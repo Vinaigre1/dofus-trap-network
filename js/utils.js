@@ -114,3 +114,23 @@ function *clockwise(x, y) {
     }
   }
 }
+
+function isInArea(x, y, areaX, areaY, area) {
+  let distance = Map.distance(areaX, areaY, x, y);
+
+  switch (area.type) {
+    case AREA.CELL:
+      return areaX === x && areaY === y;
+    case AREA.CROSS:
+      return distance.real <= area.size && distance.x === distance.y;
+    case AREA.CIRCLE:
+      return distance.real <= area.size;
+    case AREA.DIAGONAL:
+      return (distance.x === 0 && distance.y <= area.size * 2) ||
+             (distance.y === 0 && distance.x <= area.size * 2);
+    case AREA.RING:
+      return distance.real === area.size;
+    default:
+      return false;
+  }
+}

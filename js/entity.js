@@ -77,13 +77,19 @@ class Entity {
       case EFFECT.PUSH:
         direction = getDirection(effect.originCell.id, effect.targetCell.id);
         value = effect.min;
+        let diagonal = false;
+        let diagonalCheck = true;
         if ([DIRECTION.NORTHEAST, DIRECTION.SOUTHEAST, DIRECTION.SOUTHWEST, DIRECTION.NORTHWEST].includes(direction)) {
+          diagonal = true;
           value = Math.ceil(value / 2);
         }
         for (let i = 0; i < value; i++) {
           newCell = moveInDirection(this.cell.x, this.cell.y, direction, 1);
           this.nextCell = map.getCell(newCell.x, newCell.y);
-          if (this.nextCell && !map.getEntity(this.nextCell.id)) {
+          if (diagonal && !map.checkDiagonalMovement(this.cell, direction)) {
+            diagonalCheck = false;
+          }
+          if (this.nextCell && !map.getEntity(this.nextCell.id) && diagonalCheck) {
             yield; // yield for animation
             this.cell = this.nextCell;
           } else if (this.nextCell) {

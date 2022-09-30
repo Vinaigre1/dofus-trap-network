@@ -10,23 +10,13 @@ let img = [{
   offsetX: 0,
   offsetY: 0
 }];
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(113)));
-map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(86)));
-// map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(104)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(158)));
-// map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(59)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(89)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(75)));
-// map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(61)));
-// map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(91)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(146)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(157)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(171)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(271)));
-map.placeEntity(new Entity(10000, map.getCell(126), TEAM.ATTACKER, img[0]));
-map.placeEntity(new Entity(10000, map.getCell(99), TEAM.DEFENDER, img[0]));
-map.placeEntity(new Entity(10000, map.getCell(140), TEAM.DEFENDER, img[0]));
-// map.placeEntity(new Entity(10000, map.getCell(129), TEAM.DEFENDER, img[0]));
+map.placeTrap(new Trap(TRAP.DRIFT, map.getCell(242)));
+map.placeEntity(new Entity(10000, map.getCell(243), TEAM.ATTACKER, img[0]));
+map.placeEntity(new Entity(10000, map.getCell(244), TEAM.DEFENDER, img[0]));
+map.placeEntity(new Entity(10000, map.getCell(245), TEAM.DEFENDER, img[0]));
+// map.placeEntity(new Entity(10000, map.getCell(296), TEAM.DEFENDER, img[0]));
+// map.placeEntity(new Entity(10000, map.getCell(310), TEAM.DEFENDER, img[0]));
+// map.placeEntity(new Entity(10000, map.getCell(256), TEAM.DEFENDER, img[0]));
 
 function preload() {
   img.forEach(item => {
