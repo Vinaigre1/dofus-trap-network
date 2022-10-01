@@ -1,7 +1,7 @@
 let map = new Map();
 let cellW = 68;
 let cellH = 34;
-var runDraw = true;
+let mapGraphics;
 let img = [{
   name: 'Poutch Ingball',
   path: '/assets/img/poutch.png',
@@ -35,22 +35,21 @@ function setup()
 {
 	createCanvas(1000, 700);
 	frameRate(FRAMERATE);
+  mapGraphics = createGraphics(1000, 700);
+  createMap(mapGraphics);
 }
 
 function draw()
 {
 	colorMode(RGB);
-  if (runDraw || map.animating) {
-    runDraw = false;
-    background('rgb(0, 0, 0)');
-    drawMap();
-    drawTraps();
-    drawEntities();
-    if (map.animCompletion >= 1) {
-      // map.animating = false;
-      map.animCompletion = 0;
-      map.shouldTriggerStack = true;
-    }
+  background('rgb(0, 0, 0)');
+  image(mapGraphics, 0, 0);
+  drawTraps();
+  drawEntities();
+
+  if (map.animCompletion >= 1) {
+    map.animCompletion = 0;
+    map.shouldTriggerStack = true;
   }
   if (map.shouldTriggerStack) {
     map.triggerStack();
@@ -58,11 +57,11 @@ function draw()
   }
 }
 
-function drawMap()
+function createMap(graphics)
 {
   for (let i = 0; i < map.width; i++) {
     for (let j = 0; j < map.height; j++) {
-      drawCell(i, j, (j % 2 === 0 ? color(100, 100, 110) : color(130, 130, 140)), j * map.width + i);
+      drawCell(i, j, (j % 2 === 0 ? color(100, 100, 110) : color(130, 130, 140)), j * map.width + i, graphics);
     }
   }
 }
@@ -84,17 +83,25 @@ function drawTraps()
   }
 }
 
-function drawQuad(x, y, w, h, color)
+function drawQuad(x, y, w, h, color, graphics)
 {
-  fill(color);
+  if (graphics) {
+    graphics.fill(color);
+    graphics.quad(x + w/2, y,
+         x,       y + h/2,
+         x + w/2, y + h,
+         x + w,   y + h/2);
+  } else {
+    fill(color);
+    quad(x + w/2, y,
+         x,       y + h/2,
+         x + w/2, y + h,
+         x + w,   y + h/2);
+  }
 
-  quad(x + w/2, y,
-       x,       y + h/2,
-       x + w/2, y + h,
-       x + w,   y + h/2);
 }
 
-function drawCell(x, y, color, str)
+function drawCell(x, y, color, str, graphics)
 {
   if (y % 2 === 0) {
     posX = x * cellW;
@@ -104,14 +111,22 @@ function drawCell(x, y, color, str)
     posY = (y/2) * cellH;
   }
 
-  drawQuad(posX, posY, cellW, cellH, color);
+  drawQuad(posX, posY, cellW, cellH, color, graphics);
 
   if (str !== undefined) {
-    fill(0);
-    textAlign('center', 'center');
-    noStroke();
-    text(str, posX + cellW/2, posY + cellH/2);
-    stroke(0);
+    if (graphics) {
+      graphics.fill(0);
+      graphics.textAlign('center', 'center');
+      graphics.noStroke();
+      graphics.text(str, posX + cellW/2, posY + cellH/2);
+      graphics.stroke(0);
+    } else {
+      fill(0);
+      textAlign('center', 'center');
+      noStroke();
+      text(str, posX + cellW/2, posY + cellH/2);
+      stroke(0);
+    }
   }
 }
 

@@ -170,6 +170,5 @@ class Entity {
       default:
         break;
     }
-    runDraw = true;
   }
 }
