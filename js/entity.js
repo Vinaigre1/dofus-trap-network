@@ -65,7 +65,7 @@ class Entity {
         for (let i = 0; i < value; i++) {
           newCell = moveInDirection(this.cell.x, this.cell.y, direction, 1);
           this.nextCell = map.getCell(newCell.x, newCell.y);
-          if (this.nextCell && !map.getEntity(this.nextCell.id)) {
+          if (this.nextCell && !map.getEntity(this.nextCell.id) && this.nextCell.type === CELL.WALKABLE) {
             yield; // yield for animation
             this.cell = this.nextCell;
           }
@@ -89,7 +89,7 @@ class Entity {
           if (diagonal && !map.checkDiagonalMovement(this.cell, direction)) {
             diagonalCheck = false;
           }
-          if (this.nextCell && !map.getEntity(this.nextCell.id) && diagonalCheck) {
+          if (this.nextCell && !map.getEntity(this.nextCell.id) && this.nextCell.type === CELL.WALKABLE && diagonalCheck) {
             yield; // yield for animation
             this.cell = this.nextCell;
           } else if (this.nextCell) {

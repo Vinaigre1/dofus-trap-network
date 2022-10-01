@@ -10,33 +10,35 @@ let img = [{
   offsetX: 0,
   offsetY: 0
 }];
-map.placeTrap(new Trap(TRAP.TEST, map.getCell(271)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(299)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(314)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(300)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(287)));
-// map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(273)));
-// map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(271)));
-// map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(272)));
-map.placeEntity(new Entity(10000, map.getCell(258), TEAM.ATTACKER, img[0]));
-map.placeEntity(new Entity(10000, map.getCell(285), TEAM.DEFENDER, img[0]));
-map.placeEntity(new Entity(10000, map.getCell(257), TEAM.DEFENDER, img[0]));
-map.placeEntity(new Entity(10000, map.getCell(286), TEAM.DEFENDER, img[0]));
-// map.placeEntity(new Entity(10000, map.getCell(310), TEAM.DEFENDER, img[0]));
-// map.placeEntity(new Entity(10000, map.getCell(256), TEAM.DEFENDER, img[0]));
 
 function preload() {
   img.forEach(item => {
     item.load.call(item);
   });
+
+  mapGraphics = createGraphics(1000, 700);
+  loadMap(mapGraphics, 'solar');
 }
 
 function setup()
 {
 	createCanvas(1000, 700);
 	frameRate(FRAMERATE);
-  mapGraphics = createGraphics(1000, 700);
-  createMap(mapGraphics);
+
+  map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(258)));
+  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(299)));
+  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(314)));
+  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(300)));
+  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(287)));
+  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(273)));
+  // map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(271)));
+  // map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(272)));
+  map.placeEntity(new Entity(10000, map.getCell(243), TEAM.ATTACKER, img[0]));
+  // map.placeEntity(new Entity(10000, map.getCell(258), TEAM.DEFENDER, img[0]));
+  // map.placeEntity(new Entity(10000, map.getCell(244), TEAM.DEFENDER, img[0]));
+  // map.placeEntity(new Entity(10000, map.getCell(231), TEAM.DEFENDER, img[0]));
+  // map.placeEntity(new Entity(10000, map.getCell(310), TEAM.DEFENDER, img[0]));
+  // map.placeEntity(new Entity(10000, map.getCell(256), TEAM.DEFENDER, img[0]));
 }
 
 function draw()
@@ -57,51 +59,65 @@ function draw()
   }
 }
 
-function createMap(graphics)
+function loadMap(graphics, mapID)
 {
-  for (let i = 0; i < map.width; i++) {
-    for (let j = 0; j < map.height; j++) {
-      drawCell(i, j, (j % 2 === 0 ? color(100, 100, 110) : color(130, 130, 140)), j * map.width + i, graphics);
+  mapData = loadJSON(`/assets/maps/${mapID}.json`, () => {
+    map.initMap(mapData.Data[0].Cells);
+    for (let i = 0; i < MAP_HEIGHT; i++) {
+      for (let j = 0; j < MAP_WIDTH; j++) {
+        switch (map.getCell(j, i).type) {
+          case CELL.WALKABLE:
+            drawCell(j, i, (i % 2 === 0 ? color('#8E8660') : color('#968E69')), color('#7E7961'), i * MAP_WIDTH + j, graphics);
+            break;
+          case CELL.LOS_WALL:
+            drawCell(j, i, color(0), color(0), '', graphics);
+            break;
+          case CELL.WALL:
+            drawWall(j, i, color('#58533C'), color('#B8B6B2'), '', graphics);
+            break;
+          default:
+            break;
+        }
+      }
     }
-  }
+  });
 }
 
 function drawTraps()
 {
-  for (let i = 0; i < map.width; i++) {
-    for (let j = 0; j < map.height; j++) {
+  for (let i = 0; i < MAP_WIDTH; i++) {
+    for (let j = 0; j < MAP_HEIGHT; j++) {
       map.traps.forEach(trap => {
         if (trap.isInTrap(i, j)) {
-          stroke(trap.trap.color.stroke);
           strokeWeight(4);
-          drawCell(i, j, trap.trap.color.cell);
+          drawCell(i, j, trap.trap.color.cell, trap.trap.color.stroke);
           strokeWeight(1);
-          stroke(0);
         }
       });
     }
   }
 }
 
-function drawQuad(x, y, w, h, color, graphics)
+function drawQuad(x, y, w, h, cellColor, strokeColor, graphics)
 {
   if (graphics) {
-    graphics.fill(color);
+    graphics.stroke(strokeColor);
+    graphics.fill(cellColor);
     graphics.quad(x + w/2, y,
          x,       y + h/2,
          x + w/2, y + h,
          x + w,   y + h/2);
   } else {
-    fill(color);
+    stroke(strokeColor);
+    fill(cellColor);
     quad(x + w/2, y,
          x,       y + h/2,
          x + w/2, y + h,
          x + w,   y + h/2);
   }
-
 }
 
-function drawCell(x, y, color, str, graphics)
+function drawCell(x, y, cellColor, strokeColor, str, graphics)
 {
   if (y % 2 === 0) {
     posX = x * cellW;
@@ -111,7 +127,7 @@ function drawCell(x, y, color, str, graphics)
     posY = (y/2) * cellH;
   }
 
-  drawQuad(posX, posY, cellW, cellH, color, graphics);
+  drawQuad(posX, posY, cellW, cellH, cellColor, strokeColor, graphics);
 
   if (str !== undefined) {
     if (graphics) {
@@ -127,6 +143,27 @@ function drawCell(x, y, color, str, graphics)
       text(str, posX + cellW/2, posY + cellH/2);
       stroke(0);
     }
+  }
+}
+
+function drawWall(x, y, cellColor, strokeColor, str, graphics)
+{
+  if (y % 2 === 0) {
+    posX = x * cellW;
+    posY = (y/2) * cellH - cellH/2;
+  } else {
+    posX = x * cellW + cellW/2;
+    posY = (y/2) * cellH - cellH/2;
+  }
+
+  drawQuad(posX, posY, cellW, cellH, cellColor, strokeColor, graphics);
+
+  if (graphics) {
+    graphics.quad(posX, posY + cellH/2, posX, posY + cellH, posX + cellW/2, posY + cellH*1.5, posX + cellW/2, posY + cellH);
+    graphics.quad(posX + cellW/2, posY + cellH, posX + cellW/2, posY + cellH*1.5, posX + cellW, posY + cellH, posX + cellW, posY + cellH/2);
+  } else {
+    quad(posX, posY + cellH/2, posX, posY + cellH, posX + cellW/2, posY + cellH*1.5, posX + cellW/2, posY + cellH);
+    quad(posX + cellW/2, posY + cellH, posX + cellW/2, posY + cellH*1.5, posX + cellW, posY + cellH, posX + cellW, posY + cellH/2);
   }
 }
 

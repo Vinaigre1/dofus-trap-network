@@ -1,9 +1,6 @@
 class Map {
-  constructor(w = MAP_WIDTH, h = MAP_HEIGHT) {
-    this.width = w;
-    this.height = h;
+  constructor() {
     this.traps = [];
-    this.initMap();
     this.entities = [];
     this.actionStack = [];
     this.effectGenerator = null;
@@ -11,28 +8,32 @@ class Map {
     this.animSpeed = 10; // cell per second
     this.animCompletion = 0;
     this.shouldTriggerStack = false;
+    this.initialized = false;
   }
 
-  initMap() {
+  initMap(cellData) {
     this.map = [];
-    for (let i = 0; i < this.width; i++) {
+    for (let i = 0; i < MAP_WIDTH; i++) {
       let row = [];
-      for (let j = 0; j < this.height; j++) {
-        row.push(new Cell(j * this.width + i, i, j));
+      for (let j = 0; j < MAP_HEIGHT; j++) {
+        row.push(new Cell(j * MAP_WIDTH + i, i, j, cellData[j][i]));
       }
       this.map.push(row);
     }
+    this.initialized = true;
   }
 
   getCell(id_or_x, y) {
-    let x = (y === undefined ? id_or_x % this.width : id_or_x);
-    y = (y === undefined ? Math.floor(id_or_x / this.width) : y);
+    if (!this.initialized) return;
+    
+    let x = (y === undefined ? id_or_x % MAP_WIDTH : id_or_x);
+    y = (y === undefined ? Math.floor(id_or_x / MAP_WIDTH) : y);
     return this.map[x] && this.map[x][y] || undefined;
   }
 
   getEntity(id_or_x, y) {
-    let x = (y === undefined ? id_or_x % this.width : id_or_x);
-    y = (y === undefined ? Math.floor(id_or_x / this.width) : y);
+    let x = (y === undefined ? id_or_x % MAP_WIDTH : id_or_x);
+    y = (y === undefined ? Math.floor(id_or_x / MAP_WIDTH) : y);
 
     for (let i = 0; i < this.entities.length; i++) {
       if (this.entities[i].cell.x === x && this.entities[i].cell.y === y) {
@@ -93,8 +94,8 @@ class Map {
   }
 
   triggerTraps(id_or_x, y) {
-    let x = (y === undefined ? id_or_x % this.width : id_or_x);
-    y = (y === undefined ? Math.floor(id_or_x / this.width) : y);
+    let x = (y === undefined ? id_or_x % MAP_WIDTH : id_or_x);
+    y = (y === undefined ? Math.floor(id_or_x / MAP_WIDTH) : y);
 
     let triggered = [];
     this.traps.forEach((trap, i) => {
@@ -134,7 +135,8 @@ class Map {
     let pos2 = moveInDirection(cell.x, cell.y, splitDir[direction][1], 1);
     let cell1 = map.getCell(pos1.x, pos1.y);
     let cell2 = map.getCell(pos2.x, pos2.y);
-    return cell1 && !this.getEntity(cell1.id) && cell2 && !this.getEntity(cell2.id);
+    return cell1 && !this.getEntity(cell1.id) && cell1.type === CELL.WALKABLE
+        && cell2 && !this.getEntity(cell2.id) && cell2.type === CELL.WALKABLE;
   }
 
   static distance(x1, y1, x2, y2) {

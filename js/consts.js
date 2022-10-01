@@ -3,8 +3,8 @@ const MAP_WIDTH = 14;
 const MAP_HEIGHT = 40;
 const CELL = {
   WALKABLE: 0,
-  WALL: 1,
-  LOS_WALL: 2,
+  LOS_WALL: 1,
+  WALL: 2,
 };
 const EFFECT = {
   PULL: 0,
