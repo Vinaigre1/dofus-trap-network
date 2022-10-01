@@ -77,6 +77,21 @@ class Map {
     }
   }
 
+  getEntitiesInArea(area, cell) {
+    let entities = [];
+    let clock = clockwise(cell.x, cell.y);
+    let maxCells = ((area.size * 2) * ((area.size * 2) + 1)) * 2 + 1; // Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
+    for (let i = 0; i < maxCells; i++) {
+      let cellPos = clock.next().value;
+      if (isInArea(cellPos.x, cellPos.y, cell.x, cell.y, area)) {
+        let entity = this.getEntity(cellPos.x, cellPos.y);
+        if (entity)
+          entities.push(entity);
+      }
+    }
+    return entities;
+  }
+
   triggerTraps(id_or_x, y) {
     let x = (y === undefined ? id_or_x % this.width : id_or_x);
     y = (y === undefined ? Math.floor(id_or_x / this.width) : y);
@@ -86,19 +101,12 @@ class Map {
       if (trap.isInTrap(x, y)) {
         let localStack = [];
         trap.trap.effects.forEach(effect => {
-          let clock = clockwise(trap.cell.x, trap.cell.y);
-          let maxCells = ((effect.area.size * 2) * ((effect.area.size * 2) + 1)) * 2 + 1; // Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
-          for (let i = 0; i < maxCells; i++) {
-            let cellPos = clock.next().value;
-            if (!isInArea(cellPos.x, cellPos.y, trap.cell.x, trap.cell.y, effect.area)) continue;
-            
-            let entity = this.getEntity(cellPos.x, cellPos.y);
-            if (entity !== undefined) {
-              if (trap.trap.clockwise)
-                localStack.unshift(new Action(trap.caster, entity, new Effect(effect.type, trap.cell, entity.cell, effect.value.min, effect.value.max)));
-              else
-                localStack.push(new Action(trap.caster, entity, new Effect(effect.type, trap.cell, entity.cell, effect.value.min, effect.value.max)));
-            }
+          let entities = this.getEntitiesInArea(effect.area, trap.cell);
+          if (effect.type === EFFECT.PUSH) { // anticlockwise
+            entities = entities.reverse();
+          }
+          for (let i = 0; i < entities.length; i++) {
+            localStack.unshift(new Action(trap.caster, entities[i], new Effect(effect.type, trap.cell, entities[i].cell, effect.value.min, effect.value.max)));
           }
         });
         this.addToActionStack(localStack);
