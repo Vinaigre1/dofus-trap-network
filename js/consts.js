@@ -67,5 +67,6 @@ const DIRECTION = {
 };
 const SPELL = {
   TRAP: 0,
-  ENTITY: 1
+  ENTITY: 1,
+  ACTION: 2
 };

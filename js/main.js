@@ -16,8 +16,11 @@ let img = [
   { name: 'Piège Scélérat', path: '/assets/img/3638.png', asset: null, offsetX: 0, offsetY: 0 },
   { name: 'Piège à Fragmentation', path: '/assets/img/3641.png', asset: null, offsetX: 0, offsetY: 0 },
   { name: 'Concentration de Chakra', path: '/assets/img/62.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Cawotte', path: '/assets/img/367.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Sort', path: '/assets/img/spellSlot.png', asset: null, offsetX: 0, offsetY: 0 }
+  { name: 'Invocation Cawotte', path: '/assets/img/367.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Sort', path: '/assets/img/spellSlot.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Invocation Poutch', path: '/assets/img/3733.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Déclencher', path: '/assets/img/2778.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Cawotte', path: '/assets/img/Cawotte.png', asset: null, offsetX: 2, offsetY: 10 }
 ];
 let spellData = [
   { name: 'Piège Sournois', icon: img[1], type: SPELL.TRAP, effect: TRAP.TRICKY },
@@ -31,7 +34,9 @@ let spellData = [
   { name: 'Piège Fangeux', icon: img[4], type: SPELL.TRAP, effect: TRAP.MIRY },
   { name: 'Piège Scélérat', icon: img[10], type: SPELL.TRAP, effect: TRAP.SICKRAT },
   { name: 'Piège d\'Immobilisation', icon: img[2], type: SPELL.TRAP, effect: TRAP.PARALYSING },
-  { name: 'Cawotte', icon: img[13], type: SPELL.ENTITY, effect: null }
+  { name: 'Cawotte', icon: img[13], type: SPELL.ENTITY, effect: { hp: 660, image: img[17] } },
+  { name: 'Poutch', icon: img[15], type: SPELL.ENTITY, effect: { hp: 50000, image: img[0] } },
+  { name: 'Déclencher', icon: img[16], type: SPELL.ACTION, effect: null }
 ];
 
 function preload() {
@@ -51,15 +56,15 @@ function setup()
   sidebarGraphics = createGraphics(CANVAS_W * 0.25, CANVAS_H);
   loadSidebar(sidebarGraphics, spellData);
 
-  map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(258)));
-  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(299)));
+  // map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(258)));
+  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(286)));
   // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(314)));
   // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(300)));
   // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(287)));
   // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(273)));
   // map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(271)));
   // map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(272)));
-  map.placeEntity(new Entity(10000, map.getCell(243), TEAM.ATTACKER, img[0]));
+  // map.placeEntity(new Entity(10000, map.getCell(243), TEAM.ATTACKER, img[0]));
   // map.placeEntity(new Entity(10000, map.getCell(258), TEAM.DEFENDER, img[0]));
   // map.placeEntity(new Entity(10000, map.getCell(244), TEAM.DEFENDER, img[0]));
   // map.placeEntity(new Entity(10000, map.getCell(231), TEAM.DEFENDER, img[0]));

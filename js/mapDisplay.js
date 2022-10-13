@@ -6,7 +6,7 @@ function loadMap(graphics, mapID)
       for (let j = 0; j < MAP_WIDTH; j++) {
         switch (map.getCell(j, i).type) {
           case CELL.WALKABLE:
-            drawCell(j, i, (i % 2 === 0 ? color('#8E8660') : color('#968E69')), color('#7E7961'), i * MAP_WIDTH + j, graphics);
+            drawCell(j, i, (i % 2 === 0 ? color('#8E8660') : color('#968E69')), color('#7E7961'), ''/*i * MAP_WIDTH + j*/, graphics);
             break;
           case CELL.LOS_WALL:
             // drawCell(j, i, color(0, 0, 0, 0), color(0, 0, 0, 0), '', graphics);
@@ -26,18 +26,16 @@ function loadMap(graphics, mapID)
 function loadSidebar(graphics, spells)
 {
   let sidebar = new Sidebar(SIDEBAR_X, 0, CANVAS_W - SIDEBAR_X, CANVAS_H, () => {});
-  for (let i = 0; i < SIDEBAR_WIDTH; i++) {
-    for (let j = 0; j < 6; j++) {
-      // graphics.image(img[14].asset, i * img[14].asset.width, j * img[14].asset.height);
-      let x = i * img[14].asset.width + 3;
-      let y = j * img[14].asset.height + 3;
-      let w = img[14].asset.width - 6;
-      let h = img[14].asset.height - 6;
-      graphics.image(spells[j + i * 6].icon.asset, x, y, w, h);
-      sidebar.addSpell(new Spell(x, y, w, h, () => {
-        canvas.selectSpell(spells[j + i * 6]);
-      }));
-    }
+  let height = Math.ceil(spells.length / SIDEBAR_WIDTH);
+  for (let i = 0; i < spells.length; i++) {
+    let x = Math.floor(i / height) * img[14].asset.width + 3;
+    let y = (i % height) * img[14].asset.height + 3;
+    let w = img[14].asset.width - 6;
+    let h = img[14].asset.height - 6;
+    graphics.image(spells[i].icon.asset, x, y, w, h);
+    sidebar.addSpell(new Spell(x, y, w, h, () => {
+      canvas.selectSpell(spells[i]);
+    }));
   }
   canvas.addClickable(sidebar);
 }
@@ -46,7 +44,9 @@ function drawTraps()
 {
   for (let i = 0; i < MAP_WIDTH; i++) {
     for (let j = 0; j < MAP_HEIGHT; j++) {
-      map.traps.forEach(trap => {
+      if (map.getCell(i, j).type !== CELL.WALKABLE) continue;
+
+      map.traps.slice().reverse().forEach(trap => {
         if (trap.isInTrap(i, j)) {
           strokeWeight(4);
           drawCell(i, j, trap.trap.color.cell, trap.trap.color.stroke);

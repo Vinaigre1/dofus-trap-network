@@ -18,8 +18,17 @@ class Map extends Clickable {
       for (let i = 0; i < this.map.length; i++) {
         for (let j = 0; j < this.map[i].length; j++) {
           if (this.map[i][j].click(x - this.x, y - this.y)) {
-            if (canvas.selectedSpell?.type === SPELL.TRAP) {
-              map.placeTrap(new Trap(canvas.selectedSpell.effect, this.map[i][j]));
+            switch (canvas.selectedSpell?.type) {
+              case SPELL.TRAP:
+                this.placeTrap(new Trap(canvas.selectedSpell.effect, this.map[i][j]));
+                break;
+              case SPELL.ENTITY:
+                this.placeEntity(new Entity(1, this.map[i][j], TEAM.DEFENDER, canvas.selectedSpell.effect.image));
+                break;
+              case SPELL.ACTION:
+                this.triggerTraps(i, j);
+              default:
+                break;
             }
             canvas.unselectSpell();
             return true;
