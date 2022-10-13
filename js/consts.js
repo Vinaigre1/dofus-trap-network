@@ -1,6 +1,12 @@
+const CANVAS_W = 1380;
+const CANVAS_H = 700;
+const SIDEBAR_X = CANVAS_W * 0.75;
+const CELL_W = 68;
+const CELL_H = 34;
 const FRAMERATE = 30;
 const MAP_WIDTH = 14;
 const MAP_HEIGHT = 40;
+const SIDEBAR_WIDTH = 2;
 const CELL = {
   WALKABLE: 0,
   LOS_WALL: 1,
@@ -58,4 +64,8 @@ const DIRECTION = {
   SOUTHWEST: 6,
   NORTHWEST: 7,
   NONE: 8
+};
+const SPELL = {
+  TRAP: 0,
+  ENTITY: 1
 };

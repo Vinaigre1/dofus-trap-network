@@ -1,5 +1,7 @@
-class Map {
-  constructor() {
+class Map extends Clickable {
+  constructor(x, y, w, h, callback) {
+    super(x, y, w, h, callback);
+
     this.traps = [];
     this.entities = [];
     this.actionStack = [];
@@ -11,12 +13,29 @@ class Map {
     this.initialized = false;
   }
 
+  click(x, y) {
+    if (super.click(x, y)) {
+      for (let i = 0; i < this.map.length; i++) {
+        for (let j = 0; j < this.map[i].length; j++) {
+          if (this.map[i][j].click(x - this.x, y - this.y)) {
+            if (canvas.selectedSpell?.type === SPELL.TRAP) {
+              map.placeTrap(new Trap(canvas.selectedSpell.effect, this.map[i][j]));
+            }
+            canvas.unselectSpell();
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   initMap(cellData) {
     this.map = [];
     for (let i = 0; i < MAP_WIDTH; i++) {
       let row = [];
       for (let j = 0; j < MAP_HEIGHT; j++) {
-        row.push(new Cell(j * MAP_WIDTH + i, i, j, cellData[j][i]));
+        row.push(new Cell(i, j, CELL_W, CELL_H, () => {}, j * MAP_WIDTH + i, cellData[j][i]));
       }
       this.map.push(row);
     }

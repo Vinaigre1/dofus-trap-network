@@ -1,29 +1,55 @@
-let map = new Map();
-let cellW = 68;
-let cellH = 34;
+let map = new Map(0, 0, CANVAS_W * 0.75, CANVAS_H, () => {});
+let canvas = new Canvas();
 let mapGraphics;
-let img = [{
-  name: 'Poutch Ingball',
-  path: '/assets/img/poutch.png',
-  load: function() { this.asset = loadImage(this.path); },
-  asset: null,
-  offsetX: 0,
-  offsetY: 0
-}];
+let sidebarGraphics;
+let img = [
+  { name: 'Poutch Ingball', path: '/assets/img/poutch.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège Sournois', path: '/assets/img/65.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège d\'Immobilisation', path: '/assets/img/69.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège Répulsif', path: '/assets/img/73.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège Fangeux', path: '/assets/img/75.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège Insidieux', path: '/assets/img/77.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège de Masse', path: '/assets/img/79.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège Mortel', path: '/assets/img/80.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège Funeste', path: '/assets/img/3627.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège de Dérive', path: '/assets/img/3634.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège Scélérat', path: '/assets/img/3638.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Piège à Fragmentation', path: '/assets/img/3641.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Concentration de Chakra', path: '/assets/img/62.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Cawotte', path: '/assets/img/367.png', asset: null, offsetX: 0, offsetY: 0 },
+  { name: 'Sort', path: '/assets/img/spellSlot.png', asset: null, offsetX: 0, offsetY: 0 }
+];
+let spellData = [
+  { name: 'Piège Sournois', icon: img[1], type: SPELL.TRAP, effect: TRAP.TRICKY },
+  { name: 'Piège de Dérive', icon: img[9], type: SPELL.TRAP, effect: TRAP.DRIFT },
+  { name: 'Piège à Fragmentation', icon: img[11], type: SPELL.TRAP, effect: TRAP.FRAGMENTATION },
+  { name: 'Piège de Masse', icon: img[6], type: SPELL.TRAP, effect: TRAP.MASS },
+  { name: 'Piège Mortel', icon: img[7], type: SPELL.TRAP, effect: TRAP.LETHAL },
+  { name: 'Piège Funeste', icon: img[8], type: SPELL.TRAP, effect: TRAP.MALEVOLENT },
+  { name: 'Piège Répulsif', icon: img[3], type: SPELL.TRAP, effect: TRAP.REPELLING },
+  { name: 'Piège Insidieux', icon: img[5], type: SPELL.TRAP, effect: TRAP.INSIDIOUS },
+  { name: 'Piège Fangeux', icon: img[4], type: SPELL.TRAP, effect: TRAP.MIRY },
+  { name: 'Piège Scélérat', icon: img[10], type: SPELL.TRAP, effect: TRAP.SICKRAT },
+  { name: 'Piège d\'Immobilisation', icon: img[2], type: SPELL.TRAP, effect: TRAP.PARALYSING },
+  { name: 'Cawotte', icon: img[13], type: SPELL.ENTITY, effect: null }
+];
 
 function preload() {
   img.forEach(item => {
-    item.load.call(item);
+    item.asset = loadImage(item.path);
   });
 
-  mapGraphics = createGraphics(1000, 700);
+  mapGraphics = createGraphics(CANVAS_W * 0.75, CANVAS_H);
   loadMap(mapGraphics, 'solar');
 }
 
 function setup()
 {
-	createCanvas(1000, 700);
+	createCanvas(CANVAS_W, CANVAS_H);
 	frameRate(FRAMERATE);
+
+  sidebarGraphics = createGraphics(CANVAS_W * 0.25, CANVAS_H);
+  loadSidebar(sidebarGraphics, spellData);
 
   map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(258)));
   // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(299)));
@@ -46,8 +72,10 @@ function draw()
 	colorMode(RGB);
   background('rgb(0, 0, 0)');
   image(mapGraphics, 0, 0);
+  image(sidebarGraphics, CANVAS_W * 0.75, 0);
   drawTraps();
   drawEntities();
+  drawSelectedSpell();
 
   if (map.animCompletion >= 1) {
     map.animCompletion = 0;
@@ -57,155 +85,4 @@ function draw()
     map.triggerStack();
     map.shouldTriggerStack = false;
   }
-}
-
-function loadMap(graphics, mapID)
-{
-  mapData = loadJSON(`/assets/maps/${mapID}.json`, () => {
-    map.initMap(mapData.Data[0].Cells);
-    for (let i = 0; i < MAP_HEIGHT; i++) {
-      for (let j = 0; j < MAP_WIDTH; j++) {
-        switch (map.getCell(j, i).type) {
-          case CELL.WALKABLE:
-            drawCell(j, i, (i % 2 === 0 ? color('#8E8660') : color('#968E69')), color('#7E7961'), i * MAP_WIDTH + j, graphics);
-            break;
-          case CELL.LOS_WALL:
-            drawCell(j, i, color(0), color(0), '', graphics);
-            break;
-          case CELL.WALL:
-            drawWall(j, i, color('#58533C'), color('#B8B6B2'), '', graphics);
-            break;
-          default:
-            break;
-        }
-      }
-    }
-  });
-}
-
-function drawTraps()
-{
-  for (let i = 0; i < MAP_WIDTH; i++) {
-    for (let j = 0; j < MAP_HEIGHT; j++) {
-      map.traps.forEach(trap => {
-        if (trap.isInTrap(i, j)) {
-          strokeWeight(4);
-          drawCell(i, j, trap.trap.color.cell, trap.trap.color.stroke);
-          strokeWeight(1);
-        }
-      });
-    }
-  }
-}
-
-function drawQuad(x, y, w, h, cellColor, strokeColor, graphics)
-{
-  if (graphics) {
-    graphics.stroke(strokeColor);
-    graphics.fill(cellColor);
-    graphics.quad(x + w/2, y,
-         x,       y + h/2,
-         x + w/2, y + h,
-         x + w,   y + h/2);
-  } else {
-    stroke(strokeColor);
-    fill(cellColor);
-    quad(x + w/2, y,
-         x,       y + h/2,
-         x + w/2, y + h,
-         x + w,   y + h/2);
-  }
-}
-
-function drawCell(x, y, cellColor, strokeColor, str, graphics)
-{
-  if (y % 2 === 0) {
-    posX = x * cellW;
-    posY = (y/2) * cellH;
-  } else {
-    posX = x * cellW + cellW/2;
-    posY = (y/2) * cellH;
-  }
-
-  drawQuad(posX, posY, cellW, cellH, cellColor, strokeColor, graphics);
-
-  if (str !== undefined) {
-    if (graphics) {
-      graphics.fill(0);
-      graphics.textAlign('center', 'center');
-      graphics.noStroke();
-      graphics.text(str, posX + cellW/2, posY + cellH/2);
-      graphics.stroke(0);
-    } else {
-      fill(0);
-      textAlign('center', 'center');
-      noStroke();
-      text(str, posX + cellW/2, posY + cellH/2);
-      stroke(0);
-    }
-  }
-}
-
-function drawWall(x, y, cellColor, strokeColor, str, graphics)
-{
-  if (y % 2 === 0) {
-    posX = x * cellW;
-    posY = (y/2) * cellH - cellH/2;
-  } else {
-    posX = x * cellW + cellW/2;
-    posY = (y/2) * cellH - cellH/2;
-  }
-
-  drawQuad(posX, posY, cellW, cellH, cellColor, strokeColor, graphics);
-
-  if (graphics) {
-    graphics.quad(posX, posY + cellH/2, posX, posY + cellH, posX + cellW/2, posY + cellH*1.5, posX + cellW/2, posY + cellH);
-    graphics.quad(posX + cellW/2, posY + cellH, posX + cellW/2, posY + cellH*1.5, posX + cellW, posY + cellH, posX + cellW, posY + cellH/2);
-  } else {
-    quad(posX, posY + cellH/2, posX, posY + cellH, posX + cellW/2, posY + cellH*1.5, posX + cellW/2, posY + cellH);
-    quad(posX + cellW/2, posY + cellH, posX + cellW/2, posY + cellH*1.5, posX + cellW, posY + cellH, posX + cellW, posY + cellH/2);
-  }
-}
-
-function getEntityPos(x, y) {
-  if (y % 2 === 0) {
-    posX = x * cellW + cellW/2;
-    posY = (y/2) * cellH + cellH/2;
-  } else {
-    posX = x * cellW + cellW;
-    posY = (y/2) * cellH + cellH/2;
-  }
-
-  return { x: posX, y: posY };
-}
-
-function drawEntities()
-{
-  map.entities.forEach(entity => {
-    let pos = getEntityPos(entity.cell.x, entity.cell.y);
-    let nextPos;
-    if (entity.nextCell) { // Should only have 1 entity.nextCell defined in the entire array
-      nextPos = getEntityPos(entity.nextCell.x, entity.nextCell.y);
-      pos.x = pos.x * (1 - map.animCompletion) + nextPos.x * map.animCompletion;
-      pos.y = pos.y * (1 - map.animCompletion) + nextPos.y * map.animCompletion;
-      map.animCompletion += map.animSpeed / FRAMERATE;
-    }
-
-    strokeWeight(4);
-    stroke(entity.team.color.stroke);
-    fill(entity.team.color.cell);
-    ellipse(pos.x, pos.y, cellW * 0.7, cellH * 0.7);
-    strokeWeight(1);
-
-    let width = cellW;
-    let height = width * (entity.image.asset.height / entity.image.asset.width);
-
-    image(
-      entity.image.asset,
-      pos.x + entity.image.offsetX - width/2,
-      pos.y + entity.image.offsetY - height,
-      width,
-      height
-    );
-  });
 }
