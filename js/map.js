@@ -20,17 +20,23 @@ class Map extends Clickable {
           if (this.map[i][j].click(x - this.x, y - this.y)) {
             switch (canvas.selectedSpell?.type) {
               case SPELL.TRAP:
+                if (this.traps.some((trap) => trap.cell.x === i && trap.cell.y === j))
+                  break;
                 this.placeTrap(new Trap(canvas.selectedSpell.effect, this.map[i][j]));
+                canvas.unselectSpell();
                 break;
               case SPELL.ENTITY:
-                this.placeEntity(new Entity(1, this.map[i][j], TEAM.DEFENDER, canvas.selectedSpell.effect.image));
+                if (this.entities.some((entity) => entity.cell.x === i && entity.cell.y === j))
+                  break;
+                this.placeEntity(new Entity(1, this.map[i][j], TEAM.DEFENDER, canvas.selectedSpell.effect.movable, canvas.selectedSpell.effect.image));
+                canvas.unselectSpell();
                 break;
               case SPELL.ACTION:
                 this.triggerTraps(i, j);
+                canvas.unselectSpell();
               default:
                 break;
             }
-            canvas.unselectSpell();
             return true;
           }
         }

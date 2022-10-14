@@ -1,8 +1,9 @@
 class Entity {
-  constructor(hp, cell, team, image) {
+  constructor(hp, cell, team, movable, image) {
     this.hp = hp;
     this.cell = cell;
     this.team = team;
+    this.movable = movable;
     this.image = image;
     this.nextCell = null;
     this.initOffensiveStats();
@@ -57,6 +58,7 @@ class Entity {
     let damage;
     switch (effect.type) {
       case EFFECT.PULL:
+        if (!this.movable) break;
         direction = getDirection(effect.targetCell.id, effect.originCell.id);
         value = effect.min;
         if ([DIRECTION.NORTHEAST, DIRECTION.SOUTHEAST, DIRECTION.SOUTHWEST, DIRECTION.NORTHWEST].includes(direction)) {
@@ -75,6 +77,7 @@ class Entity {
         break;
 
       case EFFECT.PUSH:
+        if (!this.movable) break;
         direction = getDirection(effect.originCell.id, effect.targetCell.id);
         value = effect.min;
         let diagonal = false;

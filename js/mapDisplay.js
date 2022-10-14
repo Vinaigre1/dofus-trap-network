@@ -48,8 +48,9 @@ function drawTraps()
 
       map.traps.slice().reverse().forEach(trap => {
         if (trap.isInTrap(i, j)) {
-          strokeWeight(4);
-          drawCell(i, j, trap.trap.color.cell, trap.trap.color.stroke);
+          let borders = trap.getBorders(i, j);
+          strokeWeight(2.5);
+          drawCell(i, j, trap.trap.color.cell, trap.trap.color.stroke, '', null, borders);
           strokeWeight(1);
         }
       });
@@ -68,17 +69,31 @@ function drawSelectedSpell()
   }
 }
 
-function drawQuad(x, y, w, h, cellColor, strokeColor, graphics)
+function drawQuad(x, y, w, h, cellColor, strokeColor, graphics, borders)
 {
   if (graphics) {
     graphics.stroke(strokeColor);
+    if (borders !== undefined) {
+      if (borders & CELL_BORDER.NORTH) graphics.line(x + w,   y + h/2, x + w/2, y);
+      if (borders & CELL_BORDER.EAST)  graphics.line(x + w/2, y + h,   x + w,   y + h/2);
+      if (borders & CELL_BORDER.SOUTH) graphics.line(x,       y + h/2, x + w/2, y + h);
+      if (borders & CELL_BORDER.WEST)  graphics.line(x + w/2, y,       x,       y + h/2);
+      graphics.noStroke();
+    }
     graphics.fill(cellColor);
     graphics.quad(x + w/2, y,
-         x,       y + h/2,
-         x + w/2, y + h,
-         x + w,   y + h/2);
+    x,       y + h/2,
+    x + w/2, y + h,
+    x + w,   y + h/2);
   } else {
     stroke(strokeColor);
+    if (borders !== undefined) {
+      if (borders & CELL_BORDER.NORTH) line(x + w,   y + h/2, x + w/2, y);
+      if (borders & CELL_BORDER.EAST)  line(x + w/2, y + h,   x + w,   y + h/2);
+      if (borders & CELL_BORDER.SOUTH) line(x,       y + h/2, x + w/2, y + h);
+      if (borders & CELL_BORDER.WEST)  line(x + w/2, y,       x,       y + h/2);
+      noStroke();
+    }
     fill(cellColor);
     quad(x + w/2, y,
          x,       y + h/2,
@@ -87,7 +102,7 @@ function drawQuad(x, y, w, h, cellColor, strokeColor, graphics)
   }
 }
 
-function drawCell(x, y, cellColor, strokeColor, str, graphics)
+function drawCell(x, y, cellColor, strokeColor, str, graphics, borders)
 {
   if (y % 2 === 0) {
     posX = x * CELL_W;
@@ -97,7 +112,7 @@ function drawCell(x, y, cellColor, strokeColor, str, graphics)
     posY = (y/2) * CELL_H;
   }
 
-  drawQuad(posX, posY, CELL_W, CELL_H, cellColor, strokeColor, graphics);
+  drawQuad(posX, posY, CELL_W, CELL_H, cellColor, strokeColor, graphics, borders);
 
   if (str !== undefined) {
     if (graphics) {
@@ -161,13 +176,13 @@ function drawEntities()
       map.animCompletion += map.animSpeed / FRAMERATE;
     }
 
-    strokeWeight(4);
+    strokeWeight(2.5);
     stroke(entity.team.color.stroke);
     fill(entity.team.color.cell);
-    ellipse(pos.x, pos.y, CELL_W * 0.7, CELL_H * 0.7);
+    ellipse(pos.x, pos.y, CELL_W * 0.55, CELL_H * 0.55);
     strokeWeight(1);
 
-    let width = CELL_W;
+    let width = CELL_W * entity.image.scale;
     let height = width * (entity.image.asset.height / entity.image.asset.width);
 
     image(

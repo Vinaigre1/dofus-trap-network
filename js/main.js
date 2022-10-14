@@ -3,24 +3,24 @@ let canvas = new Canvas();
 let mapGraphics;
 let sidebarGraphics;
 let img = [
-  { name: 'Poutch Ingball', path: '/assets/img/poutch.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège Sournois', path: '/assets/img/65.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège d\'Immobilisation', path: '/assets/img/69.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège Répulsif', path: '/assets/img/73.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège Fangeux', path: '/assets/img/75.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège Insidieux', path: '/assets/img/77.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège de Masse', path: '/assets/img/79.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège Mortel', path: '/assets/img/80.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège Funeste', path: '/assets/img/3627.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège de Dérive', path: '/assets/img/3634.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège Scélérat', path: '/assets/img/3638.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Piège à Fragmentation', path: '/assets/img/3641.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Concentration de Chakra', path: '/assets/img/62.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Invocation Cawotte', path: '/assets/img/367.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Sort', path: '/assets/img/spellSlot.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Invocation Poutch', path: '/assets/img/3733.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Déclencher', path: '/assets/img/2778.png', asset: null, offsetX: 0, offsetY: 0 },
-  { name: 'Cawotte', path: '/assets/img/Cawotte.png', asset: null, offsetX: 2, offsetY: 10 }
+  { name: 'Poutch Ingball', path: '/assets/img/poutch.png', asset: null, offsetX: -4, offsetY: 9, scale: 1.43 },
+  { name: 'Piège Sournois', path: '/assets/img/65.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège d\'Immobilisation', path: '/assets/img/69.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège Répulsif', path: '/assets/img/73.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège Fangeux', path: '/assets/img/75.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège Insidieux', path: '/assets/img/77.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège de Masse', path: '/assets/img/79.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège Mortel', path: '/assets/img/80.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège Funeste', path: '/assets/img/3627.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège de Dérive', path: '/assets/img/3634.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège Scélérat', path: '/assets/img/3638.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège à Fragmentation', path: '/assets/img/3641.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Concentration de Chakra', path: '/assets/img/62.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Invocation Cawotte', path: '/assets/img/367.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Sort', path: '/assets/img/spellSlot.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Invocation Poutch', path: '/assets/img/3733.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Déclencher', path: '/assets/img/2778.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Cawotte', path: '/assets/img/Cawotte.png', asset: null, offsetX: 2, offsetY: 14, scale: 1.5 }
 ];
 let spellData = [
   { name: 'Piège Sournois', icon: img[1], type: SPELL.TRAP, effect: TRAP.TRICKY },
@@ -34,8 +34,8 @@ let spellData = [
   { name: 'Piège Fangeux', icon: img[4], type: SPELL.TRAP, effect: TRAP.MIRY },
   { name: 'Piège Scélérat', icon: img[10], type: SPELL.TRAP, effect: TRAP.SICKRAT },
   { name: 'Piège d\'Immobilisation', icon: img[2], type: SPELL.TRAP, effect: TRAP.PARALYSING },
-  { name: 'Cawotte', icon: img[13], type: SPELL.ENTITY, effect: { hp: 660, image: img[17] } },
-  { name: 'Poutch', icon: img[15], type: SPELL.ENTITY, effect: { hp: 50000, image: img[0] } },
+  { name: 'Cawotte', icon: img[13], type: SPELL.ENTITY, effect: { hp: 660, image: img[17], movable: false } },
+  { name: 'Poutch', icon: img[15], type: SPELL.ENTITY, effect: { hp: 50000, image: img[0], movable: true } },
   { name: 'Déclencher', icon: img[16], type: SPELL.ACTION, effect: null }
 ];
 
