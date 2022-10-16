@@ -14,35 +14,40 @@ class Map extends Clickable {
   }
 
   click(x, y) {
-    if (super.click(x, y)) {
-      for (let i = 0; i < this.map.length; i++) {
-        for (let j = 0; j < this.map[i].length; j++) {
-          if (this.map[i][j].click(x - this.x, y - this.y)) {
-            switch (canvas.selectedSpell?.type) {
-              case SPELL.TRAP:
-                if (this.traps.some((trap) => trap.cell.x === i && trap.cell.y === j))
-                  break;
-                this.placeTrap(new Trap(canvas.selectedSpell.effect, this.map[i][j]));
-                canvas.unselectSpell();
-                break;
-              case SPELL.ENTITY:
-                if (this.entities.some((entity) => entity.cell.x === i && entity.cell.y === j))
-                  break;
-                this.placeEntity(new Entity(1, this.map[i][j], TEAM.DEFENDER, canvas.selectedSpell.effect.movable, canvas.selectedSpell.effect.image));
-                canvas.unselectSpell();
-                break;
-              case SPELL.ACTION:
-                this.triggerTraps(i, j);
-                canvas.unselectSpell();
-              default:
-                break;
-            }
-            return true;
-          }
+    let cell = this.getMouseCell(x, y);
+    if (!cell) return false;
+
+    switch (canvas.selectedSpell?.type) {
+      case SPELL.TRAP:
+        if (this.traps.some((trap) => trap.cell.x === cell.x && trap.cell.y === cell.y))
+          break;
+        this.placeTrap(new Trap(canvas.selectedSpell.effect, cell));
+        canvas.unselectSpell();
+        break;
+      case SPELL.ENTITY:
+        if (this.entities.some((entity) => entity.cell.x === cell.x && entity.cell.y === cell.y))
+          break;
+        this.placeEntity(new Entity(1, cell, TEAM.DEFENDER, canvas.selectedSpell.effect.movable, canvas.selectedSpell.effect.image));
+        canvas.unselectSpell();
+        break;
+      case SPELL.ACTION:
+        this.triggerTraps(cell.x, cell.y);
+        canvas.unselectSpell();
+      default:
+        break;
+    }
+    return true;
+  }
+
+  getMouseCell(posX, posY) {
+    for (let i = 0; i < this.map.length; i++) {
+      for (let j = 0; j < this.map[i].length; j++) {
+        if (this.map[i][j].click(posX - this.x, posY - this.y)) {
+          return this.map[i][j];
         }
       }
     }
-    return false;
+    return null
   }
 
   initMap(cellData) {

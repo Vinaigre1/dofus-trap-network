@@ -55,21 +55,6 @@ function setup()
 
   sidebarGraphics = createGraphics(CANVAS_W * 0.25, CANVAS_H);
   loadSidebar(sidebarGraphics, spellData);
-
-  // map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(258)));
-  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(286)));
-  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(314)));
-  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(300)));
-  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(287)));
-  // map.placeTrap(new Trap(TRAP.TRICKY, map.getCell(273)));
-  // map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(271)));
-  // map.placeTrap(new Trap(TRAP.REPELLING, map.getCell(272)));
-  // map.placeEntity(new Entity(10000, map.getCell(243), TEAM.ATTACKER, img[0]));
-  // map.placeEntity(new Entity(10000, map.getCell(258), TEAM.DEFENDER, img[0]));
-  // map.placeEntity(new Entity(10000, map.getCell(244), TEAM.DEFENDER, img[0]));
-  // map.placeEntity(new Entity(10000, map.getCell(231), TEAM.DEFENDER, img[0]));
-  // map.placeEntity(new Entity(10000, map.getCell(310), TEAM.DEFENDER, img[0]));
-  // map.placeEntity(new Entity(10000, map.getCell(256), TEAM.DEFENDER, img[0]));
 }
 
 function draw()
@@ -80,6 +65,7 @@ function draw()
   image(sidebarGraphics, CANVAS_W * 0.75, 0);
   drawTraps();
   drawEntities();
+  drawSpellShadow();
   drawSelectedSpell();
 
   if (map.animCompletion >= 1) {

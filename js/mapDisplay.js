@@ -194,3 +194,13 @@ function drawEntities()
     );
   });
 }
+
+function drawSpellShadow()
+{
+  if (!canvas.selectedSpell) return;
+
+  let cell = map.getMouseCell(mouseX, mouseY);
+  if (cell) {
+    drawCell(cell.x, cell.y, color('rgb(255, 0, 0)'), color('rgba(0, 0, 0, 0)'));
+  }
+}
