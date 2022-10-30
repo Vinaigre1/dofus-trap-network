@@ -3,6 +3,7 @@ class Trap {
     this.trap = trap;
     this.cell = cell;
     this.caster = caster;
+    this.canvasElements = [];
   }
 
   isInTrap(id_or_x, y) {

@@ -76,3 +76,9 @@ const CELL_BORDER = { // Use with binary operators
   SOUTH: 4,
   WEST: 8
 };
+const SUBLAYERS = {
+  MAP: 0,
+  TRAP: 1,
+  ENTITY: 2,
+  GUI: 3
+};

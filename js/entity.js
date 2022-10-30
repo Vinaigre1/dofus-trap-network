@@ -6,6 +6,7 @@ class Entity {
     this.movable = movable;
     this.image = image;
     this.nextCell = null;
+    this.canvasElement = null;
     this.initOffensiveStats();
     this.initDefensiveStats();
   }

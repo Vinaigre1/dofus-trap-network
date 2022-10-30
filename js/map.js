@@ -13,21 +13,49 @@ class Map extends Clickable {
     this.initialized = false;
   }
 
+  loadMapGraphics(w, h, mapID) {
+    let mapData = loadJSON(`/assets/maps/${mapID}.json`, () => {
+      map.initMap(mapData.Data[0].Cells);
+      for (let i = 0; i < MAP_HEIGHT; i++) {
+        let gr = createGraphics(w, CELL_H*2);
+        let wall = false;
+        for (let j = 0; j < MAP_WIDTH; j++) {
+          switch (map.getCell(j, i).type) {
+            case CELL.WALKABLE:
+              drawCell(j, 2, (i % 2 === 0 ? color('#8E8660') : color('#968E69')), color('#7E7961'), ''/*i * MAP_WIDTH + j*/, gr);
+              break;
+            case CELL.LOS_WALL:
+              // drawCell(j, 2, color(0, 0, 0, 0), color(0, 0, 0, 0), '', gr);
+              break;
+            case CELL.WALL:
+              drawWall(j, 2, color('#58533C'), color('#B8B6B2'), '', gr);
+              wall = true;
+              break;
+            default:
+              break;
+          }
+        }
+        canvas.addElement(gr, i, SUBLAYERS.MAP, (i % 2) * CELL_W/2, i * CELL_H/2 - CELL_H, w, CELL_H * 2);
+      }
+    });
+    canvas.addClickable(map);
+  }
+
   click(x, y) {
-    let cell = this.getMouseCell(x, y);
+    let cell = this.getCellAtPos(x, y);
     if (!cell) return false;
 
     switch (canvas.selectedSpell?.type) {
       case SPELL.TRAP:
         if (this.traps.some((trap) => trap.cell.x === cell.x && trap.cell.y === cell.y))
           break;
-        this.placeTrap(new Trap(canvas.selectedSpell.effect, cell));
+        this.placeTrap(new Trap(canvas.selectedSpell.effects.trap, cell));
         canvas.unselectSpell();
         break;
       case SPELL.ENTITY:
         if (this.entities.some((entity) => entity.cell.x === cell.x && entity.cell.y === cell.y))
           break;
-        this.placeEntity(new Entity(1, cell, TEAM.DEFENDER, canvas.selectedSpell.effect.movable, canvas.selectedSpell.effect.image));
+        this.placeEntity(new Entity(1, cell, TEAM.DEFENDER, canvas.selectedSpell.effects.movable, canvas.selectedSpell.effects.image));
         canvas.unselectSpell();
         break;
       case SPELL.ACTION:
@@ -39,7 +67,7 @@ class Map extends Clickable {
     return true;
   }
 
-  getMouseCell(posX, posY) {
+  getCellAtPos(posX, posY) {
     for (let i = 0; i < this.map.length; i++) {
       for (let j = 0; j < this.map[i].length; j++) {
         if (this.map[i][j].click(posX - this.x, posY - this.y)) {
@@ -47,7 +75,7 @@ class Map extends Clickable {
         }
       }
     }
-    return null
+    return null;
   }
 
   initMap(cellData) {
@@ -106,12 +134,14 @@ class Map extends Clickable {
   }
 
   placeEntity(entity) {
+    entity.canvasElement = loadEntity(entity);
     if (entity.cell !== undefined) {
       this.entities.push(entity);
     }
   }
 
   placeTrap(trap) {
+    trap.canvasElements = loadTrap(trap, this.traps.length);
     if (trap.cell !== undefined) {
       this.traps.unshift(trap);
     }
@@ -154,6 +184,7 @@ class Map extends Clickable {
       }
     });
     triggered.reverse().forEach(trapId => {
+      canvas.removeElements(this.traps[trapId].canvasElements);
       this.traps.splice(trapId, 1);
     });
     if (triggered.length > 0) {
@@ -197,6 +228,24 @@ class Map extends Clickable {
         x: -distanceX,
         y: -distanceY
       }
+    };
+  }
+
+  static getCellPos(x, y) {
+    let posX;
+    let posY;
+
+    if (y % 2 === 0) {
+      posX = x * CELL_W;
+      posY = (y/2) * CELL_H;
+    } else {
+      posX = x * CELL_W + CELL_W/2;
+      posY = (y/2) * CELL_H;
+    }
+
+    return {
+      x: posX,
+      y: posY
     };
   }
 }

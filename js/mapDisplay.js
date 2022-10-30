@@ -1,4 +1,4 @@
-function loadMap(graphics, mapID)
+function loadMap(graphics = window, mapID)
 {
   mapData = loadJSON(`/assets/maps/${mapID}.json`, () => {
     map.initMap(mapData.Data[0].Cells);
@@ -50,7 +50,7 @@ function drawTraps()
         if (trap.isInTrap(i, j)) {
           let borders = trap.getBorders(i, j);
           strokeWeight(2.5);
-          drawCell(i, j, trap.trap.color.cell, trap.trap.color.stroke, '', null, borders);
+          drawCell(i, j, trap.trap.color.cell, trap.trap.color.stroke, '', undefined, borders, (i === trap.cell.x && j === trap.cell.y) ? trap.trap.image.asset : null);
           strokeWeight(1);
         }
       });
@@ -69,129 +69,140 @@ function drawSelectedSpell()
   }
 }
 
-function drawQuad(x, y, w, h, cellColor, strokeColor, graphics, borders)
+function drawQuad(x, y, w, h, cellColor, strokeColor, graphics = window, borders)
 {
-  if (graphics) {
-    graphics.stroke(strokeColor);
-    if (borders !== undefined) {
-      if (borders & CELL_BORDER.NORTH) graphics.line(x + w,   y + h/2, x + w/2, y);
-      if (borders & CELL_BORDER.EAST)  graphics.line(x + w/2, y + h,   x + w,   y + h/2);
-      if (borders & CELL_BORDER.SOUTH) graphics.line(x,       y + h/2, x + w/2, y + h);
-      if (borders & CELL_BORDER.WEST)  graphics.line(x + w/2, y,       x,       y + h/2);
-      graphics.noStroke();
-    }
-    graphics.fill(cellColor);
-    graphics.quad(x + w/2, y,
-    x,       y + h/2,
-    x + w/2, y + h,
-    x + w,   y + h/2);
-  } else {
-    stroke(strokeColor);
-    if (borders !== undefined) {
-      if (borders & CELL_BORDER.NORTH) line(x + w,   y + h/2, x + w/2, y);
-      if (borders & CELL_BORDER.EAST)  line(x + w/2, y + h,   x + w,   y + h/2);
-      if (borders & CELL_BORDER.SOUTH) line(x,       y + h/2, x + w/2, y + h);
-      if (borders & CELL_BORDER.WEST)  line(x + w/2, y,       x,       y + h/2);
-      noStroke();
-    }
-    fill(cellColor);
-    quad(x + w/2, y,
-         x,       y + h/2,
-         x + w/2, y + h,
-         x + w,   y + h/2);
+  graphics.stroke(strokeColor);
+  if (borders !== undefined) {
+    if (borders & CELL_BORDER.NORTH) graphics.line(x + w,   y + h/2, x + w/2, y);
+    if (borders & CELL_BORDER.EAST)  graphics.line(x + w/2, y + h,   x + w,   y + h/2);
+    if (borders & CELL_BORDER.SOUTH) graphics.line(x,       y + h/2, x + w/2, y + h);
+    if (borders & CELL_BORDER.WEST)  graphics.line(x + w/2, y,       x,       y + h/2);
+    graphics.noStroke();
   }
+  graphics.fill(cellColor);
+  graphics.quad(x + w/2, y,
+  x,       y + h/2,
+  x + w/2, y + h,
+  x + w,   y + h/2);
 }
 
-function drawCell(x, y, cellColor, strokeColor, str, graphics, borders)
+function drawCell(x, y, cellColor, strokeColor, str, graphics = window, borders, img)
 {
-  if (y % 2 === 0) {
-    posX = x * CELL_W;
-    posY = (y/2) * CELL_H;
-  } else {
-    posX = x * CELL_W + CELL_W/2;
-    posY = (y/2) * CELL_H;
-  }
+  let { x: posX, y: posY } = Map.getCellPos(x, y);
 
   drawQuad(posX, posY, CELL_W, CELL_H, cellColor, strokeColor, graphics, borders);
 
   if (str !== undefined) {
-    if (graphics) {
-      graphics.fill(0);
-      graphics.textAlign('center', 'center');
-      graphics.noStroke();
-      graphics.text(str, posX + CELL_W/2, posY + CELL_H/2);
-      graphics.stroke(0);
-    } else {
-      fill(0);
-      textAlign('center', 'center');
-      noStroke();
-      text(str, posX + CELL_W/2, posY + CELL_H/2);
-      stroke(0);
-    }
+    graphics.fill(0);
+    graphics.textAlign('center', 'center');
+    graphics.noStroke();
+    graphics.text(str, posX + CELL_W/2, posY + CELL_H/2);
+    graphics.stroke(0);
+    if (img) graphics.image(img, posX + CELL_W * 0.15, posY + CELL_H * 0.15, CELL_W * 0.7, CELL_H * 0.7);
   }
 }
 
-function drawWall(x, y, cellColor, strokeColor, str, graphics)
+function drawWall(x, y, cellColor, strokeColor, str, graphics = window)
 {
-  if (y % 2 === 0) {
-    posX = x * CELL_W;
-    posY = (y/2) * CELL_H - CELL_H/2;
-  } else {
-    posX = x * CELL_W + CELL_W/2;
-    posY = (y/2) * CELL_H - CELL_H/2;
-  }
+  let { x: posX, y: posY } = Map.getCellPos(x, y);
+
+  posY -= CELL_H / 2;
 
   drawQuad(posX, posY, CELL_W, CELL_H, cellColor, strokeColor, graphics);
 
-  if (graphics) {
-    graphics.quad(posX, posY + CELL_H/2, posX, posY + CELL_H, posX + CELL_W/2, posY + CELL_H*1.5, posX + CELL_W/2, posY + CELL_H);
-    graphics.quad(posX + CELL_W/2, posY + CELL_H, posX + CELL_W/2, posY + CELL_H*1.5, posX + CELL_W, posY + CELL_H, posX + CELL_W, posY + CELL_H/2);
-  } else {
-    quad(posX, posY + CELL_H/2, posX, posY + CELL_H, posX + CELL_W/2, posY + CELL_H*1.5, posX + CELL_W/2, posY + CELL_H);
-    quad(posX + CELL_W/2, posY + CELL_H, posX + CELL_W/2, posY + CELL_H*1.5, posX + CELL_W, posY + CELL_H, posX + CELL_W, posY + CELL_H/2);
-  }
+  graphics.quad(posX, posY + CELL_H/2, posX, posY + CELL_H, posX + CELL_W/2, posY + CELL_H*1.5, posX + CELL_W/2, posY + CELL_H);
+  graphics.quad(posX + CELL_W/2, posY + CELL_H, posX + CELL_W/2, posY + CELL_H*1.5, posX + CELL_W, posY + CELL_H, posX + CELL_W, posY + CELL_H/2);
 }
 
-function getEntityPos(x, y) {
-  if (y % 2 === 0) {
-    posX = x * CELL_W + CELL_W/2;
-    posY = (y/2) * CELL_H + CELL_H/2;
-  } else {
-    posX = x * CELL_W + CELL_W;
-    posY = (y/2) * CELL_H + CELL_H/2;
-  }
+function getEntityPos(x, y)
+{
+  let { x: posX, y: posY } = Map.getCellPos(x, y);
 
-  return { x: posX, y: posY };
+  return { x: posX + CELL_W/2, y: posY + CELL_H/2 };
 }
 
-function drawEntities()
+function loadEntity(entity)
+{
+  let width = CELL_W * entity.image.scale;
+  let height = width * (entity.image.asset.height / entity.image.asset.width);
+
+  let gr = createGraphics(width, height + CELL_H/2);
+  let pos = getEntityPos(entity.cell.x, entity.cell.y);
+
+  let nextPos;
+  if (entity.nextCell) {
+    nextPos = getEntityPos(entity.nextCell.x, entity.nextCell.y);
+    pos.x = pos.x * (1 - map.animCompletion) + nextPos.x * map.animCompletion;
+    pos.y = pos.y * (1 - map.animCompletion) + nextPos.y * map.animCompletion;
+    map.animCompletion += map.animSpeed / FRAMERATE;
+  }
+
+  gr.strokeWeight(2.5);
+  gr.stroke(entity.team.color.stroke);
+  gr.fill(entity.team.color.cell);
+  gr.ellipse(width / 2 - entity.image.offsetX, height - entity.image.offsetY, CELL_W * 0.55, CELL_H * 0.55);
+  gr.strokeWeight(1);
+
+  gr.image(
+    entity.image.asset,
+    0,
+    0,
+    width,
+    height
+  );
+  return canvas.addElement(gr, entity.cell.y, SUBLAYERS.ENTITY, pos.x + entity.image.offsetX - width/2, pos.y + entity.image.offsetY - height, width, height + CELL_H/2);
+}
+
+function loadTrap(trap, trapHeight)
+{
+  let elements = [];
+  for (let i = 0; i < MAP_HEIGHT; i++) {
+    let gr = createGraphics(CANVAS_W * 0.75, CELL_H);
+    let inTrap = false;
+    for (let j = 0; j < MAP_WIDTH; j++) {
+      if (map.getCell(j, i).type !== CELL.WALKABLE) continue;
+
+      if (trap.isInTrap(j, i)) {
+        inTrap = true;
+        let borders = trap.getBorders(j, i);
+        gr.strokeWeight(2.5);
+        drawCell(j, 0, trap.trap.color.cell, trap.trap.color.stroke, '', gr, borders, (j === trap.cell.x && i === trap.cell.y) ? trap.trap.image.asset : null);
+        gr.strokeWeight(1);
+      }
+    }
+    if (inTrap) {
+      elements.push(canvas.addElement(gr, i, SUBLAYERS.TRAP, (i % 2) * CELL_W/2, i * CELL_H/2, CANVAS_W * 0.75, CELL_H, trapHeight));
+    }
+  }
+  return elements;
+}
+
+function animateEntities()
 {
   map.entities.forEach(entity => {
-    let pos = getEntityPos(entity.cell.x, entity.cell.y);
-    let nextPos;
-    if (entity.nextCell) { // Should only have 1 entity.nextCell defined in the entire array
-      nextPos = getEntityPos(entity.nextCell.x, entity.nextCell.y);
+    if (entity.nextCell) {
+      let pos = getEntityPos(entity.cell.x, entity.cell.y);
+      let nextPos = getEntityPos(entity.nextCell.x, entity.nextCell.y);
+      let deltaTime = map.animSpeed / FRAMERATE;
+      let width = CELL_W * entity.image.scale;
+      let height = width * (entity.image.asset.height / entity.image.asset.width);
+
       pos.x = pos.x * (1 - map.animCompletion) + nextPos.x * map.animCompletion;
       pos.y = pos.y * (1 - map.animCompletion) + nextPos.y * map.animCompletion;
-      map.animCompletion += map.animSpeed / FRAMERATE;
+
+      deltaX = pos.x * (1 - deltaTime) + nextPos.x * deltaTime - pos.x;
+      deltaY = pos.y * (1 - deltaTime) + nextPos.y * deltaTime - pos.y;
+
+      entity.canvasElement.x = pos.x + entity.image.offsetX - width/2;
+      entity.canvasElement.y = pos.y + entity.image.offsetY - height;
+      entity.canvasElement.layer = Math.max(entity.nextCell.y, entity.cell.y);
+      map.animCompletion += deltaTime;
+      if (map.animCompletion >= 1) {
+        entity.canvasElement.x = nextPos.x + entity.image.offsetX - width/2;
+        entity.canvasElement.y = nextPos.y + entity.image.offsetY - height;
+        entity.canvasElement.layer = entity.nextCell.y;
+      }
     }
-
-    strokeWeight(2.5);
-    stroke(entity.team.color.stroke);
-    fill(entity.team.color.cell);
-    ellipse(pos.x, pos.y, CELL_W * 0.55, CELL_H * 0.55);
-    strokeWeight(1);
-
-    let width = CELL_W * entity.image.scale;
-    let height = width * (entity.image.asset.height / entity.image.asset.width);
-
-    image(
-      entity.image.asset,
-      pos.x + entity.image.offsetX - width/2,
-      pos.y + entity.image.offsetY - height,
-      width,
-      height
-    );
   });
 }
 
@@ -199,7 +210,7 @@ function drawSpellShadow()
 {
   if (!canvas.selectedSpell) return;
 
-  let cell = map.getMouseCell(mouseX, mouseY);
+  let cell = map.getCellAtPos(mouseX, mouseY);
   if (cell) {
     drawCell(cell.x, cell.y, color('rgb(255, 0, 0)'), color('rgba(0, 0, 0, 0)'));
   }
