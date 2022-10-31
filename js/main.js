@@ -21,7 +21,8 @@ let img = [
   { name: 'Invocation Poutch', path: '/assets/img/spells/3733.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
   { name: 'Déclencher', path: '/assets/img/spells/2778.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
   { name: 'Cawotte', path: '/assets/img/entities/Cawotte.png', asset: null, offsetX: 2, offsetY: 14, scale: 1.5 },
-  { name: 'Piège Insidieux Sol', path: '/assets/img/traps/1.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 }
+  { name: 'Piège Insidieux Sol', path: '/assets/img/traps/1.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Doom', path: '/assets/img/spells/415.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 }
 ];
 let spellData = [
   { name: 'Piège Sournois', icon: img[1], type: SPELL.TRAP, effects: { trap: { ...TRAP.TRICKY, image: img[18] } } },
@@ -37,6 +38,8 @@ let spellData = [
   { name: 'Piège d\'Immobilisation', icon: img[2], type: SPELL.TRAP, effects: { trap: { ...TRAP.PARALYSING, image: img[18] } } },
   { name: 'Cawotte', icon: img[13], type: SPELL.ENTITY, effects: { hp: 660, image: img[17], movable: false } },
   { name: 'Poutch', icon: img[15], type: SPELL.ENTITY, effects: { hp: 50000, image: img[0], movable: true } },
+  { name: 'Concentration de Chakra', icon: img[12], type: SPELL.ACTION, effects: null },
+  { name: 'Doom', icon: img[19], type: SPELL.ACTION, effects: null },
   { name: 'Déclencher', icon: img[16], type: SPELL.ACTION, effects: null }
 ];
 

@@ -179,11 +179,12 @@ function loadTrap(trap, trapHeight)
 
 function animateEntities()
 {
+  let deltaTime = map.animSpeed / FRAMERATE;
+  map.animCompletion += deltaTime;
   map.entities.forEach(entity => {
     if (entity.nextCell) {
       let pos = getEntityPos(entity.cell.x, entity.cell.y);
       let nextPos = getEntityPos(entity.nextCell.x, entity.nextCell.y);
-      let deltaTime = map.animSpeed / FRAMERATE;
       let width = CELL_W * entity.image.scale;
       let height = width * (entity.image.asset.height / entity.image.asset.width);
 
@@ -196,7 +197,6 @@ function animateEntities()
       entity.canvasElement.x = pos.x + entity.image.offsetX - width/2;
       entity.canvasElement.y = pos.y + entity.image.offsetY - height;
       entity.canvasElement.layer = Math.max(entity.nextCell.y, entity.cell.y);
-      map.animCompletion += deltaTime;
       if (map.animCompletion >= 1) {
         entity.canvasElement.x = nextPos.x + entity.image.offsetX - width/2;
         entity.canvasElement.y = nextPos.y + entity.image.offsetY - height;
