@@ -5,9 +5,10 @@ class Map extends Clickable {
     this.traps = [];
     this.entities = [];
     this.actionStack = [];
+    this.completedActionStack = [];
     this.effectGenerator = null;
     this.animating = false;
-    this.animSpeed = 5; // cell per second
+    this.animSpeed = 1; // cell per second
     this.animCompletion = 0;
     this.shouldTriggerStack = false;
     this.initialized = false;
@@ -129,6 +130,7 @@ class Map extends Clickable {
     let action = undefined;
     while (this.animating || (action = this.actionStack.pop())) {
       if (!this.animating) {
+        this.completedActionStack.push(action);
         this.effectGenerator = action.target.applyEffect(action.effect, action.caster);
       }
       let next = this.effectGenerator.next();

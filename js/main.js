@@ -88,6 +88,8 @@ function draw()
   drawSpellShadow();
   drawSelectedSpell();
 
+  drawActionStack();
+
   if (map.animCompletion >= 1) {
     map.animCompletion = 0;
     map.shouldTriggerStack = true;

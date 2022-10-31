@@ -218,3 +218,21 @@ function drawSpellShadow()
     drawCell(cell.x, cell.y, color('rgb(255, 0, 0)'), color('rgba(0, 0, 0, 0)'));
   }
 }
+
+function drawActionStack()
+{
+  fill(color('rgb(55, 55, 55)'));
+  rect(CANVAS_W * 0.875, 0, CANVAS_W * 0.125, CANVAS_H);
+  textSize(12);
+  fill(color('rgb(255, 255, 255)'));
+  let i = 0;
+  for (i = 0; i < map.actionStack.length; i++) {
+    let str = texts.effects[map.actionStack[i].effect.type];
+    text(str, CANVAS_W * 0.875 + 3, CANVAS_H - 12 - (15 * i));
+  }
+  fill(color('rgb(128, 128, 128)'));
+  for (let j = 0; j < map.completedActionStack.length; j++) {
+    let str = texts.effects[map.completedActionStack[map.completedActionStack.length - j - 1].effect.type];
+    text(str, CANVAS_W * 0.875 + 3, CANVAS_H - 12 - (15 * (i + j)));
+  }
+}
