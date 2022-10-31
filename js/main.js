@@ -3,7 +3,7 @@ let canvas = new Canvas();
 let mapGraphics;
 let sidebarGraphics;
 let img = [
-  { name: 'Poutch Ingball', path: './assets/img/entities/poutch.png', asset: null, offsetX: -4, offsetY: 9, scale: 1.43 },
+  { name: 'Poutch Ingball', path: './assets/img/entities/Poutch.png', asset: null, offsetX: -4, offsetY: 9, scale: 1.43 },
   { name: 'Piège Sournois', path: './assets/img/spells/65.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
   { name: 'Piège d\'Immobilisation', path: './assets/img/spells/69.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
   { name: 'Piège Répulsif', path: './assets/img/spells/73.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
