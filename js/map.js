@@ -7,7 +7,7 @@ class Map extends Clickable {
     this.actionStack = [];
     this.effectGenerator = null;
     this.animating = false;
-    this.animSpeed = 10; // cell per second
+    this.animSpeed = 5; // cell per second
     this.animCompletion = 0;
     this.shouldTriggerStack = false;
     this.initialized = false;
@@ -15,28 +15,31 @@ class Map extends Clickable {
 
   loadMapGraphics(w, h, mapID) {
     let mapData = loadJSON(`/assets/maps/${mapID}.json`, () => {
+      let groundGraphics = createGraphics(w, h);
       map.initMap(mapData.Data[0].Cells);
       for (let i = 0; i < MAP_HEIGHT; i++) {
-        let gr = createGraphics(w, CELL_H*2);
+        let wallGraphics = createGraphics(w, CELL_H*2);
         let wall = false;
         for (let j = 0; j < MAP_WIDTH; j++) {
           switch (map.getCell(j, i).type) {
             case CELL.WALKABLE:
-              drawCell(j, 2, (i % 2 === 0 ? color('#8E8660') : color('#968E69')), color('#7E7961'), ''/*i * MAP_WIDTH + j*/, gr);
+              drawCell(j, i, (i % 2 === 0 ? color('#8E8660') : color('#968E69')), color('#7E7961'), ''/*i * MAP_WIDTH + j*/, groundGraphics);
               break;
             case CELL.LOS_WALL:
               // drawCell(j, 2, color(0, 0, 0, 0), color(0, 0, 0, 0), '', gr);
               break;
             case CELL.WALL:
-              drawWall(j, 2, color('#58533C'), color('#B8B6B2'), '', gr);
+              drawWall(j, 2, color('#58533C'), color('#B8B6B2'), '', wallGraphics);
               wall = true;
               break;
             default:
               break;
           }
         }
-        canvas.addElement(gr, i, SUBLAYERS.MAP, (i % 2) * CELL_W/2, i * CELL_H/2 - CELL_H, w, CELL_H * 2);
+        if (wall)
+          canvas.addElement(wallGraphics, i, SUBLAYERS.MAP, (i % 2) * CELL_W/2, i * CELL_H/2 - CELL_H, w, CELL_H * 2);
       }
+      canvas.addElement(groundGraphics, 0, SUBLAYERS.MAP, 0, 0, w, h);
     });
     canvas.addClickable(map);
   }

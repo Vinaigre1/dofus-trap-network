@@ -29,7 +29,9 @@ let img = [
   { name: 'Piège Masse Sol', path: '/assets/img/traps/140.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
   { name: 'Piège Mortel Sol', path: '/assets/img/traps/145.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
   { name: 'Piège Funeste Sol', path: '/assets/img/traps/4644.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
-  { name: 'Piège Insidieux Sol', path: '/assets/img/traps/143.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 }
+  { name: 'Piège Insidieux Sol', path: '/assets/img/traps/143.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Fosse Commune', path: '/assets/img/spells/4038.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Calamité', path: '/assets/img/spells/3622.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 }
 ];
 let spellData = [
   { name: 'Piège Sournois', icon: img[1], type: SPELL.TRAP, effects: { trap: { ...TRAP.TRICKY, image: img[20] } } },
@@ -42,7 +44,9 @@ let spellData = [
   { name: 'Piège Insidieux', icon: img[5], type: SPELL.TRAP, effects: { trap: { ...TRAP.INSIDIOUS, image: img[26] } } },
   { name: 'Piège Fangeux', icon: img[4], type: SPELL.TRAP, effects: { trap: { ...TRAP.MIRY, image: img[18] } } },
   { name: 'Piège Scélérat', icon: img[10], type: SPELL.TRAP, effects: { trap: { ...TRAP.SICKRAT, image: img[18] } } },
+  { name: 'Calamité', icon: img[28], type: SPELL.TRAP, effects: { trap: { ...TRAP.CALAMITY, image: img[18] } } },
   { name: 'Piège d\'Immobilisation', icon: img[2], type: SPELL.TRAP, effects: { trap: { ...TRAP.PARALYSING, image: img[18] } } },
+  { name: 'Fosse Commune', icon: img[27], type: SPELL.TRAP, effects: { trap: { ...TRAP.MASS_GRAVE, image: img[18] } } },
   { name: 'Cawotte', icon: img[13], type: SPELL.ENTITY, effects: { hp: 660, image: img[17], movable: false } },
   { name: 'Poutch', icon: img[15], type: SPELL.ENTITY, effects: { hp: 50000, image: img[0], movable: true } },
   { name: 'Concentration de Chakra', icon: img[12], type: SPELL.ACTION, effects: null },
@@ -61,7 +65,7 @@ function setup()
 	createCanvas(CANVAS_W, CANVAS_H);
 	frameRate(FRAMERATE);
 
-  map.loadMapGraphics(CANVAS_W * 0.75, CANVAS_H, 'empty');
+  map.loadMapGraphics(CANVAS_W * 0.75, CANVAS_H, 'bouftouroyal');
 
   sidebarGraphics = createGraphics(CANVAS_W * 0.25, CANVAS_H);
   loadSidebar(sidebarGraphics, spellData);

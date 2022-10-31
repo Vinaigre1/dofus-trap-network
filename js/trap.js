@@ -23,6 +23,8 @@ class Trap {
                (distance.y === 0 && distance.x <= this.trap.area.size * 2);
       case AREA.RING:
         return distance.real === this.trap.area.size;
+      case AREA.SQUARE:
+        return distance.x + distance.y <= this.trap.area.size * 2;
       default:
         return false;
     }
@@ -59,6 +61,13 @@ class Trap {
         if (distance.relative.y === this.trap.area.size)  borders |= CELL_BORDER.SOUTH | CELL_BORDER.EAST;
         if (distance.relative.x === -this.trap.area.size) borders |= CELL_BORDER.SOUTH | CELL_BORDER.WEST;
         if (distance.relative.y === -this.trap.area.size) borders |= CELL_BORDER.NORTH | CELL_BORDER.WEST;
+        break;
+      case AREA.SQUARE:
+        if (distance.x + distance.y < this.trap.area.size * 2) break;
+        if (distance.relative.x >= 0 && distance.relative.y <= 0) borders |= CELL_BORDER.NORTH;
+        if (distance.relative.x >= 0 && distance.relative.y >= 0) borders |= CELL_BORDER.EAST;
+        if (distance.relative.x <= 0 && distance.relative.y >= 0) borders |= CELL_BORDER.SOUTH;
+        if (distance.relative.x <= 0 && distance.relative.y <= 0) borders |= CELL_BORDER.WEST;
         break;
       default:
         break;

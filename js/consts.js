@@ -34,7 +34,7 @@ const AREA = {
   CIRCLE: 2,
   DIAGONAL: 3,
   RING: 4,
-  SQUARE: 4
+  SQUARE: 5
 };
 const TRAP = {
   NONE:          { id: 0,  color: { stroke: 'rgb(  0,   0,   0)', cell: 'rgba(  0,   0,   0, 0.3)' }, area: { type: AREA.CELL,     size: 0 }, degressive: true,  effects: [] },

@@ -130,6 +130,8 @@ function isInArea(x, y, areaX, areaY, area) {
              (distance.y === 0 && distance.x <= area.size * 2);
     case AREA.RING:
       return distance.real === area.size;
+    case AREA.SQUARE:
+      return distance.x + distance.y <= area.size * 2;
     default:
       return false;
   }

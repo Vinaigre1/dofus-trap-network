@@ -86,7 +86,7 @@ function drawQuad(x, y, w, h, cellColor, strokeColor, graphics = window, borders
   x + w,   y + h/2);
 }
 
-function drawCell(x, y, cellColor, strokeColor, str, graphics = window, borders, img)
+function drawCell(x, y, cellColor, strokeColor, str, graphics = window, borders)
 {
   let { x: posX, y: posY } = Map.getCellPos(x, y);
 
@@ -98,7 +98,6 @@ function drawCell(x, y, cellColor, strokeColor, str, graphics = window, borders,
     graphics.noStroke();
     graphics.text(str, posX + CELL_W/2, posY + CELL_H/2);
     graphics.stroke(0);
-    if (img) graphics.image(img, posX + CELL_W * 0.15, posY + CELL_H * 0.15, CELL_W * 0.7, CELL_H * 0.7);
   }
 }
 
@@ -168,6 +167,10 @@ function loadTrap(trap, trapHeight)
         gr.strokeWeight(2.5);
         drawCell(j, 0, trap.trap.color.cell, trap.trap.color.stroke, '', gr, borders, (j === trap.cell.x && i === trap.cell.y) ? trap.trap.image.asset : null);
         gr.strokeWeight(1);
+        if (j === trap.cell.x && i === trap.cell.y) {
+          let cellPos = Map.getCellPos(j, i);
+          elements.push(canvas.addElement(trap.trap.image.asset, i, SUBLAYERS.TRAP_ICON, cellPos.x + CELL_W * 0.15, cellPos.y + CELL_H * 0.15, CELL_W * 0.7, CELL_H * 0.7));
+        }
       }
     }
     if (inTrap) {
