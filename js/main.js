@@ -31,7 +31,12 @@ let img = [
   { name: 'Piège Funeste Sol', path: '/assets/img/traps/4644.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
   { name: 'Piège Insidieux Sol', path: '/assets/img/traps/143.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
   { name: 'Fosse Commune', path: '/assets/img/spells/4038.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
-  { name: 'Calamité', path: '/assets/img/spells/3622.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 }
+  { name: 'Calamité', path: '/assets/img/spells/3622.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège Fangeux Sol', path: '/assets/img/traps/4867.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège Scélérat Sol', path: '/assets/img/traps/4613.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Calamité Sol', path: '/assets/img/traps/4647.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Piège d\'Immobilisation Sol', path: '/assets/img/traps/142.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 },
+  { name: 'Fosse Commune', path: '/assets/img/traps/4635.png', asset: null, offsetX: 0, offsetY: 0, scale: 1 }
 ];
 let spellData = [
   { name: 'Piège Sournois', icon: img[1], type: SPELL.TRAP, effects: { trap: { ...TRAP.TRICKY, image: img[20] } } },
@@ -42,11 +47,11 @@ let spellData = [
   { name: 'Piège Funeste', icon: img[8], type: SPELL.TRAP, effects: { trap: { ...TRAP.MALEVOLENT, image: img[25] } } },
   { name: 'Piège Répulsif', icon: img[3], type: SPELL.TRAP, effects: { trap: { ...TRAP.REPELLING, image: img[18] } } },
   { name: 'Piège Insidieux', icon: img[5], type: SPELL.TRAP, effects: { trap: { ...TRAP.INSIDIOUS, image: img[26] } } },
-  { name: 'Piège Fangeux', icon: img[4], type: SPELL.TRAP, effects: { trap: { ...TRAP.MIRY, image: img[18] } } },
-  { name: 'Piège Scélérat', icon: img[10], type: SPELL.TRAP, effects: { trap: { ...TRAP.SICKRAT, image: img[18] } } },
-  { name: 'Calamité', icon: img[28], type: SPELL.TRAP, effects: { trap: { ...TRAP.CALAMITY, image: img[18] } } },
-  { name: 'Piège d\'Immobilisation', icon: img[2], type: SPELL.TRAP, effects: { trap: { ...TRAP.PARALYSING, image: img[18] } } },
-  { name: 'Fosse Commune', icon: img[27], type: SPELL.TRAP, effects: { trap: { ...TRAP.MASS_GRAVE, image: img[18] } } },
+  { name: 'Piège Fangeux', icon: img[4], type: SPELL.TRAP, effects: { trap: { ...TRAP.MIRY, image: img[29] } } },
+  { name: 'Piège Scélérat', icon: img[10], type: SPELL.TRAP, effects: { trap: { ...TRAP.SICKRAT, image: img[30] } } },
+  { name: 'Calamité', icon: img[28], type: SPELL.TRAP, effects: { trap: { ...TRAP.CALAMITY, image: img[31] } } },
+  { name: 'Piège d\'Immobilisation', icon: img[2], type: SPELL.TRAP, effects: { trap: { ...TRAP.PARALYSING, image: img[32] } } },
+  { name: 'Fosse Commune', icon: img[27], type: SPELL.TRAP, effects: { trap: { ...TRAP.MASS_GRAVE, image: img[33] } } },
   { name: 'Cawotte', icon: img[13], type: SPELL.ENTITY, effects: { hp: 660, image: img[17], movable: false } },
   { name: 'Poutch', icon: img[15], type: SPELL.ENTITY, effects: { hp: 50000, image: img[0], movable: true } },
   { name: 'Concentration de Chakra', icon: img[12], type: SPELL.ACTION, effects: null },
@@ -65,7 +70,7 @@ function setup()
 	createCanvas(CANVAS_W, CANVAS_H);
 	frameRate(FRAMERATE);
 
-  map.loadMapGraphics(CANVAS_W * 0.75, CANVAS_H, 'bouftouroyal');
+  map.loadMapGraphics(CANVAS_W * 0.75, CANVAS_H, 'solar');
 
   sidebarGraphics = createGraphics(CANVAS_W * 0.25, CANVAS_H);
   loadSidebar(sidebarGraphics, spellData);
@@ -77,7 +82,8 @@ function draw()
 {
 	colorMode(RGB);
   background('rgb(0, 0, 0)');
-  animateEntities();
+  if (map.animating)
+    animateEntities();
   canvas.drawElements();
   drawSpellShadow();
   drawSelectedSpell();
