@@ -14,7 +14,7 @@ class Map extends Clickable {
   }
 
   loadMapGraphics(w, h, mapID) {
-    let mapData = loadJSON(`/assets/maps/${mapID}.json`, () => {
+    let mapData = loadJSON(`./assets/maps/${mapID}.json`, () => {
       let groundGraphics = createGraphics(w, h);
       map.initMap(mapData.Data[0].Cells);
       for (let i = 0; i < MAP_HEIGHT; i++) {
@@ -61,9 +61,16 @@ class Map extends Clickable {
         this.placeEntity(new Entity(1, cell, TEAM.DEFENDER, canvas.selectedSpell.effects.movable, canvas.selectedSpell.effects.image));
         canvas.unselectSpell();
         break;
-      case SPELL.ACTION:
+      case SPELL.TRIGGER:
         this.triggerTraps(cell.x, cell.y);
         canvas.unselectSpell();
+        break;
+      case SPELL.KILL:
+        if (!this.removeEntity(cell.x, cell.y)) {
+          this.removeTrap(cell.x, cell.y);
+        }
+        canvas.unselectSpell();
+        break;
       default:
         break;
     }
@@ -143,10 +150,43 @@ class Map extends Clickable {
     }
   }
 
+  removeEntity(x, y) {
+    for (let i = 0; i < this.entities.length; i++) {
+      if (this.entities[i].cell.x === x && this.entities[i].cell.y === y) {
+        canvas.removeElements([this.entities[i].canvasElement]);
+        this.entities = this.entities.filter(entity => entity !== this.entities[i]);
+        return true;
+      }
+    }
+    return false;
+  }
+
   placeTrap(trap) {
     trap.canvasElements = loadTrap(trap, this.traps.length);
     if (trap.cell !== undefined) {
       this.traps.unshift(trap);
+    }
+  }
+
+  removeTrap(x, y) {
+    for (let i = 0; i < this.traps.length; i++) {
+      if (this.traps[i].cell.x === x && this.traps[i].cell.y === y) {
+        canvas.removeElements(this.traps[i].canvasElements);
+        this.traps = this.traps.filter(trap => trap !== this.traps[i]);
+        return true;
+      }
+    }
+    return false;
+  }
+
+  getTrap(id_or_x, y) {
+    let x = (y === undefined ? id_or_x % MAP_WIDTH : id_or_x);
+    y = (y === undefined ? Math.floor(id_or_x / MAP_WIDTH) : y);
+
+    for (let i = 0; i < this.traps.length; i++) {
+      if (this.traps[i].cell.x === x && this.traps[i].cell.y === y) {
+        return this.traps[i];
+      }
     }
   }
 

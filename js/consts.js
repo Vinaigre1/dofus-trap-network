@@ -71,7 +71,9 @@ const DIRECTION = {
 const SPELL = {
   TRAP: 0,
   ENTITY: 1,
-  ACTION: 2
+  TRIGGER: 2,
+  CHAKRA: 3,
+  KILL: 4
 };
 const CELL_BORDER = { // Use with binary operators
   NORTH: 1,
@@ -83,6 +85,6 @@ const SUBLAYERS = {
   MAP: 0,
   TRAP: 1,
   TRAP_ICON: 2,
-  ENTITY: 3,
-  GUI: 4
+  UI: 3,
+  ENTITY: 4
 };

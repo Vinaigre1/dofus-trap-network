@@ -1,6 +1,6 @@
 function loadMap(graphics = window, mapID)
 {
-  mapData = loadJSON(`/assets/maps/${mapID}.json`, () => {
+  mapData = loadJSON(`./assets/maps/${mapID}.json`, () => {
     map.initMap(mapData.Data[0].Cells);
     for (let i = 0; i < MAP_HEIGHT; i++) {
       for (let j = 0; j < MAP_WIDTH; j++) {
