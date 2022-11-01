@@ -8,7 +8,7 @@ class Map extends Clickable {
     this.completedActionStack = [];
     this.effectGenerator = null;
     this.animating = false;
-    this.animSpeed = 1; // cell per second
+    this.animSpeed = 8; // cell per second
     this.animCompletion = 0;
     this.shouldTriggerStack = false;
     this.initialized = false;
@@ -49,20 +49,23 @@ class Map extends Clickable {
 
   click(x, y) {
     let cell = this.getCellAtPos(x, y);
-    if (!cell) return false;
+    if (!cell) {
+      canvas.unselectSpell();
+      return false;
+    }
 
     switch (canvas.selectedSpell?.type) {
       case SPELL.TRAP:
         if (this.traps.some((trap) => trap.cell.x === cell.x && trap.cell.y === cell.y))
           break;
         this.placeTrap(new Trap(canvas.selectedSpell.effects.trap, cell));
-        canvas.unselectSpell();
+        // canvas.unselectSpell();
         break;
       case SPELL.ENTITY:
         if (this.entities.some((entity) => entity.cell.x === cell.x && entity.cell.y === cell.y))
           break;
         this.placeEntity(new Entity(1, cell, TEAM.DEFENDER, canvas.selectedSpell.effects.movable, canvas.selectedSpell.effects.image));
-        canvas.unselectSpell();
+        // canvas.unselectSpell();
         break;
       case SPELL.TRIGGER:
         this.triggerTraps(cell.x, cell.y);
@@ -72,7 +75,7 @@ class Map extends Clickable {
         if (!this.removeEntity(cell.x, cell.y)) {
           this.removeTrap(cell.x, cell.y);
         }
-        canvas.unselectSpell();
+        // canvas.unselectSpell();
         break;
       default:
         break;
