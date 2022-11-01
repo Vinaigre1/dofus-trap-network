@@ -76,6 +76,7 @@ function setup()
   loadSidebar(sidebarGraphics, spellData);
 
   canvas.addElement(sidebarGraphics, 0, 0, CANVAS_W * 0.75, 0, CANVAS_W * 0.25, CANVAS_H);
+  sidebarGraphics.remove();
 }
 
 function draw()

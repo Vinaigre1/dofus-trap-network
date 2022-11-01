@@ -149,7 +149,9 @@ function loadEntity(entity)
     width,
     height
   );
-  return canvas.addElement(gr, entity.cell.y, SUBLAYERS.ENTITY, pos.x + entity.image.offsetX - width/2, pos.y + entity.image.offsetY - height, width, height + CELL_H/2);
+  let ret = canvas.addElement(gr, entity.cell.y, SUBLAYERS.ENTITY, pos.x + entity.image.offsetX - width/2, pos.y + entity.image.offsetY - height, width, height + CELL_H/2);
+  gr.remove();
+  return ret;
 }
 
 function loadTrap(trap, trapHeight)
@@ -176,6 +178,7 @@ function loadTrap(trap, trapHeight)
     if (inTrap) {
       elements.push(canvas.addElement(gr, i, SUBLAYERS.TRAP, (i % 2) * CELL_W/2, i * CELL_H/2, CANVAS_W * 0.75, CELL_H, trapHeight));
     }
+    gr.remove();
   }
   return elements;
 }

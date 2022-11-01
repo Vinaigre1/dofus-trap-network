@@ -39,8 +39,10 @@ class Map extends Clickable {
         }
         if (wall)
           canvas.addElement(wallGraphics, i, SUBLAYERS.MAP, (i % 2) * CELL_W/2, i * CELL_H/2 - CELL_H, w, CELL_H * 2);
+        wallGraphics.remove();
       }
       canvas.addElement(groundGraphics, 0, SUBLAYERS.MAP, 0, 0, w, h);
+      groundGraphics.remove();
     });
     canvas.addClickable(map);
   }
