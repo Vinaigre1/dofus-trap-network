@@ -132,7 +132,7 @@ class Entity {
         value = effect.min;
         damage = value; // calculate dopou
         // Apply indirect push damage if there is an entity
-        if (value > 0 && map.getEntity(effect.targetCell.id)) {
+        if (value > 0 && map.getEntity(effect.targetCell?.id)) {
           direction = getDirection(this.cell, effect.targetCell);
           newCell = moveInDirection(effect.targetCell.x, effect.targetCell.y, direction);
           map.addToActionStack(new Action(caster, map.getEntity(effect.targetCell.id), new Effect(EFFECT.DAMAGE.INDIRECT_PUSH, this.cell, map.getCell(newCell.x, newCell.y), value - 1, Math.floor(damage / 2))));
@@ -144,7 +144,7 @@ class Entity {
         value = effect.min;
         damage = effect.max;
         // Apply indirect push damage if there is an entity
-        if (value > 0 && map.getEntity(effect.targetCell.id)) {
+        if (value > 0 && map.getEntity(effect.targetCell?.id)) {
           direction = getDirection(effect.originCell.id, effect.targetCell.id);
           newCell = moveInDirection(effect.targetCell.x, effect.targetCell.y, direction);
           map.addToActionStack(new Action(caster, map.getEntity(effect.targetCell.id), new Effect(EFFECT.DAMAGE.INDIRECT_PUSH, this.cell, map.getCell(newCell.x, newCell.y), value - 1, Math.floor(damage / 2))));
