@@ -6,6 +6,13 @@ module.exports = {
   entry: "./index.tsx",
   resolve: {
     extensions: [".js", ".jsx", ".ts", ".tsx"],
+    alias: {
+      '@components': resolve(__dirname, "../../src/components"),
+      '@classes': resolve(__dirname, "../../src/classes"),
+      '@assets': resolve(__dirname, "../../src/assets"),
+      '@json': resolve(__dirname, "../../src/json"),
+      '@src': resolve(__dirname, "../../src")
+    }
   },
   context: resolve(__dirname, "../../src"),
   module: {
@@ -28,7 +35,7 @@ module.exports = {
         use: [
           "file-loader?hash=sha512&digest=hex&name=img/[contenthash].[ext]",
         ],
-      },
+      }
     ],
   },
   plugins: [new HtmlWebpackPlugin({ template: "index.html.ejs" })],

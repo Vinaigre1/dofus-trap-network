@@ -1,19 +1,19 @@
 import * as React from "react";
-import Cell from "./Cell";
+import CellComponent from "./CellComponent";
 
 type Props = {
   y: number;
   cellNum: number;
 };
 
-class Row extends React.Component<Props>
+class RowComponent extends React.Component<Props>
 {
   render() {
     let cells = [];
     let cellWidth = 100 / (this.props.cellNum + 0.5);
     let cellHeight = cellWidth / 2;
     for (let i = 0; i < this.props.cellNum; i++) {
-      cells.push(<Cell
+      cells.push(<CellComponent
         width={cellWidth}
         height={cellHeight}
         x={i}
@@ -25,4 +25,4 @@ class Row extends React.Component<Props>
   }
 }
 
-export default Row;
+export default RowComponent;

@@ -6,7 +6,16 @@
     "moduleResolution": "node",
     "outDir": "dist",
     "target": "ESNext",
-    "sourceMap": true
+    "sourceMap": true,
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@classes/*": ["./src/classes/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@json/*": ["./src/json/*"],
+      "@src/*": ["./src/*"]
+    },
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
   },
   "include": ["src"]
 }

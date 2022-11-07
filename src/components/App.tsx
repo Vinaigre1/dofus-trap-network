@@ -1,16 +1,17 @@
 import * as React from "react";
 import "./../assets/scss/App.scss";
-import GameMap from "./GameMap";
-import Stats from "./Stats";
-import History from "./History";
-import Spells from "./Spells";
+import MapComponent from "@components/MapComponent";
+import StatsComponent from "@components/StatsComponent";
+import HistoryComponent from "@components/HistoryComponent";
+import SpellsComponent from "@components/SpellsComponent";
+import Consts from "@json/Consts.json";
 
 const App = () => (
   <div className="app">
-    <Stats />
-    <GameMap cellNum={14} rowNum={40} />
-    <History />
-    <Spells />
+    <StatsComponent />
+    <MapComponent cellNum={Consts.mapWidth} rowNum={Consts.mapHeight} />
+    <HistoryComponent />
+    <SpellsComponent />
   </div>
 );
 

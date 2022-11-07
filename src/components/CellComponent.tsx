@@ -1,3 +1,4 @@
+import { CellType } from "@src/enums";
 import * as React from "react";
 
 type Props = {
@@ -8,8 +9,20 @@ type Props = {
   height: number;
 };
 
-class Cell extends React.Component<Props>
+type States = {
+  type: CellType;
+};
+
+class CellComponent extends React.Component<Props, States>
 {
+  constructor(props: Props | Readonly<Props>) {
+    super(props);
+
+    this.state = {
+      type: CellType.Ground
+    };
+  }
+
   render() {
     const even = this.props.y % 2 === 0;
     let root = {
@@ -24,8 +37,13 @@ class Cell extends React.Component<Props>
         ${root.x},${root.y + this.props.height / 2}
       `}></polygon>
     ];
-    return <g fill={`#${even ? '8E8660' : '968E69'}`} stroke="#7E7961" stroke-width="0.1" className="cell">{poly}</g>;
+    let types = {
+      [CellType.Ground]: "ground",
+      [CellType.Empty]: "empty",
+      [CellType.Wall]: "wall"
+    };
+    return <g className={`cell ${even ? 'even' : 'odd'} ${types[this.state.type]}`}>{poly}</g>;
   }
 }
 
-export default Cell;
+export default CellComponent;

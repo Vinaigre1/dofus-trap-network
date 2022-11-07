@@ -1,0 +1,24 @@
+.map {
+  flex: 3;
+  border: 1px solid blue;
+  margin: 5px;
+}
+
+.row {
+  stroke: #7E7961;
+  stroke-width: 0.1;
+}
+
+.cell.even.ground {
+  fill: #8E8660;
+}
+
+.cell.odd.ground {
+  fill: #968E69;
+}
+
+.cell.empty, .cell.wall {
+  stroke: #0000;
+  stroke-width: 0;
+  fill: #0000;
+}
