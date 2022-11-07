@@ -3,8 +3,8 @@ import { CellType } from "@src/enums";
 class Cell {
   type: CellType;
 
-  constructor() {
-
+  constructor(type: CellType) {
+    this.type = type;
   }
 }
 

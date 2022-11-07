@@ -1,3 +1,4 @@
+import Game from "@classes/Game";
 import * as React from "react";
 import "./../assets/scss/Map.scss";
 import RowComponent from "./RowComponent";
@@ -7,10 +8,18 @@ type Props = {
   rowNum: number;
 };
 
+type States = {
+  game: Game;
+}
+
 class MapComponent extends React.Component<Props>
 {
-  loadMap() {
+  constructor(props: Props | Readonly<Props>) {
+    super(props);
 
+    this.state = {
+      game: new Game("empty")
+    };
   }
 
   render() {
