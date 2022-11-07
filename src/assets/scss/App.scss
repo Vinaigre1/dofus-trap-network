@@ -1,12 +1,14 @@
-$bg-color: yellow;
-$border-color: red;
+$background: black;
+
+body {
+  background: $background;
+}
 
 .app {
+  color: white;
   font-family: helvetica, arial, sans-serif;
-  padding: 2em;
-  border: 5px solid $border-color;
-
-  p {
-    background-color: $bg-color;
-  }
+  border: 1px solid black;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
