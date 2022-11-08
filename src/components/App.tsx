@@ -6,10 +6,14 @@ import HistoryComponent from "@components/HistoryComponent";
 import SpellsComponent from "@components/SpellsComponent";
 import Consts from "@json/Consts.json";
 
+declare global { // TODO: move this in a .d.ts file
+  interface Window { mapComponent: MapComponent; }
+}
+
 const App = () => (
   <div className="app">
     <StatsComponent />
-    <MapComponent cellNum={Consts.mapWidth} rowNum={Consts.mapHeight} />
+    <MapComponent ref={(component) => {window.mapComponent = component}} cellNum={Consts.mapWidth} rowNum={Consts.mapHeight} />
     <HistoryComponent />
     <SpellsComponent />
   </div>

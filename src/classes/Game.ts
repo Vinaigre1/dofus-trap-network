@@ -3,6 +3,7 @@ import Entity from "@classes/Entity";
 import Trap from "@classes/Trap";
 
 import Consts from "@json/Consts.json";
+import { CellType } from "@src/enums";
 
 class Game {
   map: Array<Array<Cell>>;
@@ -30,10 +31,11 @@ class Game {
           for (let i = 0; i < map[0].length; i++) {
             this.map[i] = new Array<Cell>(map.length);
             for (let j = 0; j < map.length; j++) {
-              this.map[i][j] = new Cell(map[j][i]);
+              this.map[i][j] = new Cell(map[j][i], i, j);
             }
           }
           console.log(this.map);
+          window.mapComponent.forceUpdate();
         },
         (error) => {
           console.error(error);
@@ -41,6 +43,10 @@ class Game {
       )
     ;
   }
+
+  getCell(x: number, y: number): Cell {
+    return this.map && this.map[x] && this.map[x][y] || new Cell(CellType.Empty, x, y);
+  }
 }
 
-export default Game;
+export default new Game("bouftouroyal");

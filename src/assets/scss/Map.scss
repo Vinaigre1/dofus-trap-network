@@ -2,6 +2,12 @@
   flex: 3;
   border: 1px solid blue;
   margin: 5px;
+  display: grid;
+}
+
+.map svg.tiles, .map svg.entities {
+  grid-column: 1;
+  grid-row: 1;
 }
 
 .row {
@@ -17,8 +23,14 @@
   fill: #968E69;
 }
 
-.cell.empty, .cell.wall {
+.cell.empty {
+  fill: #0000;
   stroke: #0000;
   stroke-width: 0;
-  fill: #0000;
+}
+
+.cell.wall {
+  fill: #58533C;
+  stroke: #B8B6B2;
+  stroke-width: 0.1;
 }
