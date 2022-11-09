@@ -3,6 +3,7 @@ import Entity from "@classes/Entity";
 import Game from "@classes/Game";
 import * as React from "react";
 import CellComponent from "./CellComponent";
+import EntityComponent from "./EntityComponent";
 
 type Props = {
   entities: Array<Entity | Cell>;
@@ -23,6 +24,13 @@ class EntityLayerComponent extends React.Component<Props>
           id={entity.y * Game.width + entity.x}
           width={cellWidth}
           height={cellHeight}
+        />);
+      } else {
+        entities.push(<EntityComponent
+          x={entity.x}
+          y={entity.y}
+          data={entity.data}
+          team={entity.team}
         />);
       }
     }

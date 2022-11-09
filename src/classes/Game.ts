@@ -3,7 +3,7 @@ import Entity from "@classes/Entity";
 import Trap from "@classes/Trap";
 
 import Consts from "@json/Consts.json";
-import { CellType } from "@src/enums";
+import { CellType, EntityName, Team } from "@src/enums";
 
 class Game {
   map: Array<Array<Cell>>;
@@ -16,8 +16,23 @@ class Game {
   constructor(mapName: string) {
     this.width = Consts.mapWidth;
     this.height = Consts.mapHeight;
+    this.entities = [];
 
     this.loadMap(mapName);
+    this.placeEntity(new Entity(11, 20, Team.Attacker, EntityName.Cawwot));
+    this.placeEntity(new Entity(8, 20, Team.Defender, EntityName.Poutch));
+    if (true) { // Debug
+      // @ts-ignore
+      window.Game = this;
+    }
+  }
+
+  static refreshAll() {
+    window.mapComponent.forceUpdate();
+  }
+
+  placeEntity(entity: Entity) {
+    this.entities.push(entity);
   }
 
   loadMap(name: string) {
@@ -34,8 +49,7 @@ class Game {
               this.map[i][j] = new Cell(map[j][i], i, j);
             }
           }
-          console.log(this.map);
-          window.mapComponent.forceUpdate();
+          Game.refreshAll();
         },
         (error) => {
           console.error(error);
@@ -49,4 +63,4 @@ class Game {
   }
 }
 
-export default new Game("bouftouroyal");
+export default new Game("solar");

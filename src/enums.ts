@@ -40,3 +40,17 @@ export enum Direction {
   Southwest,
   Northwest
 }
+
+export enum EntityName {
+  Player = "Player",
+  Cawwot = "Cawwot",
+  Poutch = "Poutch"
+}
+
+export interface EntityData {
+  name: EntityName;
+  image: string;
+  offsetX: number;
+  offsetY: number;
+  defaultScale: number;
+}

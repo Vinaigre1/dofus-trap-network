@@ -16,11 +16,11 @@
 }
 
 .cell.even.ground {
-  fill: #8E8660;
+  fill: #8E865E;
 }
 
 .cell.odd.ground {
-  fill: #968E69;
+  fill: #968E67;
 }
 
 .cell.empty {
@@ -30,7 +30,21 @@
 }
 
 .cell.wall {
-  fill: #58533C;
+  fill: #58533A;
   stroke: #B8B6B2;
   stroke-width: 0.1;
+}
+
+.entityCircle {
+  stroke-width: 0.3;
+}
+
+.entityCircle.defender {
+  fill: #00F3;
+  stroke: #00F;
+}
+
+.entityCircle.attacker {
+  fill: #F003;
+  stroke: #F00;
 }

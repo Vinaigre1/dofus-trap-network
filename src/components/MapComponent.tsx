@@ -1,4 +1,5 @@
 import Cell from "@classes/Cell";
+import Entity from "@classes/Entity";
 import Game from "@classes/Game";
 import { CellType } from "@src/enums";
 import * as React from "react";
@@ -20,7 +21,7 @@ class MapComponent extends React.Component<Props>
 
   render() {
     let rows: Array<JSX.Element> = [];
-    let walls: Array<Cell> = [];
+    let walls: Array<Cell | Entity> = [];
     let cellWidth: number = 100 / (this.props.cellNum + 0.5);
     let cellHeight: number = cellWidth / 2;
 
@@ -36,11 +37,11 @@ class MapComponent extends React.Component<Props>
       }
       rows.push(<g className={`row ${i % 2 === 0 ? "even" : "odd"}`}>{cells}</g>);
     }
-    walls.sort((a, b) => a.y - b.y);
-
+    
     let entities = [];
     entities.push(...walls);
-    // TODO: add entities to "entities" array, with all elements sorted by "y"
+    entities.push(...Game.entities);
+    entities.sort((a, b) => a.y - b.y);
 
     let w: number = this.props.cellNum * 2 + (this.props.rowNum > 1 ? 1 : 0);
     let h: number = (this.props.rowNum + 1) / 2;
