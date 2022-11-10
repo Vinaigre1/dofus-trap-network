@@ -14,6 +14,9 @@
       "@json/*": ["./src/json/*"],
       "@src/*": ["./src/*"]
     },
+    "typeRoots": [
+      "./src/@types"
+    ],
     "resolveJsonModule": true,
     "allowSyntheticDefaultImports": true
   },

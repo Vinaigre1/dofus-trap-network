@@ -28,7 +28,7 @@ class EntityComponent extends React.Component<Props>
     };
 
     return (
-      <g>
+      <g className="entity">
         <ellipse
           className={`entityCircle ${this.props.team === Team.Attacker ? "attacker" : "defender"}`}
           cx={root.x + cellWidth / 2}

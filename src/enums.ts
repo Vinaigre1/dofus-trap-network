@@ -1,10 +1,11 @@
 export enum CellType {
   Ground,
   Empty,
-  Wall
+  Wall,
+  Trap
 }
 
-export enum Effect {
+export enum EffectType {
   Pull,
   Push,
   WaterDamage,
@@ -13,7 +14,7 @@ export enum Effect {
   AirDamage,
   PushDamage,
   IndirectPushDamage,
-  MaluMP
+  MalusMP
 }
 
 export enum Area {
@@ -45,6 +46,30 @@ export enum EntityName {
   Player = "Player",
   Cawwot = "Cawwot",
   Poutch = "Poutch"
+}
+
+export enum TrapType {
+  Tricky,
+  Insidious,
+  Miry,
+  Mass,
+  Drift,
+  Malevolent,
+  Fragmentation,
+  Paralysing,
+  Repelling,
+  Sickrat,
+  Lethal,
+  Calamity,
+  MassGrave,
+  Test
+}
+
+export enum CellBorders {
+  North = 1,
+  East = 2,
+  South = 4,
+  West = 8
 }
 
 export interface EntityData {

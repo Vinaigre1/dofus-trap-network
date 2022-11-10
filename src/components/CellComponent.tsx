@@ -53,11 +53,11 @@ class CellComponent extends React.Component<Props>
       );
     } else {
       poly.push(<polygon points={`
-      ${root.x + this.props.width / 2},${root.y}
-      ${root.x + this.props.width},${root.y + this.props.height / 2}
-      ${root.x + this.props.width / 2},${root.y + this.props.height}
-      ${root.x},${root.y + this.props.height / 2}
-    `}></polygon>)
+        ${root.x + this.props.width / 2},${root.y}
+        ${root.x + this.props.width},${root.y + this.props.height / 2}
+        ${root.x + this.props.width / 2},${root.y + this.props.height}
+        ${root.x},${root.y + this.props.height / 2}
+      `}></polygon>);
     }
 
     return <g className={`cell ${even ? 'even' : 'odd'} ${typeNames[type]}`}>{poly}</g>;

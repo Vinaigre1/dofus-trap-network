@@ -36,6 +36,12 @@ module.exports = {
         use: [
           "file-loader?hash=sha512&digest=hex&name=img/[contenthash].[ext]",
         ],
+      },
+      {
+        test: /\.json$/,
+        use: [
+          { loader: resolve(__dirname, "./loaders/jsonLoader.js") }
+        ]
       }
     ],
   },

@@ -3,7 +3,8 @@ import Entity from "@classes/Entity";
 import Trap from "@classes/Trap";
 
 import Consts from "@json/Consts.json";
-import { CellType, EntityName, Team } from "@src/enums";
+import { CellBorders, CellType, EntityName, Team, TrapType } from "@src/enums";
+import TrapCell from "./TrapCell";
 
 class Game {
   map: Array<Array<Cell>>;
@@ -17,13 +18,16 @@ class Game {
     this.width = Consts.mapWidth;
     this.height = Consts.mapHeight;
     this.entities = [];
+    this.traps = [];
 
     this.loadMap(mapName);
-    this.placeEntity(new Entity(11, 20, Team.Attacker, EntityName.Cawwot));
-    this.placeEntity(new Entity(8, 20, Team.Defender, EntityName.Poutch));
+
     if (true) { // Debug
       // @ts-ignore
       window.Game = this;
+      this.placeEntity(new Entity(11, 20, Team.Attacker, EntityName.Cawwot));
+      this.placeEntity(new Entity(8, 20, Team.Defender, EntityName.Poutch));
+      this.placeTrap(new Trap(8, 24, TrapType.Repelling));
     }
   }
 
@@ -31,8 +35,22 @@ class Game {
     window.mapComponent.forceUpdate();
   }
 
+  getAllTrapCells(): Array<TrapCell> {
+    let cells: Array<TrapCell> = [];
+
+    for (let i = 0; i < this.traps.length; i++) {
+      cells.push(...this.traps[i].getTrapCells());
+    }
+
+    return cells;
+  }
+
   placeEntity(entity: Entity) {
     this.entities.push(entity);
+  }
+
+  placeTrap(trap: Trap) {
+    this.traps.push(trap);
   }
 
   loadMap(name: string) {

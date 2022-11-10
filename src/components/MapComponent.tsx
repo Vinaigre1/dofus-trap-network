@@ -1,11 +1,11 @@
 import Cell from "@classes/Cell";
 import Entity from "@classes/Entity";
 import Game from "@classes/Game";
+import TrapCell from "@classes/TrapCell";
 import { CellType } from "@src/enums";
 import * as React from "react";
 import "./../assets/scss/Map.scss";
 import CellComponent from "./CellComponent";
-import EntityComponent from "./EntityComponent";
 import EntityLayerComponent from "./EntityLayerComponent";
 
 type Props = {
@@ -38,9 +38,10 @@ class MapComponent extends React.Component<Props>
       rows.push(<g className={`row ${i % 2 === 0 ? "even" : "odd"}`}>{cells}</g>);
     }
     
-    let entities = [];
+    let entities = Array<Cell | Entity | TrapCell>();
     entities.push(...walls);
     entities.push(...Game.entities);
+    entities.push(...Game.getAllTrapCells());
     entities.sort((a, b) => a.y - b.y);
 
     let w: number = this.props.cellNum * 2 + (this.props.rowNum > 1 ? 1 : 0);
