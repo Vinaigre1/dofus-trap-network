@@ -22,9 +22,9 @@ class EntityLayerComponent extends React.Component<Props>
       let entity = this.props.entities[i];
       if (entity instanceof TrapCell) {
         entities.push(<TrapCellComponent
-          x={entity.x}
-          y={entity.y}
-          id={entity.y * Game.width + entity.x}
+          x={entity.pos.x}
+          y={entity.pos.y}
+          id={entity.pos.y * Game.width + entity.pos.x}
           width={cellWidth}
           height={cellHeight}
           type={entity.type}
@@ -32,16 +32,16 @@ class EntityLayerComponent extends React.Component<Props>
         />);
       } else if (entity instanceof Cell) {
         entities.push(<CellComponent
-          x={entity.x}
-          y={entity.y}
-          id={entity.y * Game.width + entity.x}
+          x={entity.pos.x}
+          y={entity.pos.y}
+          id={entity.pos.y * Game.width + entity.pos.x}
           width={cellWidth}
           height={cellHeight}
         />);
       } else {
         entities.push(<EntityComponent
-          x={entity.x}
-          y={entity.y}
+          x={entity.pos.x}
+          y={entity.pos.y}
           data={entity.data}
           team={entity.team}
         />);

@@ -1,17 +1,15 @@
-import { CellType } from "@src/enums";
+import { CellType, Coordinates } from "@src/enums";
 import Game from "./Game";
 
 class Cell {
   type: CellType;
-  x: number;
-  y: number;
+  pos: Coordinates;
   id: number;
 
-  constructor(type: CellType, x: number, y: number) {
+  constructor(type: CellType, pos: Coordinates) {
     this.type = type;
-    this.x = x;
-    this.y = y;
-    this.id = y * Game.width + x;
+    this.pos = pos;
+    this.id = pos.y * Game.width + pos.x;
   }
 }
 

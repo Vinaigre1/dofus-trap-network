@@ -37,12 +37,12 @@ class MapComponent extends React.Component<Props>
       }
       rows.push(<g className={`row ${i % 2 === 0 ? "even" : "odd"}`}>{cells}</g>);
     }
-    
+
     let entities = Array<Cell | Entity | TrapCell>();
     entities.push(...walls);
     entities.push(...Game.entities);
     entities.push(...Game.getAllTrapCells());
-    entities.sort((a, b) => a.y - b.y);
+    entities.sort((a, b) => a.pos.y - b.pos.y);
 
     let w: number = this.props.cellNum * 2 + (this.props.rowNum > 1 ? 1 : 0);
     let h: number = (this.props.rowNum + 1) / 2;

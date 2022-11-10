@@ -60,6 +60,13 @@ class CellComponent extends React.Component<Props>
       `}></polygon>);
     }
 
+    poly.push(<text
+      x={root.x + this.props.width / 2 - 0.5}
+      y={root.y + this.props.height / 2 + 0.5}
+      fontSize={1}
+      stroke="black"
+    >{this.props.x},{this.props.y}</text>);
+
     return <g className={`cell ${even ? 'even' : 'odd'} ${typeNames[type]}`}>{poly}</g>;
   }
 }

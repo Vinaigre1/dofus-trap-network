@@ -1,33 +1,46 @@
-import { Area, CellBorders, TrapType } from "@src/enums";
+import { Area, CellBorders, Coordinates, TrapType } from "@src/enums";
 import Effect from "./Effect";
 import TrapCell from "./TrapCell";
 import { TrapDataType } from "@src/@types/TrapDataType";
 import _TrapData from "@json/Traps.json";
+import { getBorders, getCellsInArea } from "@src/utils/mapUtils";
 const TrapData: TrapDataType = _TrapData as unknown as TrapDataType;
 
 class Trap {
-  x: number;
-  y: number;
+  pos: Coordinates;
   type: TrapType;
   effects: Array<Effect>;
   area: Area;
   size: number;
 
-  constructor(x: number, y: number, type: TrapType) {
-    this.x = x;
-    this.y = y;
+  constructor(pos: Coordinates, type: TrapType) {
+    this.pos = pos;
     this.type = type;
-    this.area = TrapData[this.type].area.size;
+    this.area = TrapData[this.type].area.type;
+    this.size = TrapData[this.type].area.size;
+
+    this.effects = [];
+    for (let i = 0; i < TrapData[this.type].effects.length; i++) {
+      this.effects.push(new Effect(
+        TrapData[this.type].effects[i].type,
+        TrapData[this.type].effects[i].area.type,
+        TrapData[this.type].effects[i].area.size,
+        TrapData[this.type].effects[i].value.min,
+        TrapData[this.type].effects[i].value.max
+      ));
+    }
   }
 
   getTrapCells(): Array<TrapCell> {
-    return [ // WIP
-      new TrapCell(this.x - 1, this.y - this.area, this.type, CellBorders.North | CellBorders.West | CellBorders.South),
-      new TrapCell(this.x, this.y - 1, this.type, CellBorders.North | CellBorders.West | CellBorders.East),
-      new TrapCell(this.x, this.y, this.type, 0),
-      new TrapCell(this.x - 1, this.y + 1, this.type, CellBorders.South | CellBorders.East | CellBorders.West),
-      new TrapCell(this.x, this.y + 1, this.type, CellBorders.South | CellBorders.East | CellBorders.North)
-    ];
+    let trapCells: Array<TrapCell> = [];
+    const cells: Array<Coordinates> = getCellsInArea({ x: this.pos.x, y: this.pos.y }, this.area, this.size);
+
+    for (let i = 0; i < cells.length; i++) {
+      trapCells.push(new TrapCell(cells[i], this.type, getBorders(this.pos, cells[i], this.area, this.size)));
+    }
+
+    console.log(trapCells);
+    return trapCells;
   }
 }
 

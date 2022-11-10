@@ -79,3 +79,8 @@ export interface EntityData {
   offsetY: number;
   defaultScale: number;
 }
+
+export interface Coordinates {
+  x: number;
+  y: number;
+}

@@ -84,7 +84,7 @@ module.exports = function (source) {
     const continueAt = (i === 0 ? 0 : (results[i - 1].index + results[i - 1][0].length));
 
     formatted += source.slice(continueAt, results[i].index);
-    formatted += getEnumValue(varName);
+    formatted += getEnumValue(varName); // TODO: sometimes the value needs to be an integer (ex: for switch case)
   }
 
   formatted += source.slice(results.length === 0 ? 0 : results[results.length - 1].index + results[results.length - 1][0].length, source.length);

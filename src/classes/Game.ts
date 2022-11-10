@@ -25,9 +25,9 @@ class Game {
     if (true) { // Debug
       // @ts-ignore
       window.Game = this;
-      this.placeEntity(new Entity(11, 20, Team.Attacker, EntityName.Cawwot));
-      this.placeEntity(new Entity(8, 20, Team.Defender, EntityName.Poutch));
-      this.placeTrap(new Trap(8, 24, TrapType.Repelling));
+      this.placeEntity(new Entity({ x: 11, y: 20 }, Team.Attacker, EntityName.Cawwot));
+      this.placeEntity(new Entity({ x: 8, y: 20 }, Team.Defender, EntityName.Poutch));
+      this.placeTrap(new Trap({ x: 4, y: 4 }, TrapType.Paralysing));
     }
   }
 
@@ -64,7 +64,7 @@ class Game {
           for (let i = 0; i < map[0].length; i++) {
             this.map[i] = new Array<Cell>(map.length);
             for (let j = 0; j < map.length; j++) {
-              this.map[i][j] = new Cell(map[j][i], i, j);
+              this.map[i][j] = new Cell(map[j][i], { x: i, y: j});
             }
           }
           Game.refreshAll();
@@ -77,8 +77,8 @@ class Game {
   }
 
   getCell(x: number, y: number): Cell {
-    return this.map && this.map[x] && this.map[x][y] || new Cell(CellType.Empty, x, y);
+    return this.map && this.map[x] && this.map[x][y] || new Cell(CellType.Empty, { x, y });
   }
 }
 
-export default new Game("solar");
+export default new Game("empty");
