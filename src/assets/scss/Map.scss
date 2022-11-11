@@ -27,12 +27,14 @@
   fill: #968E67;
 }
 
-.trap:hover polygon {
+.cell.ground:hover polygon {
+  cursor: pointer;
   fill:rgb(185,  18,  27);
 }
 
-.cell:hover polygon {
-  fill:rgb(185,  18,  27);
+.cell text {
+  user-select: none;
+  pointer-events: none;
 }
 
 .cell.empty {

@@ -17,7 +17,7 @@ class CellComponent extends React.Component<Props>
   }
 
   render() {
-    let type: CellType = Game.getCell(this.props.x, this.props.y).type;
+    let type: CellType = Game.getCell(this.props)?.type;
     const even: boolean = this.props.y % 2 === 0;
     let root = {
       x: this.props.x * this.props.width + (even ? 0 : this.props.width / 2),

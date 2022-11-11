@@ -28,8 +28,8 @@ class MapComponent extends React.Component<Props>
     for (let i: number = 0; i < this.props.rowNum; i++) {
       let cells: Array<JSX.Element> = [];
       for (let j: number = 0; j < this.props.cellNum; j++) {
-        let cell: Cell = Game.getCell(j, i);
-        if (cell.type === CellType.Wall) {
+        let cell: Cell = Game.getCell({ x: j, y: i });
+        if (cell?.type === CellType.Wall) {
           walls.push(cell);
         } else {
           cells.push(<CellComponent y={i} x={j} id={i * this.props.cellNum + j} width={cellWidth} height={cellHeight} />);
@@ -40,8 +40,8 @@ class MapComponent extends React.Component<Props>
 
     let entities = Array<Cell | Entity | TrapCell>();
     entities.push(...walls);
-    entities.push(...Game.entities);
     entities.push(...Game.getAllTrapCells());
+    entities.push(...Game.entities);
     entities.sort((a, b) => a.pos.y - b.pos.y);
 
     let w: number = this.props.cellNum * 2 + (this.props.rowNum > 1 ? 1 : 0);

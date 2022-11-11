@@ -1,5 +1,6 @@
-import { Coordinates, EntityData, EntityName, Team } from "@src/enums";
+import { Coordinates, Direction, EffectType, EntityData, EntityName, Team } from "@src/enums";
 import Entities from "@json/Entities.json";
+import Effect from "./Effect";
 
 class Entity {
   pos: Coordinates;
@@ -16,6 +17,10 @@ class Entity {
 
   static getEntityData(name: EntityName): EntityData {
     return Entity.entityData.get(name);
+  }
+
+  isMovable(): boolean {
+    return true;
   }
 }
 

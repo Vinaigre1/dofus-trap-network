@@ -5,8 +5,9 @@ export function getCellsInArea(pos: Coordinates, area: Area, size: number): Arra
   let clock: Generator<Coordinates> = clockwise(pos);
 
   // maxCells = Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
+  // Todo: increase efficiency of this function ?
   const timesTwo: boolean = [Area.Diagonal, Area.Square].includes(area);
-  const maxCells: number = ((size * (timesTwo ? 2 : 1)) * ((size * (timesTwo ? 2 : 1)) + 1)) * 2 + 1; // Todo: increase efficiency of this function ?
+  const maxCells: number = ((size * (timesTwo ? 2 : 1)) * ((size * (timesTwo ? 2 : 1)) + 1)) * 2 + 1;
 
   for (let i: number = 0; i < maxCells; i++) {
     const clockPos: Coordinates = clock.next().value;
@@ -19,7 +20,7 @@ export function getCellsInArea(pos: Coordinates, area: Area, size: number): Arra
   return cells;
 }
 
-export function isInArea(pos: Coordinates, area: Area, areaPos: Coordinates, size: number) {
+export function isInArea(pos: Coordinates, area: Area, areaPos: Coordinates, size: number): boolean {
   let distance = getDistance(areaPos, pos);
 
   switch (area) {
@@ -140,7 +141,7 @@ export function getDistance(pos1: Coordinates, pos2: Coordinates) {
   };
 }
 
-export function getBorders(areaPos: Coordinates, pos: Coordinates, area: Area, size: number) {
+export function getBorders(areaPos: Coordinates, pos: Coordinates, area: Area, size: number): CellBorders {
   const distance = getDistance(areaPos, pos);
 
   let borders = 0;
@@ -179,4 +180,38 @@ export function getBorders(areaPos: Coordinates, pos: Coordinates, area: Area, s
       break;
   }
   return borders;
+}
+
+export function getDirection(fromPos: Coordinates, toPos: Coordinates): Direction {
+  const distance = getDistance(fromPos, toPos);
+
+  // Diagonal directions
+  if (distance.absolute.x === 0) {
+    if (distance.relative.y > 0) {
+      return Direction.Southeast;
+    } else if (distance.relative.y < 0) {
+      return Direction.Northwest;
+    } else {
+      return undefined;
+    }
+  } else if (distance.absolute.y === 0) {
+    if (distance.relative.x > 0) {
+      return Direction.Northeast;
+    } else if (distance.relative.x < 0) {
+      return Direction.Southwest;
+    }
+  }
+
+  // Non-diagonal directions
+  if (distance.relative.x > 0 && distance.relative.y > 0) {
+    return Direction.East;
+  } else if (distance.relative.x > 0 && distance.relative.y < 0) {
+    return Direction.North;
+  } else if (distance.relative.x < 0 && distance.relative.y > 0) {
+    return Direction.South;
+  } else if (distance.relative.x < 0 && distance.relative.y < 0) {
+    return Direction.West;
+  }
+
+  return undefined;
 }
