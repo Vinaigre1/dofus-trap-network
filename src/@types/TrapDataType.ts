@@ -2,6 +2,7 @@ import { Area, EffectType, TrapType } from "@src/enums"
 
 export type TrapDataType = {
   [key in TrapType]: {
+    "image": string,
     "area": {
       "type": Area,
       "size": number

@@ -29,6 +29,7 @@ class EntityLayerComponent extends React.Component<Props>
           height={cellHeight}
           type={entity.type}
           borders={entity.borders}
+          image={(entity.pos.x === entity.trap.pos.x && entity.pos.y === entity.trap.pos.y) ? entity.trap.image : undefined}
         />);
       } else if (entity instanceof Cell) {
         entities.push(<CellComponent

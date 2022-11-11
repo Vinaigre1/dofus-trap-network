@@ -12,12 +12,14 @@ class Trap {
   effects: Array<Effect>;
   area: Area;
   size: number;
+  image: string;
 
   constructor(pos: Coordinates, type: TrapType) {
     this.pos = pos;
     this.type = type;
     this.area = TrapData[this.type].area.type;
     this.size = TrapData[this.type].area.size;
+    this.image = TrapData[this.type].image;
 
     this.effects = [];
     for (let i = 0; i < TrapData[this.type].effects.length; i++) {
@@ -36,7 +38,7 @@ class Trap {
     const cells: Array<Coordinates> = getCellsInArea({ x: this.pos.x, y: this.pos.y }, this.area, this.size);
 
     for (let i = 0; i < cells.length; i++) {
-      trapCells.push(new TrapCell(cells[i], this.type, getBorders(this.pos, cells[i], this.area, this.size)));
+      trapCells.push(new TrapCell(cells[i], this.type, getBorders(this.pos, cells[i], this.area, this.size), this));
     }
 
     console.log(trapCells);

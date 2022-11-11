@@ -17,7 +17,10 @@ module.exports = function (source) {
       AirDamage: 5,
       PushDamage: 6,
       IndirectPushDamage: 7,
-      MalusMP: 8
+      MalusMP: 8,
+      InsidiousGlyph: 9,
+      MalevolentBoost: 10,
+      MiryHeal: 11
     },
     Area: {
       Cell: 0,
@@ -82,9 +85,14 @@ module.exports = function (source) {
   for (let i = 0; i < results.length; i++) {
     const varName = results[i][1];
     const continueAt = (i === 0 ? 0 : (results[i - 1].index + results[i - 1][0].length));
+    const value = getEnumValue(varName);
+
+    if (value === undefined) {
+      throw Error(`Undefined value for key: ${varName}`);
+    }
 
     formatted += source.slice(continueAt, results[i].index);
-    formatted += getEnumValue(varName); // TODO: sometimes the value needs to be an integer (ex: for switch case)
+    formatted += getEnumValue(varName);
   }
 
   formatted += source.slice(results.length === 0 ? 0 : results[results.length - 1].index + results[results.length - 1][0].length, source.length);

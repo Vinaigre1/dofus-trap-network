@@ -10,6 +10,10 @@
   grid-row: 1;
 }
 
+.map svg.entities {
+  pointer-events: none;
+}
+
 .row {
   stroke: #7E7961;
   stroke-width: 0.1;
@@ -21,6 +25,14 @@
 
 .cell.odd.ground {
   fill: #968E67;
+}
+
+.trap:hover polygon {
+  fill:rgb(185,  18,  27);
+}
+
+.cell:hover polygon {
+  fill:rgb(185,  18,  27);
 }
 
 .cell.empty {

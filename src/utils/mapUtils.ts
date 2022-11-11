@@ -4,8 +4,8 @@ export function getCellsInArea(pos: Coordinates, area: Area, size: number): Arra
   let cells: Array<Coordinates> = [];
   let clock: Generator<Coordinates> = clockwise(pos);
 
-  // Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
-  const timesTwo: boolean = (+area) in [Area.Diagonal, Area.Square];
+  // maxCells = Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
+  const timesTwo: boolean = [Area.Diagonal, Area.Square].includes(area);
   const maxCells: number = ((size * (timesTwo ? 2 : 1)) * ((size * (timesTwo ? 2 : 1)) + 1)) * 2 + 1; // Todo: increase efficiency of this function ?
 
   for (let i: number = 0; i < maxCells; i++) {
@@ -22,7 +22,7 @@ export function getCellsInArea(pos: Coordinates, area: Area, size: number): Arra
 export function isInArea(pos: Coordinates, area: Area, areaPos: Coordinates, size: number) {
   let distance = getDistance(areaPos, pos);
 
-  switch (+area) {
+  switch (area) {
     case Area.Cell:
       return areaPos.x === pos.x && areaPos.y === pos.y;
     case Area.Cross:
@@ -146,7 +146,7 @@ export function getBorders(areaPos: Coordinates, pos: Coordinates, area: Area, s
   let borders = 0;
   if (size === 0) borders |= CellBorders.North | CellBorders.East | CellBorders.South | CellBorders.West;
 
-  switch (+area) {
+  switch (area) {
     case Area.Cell:
     case Area.Diagonal:
     case Area.Ring:

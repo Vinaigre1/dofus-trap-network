@@ -14,7 +14,10 @@ export enum EffectType {
   AirDamage,
   PushDamage,
   IndirectPushDamage,
-  MalusMP
+  MalusMP,
+  InsidiousGlyph,
+  MalevolentBoost,
+  MiryHeal
 }
 
 export enum Area {

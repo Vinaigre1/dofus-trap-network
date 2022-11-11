@@ -1,363 +1,377 @@
 {
   "${TrapType.Tricky}": {
+    "image": "/assets/img/traps/Tricky.svg",
     "area": {
-      "type": "${Area.Cross}",
+      "type": ${Area.Cross},
       "size": 1
     },
     "effects": [
       {
-        "type": "${EffectType.FireDamage}",
+        "type": ${EffectType.FireDamage},
         "value": {
           "min": 26,
           "max": 28
         },
         "area": {
-          "type": "${Area.Cross}",
+          "type": ${Area.Cross},
           "size": 1
         }
       },
       {
-        "type": "${EffectType.Pull}",
+        "type": ${EffectType.Pull},
         "value": {
           "min": 1,
           "max": 1
         },
         "area": {
-          "type": "${Area.Cross}",
+          "type": ${Area.Cross},
           "size": 1
         }
       }
     ]
   },
   "${TrapType.Insidious}": {
+    "image": "/assets/img/traps/Insidious.svg",
     "area": {
-      "type": "${Area.Cell}",
+      "type": ${Area.Cell},
       "size": 0
     },
     "effects": [
       {
-        "type": "${EffectType.InsidiousGlyph}",
+        "type": ${EffectType.InsidiousGlyph},
         "value": {
           "min": 48,
           "max": 52
         },
         "area": {
-          "type": "${Area.Circle}",
+          "type": ${Area.Circle},
           "size": 3
         }
       }
     ]
   },
   "${TrapType.Miry}": {
+    "image": "/assets/img/traps/Miry.svg",
     "area": {
-      "type": "${Area.Cell}",
+      "type": ${Area.Cell},
       "size": 0
     },
     "effects": [
       {
-        "type": "${EffectType.WaterDamage}",
+        "type": ${EffectType.WaterDamage},
         "value": {
           "min": 33,
           "max": 37
         },
         "area": {
-          "type": "${Area.Cell}",
+          "type": ${Area.Cell},
           "size": 0
         }
       },
       {
-        "type": "${EffectType.MiryHeal}",
+        "type": ${EffectType.MiryHeal},
         "value": {
           "min": 0.5,
           "max": 0.5
         },
         "area": {
-          "type": "${Area.Circle}",
+          "type": ${Area.Circle},
           "size": 2
         }
       }
     ]
   },
   "${TrapType.Mass}": {
+    "image": "/assets/img/traps/Mass.svg",
     "area": {
-      "type": "${Area.Cell}",
+      "type": ${Area.Cell},
       "size": 0
     },
     "effects": [
       {
-        "type": "${EffectType.EarthDamage}",
+        "type": ${EffectType.EarthDamage},
         "value": {
           "min": 34,
           "max": 38
         },
         "area": {
-          "type": "${Area.Circle}",
+          "type": ${Area.Circle},
           "size": 3
         }
       }
     ]
   },
   "${TrapType.Drift}": {
+    "image": "/assets/img/traps/Drift.svg",
     "area": {
-      "type": "${Area.Diagonal}",
+      "type": ${Area.Diagonal},
       "size": 1
     },
     "effects": [
       {
-        "type": "${EffectType.FireDamage}",
+        "type": ${EffectType.FireDamage},
         "value": {
           "min": 17,
           "max": 19
         },
         "area": {
-          "type": "${Area.Diagonal}",
+          "type": ${Area.Diagonal},
           "size": 1
         }
       },
       {
-        "type": "${EffectType.Push}",
+        "type": ${EffectType.Push},
         "value": {
           "min": 2,
           "max": 2
         },
         "area": {
-          "type": "${Area.Diagonal}",
+          "type": ${Area.Diagonal},
           "size": 1
         }
       }
     ]
   },
   "${TrapType.Malevolent}": {
+    "image": "/assets/img/traps/Malevolent.svg",
     "area": {
-      "type": "${Area.Cell}",
+      "type": ${Area.Cell},
       "size": 0
     },
     "effects": [
       {
-        "type": "${EffectType.MalevolentBoost}",
+        "type": ${EffectType.MalevolentBoost},
         "value": {
           "min": 20,
           "max": 20
         },
         "area": {
-          "type": "${Area.Circle}",
+          "type": ${Area.Circle},
           "size": 2
         }
       },
       {
-        "type": "${EffectType.EarthDamage}",
+        "type": ${EffectType.EarthDamage},
         "value": {
           "min": 28,
           "max": 32
         },
         "area": {
-          "type": "${Area.Cell}",
+          "type": ${Area.Cell},
           "size": 0
         }
       }
     ]
   },
   "${TrapType.Fragmentation}": {
+    "image": "/assets/img/traps/Fragmentation.svg",
     "area": {
-      "type": "${Area.Cell}",
+      "type": ${Area.Cell},
       "size": 0
     },
     "effects": [
       {
-        "type": "${EffectType.FireDamage}",
+        "type": ${EffectType.FireDamage},
         "value": {
           "min": 13,
           "max": 17
         },
         "area": {
-          "type": "${Area.Cell}",
+          "type": ${Area.Cell},
           "size": 0
         }
       },
       {
-        "type": "${EffectType.FireDamage}",
+        "type": ${EffectType.FireDamage},
         "value": {
           "min": 27,
           "max": 31
         },
         "area": {
-          "type": "${Area.Ring}",
+          "type": ${Area.Ring},
           "size": 1
         }
       },
       {
-        "type": "${EffectType.FireDamage}",
+        "type": ${EffectType.FireDamage},
         "value": {
           "min": 37,
           "max": 41
         },
         "area": {
-          "type": "${Area.Ring}",
+          "type": ${Area.Ring},
           "size": 2
         }
       },
       {
-        "type": "${EffectType.FireDamage}",
+        "type": ${EffectType.FireDamage},
         "value": {
           "min": 47,
           "max": 51
         },
         "area": {
-          "type": "${Area.Ring}",
+          "type": ${Area.Ring},
           "size": 3
         }
       }
     ]
   },
   "${TrapType.Paralysing}": {
+    "image": "/assets/img/traps/Paralysing.svg",
     "area": {
-      "type": "${Area.Circle}",
+      "type": ${Area.Circle},
       "size": 3
     },
     "effects": [
       {
-        "type": "${EffectType.Mp}",
+        "type": ${EffectType.MalusMP},
         "value": {
           "min": 4,
           "max": 4
         },
         "area": {
-          "type": "${Area.Circle}",
+          "type": ${Area.Circle},
           "size": 3
         }
       }
     ]
   },
   "${TrapType.Repelling}": {
+    "image": "/assets/img/traps/Repelling.svg",
     "area": {
-      "type": "${Area.Cross}",
+      "type": ${Area.Cross},
       "size": 1
     },
     "effects": [
       {
-        "type": "${EffectType.Push}",
+        "type": ${EffectType.Push},
         "value": {
           "min": 2,
           "max": 2
         },
         "area": {
-          "type": "${Area.Cross}",
+          "type": ${Area.Cross},
           "size": 1
         }
       },
       {
-        "type": "${EffectType.AirDamage}",
+        "type": ${EffectType.AirDamage},
         "value": {
           "min": 12,
           "max": 12
         },
         "area": {
-          "type": "${Area.Cross}",
+          "type": ${Area.Cross},
           "size": 1
         }
       }
     ]
   },
   "${TrapType.Sickrat}": {
+    "image": "/assets/img/traps/Sickrat.svg",
     "area": {
-      "type": "${Area.Cell}",
+      "type": ${Area.Cell},
       "size": 0
     },
     "effects": [
       {
-        "type": "${EffectType.Pull}",
+        "type": ${EffectType.Pull},
         "value": {
           "min": 3,
           "max": 3
         },
         "area": {
-          "type": "${Area.Cross}",
+          "type": ${Area.Cross},
           "size": 3
         }
       },
       {
-        "type": "${EffectType.WaterDamage}",
+        "type": ${EffectType.WaterDamage},
         "value": {
           "min": 17,
           "max": 19
         },
         "area": {
-          "type": "${Area.Cross}",
+          "type": ${Area.Cross},
           "size": 3
         }
       }
     ]
   },
   "${TrapType.Lethal}": {
+    "image": "/assets/img/traps/Lethal.svg",
     "area": {
-      "type": "${Area.Cell}",
+      "type": ${Area.Cell},
       "size": 0
     },
     "effects": [
       {
-        "type": "${EffectType.EarthDamage}",
+        "type": ${EffectType.EarthDamage},
         "value": {
           "min": 39,
           "max": 43
         },
         "area": {
-          "type": "${Area.Cell}",
+          "type": ${Area.Cell},
           "size": 0
         }
       }
     ]
   },
   "${TrapType.Calamity}": {
+    "image": "/assets/img/traps/Calamity.svg",
     "area": {
-      "type": "${Area.Cell}",
+      "type": ${Area.Cell},
       "size": 0
     },
     "effects": [
       {
-        "type": "${EffectType.WaterDamage}",
+        "type": ${EffectType.WaterDamage},
         "value": {
           "min": 33,
           "max": 37
         },
         "area": {
-          "type": "${Area.Square}",
+          "type": ${Area.Square},
           "size": 1
         }
       }
     ]
   },
   "${TrapType.MassGrave}": {
+    "image": "/assets/img/traps/MassGrave.svg",
     "area": {
-      "type": "${Area.Cell}",
+      "type": ${Area.Cell},
       "size": 0
     },
     "effects": []
   },
   "${TrapType.Test}": {
+    "image": "/assets/img/traps/Test.svg",
     "area": {
-      "type": "${Area.Cross}",
+      "type": ${Area.Cross},
       "size": 1
     },
     "effects": [
       {
-        "type": "${EffectType.Push}",
+        "type": ${EffectType.Push},
         "value": {
           "min": 2,
           "max": 2
         },
         "area": {
-          "type": "${Area.Cross}",
+          "type": ${Area.Cross},
           "size": 2
         }
       },
       {
-        "type": "${EffectType.Pull}",
+        "type": ${EffectType.Pull},
         "value": {
           "min": 2,
           "max": 2
         },
         "area": {
-          "type": "${Area.Cross}",
+          "type": ${Area.Cross},
           "size": 1
         }
       }

@@ -3,7 +3,8 @@ import Entity from "@classes/Entity";
 import Trap from "@classes/Trap";
 
 import Consts from "@json/Consts.json";
-import { CellBorders, CellType, EntityName, Team, TrapType } from "@src/enums";
+import { CellBorders, CellType, Coordinates, Direction, EntityName, Team, TrapType } from "@src/enums";
+import { moveInDirection } from "@src/utils/mapUtils";
 import TrapCell from "./TrapCell";
 
 class Game {
@@ -27,7 +28,9 @@ class Game {
       window.Game = this;
       this.placeEntity(new Entity({ x: 11, y: 20 }, Team.Attacker, EntityName.Cawwot));
       this.placeEntity(new Entity({ x: 8, y: 20 }, Team.Defender, EntityName.Poutch));
-      this.placeTrap(new Trap({ x: 4, y: 4 }, TrapType.Paralysing));
+      this.placeTrap(new Trap({ x: 6, y: 8 }, TrapType.Paralysing));
+      this.placeTrap(new Trap({ x: 8, y: 12 }, TrapType.Drift));
+      this.placeTrap(new Trap({ x: 3, y: 21 }, TrapType.Tricky));
     }
   }
 
@@ -38,8 +41,14 @@ class Game {
   getAllTrapCells(): Array<TrapCell> {
     let cells: Array<TrapCell> = [];
 
-    for (let i = 0; i < this.traps.length; i++) {
-      cells.push(...this.traps[i].getTrapCells());
+    for (let i: number = 0; i < this.traps.length; i++) {
+      const trapCells = this.traps[i].getTrapCells();
+      for (let j: number = 0; j < trapCells.length; j++) {
+        if (this.map?.[trapCells[j].pos.x]?.[trapCells[j].pos.y].type === CellType.Ground) {
+          trapCells[j].borders |= this.getCellBorders(trapCells[j].pos);
+          cells.push(trapCells[j]);
+        }
+      }
     }
 
     return cells;
@@ -51,6 +60,25 @@ class Game {
 
   placeTrap(trap: Trap) {
     this.traps.push(trap);
+  }
+
+  getCellBorders(pos: Coordinates): CellBorders {
+    let borders: CellBorders = 0;
+    const dirToBorder = {
+      [Direction.North]: CellBorders.North,
+      [Direction.East]: CellBorders.East,
+      [Direction.South]: CellBorders.South,
+      [Direction.West]: CellBorders.West
+    }
+
+    for (const dir of [Direction.North, Direction.East, Direction.South, Direction.West]) {
+      const moved: Coordinates = moveInDirection(pos, dir, 1);
+      if (this.map[moved.x][moved.y].type !== CellType.Ground) {
+        borders |= dirToBorder[dir];
+      }
+    }
+
+    return borders;
   }
 
   loadMap(name: string) {
@@ -77,8 +105,8 @@ class Game {
   }
 
   getCell(x: number, y: number): Cell {
-    return this.map && this.map[x] && this.map[x][y] || new Cell(CellType.Empty, { x, y });
+    return this.map?.[x]?.[y] || new Cell(CellType.Empty, { x, y });
   }
 }
 
-export default new Game("empty");
+export default new Game("solar");

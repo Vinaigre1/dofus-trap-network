@@ -1,5 +1,4 @@
-import Game from "@classes/Game";
-import { CellBorders, CellType, TrapType } from "@src/enums";
+import { CellBorders, Coordinates, TrapType } from "@src/enums";
 import * as React from "react";
 
 type Props = {
@@ -10,6 +9,7 @@ type Props = {
   height: number;
   type: TrapType;
   borders: CellBorders;
+  image: string;
 };
 
 class TrapCellComponent extends React.Component<Props>
@@ -19,7 +19,7 @@ class TrapCellComponent extends React.Component<Props>
   }
 
   render() {
-    let root = {
+    const root: Coordinates = {
       x: this.props.x * this.props.width + (this.props.y % 2 === 0 ? 0 : this.props.width / 2),
       y: this.props.y * (this.props.height / 2)
     };
@@ -47,6 +47,16 @@ class TrapCellComponent extends React.Component<Props>
       ${root.x + this.props.width / 2},${root.y + this.props.height}
       ${root.x},${root.y + this.props.height / 2}
     `}></polygon>);
+    if (this.props.image) {
+      components.push(<image
+        className="trap-image paralysing"
+        href={this.props.image}
+        x={root.x + this.props.width * 0.15}
+        y={root.y + this.props.height * 0.15}
+        width={this.props.width * 0.7}
+        height={this.props.height * 0.7}
+      />);
+    }
 
     let path: string = "";
     if (this.props.borders & CellBorders.North) path += ` M ${root.x + this.props.width / 2},${root.y} L ${root.x + this.props.width},${root.y + this.props.height / 2} `;
