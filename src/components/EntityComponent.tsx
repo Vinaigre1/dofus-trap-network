@@ -1,5 +1,6 @@
 import Game from "@classes/Game";
-import { EntityData, Team } from "@src/enums";
+import { Area, Coordinates, EntityData, Team } from "@src/enums";
+import { isInArea } from "@src/utils/mapUtils";
 import * as React from "react";
 
 type Props = {
@@ -9,35 +10,72 @@ type Props = {
   data: EntityData;
 };
 
-class EntityComponent extends React.Component<Props>
+type States = {
+  animX: number;
+  animY: number;
+  mounted: boolean;
+}
+
+class EntityComponent extends React.Component<Props, States>
 {
-  constructor(props) {
+  transitionCounter: number;
+
+  constructor(props: Props) {
     super(props);
+
+    this.state ={
+      animX: undefined,
+      animY: undefined,
+      mounted: false
+    };
+    this.transitionCounter = 0;
+  }
+
+  move(fromPos: Coordinates, toPos: Coordinates) {
+    this.transitionCounter = 2;
+    if (isInArea(fromPos, Area.Diagonal, toPos, 40)) {
+      this.transitionCounter = 1;
+    }
+
+    this.setState({
+      animX: toPos.x,
+      animY: toPos.y
+    });
+  }
+
+  onTransitionEnd(event) {
+    console.log(this.transitionCounter);
+    if (this.transitionCounter <= 1) {
+      Game.triggerStack();
+    } else {
+      this.transitionCounter--;
+    }
   }
 
   render() {
-    let cellWidth: number = 100 / (Game.width + 0.5);
-    let cellHeight: number = cellWidth / 2;
+    const cellWidth: number = 100 / (Game.width + 0.5);
+    const cellHeight: number = cellWidth / 2;
 
-    let width: number = 200 / (Game.width * 2 + (Game.width > 1 ? 1 : 0)) * this.props.data.defaultScale;
-    let height: number = width; // Square image with transparent padding
+    const width: number = 200 / (Game.width * 2 + (Game.width > 1 ? 1 : 0)) * this.props.data.defaultScale;
+    const height: number = width; // Square image with transparent padding
 
-    let root = {
-      x: this.props.x * cellWidth + (this.props.y % 2 === 0 ? 0 : cellWidth / 2),
-      y: this.props.y * cellHeight / 2
+    const root: Coordinates = {
+      x: (this.state.animX ?? this.props.x) * cellWidth + ((this.state.animY ?? this.props.y) % 2 === 0 ? 0 : cellWidth / 2),
+      y: (this.state.animY ?? this.props.y) * cellHeight / 2
     };
 
     return (
       <g className="entity">
         <ellipse
-          className={`entityCircle ${this.props.team === Team.Attacker ? "attacker" : "defender"}`}
+          className={`entity-circle ${this.props.team === Team.Attacker ? "attacker" : "defender"}`}
           cx={root.x + cellWidth / 2}
           cy={root.y + cellHeight / 2}
           rx={cellWidth * 0.3}
           ry={cellHeight * 0.3}
+          onTransitionEnd={(event) => { this.onTransitionEnd(event) }}
         />
         <image
-          className="entity"
+          className="entity-image"
           href={this.props.data.image}
           x={root.x - width / 2 + cellWidth / 2 + this.props.data.offsetX * cellWidth}
           y={root.y  - height + cellHeight * 0.75 + this.props.data.offsetY * cellHeight}

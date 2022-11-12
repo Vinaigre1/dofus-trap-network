@@ -75,6 +75,23 @@ export enum CellBorders {
   West = 8
 }
 
+export const TrapClasses = {
+  [TrapType.Tricky]: "tricky",
+  [TrapType.Insidious]: "insidious",
+  [TrapType.Miry]: "miry",
+  [TrapType.Mass]: "mass",
+  [TrapType.Drift]: "drift",
+  [TrapType.Malevolent]: "malevolent",
+  [TrapType.Fragmentation]: "fragmentation",
+  [TrapType.Paralysing]: "paralysing",
+  [TrapType.Repelling]: "repelling",
+  [TrapType.Sickrat]: "sickrat",
+  [TrapType.Lethal]: "lethal",
+  [TrapType.Calamity]: "calamity",
+  [TrapType.MassGrave]: "massgrave",
+  [TrapType.Test]: "test-trap"
+};
+
 export interface EntityData {
   name: EntityName;
   image: string;

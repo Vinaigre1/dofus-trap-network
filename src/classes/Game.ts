@@ -15,9 +15,13 @@ class Game {
   traps: Array<Trap>;
   actionStack: Array<Action>;
   completedActionStack: Array<Action>;
-
+  mapLoaded: boolean;
+  
   width: number;
   height: number;
+
+  actionGenerator: Generator<Entity>;
+  waitingAnim: boolean;
 
   constructor(mapName: string) {
     this.width = Consts.mapWidth;
@@ -26,6 +30,8 @@ class Game {
     this.traps = [];
     this.actionStack = [];
     this.completedActionStack = [];
+    this.mapLoaded = false;
+    this.waitingAnim = false;
 
     this.loadMap(mapName);
 
@@ -36,9 +42,9 @@ class Game {
       this.placeEntity(new Entity({ x: 8, y: 17 }, Team.Attacker, EntityName.Cawwot));
       this.placeEntity(new Entity({ x: 7, y: 19 }, Team.Defender, EntityName.Poutch));
       this.placeTrap(new Trap({ x: 6, y: 18 }, TrapType.Tricky, this.entities[0]));
+      this.placeTrap(new Trap({ x: 8, y: 19 }, TrapType.Drift, this.entities[0]));
       this.placeTrap(new Trap({ x: 5, y: 19 }, TrapType.Repelling, this.entities[0]));
       this.placeTrap(new Trap({ x: 8, y: 18 }, TrapType.Repelling, this.entities[0]));
-      this.placeTrap(new Trap({ x: 8, y: 19 }, TrapType.Drift, this.entities[0]));
     }
   }
 
@@ -134,6 +140,7 @@ class Game {
             }
           }
           Game.refreshAll();
+          this.mapLoaded = true;
         },
         (error) => {
           console.error(error);
@@ -198,12 +205,10 @@ class Game {
    * Triggers all traps at the given coordinates and adds
    * all actions in a specific order to the action stack.
    * 
-   * This function does not trigger the action stack.
-   * 
    * @param {Coordinates} pos Coordinates of the cell where traps are triggered
    * @returns {boolean} Returns true if one or more traps has been triggered
    */
-  triggerTraps(pos: Coordinates): boolean {
+  triggerTraps(pos: Coordinates, triggerStack: boolean = false): boolean {
     let triggered: Array<number> = [];
     for (let i: number = 0; i < this.traps.length; i++) {
       if (this.traps[i].isInTrap(pos)) {
@@ -223,10 +228,11 @@ class Game {
       }
     }
     for (let i: number = triggered.length - 1; i >= 0; i--) {
+      this.traps[triggered[i]].removeComponent();
       this.traps.splice(triggered[i], 1);
     }
-    if (triggered.length > 0) {
-      // this.shouldTriggerStack = true;
+    if (triggered.length > 0 && triggerStack) {
+      this.triggerStack();
       return true;
     }
     return false;
@@ -246,10 +252,21 @@ class Game {
    */
   triggerStack() {
     let action: Action = undefined;
-    while (action = this.actionStack.pop()) {
-      this.completedActionStack.push(action);
-      action.apply();
+    while (this.waitingAnim || (action = this.actionStack.pop())) {
+      if (!this.waitingAnim) {
+        this.completedActionStack.push(action);
+        this.actionGenerator = action.apply();
+      }
+      const next = this.actionGenerator.next();
+      if (!next.done && next.value) {
+        this.waitingAnim = true;
+        next.value.component.move(next.value.pos, next.value.animPos);
+        return;
+      } else {
+        this.waitingAnim = false;
+      }
     }
+    Game.refreshAll();
     // this.shouldTriggerStack = false;
   }
 
@@ -280,4 +297,4 @@ class Game {
   }
 }
 
-export default new Game("solar");
+export default new Game("empty");

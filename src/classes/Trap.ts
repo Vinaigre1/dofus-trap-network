@@ -6,6 +6,7 @@ import { getBorders, getCellsInArea, isInArea } from "@src/utils/mapUtils";
 import Entity from "@classes/Entity";
 
 import _TrapData from "@json/Traps.json";
+import TrapComponent from "@components/TrapComponent";
 const TrapData: TrapDataType = _TrapData as unknown as TrapDataType;
 
 class Trap {
@@ -15,7 +16,8 @@ class Trap {
   area: Area;
   size: number;
   image: string;
-  caster: Entity
+  caster: Entity;
+  component: TrapComponent;
 
   constructor(pos: Coordinates, type: TrapType, caster: Entity) {
     this.pos = pos;
@@ -24,6 +26,7 @@ class Trap {
     this.size = TrapData[this.type].area.size;
     this.image = TrapData[this.type].image;
     this.caster = caster;
+    this.component = undefined;
 
     this.effects = [];
     for (let i = 0; i < TrapData[this.type].effects.length; i++) {
@@ -50,6 +53,10 @@ class Trap {
 
   isInTrap(pos: Coordinates) {
     return isInArea(pos, this.area, this.pos, this.size);
+  }
+
+  removeComponent() {
+    this.component?.hide();
   }
 }
 

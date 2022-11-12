@@ -1,3 +1,5 @@
+$animSpeed: calc(1s / 5); // 2 cells per second
+
 .map {
   flex: 3;
   border: 1px solid blue;
@@ -45,20 +47,20 @@
 
 .cell.wall {
   fill: #58533A;
-  stroke: #B8B6B2;
+  stroke: #CCCC;
   stroke-width: 0.1;
 }
 
-.entityCircle {
+.entity-circle {
   stroke-width: 0.3;
 }
 
-.entityCircle.defender {
+.entity-circle.defender {
   fill: #00F3;
   stroke: #00F;
 }
 
-.entityCircle.attacker {
+.entity-circle.attacker {
   fill: #F003;
   stroke: #F00;
 }
@@ -84,3 +86,11 @@
 .trap.calamity polygon      { fill: rgba( 64, 131, 164, 0.3); } .trap.calamity path      { stroke: rgb( 64, 131, 164); stroke-width: 0.3; }
 .trap.massgrave polygon     { fill: rgba( 49,  45, 134, 0.3); } .trap.massgrave path     { stroke: rgb( 49,  45, 134); stroke-width: 0.3; }
 .trap.test-trap polygon     { fill: rgba(255, 255, 255, 0.3); } .trap.test-trap path     { stroke: rgb(255, 255, 255); stroke-width: 0.3; }
+
+.entity-image {
+  transition: x $animSpeed linear, y $animSpeed linear;
+}
+
+.entity-circle {
+  transition: cx $animSpeed linear, cy $animSpeed linear;
+}

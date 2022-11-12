@@ -1,4 +1,3 @@
-import Effect from "@classes/Effect";
 import Entity from "@classes/Entity";
 import { Coordinates, Direction, EffectType } from "@src/enums";
 import { getDirection, moveInDirection } from "@src/utils/mapUtils";
@@ -21,20 +20,22 @@ export default class Action {
     this.value = value;
   }
 
-  apply() {
+  /**
+   * Applies the action from the originEntity to the targetEntity.
+   */
+  *apply() {
     switch (this.type) {
-      case EffectType.Pull:
-        console.log(`Applying effect ${EffectType.Pull} to ${this.targetEntity.data.name}`);
-        break;
-      case EffectType.Push:
+      case EffectType.Pull: {
         if (!this.targetEntity.isMovable()) break;
-        const dir: Direction = getDirection(this.originPos, this.targetPos);
+        const dir: Direction = getDirection(this.targetPos, this.originPos);
         const diagonal: boolean = [Direction.Northeast, Direction.Southeast, Direction.Southwest, Direction.Northwest].includes(dir);
         for (let i: number = 0; i < (diagonal ? Math.ceil(this.value / 2) : this.value); i++) {
           const nextCell: Coordinates = moveInDirection(this.targetEntity.pos, dir, 1);
-          console.log(this.targetEntity.pos, nextCell);
           if (Game.isMovementPossible(this.targetEntity.pos, nextCell, dir)) {
-            this.targetEntity.pos = nextCell;
+            this.targetEntity.animPos = nextCell;
+            yield this.targetEntity; // Yield for animation
+            this.targetEntity.pos = this.targetEntity.animPos;
+            this.targetEntity.animPos = undefined;
             if (Game.triggerTraps(nextCell)) {
               break;
             }
@@ -44,37 +45,68 @@ export default class Action {
           }
         }
         break;
-      case EffectType.WaterDamage:
-        console.log(`Applying effect ${EffectType.WaterDamage} to ${this.targetEntity.data.name}`);
+      }
+      case EffectType.Push: {
+        if (!this.targetEntity.isMovable()) break;
+        const dir: Direction = getDirection(this.originPos, this.targetPos);
+        const diagonal: boolean = [Direction.Northeast, Direction.Southeast, Direction.Southwest, Direction.Northwest].includes(dir);
+        for (let i: number = 0; i < (diagonal ? Math.ceil(this.value / 2) : this.value); i++) {
+          const nextCell: Coordinates = moveInDirection(this.targetEntity.pos, dir, 1);
+          if (Game.isMovementPossible(this.targetEntity.pos, nextCell, dir)) {
+            this.targetEntity.animPos = nextCell;
+            yield this.targetEntity; // Yield for animation
+            this.targetEntity.pos = this.targetEntity.animPos;
+            this.targetEntity.animPos = undefined;
+            if (Game.triggerTraps(nextCell)) {
+              break;
+            }
+          } else {
+            break;
+          }
+        }
         break;
-      case EffectType.FireDamage:
-        console.log(`Applying effect ${EffectType.FireDamage} to ${this.targetEntity.data.name}`);
+      }
+      case EffectType.WaterDamage: {
+        console.log(`Applying effect "WaterDamage" to ${this.targetEntity.data.name}`);
         break;
-      case EffectType.EarthDamage:
-        console.log(`Applying effect ${EffectType.EarthDamage} to ${this.targetEntity.data.name}`);
+      }
+      case EffectType.FireDamage: {
+        console.log(`Applying effect "FireDamage" to ${this.targetEntity.data.name}`);
         break;
-      case EffectType.AirDamage:
-        console.log(`Applying effect ${EffectType.AirDamage} to ${this.targetEntity.data.name}`);
+      }
+      case EffectType.EarthDamage: {
+        console.log(`Applying effect "EarthDamage" to ${this.targetEntity.data.name}`);
         break;
-      case EffectType.PushDamage:
+      }
+      case EffectType.AirDamage: {
+        console.log(`Applying effect "AirDamage" to ${this.targetEntity.data.name}`);
+        break;
+      }
+      case EffectType.PushDamage: {
         // Create here the IndirectPushDamage action
-        console.log(`Applying effect ${EffectType.PushDamage} to ${this.targetEntity.data.name}`);
+        console.log(`Applying effect "PushDamage" to ${this.targetEntity.data.name}`);
+      }
         break;
-      case EffectType.IndirectPushDamage:
-        console.log(`Applying effect ${EffectType.IndirectPushDamage} to ${this.targetEntity.data.name}`);
+      case EffectType.IndirectPushDamage: {
+        console.log(`Applying effect "IndirectPushDamage" to ${this.targetEntity.data.name}`);
         break;
-      case EffectType.MalusMP:
-        console.log(`Applying effect ${EffectType.MalusMP} to ${this.targetEntity.data.name}`);
+      }
+      case EffectType.MalusMP: {
+        console.log(`Applying effect "MalusMP" to ${this.targetEntity.data.name}`);
         break;
-      case EffectType.InsidiousGlyph:
-        console.log(`Applying effect ${EffectType.InsidiousGlyph} to ${this.targetEntity.data.name}`);
+      }
+      case EffectType.InsidiousGlyph: {
+        console.log(`Applying effect "InsidiousGlyph" to ${this.targetEntity.data.name}`);
         break;
-      case EffectType.MalevolentBoost:
-        console.log(`Applying effect ${EffectType.MalevolentBoost} to ${this.targetEntity.data.name}`);
+      }
+      case EffectType.MalevolentBoost: {
+        console.log(`Applying effect "MalevolentBoost" to ${this.targetEntity.data.name}`);
         break;
-      case EffectType.MiryHeal:
-        console.log(`Applying effect ${EffectType.MiryHeal} to ${this.targetEntity.data.name}`);
+      }
+      case EffectType.MiryHeal: {
+        console.log(`Applying effect "MiryHeal" to ${this.targetEntity.data.name}`);
         break;
+      }
     }
   }
 }

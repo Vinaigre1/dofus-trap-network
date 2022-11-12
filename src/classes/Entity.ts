@@ -1,11 +1,13 @@
 import { Coordinates, Direction, EffectType, EntityData, EntityName, Team } from "@src/enums";
 import Entities from "@json/Entities.json";
-import Effect from "./Effect";
+import EntityComponent from "@components/EntityComponent";
 
 class Entity {
   pos: Coordinates;
   team: Team;
   data: EntityData;
+  animPos: Coordinates;
+  component: EntityComponent;
 
   static entityData: Map<EntityName, EntityData> = new Map(Object.entries(Entities) as Array<[EntityName, EntityData]>);
 
@@ -13,6 +15,7 @@ class Entity {
     this.pos = pos;
     this.team = team;
     this.data = Entity.getEntityData(name);
+    this.animPos = undefined;
   }
 
   static getEntityData(name: EntityName): EntityData {
