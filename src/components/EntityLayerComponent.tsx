@@ -16,26 +16,26 @@ class EntityLayerComponent extends React.Component<Props>
     let cellWidth: number = 100 / (Game.width + 0.5);
     let cellHeight: number = cellWidth / 2;
 
-    if (Game.mapLoaded) {
-      for (let i: number = 0; i < this.props.entities.length; i++) {
-        const entity = this.props.entities[i];
-        if (entity instanceof Cell) {
-          entities.push(<CellComponent
-            x={entity.pos.x}
-            y={entity.pos.y}
-            id={entity.pos.y * Game.width + entity.pos.x}
-            width={cellWidth}
-            height={cellHeight}
-          />);
-        } else {
-          entities.push(<EntityComponent
-            x={entity.animPos?.x ?? entity.pos.x}
-            y={entity.animPos?.y ?? entity.pos.y}
-            data={entity.data}
-            team={entity.team}
-            ref={(component) => {entity.component = component}} 
-          />);
-        }
+    for (let i: number = 0; i < this.props.entities.length; i++) {
+      const entity = this.props.entities[i];
+      if (entity instanceof Cell) {
+        entities.push(<CellComponent
+          x={entity.pos.x}
+          y={entity.pos.y}
+          id={entity.pos.y * Game.width + entity.pos.x}
+          width={cellWidth}
+          height={cellHeight}
+          key={entity.uuid}
+        />);
+      } else {
+        entities.push(<EntityComponent
+          x={entity.animPos?.x ?? entity.pos.x}
+          y={entity.animPos?.y ?? entity.pos.y}
+          data={entity.data}
+          team={entity.team}
+          ref={(component) => {entity.component = component}}
+          key={entity.uuid}
+        />);
       }
     }
     return entities;

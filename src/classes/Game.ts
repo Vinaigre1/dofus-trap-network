@@ -38,13 +38,9 @@ class Game {
     if (true) { // Debug
       // @ts-ignore
       window.Game = this;
-      this.placeEntity(new Entity({ x: 6, y: 7 }, Team.Attacker, EntityName.Poutch));
-      this.placeEntity(new Entity({ x: 8, y: 17 }, Team.Attacker, EntityName.Cawwot));
-      this.placeEntity(new Entity({ x: 7, y: 19 }, Team.Defender, EntityName.Poutch));
-      this.placeTrap(new Trap({ x: 6, y: 18 }, TrapType.Tricky, this.entities[0]));
-      this.placeTrap(new Trap({ x: 8, y: 19 }, TrapType.Drift, this.entities[0]));
-      this.placeTrap(new Trap({ x: 5, y: 19 }, TrapType.Repelling, this.entities[0]));
-      this.placeTrap(new Trap({ x: 8, y: 18 }, TrapType.Repelling, this.entities[0]));
+      this.placeEntity(new Entity({ x: 7, y: 10 }, Team.Attacker, EntityName.Poutch));
+      this.placeEntity(new Entity({ x: 13, y: 10 }, Team.Defender, EntityName.Poutch));
+      this.placeTrap(new Trap({ x: 12, y: 11 }, TrapType.Repelling, this.entities[0]));
     }
   }
 
@@ -267,7 +263,6 @@ class Game {
       }
     }
     Game.refreshAll();
-    // this.shouldTriggerStack = false;
   }
 
   /**
