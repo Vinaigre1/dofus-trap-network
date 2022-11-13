@@ -1,6 +1,6 @@
 import Game from "@classes/Game";
 import Trap from "@classes/Trap";
-import { TrapClasses } from "@src/enums";
+import { CellType, TrapClasses } from "@src/enums";
 import * as React from "react";
 import TrapCellComponent from "./TrapCellComponent";
 
@@ -12,6 +12,9 @@ type Props = {
 
 class TrapComponent extends React.Component<Props>
 {
+  /**
+   * Hides the trap component.
+   */
   hide() {
     this.props.hide(this.props.entityId);
   }
@@ -23,6 +26,9 @@ class TrapComponent extends React.Component<Props>
 
     const trapCells = this.props.trap.getTrapCells();
     for (let j: number = 0; j < trapCells.length; j++) {
+      if (Game.getCell(trapCells[j].pos)?.type !== CellType.Ground) continue;
+
+      trapCells[j].borders |= Game.getCellBorders(trapCells[j].pos);
       cells.push(<TrapCellComponent
         x={trapCells[j].pos.x}
         y={trapCells[j].pos.y}

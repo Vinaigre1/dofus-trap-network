@@ -31,6 +31,14 @@ class EntityComponent extends React.Component<Props, States>
     this.transitionCounter = 0;
   }
 
+  /**
+   * Moves an element on the screen.
+   * *toPos* is used to know how many coordinates are changed
+   * at the end of the css animation.
+   * 
+   * @param {Coordinates} fromPos Starting position
+   * @param {Coordinates} toPos Ending position
+   */
   move(fromPos: Coordinates, toPos: Coordinates) {
     this.transitionCounter = 2;
     if (isInArea(fromPos, Area.Diagonal, toPos, 40)) {
@@ -43,7 +51,10 @@ class EntityComponent extends React.Component<Props, States>
     });
   }
 
-  onTransitionEnd(event) {
+  /**
+   * Function triggered when a css transition of the entity circle ends.
+   */
+  onTransitionEnd() {
     console.log(this.transitionCounter);
     if (this.transitionCounter <= 1) {
       Game.triggerStack();
@@ -72,7 +83,7 @@ class EntityComponent extends React.Component<Props, States>
           cy={root.y + cellHeight / 2}
           rx={cellWidth * 0.3}
           ry={cellHeight * 0.3}
-          onTransitionEnd={(event) => { this.onTransitionEnd(event) }}
+          onTransitionEnd={() => { this.onTransitionEnd() }}
         />
         <image
           className="entity-image"

@@ -75,6 +75,38 @@ export enum CellBorders {
   West = 8
 }
 
+export enum SpellCategory {
+  Water,
+  Fire,
+  Earth,
+  Air,
+  Malus,
+  Summon,
+  Other
+}
+
+export enum SpellType {
+  TrickyTrap,
+  DriftTrap,
+  FragmentationTrap,
+  MassTrap,
+  LethalTrap,
+  MalevolentTrap,
+  RepellingTrap,
+  InsidiousTrap,
+  MiryTrap,
+  SickratTrap,
+  Calamity,
+  ParalysingTrap,
+  MassGrave
+}
+
+export enum ActionType {
+  Waiting,
+  Current,
+  Completed
+}
+
 export const TrapClasses = {
   [TrapType.Tricky]: "tricky",
   [TrapType.Insidious]: "insidious",

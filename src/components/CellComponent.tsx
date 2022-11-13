@@ -17,19 +17,19 @@ class CellComponent extends React.Component<Props>
   }
 
   render() {
-    let type: CellType = Game.getCell(this.props)?.type;
+    const type: CellType = Game.getCell(this.props)?.type;
     const even: boolean = this.props.y % 2 === 0;
-    let root = {
+    const root = {
       x: this.props.x * this.props.width + (even ? 0 : this.props.width / 2),
       y: this.props.y * (this.props.height / 2)
     };
-    let typeNames = {
+    const typeClasses = {
       [CellType.Ground]: "ground",
       [CellType.Empty]: "empty",
       [CellType.Wall]: "wall"
     };
 
-    let poly: Array<JSX.Element> = [];
+    const poly: Array<JSX.Element> = [];
     if (type === CellType.Wall) {
       poly.push(
         <polygon points={`
@@ -67,7 +67,7 @@ class CellComponent extends React.Component<Props>
       stroke="black"
     >{this.props.x},{this.props.y}</text>);
 
-    return <g className={`cell ${even ? 'even' : 'odd'} ${typeNames[type]}`}>{poly}</g>;
+    return <g className={`cell ${even ? 'even' : 'odd'} ${typeClasses[type]}`}>{poly}</g>;
   }
 }
 

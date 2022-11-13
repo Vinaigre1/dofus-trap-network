@@ -4,12 +4,14 @@ import TrapCell from "@classes/TrapCell";
 import { TrapDataType } from "@src/@types/TrapDataType";
 import { getBorders, getCellsInArea, isInArea } from "@src/utils/mapUtils";
 import Entity from "@classes/Entity";
+import { v4 as uuidv4 } from "uuid";
 
 import _TrapData from "@json/Traps.json";
 import TrapComponent from "@components/TrapComponent";
 const TrapData: TrapDataType = _TrapData as unknown as TrapDataType;
 
 class Trap {
+  uuid: string;
   pos: Coordinates;
   type: TrapType;
   effects: Array<Effect>;
@@ -20,6 +22,7 @@ class Trap {
   component: TrapComponent;
 
   constructor(pos: Coordinates, type: TrapType, caster: Entity) {
+    this.uuid = uuidv4();
     this.pos = pos;
     this.type = type;
     this.area = TrapData[this.type].area.type;
@@ -40,6 +43,12 @@ class Trap {
     }
   }
 
+  /**
+   * Returns a new array of TrapCell objects corresponding to
+   * all visible cells of the Trap.
+   * 
+   * @returns {Array<TrapCell>} List of TrapCell objects
+   */
   getTrapCells(): Array<TrapCell> {
     let trapCells: Array<TrapCell> = [];
     const cells: Array<Coordinates> = getCellsInArea({ x: this.pos.x, y: this.pos.y }, this.area, this.size);

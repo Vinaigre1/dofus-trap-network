@@ -1,5 +1,5 @@
 import * as React from "react";
-import "./../assets/scss/Stats.scss";
+import "@assets/scss/Stats.scss";
 
 type Props = {
 };

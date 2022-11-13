@@ -1,5 +1,13 @@
 import { Area, CellBorders, Coordinates, Direction } from "@src/enums";
 
+/**
+ * Returns all cells present in the given area
+ * 
+ * @param {Coordinates} pos Position of the area
+ * @param {Area} area Type of area
+ * @param {number} size Size of the area
+ * @returns {Array<Coordinates>} List of all Coordinates in the given area
+ */
 export function getCellsInArea(pos: Coordinates, area: Area, size: number): Array<Coordinates> {
   let cells: Array<Coordinates> = [];
   let clock: Generator<Coordinates> = clockwise(pos);
@@ -20,6 +28,15 @@ export function getCellsInArea(pos: Coordinates, area: Area, size: number): Arra
   return cells;
 }
 
+/**
+ * Checks if a given coordinates is present in a given area.
+ * 
+ * @param {Coordinates} pos Position to check
+ * @param {Area} area Type of area
+ * @param {Coordinates} areaPos Position of the area
+ * @param {number} size Size of the area
+ * @returns {boolean} true if *pos* is in the given area
+ */
 export function isInArea(pos: Coordinates, area: Area, areaPos: Coordinates, size: number): boolean {
   let distance = getDistance(areaPos, pos);
 
@@ -42,6 +59,13 @@ export function isInArea(pos: Coordinates, area: Area, areaPos: Coordinates, siz
   }
 }
 
+/**
+ * Generates coordinates using the clockwise system.
+ * 
+ * @generator
+ * @param {Coordinates} pos Coordinates of the center
+ * @yields {Coordinates} The next coordinates
+ */
 export function *clockwise(pos: Coordinates): Generator<Coordinates> {
   let nextPos: Coordinates = pos;
   yield { ...pos };
@@ -77,6 +101,15 @@ export function *clockwise(pos: Coordinates): Generator<Coordinates> {
   }
 }
 
+/**
+ * Returns the coordinates of the cell in the given
+ * direction from a given coordinates.
+ * 
+ * @param {Coordinates} pos Starting position
+ * @param {Direction} direction Direction of the movement
+ * @param {number} distance Number of cells to move
+ * @returns {Coordinates} The calculated coordinates
+ */
 export function moveInDirection(pos: Coordinates, direction: Direction, distance: number): Coordinates {
   pos = { ...pos };
   switch (direction) {
@@ -114,7 +147,15 @@ export function moveInDirection(pos: Coordinates, direction: Direction, distance
   return pos;
 }
 
-export function getDistance(pos1: Coordinates, pos2: Coordinates) {
+/**
+ * Calculates the distance between two coordinates with details
+ * such as absolute and relative distances, and total distance.
+ * 
+ * @param {Coordinates} pos1 First coordinates
+ * @param {Coordinates} pos2 Second coordinates
+ * @returns {{ real: number, absolute: Coordinates, relative: Coordinates }} An object describing the distance between the two coordinates
+ */
+export function getDistance(pos1: Coordinates, pos2: Coordinates): { real: number; absolute: Coordinates; relative: Coordinates; } {
   let dis: Coordinates = {
     x: 2 * (pos1.x - pos2.x),
     y: pos1.y - pos2.y
@@ -141,6 +182,16 @@ export function getDistance(pos1: Coordinates, pos2: Coordinates) {
   };
 }
 
+/**
+ * Calculates the borders of a cell in an area between its
+ * coordinates and the exterior of the area.
+ * 
+ * @param {Coordinates} areaPos Center coordinates of the area
+ * @param {Coordinates} pos Coordinates of the cell
+ * @param {Area} area Type of area
+ * @param {number} size Size of the area
+ * @returns {CellBorders} The borders of the given cell in the given area
+ */
 export function getBorders(areaPos: Coordinates, pos: Coordinates, area: Area, size: number): CellBorders {
   const distance = getDistance(areaPos, pos);
 
@@ -182,6 +233,15 @@ export function getBorders(areaPos: Coordinates, pos: Coordinates, area: Area, s
   return borders;
 }
 
+/**
+ * Returns the direction of a movement from *fromPos* to *toPos*.
+ * 
+ * The returned direction is one of the 8 possible in the *Direction* enum.
+ * 
+ * @param {Coordinates} fromPos Starting coordinates
+ * @param {Coordinates} toPos Ending coordinates
+ * @returns {Direction} The direction of the movement
+ */
 export function getDirection(fromPos: Coordinates, toPos: Coordinates): Direction {
   const distance = getDistance(fromPos, toPos);
 

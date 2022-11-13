@@ -21,10 +21,21 @@ class Entity {
     this.animPos = undefined;
   }
 
+  /**
+   * Returns an Entity object with data from Entities.json.
+   * 
+   * @param {EntityName} name Name of the entity
+   * @returns {Entity} An Entity object
+   */
   static getEntityData(name: EntityName): EntityData {
     return Entity.entityData.get(name);
   }
 
+  /**
+   * Returns true if the entity is movable.
+   * 
+   * @returns {boolean} true if the entity is movable
+   */
   isMovable(): boolean {
     return true;
   }

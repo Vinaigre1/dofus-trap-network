@@ -8,17 +8,23 @@ import { Area, CellBorders, CellType, Coordinates, Direction, EffectType, Entity
 import { clockwise, isInArea, moveInDirection } from "@src/utils/mapUtils";
 import TrapCell from "@classes/TrapCell";
 import { randomInt } from "@src/utils/utils";
+import MapComponent from "@components/MapComponent";
+import HistoryComponent from "@components/HistoryComponent";
 
 class Game {
   map: Array<Array<Cell>>;
   entities: Array<Entity>;
   traps: Array<Trap>;
-  actionStack: Array<Action>;
-  completedActionStack: Array<Action>;
   mapLoaded: boolean;
+  mapComponent: MapComponent;
+  historyComponent: HistoryComponent;
   
   width: number;
   height: number;
+  
+  actionStack: Array<Action>;
+  completedActionStack: Array<Action>;
+  currentAction: Action;
 
   actionGenerator: Generator<Entity>;
   waitingAnim: boolean;
@@ -30,25 +36,53 @@ class Game {
     this.traps = [];
     this.actionStack = [];
     this.completedActionStack = [];
+    this.currentAction = undefined;
     this.mapLoaded = false;
     this.waitingAnim = false;
+    this.mapComponent = undefined;
 
     this.loadMap(mapName);
 
     if (true) { // Debug
       // @ts-ignore
       window.Game = this;
-      this.placeEntity(new Entity({ x: 7, y: 10 }, Team.Attacker, EntityName.Poutch));
-      this.placeEntity(new Entity({ x: 13, y: 10 }, Team.Defender, EntityName.Poutch));
-      this.placeTrap(new Trap({ x: 12, y: 11 }, TrapType.Repelling, this.entities[0]));
+      this.placeEntity(new Entity({ x: 6, y: 34 }, Team.Attacker, EntityName.Poutch));
+      this.placeEntity(new Entity({ x: 3, y: 29 }, Team.Defender, EntityName.Poutch));
+      this.placeTrap(new Trap({ x: 4, y: 30 }, TrapType.Malevolent, this.entities[0]));
+      this.placeTrap(new Trap({ x: 3, y: 29 }, TrapType.Lethal, this.entities[0]));
+      this.placeTrap(new Trap({ x: 3, y: 28 }, TrapType.Repelling, this.entities[0]));
+      this.placeTrap(new Trap({ x: 3, y: 30 }, TrapType.Tricky, this.entities[0]));
+      this.placeTrap(new Trap({ x: 3, y: 31 }, TrapType.Malevolent, this.entities[0]));
+      this.placeTrap(new Trap({ x: 4, y: 32 }, TrapType.Repelling, this.entities[0]));
+      this.placeTrap(new Trap({ x: 3, y: 32 }, TrapType.Tricky, this.entities[0]));
+      this.placeTrap(new Trap({ x: 2, y: 29 }, TrapType.Lethal, this.entities[0]));
+      this.placeTrap(new Trap({ x: 2, y: 30 }, TrapType.Malevolent, this.entities[0]));
+      this.placeTrap(new Trap({ x: 1, y: 29 }, TrapType.Repelling, this.entities[0]));
+      this.placeTrap(new Trap({ x: 2, y: 31 }, TrapType.Lethal, this.entities[0]));
+      this.placeTrap(new Trap({ x: 1, y: 31 }, TrapType.Tricky, this.entities[0]));
+      this.placeTrap(new Trap({ x: 2, y: 32 }, TrapType.Malevolent, this.entities[0]));
+      this.placeTrap(new Trap({ x: 2, y: 33 }, TrapType.Repelling, this.entities[0]));
+      this.placeTrap(new Trap({ x: 1, y: 30 }, TrapType.Lethal, this.entities[0]));
+      this.placeTrap(new Trap({ x: 1, y: 33 }, TrapType.Tricky, this.entities[0]));
+      this.placeTrap(new Trap({ x: 0, y: 31 }, TrapType.Malevolent, this.entities[0]));
+      this.placeTrap(new Trap({ x: 0, y: 30 }, TrapType.Repelling, this.entities[0]));
+      this.placeTrap(new Trap({ x: 1, y: 32 }, TrapType.Lethal, this.entities[0]));
+      this.placeTrap(new Trap({ x: 1, y: 34 }, TrapType.Drift, this.entities[0]));
     }
   }
 
   /**
    * Forces the map component to update its values and children.
    */
-  static refreshAll() {
-    window.mapComponent.forceUpdate();
+  refreshMap() {
+    this.mapComponent?.forceUpdate();
+  }
+
+  /**
+   * Forces the history component to update its values and children.
+   */
+  refreshHistory() {
+    this.historyComponent?.forceUpdate();
   }
 
   /**
@@ -135,7 +169,7 @@ class Game {
               this.map[i][j] = new Cell(map[j][i], { x: i, y: j});
             }
           }
-          Game.refreshAll();
+          this.refreshMap();
           this.mapLoaded = true;
         },
         (error) => {
@@ -227,8 +261,10 @@ class Game {
       this.traps[triggered[i]].removeComponent();
       this.traps.splice(triggered[i], 1);
     }
-    if (triggered.length > 0 && triggerStack) {
-      this.triggerStack();
+    if (triggered.length > 0) {
+      if (triggerStack) {
+        this.triggerStack();
+      }
       return true;
     }
     return false;
@@ -247,11 +283,11 @@ class Game {
    * Every action, starting from the last one is applied one by one.
    */
   triggerStack() {
-    let action: Action = undefined;
-    while (this.waitingAnim || (action = this.actionStack.pop())) {
+    while (this.waitingAnim || (this.currentAction = this.actionStack.pop())) {
+      this.refreshHistory();
       if (!this.waitingAnim) {
-        this.completedActionStack.push(action);
-        this.actionGenerator = action.apply();
+        this.actionGenerator = this.currentAction.apply();
+        this.completedActionStack.push(this.currentAction);
       }
       const next = this.actionGenerator.next();
       if (!next.done && next.value) {
@@ -259,10 +295,11 @@ class Game {
         next.value.component.move(next.value.pos, next.value.animPos);
         return;
       } else {
+        this.currentAction = undefined;
         this.waitingAnim = false;
       }
     }
-    Game.refreshAll();
+    this.refreshMap();
   }
 
   /**
@@ -290,6 +327,19 @@ class Game {
     }
     return this.getCell(toPos)?.type === CellType.Ground && this.getEntity(toPos) === undefined;
   }
+
+  /**
+   * Returns all actions in an object.
+   * 
+   * @returns Object containing all actions: completed, current and waiting
+   */
+  getActionStack(): { waiting: Array<Action>, completed: Array<Action>, current: Action } {
+    return {
+      waiting: this.actionStack,
+      completed: this.completedActionStack,
+      current: this.currentAction
+    };
+  }
 }
 
-export default new Game("empty");
+export default new Game("servitude");

@@ -2,16 +2,21 @@ import Entity from "@classes/Entity";
 import { Coordinates, Direction, EffectType } from "@src/enums";
 import { getDirection, moveInDirection } from "@src/utils/mapUtils";
 import Game from "./Game";
+import { v4 as uuidv4 } from "uuid";
+import ActionComponent from "@components/ActionComponent";
 
 export default class Action {
+  uuid: string;
   originEntity: Entity;
   targetEntity: Entity;
   originPos: Coordinates;
   targetPos: Coordinates;
   type: EffectType;
   value: number;
+  component: ActionComponent;
 
   constructor(originEntity: Entity, targetEntity: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number) {
+    this.uuid = uuidv4();
     this.originEntity = originEntity;
     this.targetEntity = targetEntity;
     this.originPos = originPos;

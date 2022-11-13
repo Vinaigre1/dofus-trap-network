@@ -70,6 +70,30 @@ module.exports = function (source) {
       East: 2,
       South: 4,
       West: 8
+    },
+    SpellCategory: {
+      Water: 0,
+      Fire: 1,
+      Earth: 2,
+      Air: 3,
+      Malus: 4,
+      Summon: 5,
+      Other: 6
+    },
+    SpellType: {
+      TrickyTrap: 0,
+      DriftTrap: 1,
+      FragmentationTrap: 2,
+      MassTrap: 3,
+      LethalTrap: 4,
+      MalevolentTrap: 5,
+      RepellingTrap: 6,
+      InsidiousTrap: 7,
+      MiryTrap: 8,
+      SickratTrap: 9,
+      Calamity: 10,
+      ParalysingTrap: 11,
+      MassGrave: 12
     }
   }
 

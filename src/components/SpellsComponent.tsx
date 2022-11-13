@@ -1,5 +1,6 @@
 import * as React from "react";
-import "./../assets/scss/Spells.scss";
+import "@assets/scss/Spells.scss";
+import SpellComponent from "@components/SpellComponent";
 
 type Props = {
 };
@@ -7,7 +8,11 @@ type Props = {
 class SpellsComponent extends React.Component<Props>
 {
   render() {
-    return <div className="spells">spells</div>;
+    const spells: Array<SpellComponent> = [];
+
+    return <div className="spells">
+      
+    </div>;
   }
 }
 

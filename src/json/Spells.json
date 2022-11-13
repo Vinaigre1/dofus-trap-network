@@ -1,0 +1,54 @@
+{
+  "${SpellType.TrickyTrap}": {
+    "icon": "/assets/img/spells/TrickyTrap.svg",
+    "category": ${SpellCategory.Fire}
+  },
+  "${SpellType.DriftTrap}": {
+    "icon": "/assets/img/spells/DriftTrap.svg",
+    "category": ${SpellCategory.Fire}
+  },
+  "${SpellType.FragmentationTrap}": {
+    "icon": "/assets/img/spells/FragmentationTrap.svg",
+    "category": ${SpellCategory.Fire}
+  },
+  "${SpellType.MassTrap}": {
+    "icon": "/assets/img/spells/MassTrap.svg",
+    "category": ${SpellCategory.Earth}
+  },
+  "${SpellType.LethalTrap}": {
+    "icon": "/assets/img/spells/LethalTrap.svg",
+    "category": ${SpellCategory.Earth}
+  },
+  "${SpellType.MalevolentTrap}": {
+    "icon": "/assets/img/spells/MalevolentTrap.svg",
+    "category": ${SpellCategory.Earth}
+  },
+  "${SpellType.RepellingTrap}": {
+    "icon": "/assets/img/spells/RepellingTrap.svg",
+    "category": ${SpellCategory.Air}
+  },
+  "${SpellType.InsidiousTrap}": {
+    "icon": "/assets/img/spells/InsidiousTrap.svg",
+    "category": ${SpellCategory.Air}
+  },
+  "${SpellType.MiryTrap}": {
+    "icon": "/assets/img/spells/MiryTrap.svg",
+    "category": ${SpellCategory.Water}
+  },
+  "${SpellType.SickratTrap}": {
+    "icon": "/assets/img/spells/SickratTrap.svg",
+    "category": ${SpellCategory.Water}
+  },
+  "${SpellType.Calamity}": {
+    "icon": "/assets/img/spells/Calamity.svg",
+    "category": ${SpellCategory.Water}
+  },
+  "${SpellType.ParalysingTrap}": {
+    "icon": "/assets/img/spells/ParalysingTrap.svg",
+    "category": ${SpellCategory.Malus}
+  },
+  "${SpellType.MassGrave}": {
+    "icon": "/assets/img/spells/MassGrave.svg",
+    "category": ${SpellCategory.Malus}
+  }
+}

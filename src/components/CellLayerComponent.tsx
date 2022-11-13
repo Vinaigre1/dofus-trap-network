@@ -23,6 +23,11 @@ class CellLayerComponent extends React.Component<Props, States>
     };
   }
 
+  /**
+   * Hides an element on the screen.
+   * 
+   * @param {number} entityId ID of the element to hide
+   */
   hideElement(entityId: number) {
     this.setState((state) => {
       return { hiddenElements: [ ...state.hiddenElements, entityId ] };
@@ -57,6 +62,7 @@ class CellLayerComponent extends React.Component<Props, States>
           y={root.y + celHeight * 0.15}
           width={cellWidth * 0.7}
           height={celHeight * 0.7}
+          key={trap.uuid}
         />);
       }
     }
