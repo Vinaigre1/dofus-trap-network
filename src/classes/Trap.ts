@@ -25,6 +25,8 @@ class Trap {
   image: string;
   caster: Entity;
   component: TrapComponent;
+  imgComponent: SVGImageElement;
+  active: boolean;
 
   constructor(pos: Coordinates, type: TrapType, caster: Entity) {
     this.uuid = uuidv4();
@@ -35,6 +37,7 @@ class Trap {
     this.image = TrapData[this.type].image;
     this.caster = caster;
     this.component = undefined;
+    this.active = true;
 
     this.effects = [];
     for (let i = 0; i < TrapData[this.type].effects.length; i++) {
@@ -55,6 +58,8 @@ class Trap {
    * @returns {Array<TrapCell>} List of TrapCell objects
    */
   getTrapCells(): Array<TrapCell> {
+    if (!this.active) return [];
+
     let trapCells: Array<TrapCell> = [];
     const cells: Array<Coordinates> = getCellsInArea({ x: this.pos.x, y: this.pos.y }, this.area, this.size);
 
@@ -66,16 +71,24 @@ class Trap {
   }
 
   isInTrap(pos: Coordinates) {
+    if (!this.active) return false;
     return isInArea(pos, this.area, this.pos, this.size);
   }
 
-  removeComponent() {
+  enable() {
+    this.active = true;
+    this.imgComponent.style.display = "";
+    this.component?.show();
+  }
+
+  disable() {
+    this.active = false;
+    this.imgComponent.style.display = "none";
     this.component?.hide();
   }
 
   getSpellIcon(): string {
     for (const type in SpellData) {
-      console.log("spell icon not found", SpellData[type]);
       if (SpellData[type].effect?.trap === this.type) {
         return SpellData[type].icon;
       }

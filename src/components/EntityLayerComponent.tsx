@@ -29,10 +29,7 @@ class EntityLayerComponent extends React.Component<Props>
         />);
       } else {
         entities.push(<EntityComponent
-          x={entity.animPos?.x ?? entity.pos.x}
-          y={entity.animPos?.y ?? entity.pos.y}
-          data={entity.data}
-          team={entity.team}
+          entity={entity}
           ref={(component) => {entity.component = component}}
           key={entity.uuid}
         />);

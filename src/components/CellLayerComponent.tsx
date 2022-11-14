@@ -10,28 +10,12 @@ type Props = {
 };
 
 type States = {
-  hiddenElements: Array<number>;
 };
 
 class CellLayerComponent extends React.Component<Props, States>
 {
   constructor(props: Props) {
     super(props);
-
-    this.state = {
-      hiddenElements: []
-    };
-  }
-
-  /**
-   * Hides an element on the screen.
-   * 
-   * @param {number} entityId ID of the element to hide
-   */
-  hideElement(entityId: number) {
-    this.setState((state) => {
-      return { hiddenElements: [ ...state.hiddenElements, entityId ] };
-    });
   }
 
   render() {
@@ -43,28 +27,26 @@ class CellLayerComponent extends React.Component<Props, States>
 
     for (let i: number = this.props.traps.length - 1; i >= 0; i--) {
       const trap = this.props.traps[i];
-      if (!this.state.hiddenElements.includes(i)) {
-        traps.push(<TrapComponent
-          trap={trap}
-          ref={(component) => { trap.component = component }} 
-          entityId={i}
-          hide={(entityId: number) => { this.hideElement(entityId) }}
-        />);
+      traps.push(<TrapComponent
+        trap={trap}
+        ref={(component) => { trap.component = component; }} 
+        entityId={i}
+      />);
 
-        const root: Coordinates = {
-          x: trap.pos.x * cellWidth + (trap.pos.y % 2 === 0 ? 0 : cellWidth / 2),
-          y: trap.pos.y * (celHeight / 2)
-        };
-        trapImages.push(<image
-          className={`trap-image ${TrapClasses[trap.type]}`}
-          href={trap.image}
-          x={root.x + cellWidth * 0.15}
-          y={root.y + celHeight * 0.15}
-          width={cellWidth * 0.7}
-          height={celHeight * 0.7}
-          key={trap.uuid}
-        />);
-      }
+      const root: Coordinates = {
+        x: trap.pos.x * cellWidth + (trap.pos.y % 2 === 0 ? 0 : cellWidth / 2),
+        y: trap.pos.y * (celHeight / 2)
+      };
+      trapImages.push(<image
+        className={`trap-image ${TrapClasses[trap.type]}`}
+        href={trap.image}
+        x={root.x + cellWidth * 0.15}
+        y={root.y + celHeight * 0.15}
+        width={cellWidth * 0.7}
+        height={celHeight * 0.7}
+        key={trap.uuid}
+        ref={(component) => { trap.imgComponent = component; }}
+      />);
     }
 
     return [

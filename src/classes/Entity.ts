@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from "uuid";
 class Entity {
   uuid: string;
   pos: Coordinates;
+  initialPos: Coordinates;
   team: Team;
   data: EntityData;
   animPos: Coordinates;
@@ -16,6 +17,7 @@ class Entity {
   constructor(pos: Coordinates, team: Team, name: EntityName) {
     this.uuid = uuidv4();
     this.pos = pos;
+    this.initialPos = pos;
     this.team = team;
     this.data = Entity.getEntityData(name);
     this.animPos = undefined;
@@ -37,6 +39,15 @@ class Entity {
    * @returns {boolean} true if the entity is movable
    */
   isMovable(): boolean {
+    return true;
+  }
+
+  /**
+   * Resets the entity values.
+   */
+  reset() {
+    this.pos = this.initialPos;
+    this.component?.show();
     return true;
   }
 }

@@ -262,8 +262,7 @@ class Game {
       }
     }
     for (let i: number = triggered.length - 1; i >= 0; i--) {
-      this.traps[triggered[i]].removeComponent();
-      this.traps.splice(triggered[i], 1);
+      this.traps[triggered[i]].disable();
     }
     if (triggered.length > 0) {
       if (triggerStack) {
@@ -343,6 +342,21 @@ class Game {
       completed: this.completedActionStack,
       current: this.currentAction
     };
+  }
+
+  /**
+   * Reset all traps and entities to their original position.
+   */
+  resetAll() {
+    for (let i: number = 0; i < this.entities.length; i++) {
+      this.entities[i].reset();
+    }
+
+    for (let i: number = 0; i < this.traps.length; i++) {
+      this.traps[i].enable();
+    }
+
+    this.refreshMap();
   }
 }
 

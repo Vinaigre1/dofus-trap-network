@@ -6,20 +6,44 @@ import TrapCellComponent from "./TrapCellComponent";
 
 type Props = {
   trap: Trap;
-  hide: Function
   entityId: number;
 };
 
-class TrapComponent extends React.Component<Props>
+type States = {
+  display: boolean;
+};
+
+class TrapComponent extends React.Component<Props, States>
 {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      display: true
+    };
+  }
+
+  /**
+   * Shows the trap component.
+   */
+  show() {
+    this.setState((state) => {
+      return { ...state, display: true }
+    });
+  }
+
   /**
    * Hides the trap component.
    */
   hide() {
-    this.props.hide(this.props.entityId);
+    this.setState((state) => {
+      return { ...state, display: false }
+    });
   }
 
   render() {
+    if (!this.state.display) return;
+
     let cells: Array<JSX.Element> = [];
     let cellWidth: number = 100 / (Game.width + 0.5);
     let cellHeight: number = cellWidth / 2;
