@@ -52,7 +52,7 @@ class MapComponent extends React.Component<Props>
     const h: number = (this.props.rowNum + 1) / 2;
     const height: number = h / w * 100;
     return (
-      <div className="map">
+      <div className="relative-height-source map">
         <svg className="tiles" viewBox={`0 0 100 ${height}`}>
           <CellLayerComponent rows={rows} traps={traps} />
         </svg>

@@ -46,6 +46,10 @@ class Game {
     if (true) { // Debug
       // @ts-ignore
       window.Game = this;
+      // this.placeEntity(new Entity({ x: 6, y: 34 }, Team.Attacker, EntityName.Poutch));
+      // this.placeEntity(new Entity({ x: 3, y: 29 }, Team.Defender, EntityName.Poutch));
+      // this.placeTrap(new Trap({ x: 4, y: 28 }, TrapType.Repelling, this.entities[0]));
+      // this.placeTrap(new Trap({ x: 2, y: 30 }, TrapType.Tricky, this.entities[0]));
       this.placeEntity(new Entity({ x: 6, y: 34 }, Team.Attacker, EntityName.Poutch));
       this.placeEntity(new Entity({ x: 3, y: 29 }, Team.Defender, EntityName.Poutch));
       this.placeTrap(new Trap({ x: 4, y: 30 }, TrapType.Malevolent, this.entities[0]));
@@ -250,7 +254,7 @@ class Game {
           }
           for (let k: number = 0; k < entities.length; k++) {
             const value = randomInt(this.traps[i].effects[j].min, this.traps[i].effects[j].max);
-            localStack.unshift(new Action(this.traps[i].caster, entities[k], this.traps[i].pos, entities[k].pos, this.traps[i].effects[j].type, value));
+            localStack.unshift(new Action(this.traps[i].caster, entities[k], this.traps[i].pos, entities[k].pos, this.traps[i].effects[j].type, value, this.traps[i].getSpellIcon()));
           }
         }
         this.addToActionStack(...localStack);
@@ -287,7 +291,6 @@ class Game {
       this.refreshHistory();
       if (!this.waitingAnim) {
         this.actionGenerator = this.currentAction.apply();
-        this.completedActionStack.push(this.currentAction);
       }
       const next = this.actionGenerator.next();
       if (!next.done && next.value) {
@@ -295,6 +298,7 @@ class Game {
         next.value.component.move(next.value.pos, next.value.animPos);
         return;
       } else {
+        this.completedActionStack.push(this.currentAction);
         this.currentAction = undefined;
         this.waitingAnim = false;
       }

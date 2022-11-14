@@ -1,54 +1,93 @@
 {
   "${SpellType.TrickyTrap}": {
     "icon": "/assets/img/spells/TrickyTrap.svg",
-    "category": ${SpellCategory.Fire}
+    "category": ${SpellCategory.FireTrap},
+    "effect": {
+      "trap": ${TrapType.Tricky}
+    }
   },
   "${SpellType.DriftTrap}": {
     "icon": "/assets/img/spells/DriftTrap.svg",
-    "category": ${SpellCategory.Fire}
+    "category": ${SpellCategory.FireTrap},
+    "effect": {
+      "trap": ${TrapType.Drift}
+    }
   },
   "${SpellType.FragmentationTrap}": {
     "icon": "/assets/img/spells/FragmentationTrap.svg",
-    "category": ${SpellCategory.Fire}
+    "category": ${SpellCategory.FireTrap},
+    "effect": {
+      "trap": ${TrapType.Fragmentation}
+    }
   },
   "${SpellType.MassTrap}": {
     "icon": "/assets/img/spells/MassTrap.svg",
-    "category": ${SpellCategory.Earth}
+    "category": ${SpellCategory.EarthTrap},
+    "effect": {
+      "trap": ${TrapType.Mass}
+    }
   },
   "${SpellType.LethalTrap}": {
     "icon": "/assets/img/spells/LethalTrap.svg",
-    "category": ${SpellCategory.Earth}
+    "category": ${SpellCategory.EarthTrap},
+    "effect": {
+      "trap": ${TrapType.Lethal}
+    }
   },
   "${SpellType.MalevolentTrap}": {
     "icon": "/assets/img/spells/MalevolentTrap.svg",
-    "category": ${SpellCategory.Earth}
+    "category": ${SpellCategory.EarthTrap},
+    "effect": {
+      "trap": ${TrapType.Malevolent}
+    }
   },
   "${SpellType.RepellingTrap}": {
     "icon": "/assets/img/spells/RepellingTrap.svg",
-    "category": ${SpellCategory.Air}
+    "category": ${SpellCategory.AirTrap},
+    "effect": {
+      "trap": ${TrapType.Repelling}
+    }
   },
   "${SpellType.InsidiousTrap}": {
     "icon": "/assets/img/spells/InsidiousTrap.svg",
-    "category": ${SpellCategory.Air}
+    "category": ${SpellCategory.AirTrap},
+    "effect": {
+      "trap": ${TrapType.Insidious}
+    }
   },
   "${SpellType.MiryTrap}": {
     "icon": "/assets/img/spells/MiryTrap.svg",
-    "category": ${SpellCategory.Water}
+    "category": ${SpellCategory.WaterTrap},
+    "effect": {
+      "trap": ${TrapType.Miry}
+    }
   },
   "${SpellType.SickratTrap}": {
     "icon": "/assets/img/spells/SickratTrap.svg",
-    "category": ${SpellCategory.Water}
+    "category": ${SpellCategory.WaterTrap},
+    "effect": {
+      "trap": ${TrapType.Sickrat}
+    }
   },
   "${SpellType.Calamity}": {
     "icon": "/assets/img/spells/Calamity.svg",
-    "category": ${SpellCategory.Water}
+    "category": ${SpellCategory.WaterTrap},
+    "effect": {
+      "trap": ${TrapType.Calamity}
+    }
   },
   "${SpellType.ParalysingTrap}": {
     "icon": "/assets/img/spells/ParalysingTrap.svg",
-    "category": ${SpellCategory.Malus}
+    "category": ${SpellCategory.MalusTrap},
+    "effect": {
+      "trap": ${TrapType.Paralysing}
+    }
   },
   "${SpellType.MassGrave}": {
     "icon": "/assets/img/spells/MassGrave.svg",
-    "category": ${SpellCategory.Malus}
+    "category": ${SpellCategory.MalusTrap},
+    "effect": {
+      "trap": ${TrapType.MassGrave}
+    }
   }
 }

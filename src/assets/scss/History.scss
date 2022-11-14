@@ -2,4 +2,40 @@
   flex: 1;
   border: 1px solid green;
   margin: 5px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+.action {
+  margin: 5px;
+  padding: 8px;
+  border: 1px solid #DDD;
+  border-radius: 5px;
+  background-color: #151520;
+  display: flex;
+
+  .action-img {
+    width: 45px;
+    height: 45px;
+    margin-right: 10px;
+  }
+
+  .action-infos {
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.action.completed {
+  color: #DDD;
+}
+
+.action.current {
+  color: #DDD;
+}
+
+.action.waiting {
+  color: #DDD;
 }

@@ -76,11 +76,11 @@ export enum CellBorders {
 }
 
 export enum SpellCategory {
-  Water,
-  Fire,
-  Earth,
-  Air,
-  Malus,
+  WaterTrap,
+  FireTrap,
+  EarthTrap,
+  AirTrap,
+  MalusTrap,
   Summon,
   Other
 }

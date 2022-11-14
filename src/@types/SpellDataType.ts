@@ -1,8 +1,11 @@
-import { SpellType, SpellCategory } from "@src/enums";
+import { SpellType, SpellCategory, TrapType } from "@src/enums";
 
 export type SpellDataType = {
   [key in SpellType]: {
     "icon": string,
-    "category": SpellCategory
+    "category": SpellCategory,
+    "effect": {
+      "trap": TrapType
+    }
   }
 }

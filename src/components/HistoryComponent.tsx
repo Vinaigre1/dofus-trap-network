@@ -13,7 +13,7 @@ class HistoryComponent extends React.Component<Props>
     const actions = Game.getActionStack();
     const actionComponents: Array<JSX.Element> = [];
 
-    for (let i: number = 0; i < actions.waiting.length; i++) {
+    for (let i: number = actions.waiting.length - 1; i >= 0; i--) {
       actionComponents.push(<ActionComponent
         type={ActionType.Waiting}
         action={actions.waiting[i]}
@@ -27,14 +27,14 @@ class HistoryComponent extends React.Component<Props>
       />);
     }
 
-    for (let i: number = 0; i < actions.completed.length; i++) {
+    for (let i: number = actions.completed.length - 1; i >= 0; i--) {
       actionComponents.push(<ActionComponent
         type={ActionType.Completed}
         action={actions.completed[i]}
       />);
     }
 
-    return <div className="history">{actionComponents}</div>;
+    return <div className="relative-height history">{actionComponents}</div>;
   }
 }
 

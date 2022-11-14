@@ -1,14 +1,19 @@
-import { Area, CellBorders, Coordinates, TrapType } from "@src/enums";
+import { Area, Coordinates, TrapType } from "@src/enums";
 import Effect from "@classes/Effect";
 import TrapCell from "@classes/TrapCell";
 import { TrapDataType } from "@src/@types/TrapDataType";
 import { getBorders, getCellsInArea, isInArea } from "@src/utils/mapUtils";
 import Entity from "@classes/Entity";
 import { v4 as uuidv4 } from "uuid";
+import Spell from "@classes/Spell";
 
 import _TrapData from "@json/Traps.json";
 import TrapComponent from "@components/TrapComponent";
 const TrapData: TrapDataType = _TrapData as unknown as TrapDataType;
+
+import _SpellData from "@json/Spells.json";
+import { SpellDataType } from "@src/@types/SpellDataType";
+const SpellData: SpellDataType = _SpellData as unknown as SpellDataType;
 
 class Trap {
   uuid: string;
@@ -66,6 +71,15 @@ class Trap {
 
   removeComponent() {
     this.component?.hide();
+  }
+
+  getSpellIcon(): string {
+    for (const type in SpellData) {
+      console.log("spell icon not found", SpellData[type]);
+      if (SpellData[type].effect?.trap === this.type) {
+        return SpellData[type].icon;
+      }
+    }
   }
 }
 

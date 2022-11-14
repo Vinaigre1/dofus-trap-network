@@ -1,5 +1,6 @@
 import * as React from "react";
 import "@assets/scss/App.scss";
+import "@assets/js/script.js";
 import MapComponent from "@components/MapComponent";
 import StatsComponent from "@components/StatsComponent";
 import HistoryComponent from "@components/HistoryComponent";

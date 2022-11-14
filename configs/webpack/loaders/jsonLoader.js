@@ -72,11 +72,11 @@ module.exports = function (source) {
       West: 8
     },
     SpellCategory: {
-      Water: 0,
-      Fire: 1,
-      Earth: 2,
-      Air: 3,
-      Malus: 4,
+      WaterTrap: 0,
+      FireTrap: 1,
+      EarthTrap: 2,
+      AirTrap: 3,
+      MalusTrap: 4,
       Summon: 5,
       Other: 6
     },
