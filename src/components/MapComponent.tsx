@@ -35,10 +35,10 @@ class MapComponent extends React.Component<Props>
         if (cell?.type === CellType.Wall) {
           walls.push(cell);
         } else {
-          cells.push(<CellComponent y={i} x={j} id={i * this.props.cellNum + j} width={cellWidth} height={cellHeight} />);
+          cells.push(<CellComponent key={`cell-${i * this.props.cellNum + j}`} y={i} x={j} id={i * this.props.cellNum + j} width={cellWidth} height={cellHeight} />);
         }
       }
-      rows.push(<g className={`row ${i % 2 === 0 ? "even" : "odd"}`}>{cells}</g>);
+      rows.push(<g className={`row ${i % 2 === 0 ? "even" : "odd"}`} key={`row-${i}`}>{cells}</g>);
     }
 
     traps.push(...Game.traps);

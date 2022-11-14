@@ -69,24 +69,36 @@ $animSpeed: calc(1s / 3); // 3 cells per second
 .trap {
   fill: none;
   stroke: none;
-  stroke-width: 0;
+  stroke-width: 0.2;
   stroke-linecap: round;
 }
 
-.trap.tricky polygon        { fill: rgba(185,  18,  27, 0.3); } .trap.tricky path        { stroke: rgb(185,  18,  27); stroke-width: 0.2; }
-.trap.insidious polygon     { fill: rgba(150, 255, 150, 0.3); } .trap.insidious path     { stroke: rgb(150, 255, 150); stroke-width: 0.2; }
-.trap.miry polygon          { fill: rgba( 64, 131, 164, 0.3); } .trap.miry path          { stroke: rgb( 64, 131, 164); stroke-width: 0.2; }
-.trap.mass polygon          { fill: rgba( 90,  52,  28, 0.3); } .trap.mass path          { stroke: rgb( 90,  52,  28); stroke-width: 0.2; }
-.trap.drift polygon         { fill: rgba(185,  18,  27, 0.3); } .trap.drift path         { stroke: rgb(185,  18,  27); stroke-width: 0.2; }
-.trap.malevolent polygon    { fill: rgba( 90,  52,  28, 0.3); } .trap.malevolent path    { stroke: rgb( 90,  52,  28); stroke-width: 0.2; }
-.trap.fragmentation polygon { fill: rgba(185,  18,  27, 0.3); } .trap.fragmentation path { stroke: rgb(185,  18,  27); stroke-width: 0.2; }
-.trap.paralysing polygon    { fill: rgba( 49,  45, 134, 0.3); } .trap.paralysing path    { stroke: rgb( 49,  45, 134); stroke-width: 0.2; }
-.trap.repelling polygon     { fill: rgba(150, 255, 150, 0.3); } .trap.repelling path     { stroke: rgb(150, 255, 150); stroke-width: 0.2; }
-.trap.sickrat polygon       { fill: rgba( 64, 131, 164, 0.3); } .trap.sickrat path       { stroke: rgb( 64, 131, 164); stroke-width: 0.2; }
-.trap.lethal polygon        { fill: rgba( 90,  52,  28, 0.3); } .trap.lethal path        { stroke: rgb( 90,  52,  28); stroke-width: 0.2; }
-.trap.calamity polygon      { fill: rgba( 64, 131, 164, 0.3); } .trap.calamity path      { stroke: rgb( 64, 131, 164); stroke-width: 0.2; }
-.trap.massgrave polygon     { fill: rgba( 49,  45, 134, 0.3); } .trap.massgrave path     { stroke: rgb( 49,  45, 134); stroke-width: 0.2; }
-.trap.test-trap polygon     { fill: rgba(255, 255, 255, 0.3); } .trap.test-trap path     { stroke: rgb(255, 255, 255); stroke-width: 0.2; }
+.trap polygon {
+  opacity: 0.3;
+}
+
+.trap-highlighted .trap {
+  stroke-width: 1;
+}
+
+.trap-highlighted .trap polygon {
+  opacity: 0.6;
+}
+
+.trap.tricky polygon        { fill: rgb(185,  18,  27); } .trap.tricky path        { stroke: rgb(185,  18,  27); }
+.trap.insidious polygon     { fill: rgb(150, 255, 150); } .trap.insidious path     { stroke: rgb(150, 255, 150); }
+.trap.miry polygon          { fill: rgb( 64, 131, 164); } .trap.miry path          { stroke: rgb( 64, 131, 164); }
+.trap.mass polygon          { fill: rgb( 90,  52,  28); } .trap.mass path          { stroke: rgb( 90,  52,  28); }
+.trap.drift polygon         { fill: rgb(185,  18,  27); } .trap.drift path         { stroke: rgb(185,  18,  27); }
+.trap.malevolent polygon    { fill: rgb( 90,  52,  28); } .trap.malevolent path    { stroke: rgb( 90,  52,  28); }
+.trap.fragmentation polygon { fill: rgb(185,  18,  27); } .trap.fragmentation path { stroke: rgb(185,  18,  27); }
+.trap.paralysing polygon    { fill: rgb( 49,  45, 134); } .trap.paralysing path    { stroke: rgb( 49,  45, 134); }
+.trap.repelling polygon     { fill: rgb(150, 255, 150); } .trap.repelling path     { stroke: rgb(150, 255, 150); }
+.trap.sickrat polygon       { fill: rgb( 64, 131, 164); } .trap.sickrat path       { stroke: rgb( 64, 131, 164); }
+.trap.lethal polygon        { fill: rgb( 90,  52,  28); } .trap.lethal path        { stroke: rgb( 90,  52,  28); }
+.trap.calamity polygon      { fill: rgb( 64, 131, 164); } .trap.calamity path      { stroke: rgb( 64, 131, 164); }
+.trap.massgrave polygon     { fill: rgb( 49,  45, 134); } .trap.massgrave path     { stroke: rgb( 49,  45, 134); }
+.trap.test-trap polygon     { fill: rgb(255, 255, 255); } .trap.test-trap path     { stroke: rgb(255, 255, 255); }
 
 .entity-image {
   transition: x $animSpeed linear, y $animSpeed linear;

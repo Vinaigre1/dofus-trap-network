@@ -17,6 +17,7 @@ class HistoryComponent extends React.Component<Props>
       actionComponents.push(<ActionComponent
         type={ActionType.Waiting}
         action={actions.waiting[i]}
+        key={actions.waiting[i].uuid}
       />);
     }
 
@@ -24,6 +25,7 @@ class HistoryComponent extends React.Component<Props>
       actionComponents.push(<ActionComponent
         type={ActionType.Current}
         action={actions.current}
+        key={actions.current.uuid}
       />);
     }
 
@@ -31,6 +33,7 @@ class HistoryComponent extends React.Component<Props>
       actionComponents.push(<ActionComponent
         type={ActionType.Completed}
         action={actions.completed[i]}
+        key={actions.completed[i].uuid}
       />);
     }
 

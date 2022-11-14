@@ -13,15 +13,18 @@ import HistoryComponent from "@components/HistoryComponent";
 
 class Game {
   map: Array<Array<Cell>>;
-  entities: Array<Entity>;
-  traps: Array<Trap>;
   mapLoaded: boolean;
   mapComponent: MapComponent;
   historyComponent: HistoryComponent;
-  
+
+  entities: Array<Entity>;
+  traps: Array<Trap>;
+  startPoint: Coordinates;
+  savedActionStack: Array<Action>;
+
   width: number;
   height: number;
-  
+
   actionStack: Array<Action>;
   completedActionStack: Array<Action>;
   currentAction: Action;
@@ -36,10 +39,12 @@ class Game {
     this.traps = [];
     this.actionStack = [];
     this.completedActionStack = [];
+    this.savedActionStack = [];
     this.currentAction = undefined;
     this.mapLoaded = false;
     this.waitingAnim = false;
     this.mapComponent = undefined;
+    this.startPoint = undefined;
 
     this.loadMap(mapName);
 
@@ -72,7 +77,25 @@ class Game {
       this.placeTrap(new Trap({ x: 0, y: 30 }, TrapType.Repelling, this.entities[0]));
       this.placeTrap(new Trap({ x: 1, y: 32 }, TrapType.Lethal, this.entities[0]));
       this.placeTrap(new Trap({ x: 1, y: 34 }, TrapType.Drift, this.entities[0]));
+      this.setStartPoint({ x: 3, y: 29 });
     }
+  }
+
+  /**
+   * Sets the start point of the network.
+   * 
+   * @param {Coordinates} point The start point
+   */
+  setStartPoint(point: Coordinates) {
+    this.startPoint = point;
+  }
+
+  /**
+   * Runs the trap network.
+   */
+  run() {
+    this.savedActionStack = [];
+    this.triggerTraps(this.startPoint, true);
   }
 
   /**
@@ -254,7 +277,7 @@ class Game {
           }
           for (let k: number = 0; k < entities.length; k++) {
             const value = randomInt(this.traps[i].effects[j].min, this.traps[i].effects[j].max);
-            localStack.unshift(new Action(this.traps[i].caster, entities[k], this.traps[i].pos, entities[k].pos, this.traps[i].effects[j].type, value, this.traps[i].getSpellIcon()));
+            localStack.unshift(new Action(this.traps[i].caster, entities[k], this.traps[i].pos, entities[k].pos, this.traps[i].effects[j].type, value, this.traps[i]));
           }
         }
         this.addToActionStack(...localStack);
@@ -337,6 +360,13 @@ class Game {
    * @returns Object containing all actions: completed, current and waiting
    */
   getActionStack(): { waiting: Array<Action>, completed: Array<Action>, current: Action } {
+    if (this.savedActionStack.length > 0) {
+      return {
+        waiting: [],
+        completed: this.savedActionStack,
+        current: undefined
+      };
+    }
     return {
       waiting: this.actionStack,
       completed: this.completedActionStack,
@@ -345,7 +375,8 @@ class Game {
   }
 
   /**
-   * Reset all traps and entities to their original position.
+   * Reset all traps and entities to their original position,
+   * save the completed action stack and reset some properties.
    */
   resetAll() {
     for (let i: number = 0; i < this.entities.length; i++) {
@@ -355,6 +386,12 @@ class Game {
     for (let i: number = 0; i < this.traps.length; i++) {
       this.traps[i].enable();
     }
+
+    this.savedActionStack = this.completedActionStack;
+    this.completedActionStack = [];
+    this.actionStack = [];
+    this.currentAction = undefined;
+    this.waitingAnim = false;
 
     this.refreshMap();
   }

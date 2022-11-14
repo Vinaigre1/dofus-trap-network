@@ -6,7 +6,6 @@ window.onload = function() {
       for (const element of elements) {
         element.style.maxHeight = `${entry.contentRect.height}px`;
       }
-      console.log(entry.contentRect.height);
     }
   }).observe(sourceEl[0]);
 }

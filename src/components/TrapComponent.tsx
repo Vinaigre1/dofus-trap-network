@@ -6,7 +6,7 @@ import TrapCellComponent from "./TrapCellComponent";
 
 type Props = {
   trap: Trap;
-  entityId: number;
+  setHighlight: Function;
 };
 
 type States = {
@@ -41,6 +41,13 @@ class TrapComponent extends React.Component<Props, States>
     });
   }
 
+  /**
+   * Set the highlight value of the trap component.
+   */
+  setHighlight(highlight: boolean) {
+    this.props.setHighlight(this.props.trap.uuid, highlight);
+  }
+
   render() {
     if (!this.state.display) return;
 
@@ -61,6 +68,7 @@ class TrapComponent extends React.Component<Props, States>
         height={cellHeight}
         type={trapCells[j].type}
         borders={trapCells[j].borders}
+        key={j}
       />);
     }
     return (

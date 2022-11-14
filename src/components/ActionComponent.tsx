@@ -15,6 +15,14 @@ class ActionComponent extends React.Component<Props>
     super(props);
   }
 
+  onMouseOver() {
+    console.log(this.props.action.originTrap.component.setHighlight(true));
+  }
+
+  onMouseLeave() {
+    console.log(this.props.action.originTrap.component.setHighlight(false));
+  }
+
   render() {
     const actionClasses = {
       [ActionType.Waiting]: "waiting",
@@ -33,19 +41,21 @@ class ActionComponent extends React.Component<Props>
       [EffectType.IndirectPushDamage]: <Trans>Indirect push damage</Trans>
     };
 
-    return <div className={`action ${actionClasses[this.props.type]}`}>
-      <div className="action-img">
-        <img src={this.props.action.spellIcon} alt="" />
-      </div>
-      <div className="action-infos">
-        <div className="action-type">
-          {actionNames[this.props.action.type] ?? `Unknown type: ${this.props.action.type}`}
+    return (
+      <div className={`action ${actionClasses[this.props.type]}`} onMouseOver={() => { this.onMouseOver(); }} onMouseLeave={() => { this.onMouseLeave(); }} >
+        <div className="action-img">
+          <img src={this.props.action.originTrap.getSpellIcon()} alt="" />
         </div>
-        <div className="action-value">
-          <Trans>Value: {{ value: this.props.action.value }}</Trans>
+        <div className="action-infos">
+          <div className="action-type">
+            {actionNames[this.props.action.type] ?? `Unknown type: ${this.props.action.type}`}
+          </div>
+          <div className="action-value">
+            <Trans>Value: {{ value: this.props.action.value }}</Trans>
+          </div>
         </div>
       </div>
-    </div>;
+    );
   }
 }
 

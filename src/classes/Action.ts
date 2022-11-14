@@ -4,7 +4,7 @@ import { getDirection, moveInDirection } from "@src/utils/mapUtils";
 import Game from "@classes/Game";
 import ActionComponent from "@components/ActionComponent";
 import { v4 as uuidv4 } from "uuid";
-import Spell from "./Spell";
+import Trap from "./Trap";
 
 export default class Action {
   uuid: string;
@@ -15,9 +15,9 @@ export default class Action {
   type: EffectType;
   value: number;
   component: ActionComponent;
-  spellIcon: string;
+  originTrap: Trap;
 
-  constructor(originEntity: Entity, targetEntity: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, spellIcon: string) {
+  constructor(originEntity: Entity, targetEntity: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, originTrap: Trap) {
     this.uuid = uuidv4();
     this.originEntity = originEntity;
     this.targetEntity = targetEntity;
@@ -25,7 +25,7 @@ export default class Action {
     this.targetPos = targetPos;
     this.type = type;
     this.value = value;
-    this.spellIcon = spellIcon;
+    this.originTrap = originTrap;
   }
 
   /**
@@ -48,7 +48,7 @@ export default class Action {
               break;
             }
           } else {
-            Game.addToActionStack(new Action(this.originEntity, this.targetEntity, this.targetEntity.pos, nextCell, EffectType.PushDamage, diagonal ? (this.value - i) * 2 : (this.value - i), this.spellIcon));
+            Game.addToActionStack(new Action(this.originEntity, this.targetEntity, this.targetEntity.pos, nextCell, EffectType.PushDamage, diagonal ? (this.value - i) * 2 : (this.value - i), this.originTrap));
             break;
           }
         }

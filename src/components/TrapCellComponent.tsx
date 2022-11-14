@@ -24,7 +24,7 @@ class TrapCellComponent extends React.Component<Props>
     };
 
     let components: Array<JSX.Element> = [];
-    components.push(<polygon points={`
+    components.push(<polygon key='polygon' points={`
       ${root.x + this.props.width / 2},${root.y}
       ${root.x + this.props.width},${root.y + this.props.height / 2}
       ${root.x + this.props.width / 2},${root.y + this.props.height}
@@ -37,7 +37,7 @@ class TrapCellComponent extends React.Component<Props>
     if (this.props.borders & CellBorders.South) path += ` M ${root.x + this.props.width / 2},${root.y + this.props.height} L ${root.x},${root.y + this.props.height / 2} `;
     if (this.props.borders & CellBorders.West)  path += ` M ${root.x},${root.y + this.props.height / 2} L ${root.x + this.props.width / 2},${root.y} `;
 
-    components.push(<path d={path} />);
+    components.push(<path key='path' d={path} />);
 
     return <g className={`trap-cell ${TrapClasses[this.props.type]}`}>{components}</g>;
   }

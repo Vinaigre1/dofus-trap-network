@@ -32,19 +32,19 @@ class CellComponent extends React.Component<Props>
     const poly: Array<JSX.Element> = [];
     if (type === CellType.Wall) {
       poly.push(
-        <polygon points={`
+        <polygon key='polygon-1' points={`
           ${root.x + this.props.width / 2},${root.y - this.props.height / 2}
           ${root.x + this.props.width},${root.y}
           ${root.x + this.props.width / 2},${root.y + this.props.height / 2}
           ${root.x},${root.y}
         `}></polygon>,
-        <polygon points={`
+        <polygon key='polygon-2' points={`
           ${root.x},${root.y}
           ${root.x},${root.y + this.props.height / 2}
           ${root.x + this.props.width / 2},${root.y + this.props.height}
           ${root.x + this.props.width / 2},${root.y + this.props.height / 2}
         `}></polygon>,
-        <polygon points={`
+        <polygon key='polygon-3' points={`
           ${root.x + this.props.width / 2},${root.y + this.props.height / 2}
           ${root.x + this.props.width / 2},${root.y + this.props.height}
           ${root.x + this.props.width},${root.y + this.props.height / 2}
@@ -52,7 +52,7 @@ class CellComponent extends React.Component<Props>
         `}></polygon>
       );
     } else {
-      poly.push(<polygon points={`
+      poly.push(<polygon key='polygon-4' points={`
         ${root.x + this.props.width / 2},${root.y}
         ${root.x + this.props.width},${root.y + this.props.height / 2}
         ${root.x + this.props.width / 2},${root.y + this.props.height}
@@ -60,7 +60,7 @@ class CellComponent extends React.Component<Props>
       `}></polygon>);
     }
 
-    poly.push(<text
+    poly.push(<text key='text'
       x={root.x + this.props.width / 2 - 0.5}
       y={root.y + this.props.height / 2 + 0.5}
       fontSize={1}
