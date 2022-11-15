@@ -55,14 +55,14 @@ class CellLayerComponent extends React.Component<Props, States>
         y: trap.pos.y * (celHeight / 2)
       };
 
-      if (!this.state.highlighted.includes(this.props.traps[i].uuid)) {
-        traps.push(<TrapComponent
-          trap={trap}
-          ref={(component) => { trap.component = component; }} 
-          setHighlight={(uuid: string, highlight: boolean) => { this.setHighlight(uuid, highlight); }}
-          key={'trap-' + trap.uuid}
-        />);
+      traps.push(<TrapComponent
+        trap={trap}
+        ref={(component) => { trap.component = component; }} 
+        setHighlight={(uuid: string, highlight: boolean) => { this.setHighlight(uuid, highlight); }}
+        key={'trap-' + trap.uuid}
+      />);
 
+      if (!this.state.highlighted.includes(this.props.traps[i].uuid)) {
         trapImages.push(<image
           className={`trap-image ${TrapClasses[trap.type]}`}
           href={trap.image}
@@ -78,7 +78,7 @@ class CellLayerComponent extends React.Component<Props, States>
           trap={trap}
           ref={(component) => { trap.component = component; }} 
           setHighlight={(uuid: string, highlight: boolean) => { this.setHighlight(uuid, highlight); }}
-          key={'trap-' + trap.uuid}
+          key={'trap-hl-' + trap.uuid}
         />);
 
         highlightedImages.push(<image

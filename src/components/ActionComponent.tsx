@@ -15,12 +15,12 @@ class ActionComponent extends React.Component<Props>
     super(props);
   }
 
-  onMouseOver() {
-    console.log(this.props.action.originTrap.component.setHighlight(true));
+  onMouseEnter() {
+    this.props.action.originTrap.component.setHighlight(true);
   }
 
   onMouseLeave() {
-    console.log(this.props.action.originTrap.component.setHighlight(false));
+    this.props.action.originTrap.component.setHighlight(false);
   }
 
   render() {
@@ -42,7 +42,7 @@ class ActionComponent extends React.Component<Props>
     };
 
     return (
-      <div className={`action ${actionClasses[this.props.type]}`} onMouseOver={() => { this.onMouseOver(); }} onMouseLeave={() => { this.onMouseLeave(); }} >
+      <div className={`action ${actionClasses[this.props.type]}`} onMouseEnter={() => { this.onMouseEnter(); }} onMouseLeave={() => { this.onMouseLeave(); }} >
         <div className="action-img">
           <img src={this.props.action.originTrap.getSpellIcon()} alt="" />
         </div>

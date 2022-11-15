@@ -31,7 +31,6 @@ $animSpeed: calc(1s / 3); // 3 cells per second
 }
 
 .cell.ground:hover polygon {
-  cursor: pointer;
   fill:rgb(185,  18,  27);
 }
 
@@ -75,6 +74,18 @@ $animSpeed: calc(1s / 3); // 3 cells per second
 
 .trap polygon {
   opacity: 0.3;
+}
+
+.trap-cell path, .trap-image, .trap-cell:not(.trap-center) {
+  pointer-events: none;
+}
+
+.trap-center {
+  cursor: pointer;
+}
+
+.trap-highlighted {
+  pointer-events: none;
 }
 
 .trap-highlighted .trap {

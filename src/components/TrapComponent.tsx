@@ -45,18 +45,20 @@ class TrapComponent extends React.Component<Props, States>
    * Set the highlight value of the trap component.
    */
   setHighlight(highlight: boolean) {
+    if (!this.state.display) return;
+
     this.props.setHighlight(this.props.trap.uuid, highlight);
   }
 
   render() {
-    if (!this.state.display) return;
-
     let cells: Array<JSX.Element> = [];
     let cellWidth: number = 100 / (Game.width + 0.5);
     let cellHeight: number = cellWidth / 2;
 
     const trapCells = this.props.trap.getTrapCells();
     for (let j: number = 0; j < trapCells.length; j++) {
+      const center = trapCells[j].pos.x === this.props.trap.pos.x && trapCells[j].pos.y === this.props.trap.pos.y;
+      if (!this.state.display && !center) continue;
       if (Game.getCell(trapCells[j].pos)?.type !== CellType.Ground) continue;
 
       trapCells[j].borders |= Game.getCellBorders(trapCells[j].pos);
@@ -64,6 +66,8 @@ class TrapComponent extends React.Component<Props, States>
         x={trapCells[j].pos.x}
         y={trapCells[j].pos.y}
         id={trapCells[j].pos.y * Game.width + trapCells[j].pos.x}
+        center={center}
+        setHighlight={(highlight: boolean) => { this.setHighlight(highlight); }}
         width={cellWidth}
         height={cellHeight}
         type={trapCells[j].type}

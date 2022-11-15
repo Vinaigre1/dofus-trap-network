@@ -5,16 +5,26 @@ type Props = {
   x: number;
   y: number;
   id: number;
+  center: boolean;
   width: number;
   height: number;
   type: TrapType;
   borders: CellBorders;
+  setHighlight: Function;
 };
 
 class TrapCellComponent extends React.Component<Props>
 {
   constructor(props: Props | Readonly<Props>) {
     super(props);
+  }
+
+  onMouseEnter() {
+    this.props.setHighlight(true);
+  }
+
+  onMouseLeave() {
+    this.props.setHighlight(false);
   }
 
   render() {
@@ -28,8 +38,10 @@ class TrapCellComponent extends React.Component<Props>
       ${root.x + this.props.width / 2},${root.y}
       ${root.x + this.props.width},${root.y + this.props.height / 2}
       ${root.x + this.props.width / 2},${root.y + this.props.height}
-      ${root.x},${root.y + this.props.height / 2}
-    `}></polygon>);
+      ${root.x},${root.y + this.props.height / 2}`}
+      onMouseEnter={this.props.center ? () => { this.onMouseEnter(); } : undefined}
+      onMouseLeave={this.props.center ? () => { this.onMouseLeave(); } : undefined}
+    ></polygon>);
 
     let path: string = "";
     if (this.props.borders & CellBorders.North) path += ` M ${root.x + this.props.width / 2},${root.y} L ${root.x + this.props.width},${root.y + this.props.height / 2} `;
@@ -39,7 +51,7 @@ class TrapCellComponent extends React.Component<Props>
 
     components.push(<path key='path' d={path} />);
 
-    return <g className={`trap-cell ${TrapClasses[this.props.type]}`}>{components}</g>;
+    return <g className={`trap-cell ${this.props.center ? 'trap-center' : ''} ${TrapClasses[this.props.type]}`}>{components}</g>;
   }
 }
 
