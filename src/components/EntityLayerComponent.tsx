@@ -46,7 +46,7 @@ class EntityLayerComponent extends React.Component<Props>
 
       entities.push(<image
         className="entity-image"
-        href="/assets/img/entities/Target.svg"
+        href="./assets/img/entities/Target.svg"
         x={root.x + cellWidth * 0.15}
         y={root.y + cellHeight * 0.15}
         width={cellWidth * 0.7}

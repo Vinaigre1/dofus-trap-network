@@ -43,8 +43,8 @@ module.exports = {
     new HtmlWebpackPlugin({ template: "index.html.ejs" }),
     new CopyPlugin({
       patterns: [
-        { from: resolve(__dirname, "../../src/assets"), to: resolve(__dirname, "../../dist/assets") },
-        { from: resolve(__dirname, "../../favicon.png"), to: resolve(__dirname, "../../dist/favicon.png") }
+        { from: resolve(__dirname, "../../src/assets"), to: resolve(__dirname, "../../docs/assets") },
+        { from: resolve(__dirname, "../../favicon.png"), to: resolve(__dirname, "../../docs/favicon.png") }
       ]
     })
   ],

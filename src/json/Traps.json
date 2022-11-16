@@ -1,6 +1,6 @@
 {
   "${TrapType.Tricky}": {
-    "image": "/assets/img/traps/Tricky.svg",
+    "image": "./assets/img/traps/Tricky.svg",
     "area": {
       "type": ${Area.Cross},
       "size": 1
@@ -31,7 +31,7 @@
     ]
   },
   "${TrapType.Insidious}": {
-    "image": "/assets/img/traps/Insidious.svg",
+    "image": "./assets/img/traps/Insidious.svg",
     "area": {
       "type": ${Area.Cell},
       "size": 0
@@ -51,7 +51,7 @@
     ]
   },
   "${TrapType.Miry}": {
-    "image": "/assets/img/traps/Miry.svg",
+    "image": "./assets/img/traps/Miry.svg",
     "area": {
       "type": ${Area.Cell},
       "size": 0
@@ -82,7 +82,7 @@
     ]
   },
   "${TrapType.Mass}": {
-    "image": "/assets/img/traps/Mass.svg",
+    "image": "./assets/img/traps/Mass.svg",
     "area": {
       "type": ${Area.Cell},
       "size": 0
@@ -102,7 +102,7 @@
     ]
   },
   "${TrapType.Drift}": {
-    "image": "/assets/img/traps/Drift.svg",
+    "image": "./assets/img/traps/Drift.svg",
     "area": {
       "type": ${Area.Diagonal},
       "size": 1
@@ -133,7 +133,7 @@
     ]
   },
   "${TrapType.Malevolent}": {
-    "image": "/assets/img/traps/Malevolent.svg",
+    "image": "./assets/img/traps/Malevolent.svg",
     "area": {
       "type": ${Area.Cell},
       "size": 0
@@ -164,7 +164,7 @@
     ]
   },
   "${TrapType.Fragmentation}": {
-    "image": "/assets/img/traps/Fragmentation.svg",
+    "image": "./assets/img/traps/Fragmentation.svg",
     "area": {
       "type": ${Area.Cell},
       "size": 0
@@ -217,7 +217,7 @@
     ]
   },
   "${TrapType.Paralysing}": {
-    "image": "/assets/img/traps/Paralysing.svg",
+    "image": "./assets/img/traps/Paralysing.svg",
     "area": {
       "type": ${Area.Circle},
       "size": 3
@@ -237,7 +237,7 @@
     ]
   },
   "${TrapType.Repelling}": {
-    "image": "/assets/img/traps/Repelling.svg",
+    "image": "./assets/img/traps/Repelling.svg",
     "area": {
       "type": ${Area.Cross},
       "size": 1
@@ -268,7 +268,7 @@
     ]
   },
   "${TrapType.Sickrat}": {
-    "image": "/assets/img/traps/Sickrat.svg",
+    "image": "./assets/img/traps/Sickrat.svg",
     "area": {
       "type": ${Area.Cell},
       "size": 0
@@ -299,7 +299,7 @@
     ]
   },
   "${TrapType.Lethal}": {
-    "image": "/assets/img/traps/Lethal.svg",
+    "image": "./assets/img/traps/Lethal.svg",
     "area": {
       "type": ${Area.Cell},
       "size": 0
@@ -319,7 +319,7 @@
     ]
   },
   "${TrapType.Calamity}": {
-    "image": "/assets/img/traps/Calamity.svg",
+    "image": "./assets/img/traps/Calamity.svg",
     "area": {
       "type": ${Area.Cell},
       "size": 0
@@ -339,7 +339,7 @@
     ]
   },
   "${TrapType.MassGrave}": {
-    "image": "/assets/img/traps/MassGrave.svg",
+    "image": "./assets/img/traps/MassGrave.svg",
     "area": {
       "type": ${Area.Cell},
       "size": 0
@@ -347,7 +347,7 @@
     "effects": []
   },
   "${TrapType.Test}": {
-    "image": "/assets/img/traps/Test.svg",
+    "image": "./assets/img/traps/Test.svg",
     "area": {
       "type": ${Area.Cross},
       "size": 1

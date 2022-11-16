@@ -47,8 +47,8 @@
     "webpack-merge": "^5.8.0"
   },
   "scripts": {
-    "build": "yarn run clean-dist && webpack --config=configs/webpack/prod.js",
-    "clean-dist": "rimraf dist/*",
+    "build": "yarn run clean-docs && webpack --config=configs/webpack/prod.js",
+    "clean-docs": "rimraf docs/*",
     "lint": "eslint './src/**/*.{js,ts,tsx}' --quiet",
     "start": "yarn run start-dev",
     "start-dev": "webpack serve --config=configs/webpack/dev.js",

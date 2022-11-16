@@ -193,7 +193,7 @@ class Game {
    * @param {string} name The name of the json map to load
    */
   loadMap(name: string) {
-    const fileURL: string = `/assets/maps/${name}.json`;
+    const fileURL: string = `./assets/maps/${name}.json`;
     fetch(fileURL)
       .then(res => res.json())
       .then(
