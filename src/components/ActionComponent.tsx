@@ -24,11 +24,11 @@ class ActionComponent extends React.Component<Props, States>
   }
 
   onMouseEnter() {
-    this.props.action.originTrap.component.setHighlight(true);
+    this.props.action?.originTrap?.component?.setHighlight(true);
   }
 
   onMouseLeave() {
-    this.props.action.originTrap.component.setHighlight(false);
+    this.props.action?.originTrap?.component?.setHighlight(false);
   }
 
   setHighlight(highlight: boolean) {

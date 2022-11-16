@@ -4,9 +4,11 @@ import Game from "@classes/Game";
 import * as React from "react";
 import CellComponent from "@components/CellComponent";
 import EntityComponent from "@components/EntityComponent";
+import { Coordinates } from "@src/enums";
 
 type Props = {
   entities: Array<Entity | Cell>;
+  startPoint: Coordinates;
 };
 
 class EntityLayerComponent extends React.Component<Props>
@@ -35,6 +37,23 @@ class EntityLayerComponent extends React.Component<Props>
         />);
       }
     }
+
+    if (this.props.startPoint) {
+      const root: Coordinates = {
+        x: (this.props.startPoint.x) * cellWidth + ((this.props.startPoint.y) % 2 === 0 ? 0 : cellWidth / 2),
+        y: (this.props.startPoint.y) * cellHeight / 2
+      };
+
+      entities.push(<image
+        className="entity-image"
+        href="/assets/img/entities/Target.svg"
+        x={root.x + cellWidth * 0.15}
+        y={root.y + cellHeight * 0.15}
+        width={cellWidth * 0.7}
+        height={cellHeight * 0.7}
+      />);
+    }
+
     return entities;
   }
 }

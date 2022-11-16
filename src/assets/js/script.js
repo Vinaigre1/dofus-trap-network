@@ -8,4 +8,4 @@ window.onload = function() {
       }
     }
   }).observe(sourceEl[0]);
-}
+};

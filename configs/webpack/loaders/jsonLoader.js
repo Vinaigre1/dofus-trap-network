@@ -44,6 +44,11 @@ module.exports = function (source) {
       Southwest: 6,
       Northwest: 7
     },
+    EntityType: {
+      Player: 0,
+      Cawwot: 1,
+      Poutch: 2
+    },
     EntityName: {
       Player: "Player",
       Cawwot: "Cawwot",
@@ -78,7 +83,8 @@ module.exports = function (source) {
       AirTrap: 3,
       MalusTrap: 4,
       Summon: 5,
-      Other: 6
+      Other: 6,
+      Action: 7
     },
     SpellType: {
       TrickyTrap: 0,
@@ -96,7 +102,10 @@ module.exports = function (source) {
       MassGrave: 12,
       Poutch: 13,
       Cawwot: 14,
-      Chakra: 15
+      Chakra: 15,
+      TestTrap: 16,
+      Select: 17,
+      Remove: 18
     }
   }
 

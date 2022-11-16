@@ -1,3 +1,4 @@
+import Game from "@classes/Game";
 import { CellBorders, Coordinates, TrapClasses, TrapType } from "@src/enums";
 import * as React from "react";
 
@@ -27,6 +28,10 @@ class TrapCellComponent extends React.Component<Props>
     this.props.setHighlight(false);
   }
 
+  onClick() {
+    Game.onCellClick({ x: this.props.x, y: this.props.y });
+  }
+
   render() {
     const root: Coordinates = {
       x: this.props.x * this.props.width + (this.props.y % 2 === 0 ? 0 : this.props.width / 2),
@@ -41,6 +46,7 @@ class TrapCellComponent extends React.Component<Props>
       ${root.x},${root.y + this.props.height / 2}`}
       onMouseEnter={this.props.center ? () => { this.onMouseEnter(); } : undefined}
       onMouseLeave={this.props.center ? () => { this.onMouseLeave(); } : undefined}
+      onClick={this.props.center ? () => { this.onClick(); } : undefined}
     ></polygon>);
 
     let path: string = "";

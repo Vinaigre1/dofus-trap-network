@@ -108,7 +108,7 @@
     "icon": "/assets/img/spells/Poutch.svg",
     "category": ${SpellCategory.Summon},
     "effect": {
-      "trap": ${TrapType.MassGrave}
+      "entity": "${EntityName.Poutch}"
     }
   },
   "${SpellType.Cawwot}": {
@@ -116,7 +116,7 @@
     "icon": "/assets/img/spells/Cawwot.svg",
     "category": ${SpellCategory.Summon},
     "effect": {
-      "trap": ${TrapType.MassGrave}
+      "entity": "${EntityName.Cawwot}"
     }
   },
   "${SpellType.Chakra}": {
@@ -125,6 +125,30 @@
     "category": ${SpellCategory.Other},
     "effect": {
       "trap": ${TrapType.MassGrave}
+    }
+  },
+  "${SpellType.TestTrap}": {
+    "name": "Test Trap",
+    "icon": "/assets/img/spells/TestTrap.svg",
+    "category": ${SpellCategory.Other},
+    "effect": {
+      "trap": ${TrapType.Test}
+    }
+  },
+  "${SpellType.Select}": {
+    "name": "Select",
+    "icon": "/assets/img/spells/Select.svg",
+    "category": ${SpellCategory.Action},
+    "effect": {
+      "action": "Select"
+    }
+  },
+  "${SpellType.Remove}": {
+    "name": "Remove",
+    "icon": "/assets/img/spells/Remove.svg",
+    "category": ${SpellCategory.Action},
+    "effect": {
+      "action": "Remove"
     }
   }
 }

@@ -114,5 +114,3 @@ class EntityComponent extends React.Component<Props, States>
 }
 
 export default EntityComponent
-
-{/* <image class="monster" width="73.0995966490847" height="73.0995966490847" x="372.42320819112626" y="304.7098976109215" transform="translate(-36.50613228048402, -65.07989472541111)" xlink:href="/asset/dofensive/monsters/4321"></image> */}

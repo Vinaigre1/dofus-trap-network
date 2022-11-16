@@ -16,6 +16,10 @@ class CellComponent extends React.Component<Props>
     super(props);
   }
 
+  onClick() {
+    Game.onCellClick({ x: this.props.x, y: this.props.y });
+  }
+
   render() {
     const type: CellType = Game.getCell(this.props)?.type;
     const even: boolean = this.props.y % 2 === 0;
@@ -57,7 +61,9 @@ class CellComponent extends React.Component<Props>
         ${root.x + this.props.width},${root.y + this.props.height / 2}
         ${root.x + this.props.width / 2},${root.y + this.props.height}
         ${root.x},${root.y + this.props.height / 2}
-      `}></polygon>);
+      `}
+        onClick={() => { this.onClick(); }}
+      ></polygon>);
     }
 
     // poly.push(<text key='text'

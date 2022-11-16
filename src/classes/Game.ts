@@ -4,7 +4,7 @@ import Trap from "@classes/Trap";
 import Action from "@classes/Action";
 
 import Consts from "@json/Consts.json";
-import { Area, CellBorders, CellType, Coordinates, Direction, EffectType, EntityName, Team, TrapType } from "@src/enums";
+import { ActionName, Area, CellBorders, CellType, Coordinates, Direction, EffectType, EntityName, Team, TrapType } from "@src/enums";
 import { clockwise, isInArea, moveInDirection } from "@src/utils/mapUtils";
 import TrapCell from "@classes/TrapCell";
 import { randomInt } from "@src/utils/utils";
@@ -241,6 +241,48 @@ class Game {
   }
 
   /**
+   * Returns the trap at the given coordinates.
+   * 
+   * @param {Coordinates} pos Coordinates of the cell to check
+   * @returns {Trap} The trap, or undefined if there is none
+   */
+  getTrap(pos: Coordinates): Trap {
+    for (let i: number = 0; i < this.traps.length; i++) {
+      if (this.traps[i].pos.x === pos.x && this.traps[i].pos.y === pos.y)
+        return this.traps[i];
+    }
+    return undefined;
+  }
+
+  /**
+   * Removes one entity at the given coordinates.
+   * 
+   * @param {Coordinates} pos Coordinates of the entity to remove
+   */
+  removeEntity(pos: Coordinates) {
+    for (let i: number = 0; i < this.entities.length; i++) {
+      if (this.entities[i].pos.x === pos.x && this.entities[i].pos.y === pos.y) {
+        this.entities.splice(i, 1);
+        break;
+      }
+    }
+  }
+
+  /**
+   * Removes one trap at the given coordinates.
+   * 
+   * @param {Coordinates} pos Coordinates of the trap to remove
+   */
+  removeTrap(pos: Coordinates) {
+    for (let i: number = 0; i < this.traps.length; i++) {
+      if (this.traps[i].pos.x === pos.x && this.traps[i].pos.y === pos.y) {
+        this.traps.splice(i, 1);
+        break;
+      }
+    }
+  }
+
+  /**
    * Returns all entities in the given area.
    * 
    * @param {Coordinates} pos Coordinates of the center of the area
@@ -445,6 +487,38 @@ class Game {
    */
   selectSpell(spell: Spell) {
     this.selectedSpell = spell;
+  }
+
+  onCellClick(pos: Coordinates) {
+    if (this.selectedSpell?.effect?.trap !== undefined) {
+      if (this.getTrap(pos) === undefined)
+        this.placeTrap(new Trap(pos, this.selectedSpell.effect.trap, this.entities[0]));
+    }
+    if (this.selectedSpell?.effect?.entity !== undefined) {
+      if (this.getEntity(pos) === undefined)
+        this.placeEntity(new Entity(pos, Team.Defender,this.selectedSpell.effect.entity))
+    }
+    if (this.selectedSpell?.effect?.action !== undefined) {
+      this.runActionSpell(pos, this.selectedSpell.effect.action);
+    }
+    this.refreshMap();
+  }
+
+  runActionSpell(pos: Coordinates, actionName: ActionName) {
+    switch (actionName) {
+      case ActionName.Remove:
+        if (this.getEntity(pos)) {
+          this.removeEntity(pos);
+        } else if (this.getTrap(pos)) {
+          this.removeTrap(pos);
+        }
+        break;
+      case ActionName.Select:
+        this.setStartPoint(pos);
+        break;
+      default:
+        break;
+    }
   }
 }
 

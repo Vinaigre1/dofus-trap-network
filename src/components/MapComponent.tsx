@@ -57,7 +57,7 @@ class MapComponent extends React.Component<Props>
           <CellLayerComponent rows={rows} traps={traps} />
         </svg>
         <svg className="entities" viewBox={`0 0 100 ${height}`}>
-          <EntityLayerComponent entities={entities} />
+          <EntityLayerComponent entities={entities} startPoint={Game.startPoint} />
         </svg>
       </div>
     );

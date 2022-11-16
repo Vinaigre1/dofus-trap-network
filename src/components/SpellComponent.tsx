@@ -1,20 +1,17 @@
 import * as React from "react";
 import "@assets/scss/Spells.scss";
 import { Spell } from "@src/@types/SpellDataType";
-import Game from "@classes/Game";
 
 type Props = {
-  spell: Spell
+  spell: Spell;
+  onClick: Function;
+  selected: boolean;
 };
 
 class SpellComponent extends React.Component<Props>
 {
-  onClick() {
-    Game.selectSpell(this.props.spell);
-  }
-
   render() {
-    return <div className="spell" onClick={() => { this.onClick(); }}>
+    return <div className={`spell ${this.props.selected ? "selected-spell" : ""}`} onClick={() => { this.props.onClick(this.props.spell); }}>
       <img
         width="45"
         height="45"

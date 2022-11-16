@@ -82,7 +82,8 @@ export enum SpellCategory {
   AirTrap,
   MalusTrap,
   Summon,
-  Other
+  Other,
+  Action
 }
 
 export enum SpellType {
@@ -101,13 +102,21 @@ export enum SpellType {
   MassGrave,
   Poutch,
   Cawwot,
-  Chakra
+  Chakra,
+  TestTrap,
+  Select,
+  Remove
 }
 
 export enum ActionType {
   Waiting,
   Current,
   Completed
+}
+
+export enum ActionName {
+  Select = "Select",
+  Remove = "Remove"
 }
 
 export const TrapClasses = {
