@@ -1,0 +1,14 @@
+body {
+  background: url('/assets/img/other/background.png') no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(20px);
+}
+
+.app {
+  color: white;
+  box-shadow: 0 0 25px 15px rgba(0, 0, 0, 0.8);
+  font-family: helvetica, arial, sans-serif;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}

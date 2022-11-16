@@ -1,0 +1,33 @@
+.spells {
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);
+  width: 100%;
+  margin: 5px;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+  line-height: 50%;
+}
+
+.spell-category {
+  flex: 3;
+  display: inline-block;
+  text-align: center;
+}
+
+.spells .controls {
+  flex: 8;
+}
+
+.spells-padding {
+  flex: 8;
+}
+
+.spell {
+  cursor: pointer;
+  padding: 5px;
+}
+
+.selected-spell {
+  box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
+  background-color: rgba(255, 255, 255, 0.3);
+}

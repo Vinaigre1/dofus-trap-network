@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "outDir": "dist",
+    "target": "ESNext",
+    "sourceMap": true,
+    "paths": {
+      "@components/*": ["./src/components/*"],
+      "@classes/*": ["./src/classes/*"],
+      "@assets/*": ["./src/assets/*"],
+      "@json/*": ["./src/json/*"],
+      "@src/*": ["./src/*"]
+    },
+    "typeRoots": [
+      "./src/@types"
+    ],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src"]
+}

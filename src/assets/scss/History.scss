@@ -1,0 +1,63 @@
+.history {
+  flex: 1;
+  margin: 5px;
+  overflow-y: scroll;
+  display: flex;
+  flex-direction: column-reverse;
+  background-color: #0008;
+}
+
+.action:last-child {
+  border-top: 1px solid #DDD;
+}
+
+.action {
+  padding: 4px;
+  border-bottom: 1px solid #DDD;
+  display: flex;
+  color: #EEE;
+
+  .action-img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+  }
+
+  .action-infos {
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.action.current {
+  background-color: #0D04;
+}
+
+.action.waiting {
+  opacity: 0.3;
+}
+
+.action.highlighted {
+  background-color: #FFF6;
+}
+
+.action:hover {
+  cursor: pointer;
+  padding-left: 5%;
+}
+
+.highlighted.action-tricky        { background-color: rgb(185,  18,  27, 0.6); }
+.highlighted.action-insidious     { background-color: rgb(150, 255, 150, 0.3); }
+.highlighted.action-miry          { background-color: rgb( 64, 131, 164, 0.6); }
+.highlighted.action-mass          { background-color: rgb( 90,  52,  28, 0.6); }
+.highlighted.action-drift         { background-color: rgb(185,  18,  27, 0.6); }
+.highlighted.action-malevolent    { background-color: rgb( 90,  52,  28, 0.6); }
+.highlighted.action-fragmentation { background-color: rgb(185,  18,  27, 0.6); }
+.highlighted.action-paralysing    { background-color: rgb( 49,  45, 134, 0.5); }
+.highlighted.action-repelling     { background-color: rgb(150, 255, 150, 0.3); }
+.highlighted.action-sickrat       { background-color: rgb( 64, 131, 164, 0.6); }
+.highlighted.action-lethal        { background-color: rgb( 90,  52,  28, 0.6); }
+.highlighted.action-calamity      { background-color: rgb( 64, 131, 164, 0.6); }
+.highlighted.action-massgrave     { background-color: rgb( 49,  45, 134, 0.5); }
+.highlighted.action-test-trap     { background-color: rgb(255, 255, 255, 0.4); }
