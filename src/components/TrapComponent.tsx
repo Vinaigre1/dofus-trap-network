@@ -7,6 +7,7 @@ import TrapCellComponent from "./TrapCellComponent";
 type Props = {
   trap: Trap;
   setHighlight: Function;
+  highlight: boolean;
 };
 
 type States = {
@@ -15,7 +16,7 @@ type States = {
 
 class TrapComponent extends React.Component<Props, States>
 {
-  constructor(props) {
+  constructor(props: Props) {
     super(props);
 
     this.state = {
@@ -30,6 +31,7 @@ class TrapComponent extends React.Component<Props, States>
     this.setState((state) => {
       return { ...state, display: true }
     });
+    this.props.trap.imgComponent.style.display = "";
   }
 
   /**
@@ -39,14 +41,13 @@ class TrapComponent extends React.Component<Props, States>
     this.setState((state) => {
       return { ...state, display: false }
     });
+    this.props.trap.imgComponent.style.display = "none";
   }
 
   /**
    * Set the highlight value of the trap component.
    */
   setHighlight(highlight: boolean) {
-    if (!this.state.display) return;
-
     const actions = Game.getActionsFromTrap(this.props.trap);
     actions.forEach(action => {
       action.component?.setHighlight(highlight);
@@ -59,9 +60,9 @@ class TrapComponent extends React.Component<Props, States>
     let cellWidth: number = 100 / (Game.width + 0.5);
     let cellHeight: number = cellWidth / 2;
 
-    const trapCells = this.props.trap.getTrapCells();
+    const trapCells = this.props.trap.getTrapCells(this.props.highlight);
     for (let j: number = 0; j < trapCells.length; j++) {
-      const center = trapCells[j].pos.x === this.props.trap.pos.x && trapCells[j].pos.y === this.props.trap.pos.y;
+      const center: boolean = trapCells[j].pos.x === this.props.trap.pos.x && trapCells[j].pos.y === this.props.trap.pos.y;
       if (!this.state.display && !center) continue;
       if (Game.getCell(trapCells[j].pos)?.type !== CellType.Ground) continue;
 

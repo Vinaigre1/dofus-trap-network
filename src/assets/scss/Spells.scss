@@ -8,11 +8,19 @@
 }
 
 .spell-category {
-  flex: 1;
+  flex: 3;
   display: inline-block;
   text-align: center;
 }
 
 .spells .controls {
-  flex: 1.5;
+  flex: 7;
+}
+
+.spells-padding {
+  flex: 7;
+}
+
+.spell {
+  cursor: pointer;
 }

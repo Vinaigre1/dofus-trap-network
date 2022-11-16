@@ -29,7 +29,6 @@ class SpellsComponent extends React.Component<Props>
     for (const cat of categoryOrder) {
       const spells: Array<JSX.Element> = [];
       for (const type in SpellData) {
-        console.log(SpellData[type].category, cat);
         if (SpellData[type].category !== cat) continue;
 
         spells.push(<SpellComponent
@@ -45,6 +44,7 @@ class SpellsComponent extends React.Component<Props>
     }
 
     return <div className="spells">
+      <div className="spells-padding"></div>
       {spellCategories}
       <div className="controls">
         <button onClick={() => { Game.run(); }}>play</button>

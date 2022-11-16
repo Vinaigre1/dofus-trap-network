@@ -5,7 +5,6 @@ import { TrapDataType } from "@src/@types/TrapDataType";
 import { getBorders, getCellsInArea, isInArea } from "@src/utils/mapUtils";
 import Entity from "@classes/Entity";
 import { v4 as uuidv4 } from "uuid";
-import Spell from "@classes/Spell";
 
 import _TrapData from "@json/Traps.json";
 import TrapComponent from "@components/TrapComponent";
@@ -55,10 +54,11 @@ class Trap {
    * Returns a new array of TrapCell objects corresponding to
    * all visible cells of the Trap.
    * 
+   * @param {boolean} force Force the function to run when the trap is disabled
    * @returns {Array<TrapCell>} List of TrapCell objects
    */
-  getTrapCells(): Array<TrapCell> {
-    if (!this.active) return [];
+  getTrapCells(force: boolean = false): Array<TrapCell> {
+    if (!this.active && !force) return [];
 
     let trapCells: Array<TrapCell> = [];
     const cells: Array<Coordinates> = getCellsInArea({ x: this.pos.x, y: this.pos.y }, this.area, this.size);
@@ -77,13 +77,11 @@ class Trap {
 
   enable() {
     this.active = true;
-    this.imgComponent.style.display = "";
     this.component?.show();
   }
 
   disable() {
     this.active = false;
-    this.imgComponent.style.display = "none";
     this.component?.hide();
   }
 

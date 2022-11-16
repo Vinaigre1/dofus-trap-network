@@ -10,6 +10,7 @@ import TrapCell from "@classes/TrapCell";
 import { randomInt } from "@src/utils/utils";
 import MapComponent from "@components/MapComponent";
 import HistoryComponent from "@components/HistoryComponent";
+import { Spell } from "@src/@types/SpellDataType";
 
 class Game {
   map: Array<Array<Cell>>;
@@ -32,6 +33,8 @@ class Game {
   actionGenerator: Generator<Entity>;
   waitingAnim: boolean;
   remainingSteps: number;
+
+  selectedSpell: Spell;
 
   constructor(mapName: string) {
     this.width = Consts.mapWidth;
@@ -282,8 +285,8 @@ class Game {
           if (this.traps[i].effects[j].type === EffectType.Push) { // anticlockwise for Push effects
             entities = entities.reverse();
           }
+          const value = randomInt(this.traps[i].effects[j].min, this.traps[i].effects[j].max);
           for (let k: number = 0; k < entities.length; k++) {
-            const value = randomInt(this.traps[i].effects[j].min, this.traps[i].effects[j].max);
             localStack.unshift(new Action(this.traps[i].caster, entities[k], this.traps[i].pos, entities[k].pos, this.traps[i].effects[j].type, value, this.traps[i]));
           }
         }
@@ -400,7 +403,7 @@ class Game {
   }
 
   /**
-   * Returns all saved actions corresponding to the given trap.
+   * Returns all actions corresponding to the given trap.
    * 
    * @param {Trap} trap
    * @returns {Array<Action>} All the actions of the trap
@@ -412,6 +415,19 @@ class Game {
         actions.push(this.savedActionStack[i]);
       }
     }
+    for (let i: number = 0; i < this.actionStack.length; i++) {
+      if (this.actionStack[i].originTrap.uuid === trap.uuid) {
+        actions.push(this.actionStack[i]);
+      }
+    }
+    for (let i: number = 0; i < this.completedActionStack.length; i++) {
+      if (this.completedActionStack[i].originTrap.uuid === trap.uuid) {
+        actions.push(this.completedActionStack[i]);
+      }
+    }
+    if (this.currentAction?.originTrap.uuid === trap.uuid) {
+      actions.push(this.currentAction);
+    }
     return actions;
   }
 
@@ -420,6 +436,15 @@ class Game {
    */
   onEntityTransitionEnd() {
     this.triggerStack();
+  }
+
+  /**
+   * Selects a spell.
+   * 
+   * @param {Spell} spell Spell to select
+   */
+  selectSpell(spell: Spell) {
+    this.selectedSpell = spell;
   }
 }
 

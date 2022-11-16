@@ -7,7 +7,7 @@ type Props = {
 class StatsComponent extends React.Component<Props>
 {
   render() {
-    return <div className="relative-height stats">stats</div>;
+    return <div className="relative-height stats">(Work In Progress)</div>;
   }
 }
 

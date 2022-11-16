@@ -59,6 +59,7 @@ class CellLayerComponent extends React.Component<Props, States>
         trap={trap}
         ref={(component) => { trap.component = component; }} 
         setHighlight={(uuid: string, highlight: boolean) => { this.setHighlight(uuid, highlight); }}
+        highlight={false}
         key={'trap-' + trap.uuid}
       />);
 
@@ -72,12 +73,14 @@ class CellLayerComponent extends React.Component<Props, States>
           height={celHeight * 0.7}
           key={trap.uuid}
           ref={(component) => { trap.imgComponent = component; }}
+          style={{ display: this.props.traps[i].active ? "" : "none" }}
         />);
       } else {
         highlightedTraps.push(<TrapComponent
           trap={trap}
           ref={(component) => { trap.component = component; }} 
           setHighlight={(uuid: string, highlight: boolean) => { this.setHighlight(uuid, highlight); }}
+          highlight={true}
           key={'trap-hl-' + trap.uuid}
         />);
 
