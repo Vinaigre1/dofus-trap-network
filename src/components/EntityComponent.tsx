@@ -70,7 +70,7 @@ class EntityComponent extends React.Component<Props, States>
         animX: undefined,
         animY: undefined
       });
-      Game.triggerStack();
+      Game.onEntityTransitionEnd();
     } else {
       this.transitionCounter--;
     }

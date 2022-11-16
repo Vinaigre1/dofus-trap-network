@@ -31,6 +31,7 @@ class Game {
 
   actionGenerator: Generator<Entity>;
   waitingAnim: boolean;
+  remainingSteps: number;
 
   constructor(mapName: string) {
     this.width = Consts.mapWidth;
@@ -45,38 +46,26 @@ class Game {
     this.waitingAnim = false;
     this.mapComponent = undefined;
     this.startPoint = undefined;
+    this.remainingSteps = -1;
 
     this.loadMap(mapName);
 
     if (true) { // Debug
       // @ts-ignore
       window.Game = this;
-      // this.placeEntity(new Entity({ x: 6, y: 34 }, Team.Attacker, EntityName.Poutch));
-      // this.placeEntity(new Entity({ x: 3, y: 29 }, Team.Defender, EntityName.Poutch));
-      // this.placeTrap(new Trap({ x: 4, y: 28 }, TrapType.Repelling, this.entities[0]));
-      // this.placeTrap(new Trap({ x: 2, y: 30 }, TrapType.Tricky, this.entities[0]));
       this.placeEntity(new Entity({ x: 6, y: 34 }, Team.Attacker, EntityName.Poutch));
       this.placeEntity(new Entity({ x: 3, y: 29 }, Team.Defender, EntityName.Poutch));
-      this.placeTrap(new Trap({ x: 4, y: 30 }, TrapType.Malevolent, this.entities[0]));
-      this.placeTrap(new Trap({ x: 3, y: 29 }, TrapType.Lethal, this.entities[0]));
+      this.placeEntity(new Entity({ x: 4, y: 26 }, Team.Defender, EntityName.Poutch));
+      this.placeTrap(new Trap({ x: 3, y: 30 }, TrapType.Repelling, this.entities[0]));
       this.placeTrap(new Trap({ x: 3, y: 28 }, TrapType.Repelling, this.entities[0]));
-      this.placeTrap(new Trap({ x: 3, y: 30 }, TrapType.Tricky, this.entities[0]));
-      this.placeTrap(new Trap({ x: 3, y: 31 }, TrapType.Malevolent, this.entities[0]));
-      this.placeTrap(new Trap({ x: 4, y: 32 }, TrapType.Repelling, this.entities[0]));
-      this.placeTrap(new Trap({ x: 3, y: 32 }, TrapType.Tricky, this.entities[0]));
-      this.placeTrap(new Trap({ x: 2, y: 29 }, TrapType.Lethal, this.entities[0]));
-      this.placeTrap(new Trap({ x: 2, y: 30 }, TrapType.Malevolent, this.entities[0]));
-      this.placeTrap(new Trap({ x: 1, y: 29 }, TrapType.Repelling, this.entities[0]));
-      this.placeTrap(new Trap({ x: 2, y: 31 }, TrapType.Lethal, this.entities[0]));
-      this.placeTrap(new Trap({ x: 1, y: 31 }, TrapType.Tricky, this.entities[0]));
-      this.placeTrap(new Trap({ x: 2, y: 32 }, TrapType.Malevolent, this.entities[0]));
-      this.placeTrap(new Trap({ x: 2, y: 33 }, TrapType.Repelling, this.entities[0]));
-      this.placeTrap(new Trap({ x: 1, y: 30 }, TrapType.Lethal, this.entities[0]));
-      this.placeTrap(new Trap({ x: 1, y: 33 }, TrapType.Tricky, this.entities[0]));
-      this.placeTrap(new Trap({ x: 0, y: 31 }, TrapType.Malevolent, this.entities[0]));
-      this.placeTrap(new Trap({ x: 0, y: 30 }, TrapType.Repelling, this.entities[0]));
-      this.placeTrap(new Trap({ x: 1, y: 32 }, TrapType.Lethal, this.entities[0]));
-      this.placeTrap(new Trap({ x: 1, y: 34 }, TrapType.Drift, this.entities[0]));
+      this.placeTrap(new Trap({ x: 3, y: 31 }, TrapType.Drift, this.entities[0]));
+      this.placeTrap(new Trap({ x: 5, y: 26 }, TrapType.Tricky, this.entities[0]));
+      this.placeTrap(new Trap({ x: 4, y: 27 }, TrapType.Sickrat, this.entities[0]));
+      this.placeTrap(new Trap({ x: 5, y: 30 }, TrapType.Repelling, this.entities[0]));
+      this.placeTrap(new Trap({ x: 6, y: 27 }, TrapType.Tricky, this.entities[0]));
+      this.placeTrap(new Trap({ x: 6, y: 28 }, TrapType.Sickrat, this.entities[0]));
+      this.placeTrap(new Trap({ x: 8, y: 28 }, TrapType.Tricky, this.entities[0]));
+      this.placeTrap(new Trap({ x: 7, y: 29 }, TrapType.Sickrat, this.entities[0]));
       this.setStartPoint({ x: 3, y: 29 });
     }
   }
@@ -95,7 +84,25 @@ class Game {
    */
   run() {
     this.savedActionStack = [];
-    this.triggerTraps(this.startPoint, true);
+    this.triggerTraps(this.startPoint);
+    this.remainingSteps = -1;
+    this.triggerStack();
+  }
+
+  /**
+   * Runs the trap network.
+   */
+  runOne() {
+    this.remainingSteps = 1;
+    if (this.actionStack.length === 0) {
+      this.savedActionStack = [];
+      this.triggerTraps(this.startPoint);
+    }
+    this.triggerStack();
+  }
+
+  pause() {
+    this.remainingSteps = 0;
   }
 
   /**
@@ -265,7 +272,7 @@ class Game {
    * @param {Coordinates} pos Coordinates of the cell where traps are triggered
    * @returns {boolean} Returns true if one or more traps has been triggered
    */
-  triggerTraps(pos: Coordinates, triggerStack: boolean = false): boolean {
+  triggerTraps(pos: Coordinates): boolean {
     let triggered: Array<number> = [];
     for (let i: number = 0; i < this.traps.length; i++) {
       if (this.traps[i].isInTrap(pos)) {
@@ -287,13 +294,7 @@ class Game {
     for (let i: number = triggered.length - 1; i >= 0; i--) {
       this.traps[triggered[i]].disable();
     }
-    if (triggered.length > 0) {
-      if (triggerStack) {
-        this.triggerStack();
-      }
-      return true;
-    }
-    return false;
+    return (triggered.length > 0);
   }
 
   /**
@@ -307,9 +308,11 @@ class Game {
   /**
    * Triggers the action stack.
    * Every action, starting from the last one is applied one by one.
+   * 
+   * This function uses this.remainingSteps = number of actions to trigger. -1 = no limit
    */
   triggerStack() {
-    while (this.waitingAnim || (this.currentAction = this.actionStack.pop())) {
+    while (this.waitingAnim || (this.remainingSteps-- !== 0 && (this.currentAction = this.actionStack.pop()))) {
       this.refreshHistory();
       if (!this.waitingAnim) {
         this.actionGenerator = this.currentAction.apply();
@@ -395,6 +398,29 @@ class Game {
 
     this.refreshMap();
   }
+
+  /**
+   * Returns all saved actions corresponding to the given trap.
+   * 
+   * @param {Trap} trap
+   * @returns {Array<Action>} All the actions of the trap
+   */
+  getActionsFromTrap(trap: Trap): Array<Action> {
+    const actions: Array<Action> = [];
+    for (let i: number = 0; i < this.savedActionStack.length; i++) {
+      if (this.savedActionStack[i].originTrap.uuid === trap.uuid) {
+        actions.push(this.savedActionStack[i]);
+      }
+    }
+    return actions;
+  }
+
+  /**
+   * Function triggered when an entity stops moving.
+   */
+  onEntityTransitionEnd() {
+    this.triggerStack();
+  }
 }
 
-export default new Game("servitude");
+export default new Game("empty");

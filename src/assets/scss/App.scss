@@ -1,7 +1,7 @@
-$background: black;
-
 body {
-  background: $background;
+  background: url('/assets/img/other/background2.png') no-repeat;
+  background-size: cover;
+  backdrop-filter: blur(20px);
 }
 
 .app {

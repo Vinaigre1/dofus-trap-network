@@ -34,6 +34,7 @@ class HistoryComponent extends React.Component<Props>
         type={ActionType.Completed}
         action={actions.completed[i]}
         key={actions.completed[i].uuid}
+        ref={(component) => { actions.completed[i].component = component; }}
       />);
     }
 

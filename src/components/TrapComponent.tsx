@@ -47,6 +47,10 @@ class TrapComponent extends React.Component<Props, States>
   setHighlight(highlight: boolean) {
     if (!this.state.display) return;
 
+    const actions = Game.getActionsFromTrap(this.props.trap);
+    actions.forEach(action => {
+      action.component?.setHighlight(highlight);
+    });
     this.props.setHighlight(this.props.trap.uuid, highlight);
   }
 

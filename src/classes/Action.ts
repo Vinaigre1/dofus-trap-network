@@ -48,7 +48,6 @@ export default class Action {
               break;
             }
           } else {
-            Game.addToActionStack(new Action(this.originEntity, this.targetEntity, this.targetEntity.pos, nextCell, EffectType.PushDamage, diagonal ? (this.value - i) * 2 : (this.value - i), this.originTrap));
             break;
           }
         }
@@ -69,6 +68,7 @@ export default class Action {
               break;
             }
           } else {
+            Game.addToActionStack(new Action(this.originEntity, this.targetEntity, this.targetEntity.pos, nextCell, EffectType.PushDamage, diagonal ? Math.ceil(this.value / 2) * 2 : (this.value - i), this.originTrap));
             break;
           }
         }
