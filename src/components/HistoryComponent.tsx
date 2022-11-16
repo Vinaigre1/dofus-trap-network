@@ -13,7 +13,7 @@ class HistoryComponent extends React.Component<Props>
     const actions = Game.getActionStack();
     const actionComponents: Array<JSX.Element> = [];
 
-    for (let i: number = actions.waiting.length - 1; i >= 0; i--) {
+    for (let i: number = 0; i < actions.waiting.length; i++) {
       actionComponents.push(<ActionComponent
         type={ActionType.Waiting}
         action={actions.waiting[i]}

@@ -93,7 +93,10 @@ module.exports = function (source) {
       SickratTrap: 9,
       Calamity: 10,
       ParalysingTrap: 11,
-      MassGrave: 12
+      MassGrave: 12,
+      Poutch: 13,
+      Cawwot: 14,
+      Chakra: 15
     }
   }
 

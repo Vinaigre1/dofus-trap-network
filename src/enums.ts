@@ -98,7 +98,10 @@ export enum SpellType {
   SickratTrap,
   Calamity,
   ParalysingTrap,
-  MassGrave
+  MassGrave,
+  Poutch,
+  Cawwot,
+  Chakra
 }
 
 export enum ActionType {

@@ -1,5 +1,6 @@
 {
   "${SpellType.TrickyTrap}": {
+    "name": "Tricky Trap",
     "icon": "/assets/img/spells/TrickyTrap.svg",
     "category": ${SpellCategory.FireTrap},
     "effect": {
@@ -7,6 +8,7 @@
     }
   },
   "${SpellType.DriftTrap}": {
+    "name": "Drift Trap",
     "icon": "/assets/img/spells/DriftTrap.svg",
     "category": ${SpellCategory.FireTrap},
     "effect": {
@@ -14,6 +16,7 @@
     }
   },
   "${SpellType.FragmentationTrap}": {
+    "name": "Fragmentation Trap",
     "icon": "/assets/img/spells/FragmentationTrap.svg",
     "category": ${SpellCategory.FireTrap},
     "effect": {
@@ -21,6 +24,7 @@
     }
   },
   "${SpellType.MassTrap}": {
+    "name": "Mass Trap",
     "icon": "/assets/img/spells/MassTrap.svg",
     "category": ${SpellCategory.EarthTrap},
     "effect": {
@@ -28,6 +32,7 @@
     }
   },
   "${SpellType.LethalTrap}": {
+    "name": "Lethal Trap",
     "icon": "/assets/img/spells/LethalTrap.svg",
     "category": ${SpellCategory.EarthTrap},
     "effect": {
@@ -35,6 +40,7 @@
     }
   },
   "${SpellType.MalevolentTrap}": {
+    "name": "Malevolent Trap",
     "icon": "/assets/img/spells/MalevolentTrap.svg",
     "category": ${SpellCategory.EarthTrap},
     "effect": {
@@ -42,6 +48,7 @@
     }
   },
   "${SpellType.RepellingTrap}": {
+    "name": "Repelling Trap",
     "icon": "/assets/img/spells/RepellingTrap.svg",
     "category": ${SpellCategory.AirTrap},
     "effect": {
@@ -49,6 +56,7 @@
     }
   },
   "${SpellType.InsidiousTrap}": {
+    "name": "Insidious Trap",
     "icon": "/assets/img/spells/InsidiousTrap.svg",
     "category": ${SpellCategory.AirTrap},
     "effect": {
@@ -56,6 +64,7 @@
     }
   },
   "${SpellType.MiryTrap}": {
+    "name": "Miry Trap",
     "icon": "/assets/img/spells/MiryTrap.svg",
     "category": ${SpellCategory.WaterTrap},
     "effect": {
@@ -63,6 +72,7 @@
     }
   },
   "${SpellType.SickratTrap}": {
+    "name": "Sickrat Trap",
     "icon": "/assets/img/spells/SickratTrap.svg",
     "category": ${SpellCategory.WaterTrap},
     "effect": {
@@ -70,6 +80,7 @@
     }
   },
   "${SpellType.Calamity}": {
+    "name": "Calamity",
     "icon": "/assets/img/spells/Calamity.svg",
     "category": ${SpellCategory.WaterTrap},
     "effect": {
@@ -77,6 +88,7 @@
     }
   },
   "${SpellType.ParalysingTrap}": {
+    "name": "Paralysing Trap",
     "icon": "/assets/img/spells/ParalysingTrap.svg",
     "category": ${SpellCategory.MalusTrap},
     "effect": {
@@ -84,8 +96,33 @@
     }
   },
   "${SpellType.MassGrave}": {
+    "name": "Mass Grave",
     "icon": "/assets/img/spells/MassGrave.svg",
     "category": ${SpellCategory.MalusTrap},
+    "effect": {
+      "trap": ${TrapType.MassGrave}
+    }
+  },
+  "${SpellType.Poutch}": {
+    "name": "Poutch Ingball",
+    "icon": "/assets/img/spells/Poutch.svg",
+    "category": ${SpellCategory.Summon},
+    "effect": {
+      "trap": ${TrapType.MassGrave}
+    }
+  },
+  "${SpellType.Cawwot}": {
+    "name": "Cawwot",
+    "icon": "/assets/img/spells/Cawwot.svg",
+    "category": ${SpellCategory.Summon},
+    "effect": {
+      "trap": ${TrapType.MassGrave}
+    }
+  },
+  "${SpellType.Chakra}": {
+    "name": "Chakra Concentration",
+    "icon": "/assets/img/spells/ChakraConcentration.svg",
+    "category": ${SpellCategory.Other},
     "effect": {
       "trap": ${TrapType.MassGrave}
     }

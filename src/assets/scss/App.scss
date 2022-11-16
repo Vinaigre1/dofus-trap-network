@@ -6,8 +6,8 @@ body {
 
 .app {
   color: white;
+  box-shadow: 0 0 25px 15px rgba(0, 0, 0, 0.8);
   font-family: helvetica, arial, sans-serif;
-  border: 1px solid black;
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;

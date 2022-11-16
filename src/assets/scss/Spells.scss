@@ -1,5 +1,18 @@
 .spells {
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);
   width: 100%;
   margin: 5px;
-  border: 1px solid yellow;
+  padding: 10px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.spell-category {
+  flex: 1;
+  display: inline-block;
+  text-align: center;
+}
+
+.spells .controls {
+  flex: 1.5;
 }

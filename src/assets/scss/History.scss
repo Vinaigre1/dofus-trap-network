@@ -1,6 +1,5 @@
 .history {
   flex: 1;
-  border: 1px solid green;
   margin: 5px;
   overflow-y: scroll;
   display: flex;
@@ -30,13 +29,11 @@
 }
 
 .action.completed {
-  opacity: 1;
   color: #DDD;
 }
 
 .action.current {
   color: #DDD;
-  opacity: 1;
   background-color: #0D04;
 }
 
@@ -48,6 +45,5 @@
 .action.highlighted {
   cursor: pointer;
   opacity: 1;
-  background-color: #FFF4;
-  box-shadow: 0 0 0 5px white;
+  background-color: #FFF6;
 }

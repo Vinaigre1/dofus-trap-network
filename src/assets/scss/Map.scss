@@ -1,8 +1,8 @@
 $animSpeed: calc(1s / 10); // 3 cells per second
 
 .map {
+  box-shadow: 0 0 20px 10px rgba(0, 0, 0, 0.5);
   flex: 3;
-  border: 1px solid blue;
   margin: 5px;
   display: grid;
   height: fit-content;
