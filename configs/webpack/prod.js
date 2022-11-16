@@ -9,7 +9,7 @@ module.exports = merge(commonConfig, {
   output: {
     filename: "js/bundle.[contenthash].min.js",
     path: resolve(__dirname, "../../docs"),
-    publicPath: "/",
+    publicPath: "/dofus-trap-network/",
   },
   devtool: "source-map",
   externals: {
