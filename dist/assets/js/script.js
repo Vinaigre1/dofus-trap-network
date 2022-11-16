@@ -1,0 +1,1 @@
+window.onload=function(){const e=document.getElementsByClassName("relative-height-source");new ResizeObserver((e=>{const t=document.getElementsByClassName("relative-height");for(const o of e)for(const e of t)e.style.maxHeight=`${o.contentRect.height}px`})).observe(e[0])};
