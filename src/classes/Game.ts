@@ -53,7 +53,7 @@ class Game {
 
     this.loadMap(mapName);
 
-    if (true) { // Debug
+    if (false) { // Debug
       // @ts-ignore
       window.Game = this;
       this.placeEntity(new Entity({ x: 6, y: 34 }, Team.Attacker, EntityName.Poutch));
