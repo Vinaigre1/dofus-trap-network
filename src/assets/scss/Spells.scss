@@ -31,3 +31,103 @@
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
   background-color: rgba(255, 255, 255, 0.3);
 }
+
+.controls button {
+  width: 60px;
+  height: 40px;
+  background-color: rgb(69, 69, 69);
+  border: none;
+  box-shadow: 0 0 10px 5px #0008;
+}
+
+.controls button:after {
+  content: '.';
+  color: transparent;
+  background-size: cover;
+  width: 30px;
+  height: 30px;
+  display: inline-block;
+}
+
+.controls .play:after {
+  background-image: url('/assets/img/other/play.png');
+}
+
+.controls .pause:after {
+  background-image: url('/assets/img/other/pause.png');
+}
+
+.controls .step:after {
+  background-image: url('/assets/img/other/step.png');
+}
+
+.controls .stop:after {
+  background-image: url('/assets/img/other/stop.png');
+}
+
+/*
+.controls .play:after,
+.controls .step:after {
+  content: '.';
+  margin-left: 5px;
+  margin-top: 5px;
+  color: transparent;
+  user-select: none;
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  box-sizing: border-box;
+  border-width: 10px 0 10px 18px;
+  border-style: solid;
+  border-color: transparent transparent transparent rgb(200, 200, 200);
+}
+
+.controls .pause:after {
+  content: '.';
+  color: transparent;
+  user-select: none;
+  display: inline-block;
+  width: 15px;
+  height: 20px;
+  box-sizing: border-box;
+  border-width: 0 5px 0 5px;
+  border-style: solid;
+  border-color: transparent #CCC transparent #CCC;
+}
+
+.controls button:hover {
+  background-color: #282828;
+  cursor: pointer;
+}
+
+.controls .play:hover:after,
+.controls .pause:hover:after,
+.controls .step:hover:after {
+  border-left-color: #AAA;
+}
+
+.controls .pause:hover:after {
+  border-right-color: #AAA;
+}
+
+.controls button:active {
+  background-color: #222;
+  cursor: pointer;
+}
+
+.controls .play:active:after,
+.controls .pause:active:after,
+.controls .step:active:after {
+  border-left-color: #999;
+}
+
+.controls .pause:active:after {
+  border-right-color: #999;
+}
+
+.controls .step {
+  color:rgb(200, 200, 200);
+  font-size: 20px;
+  vertical-align: middle;
+}
+*/
