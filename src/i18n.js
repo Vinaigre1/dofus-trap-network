@@ -22,7 +22,9 @@ const resources = {
       "{{value}} earth damage": "{{value}} earth damage",
       "{{value}} air damage": "{{value}} air damage",
       "{{value}} push damage": "{{value}} push damage",
-      "{{value}} push damage (indirect)": "{{value}} push damage (indirect)"
+      "{{value}} push damage (indirect)": "{{value}} push damage (indirect)",
+      "{{value}} push damage (indirect)": "{{value}} push damage (indirect)",
+      "Selected map": "Selected map",
     }
   },
   fr: {
@@ -51,7 +53,8 @@ const resources = {
       "{{value}} push damage_one": "{{value}} dommage de poussée",
       "{{value}} push damage": "{{value}} dommages de poussée",
       "{{value}} push damage_one (indirect)": "{{value}} dommage de poussée (indirecte)",
-      "{{value}} push damage (indirect)": "{{value}} dommages de poussée (indirecte)"
+      "{{value}} push damage (indirect)": "{{value}} dommages de poussée (indirecte)",
+      "Selected map": "Map sélectionnée",
     }
   }
 };

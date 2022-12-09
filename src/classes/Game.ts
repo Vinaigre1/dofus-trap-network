@@ -132,7 +132,7 @@ class Game {
    * @returns {Array<TrapCell>} The trap cells of all placed traps
    */
   getAllTrapCells(): Array<TrapCell> {
-    let cells: Array<TrapCell> = [];
+    const cells: Array<TrapCell> = [];
 
     for (let i: number = 0; i < this.traps.length; i++) {
       const trapCells = this.traps[i].getTrapCells();
@@ -202,7 +202,8 @@ class Game {
       .then(res => res.json())
       .then(
         (res) => {
-          let map = res.Data[0].Cells;
+          this.prepareNewMap();
+          const map = res.Data[0].Cells;
           this.map = new Array<Array<Cell>>(map[0].length);
           for (let i = 0; i < map[0].length; i++) {
             this.map[i] = new Array<Cell>(map.length);
@@ -211,6 +212,7 @@ class Game {
             }
           }
           this.refreshMap();
+          this.refreshHistory();
           this.mapLoaded = true;
         },
         (error) => {
@@ -218,6 +220,27 @@ class Game {
         }
       )
     ;
+  }
+
+  /**
+   * Resets all properties related to the map
+   */
+  prepareNewMap(refresh: boolean = false) {
+    this.traps = [];
+    this.entities = [];
+    this.actionStack = [];
+    this.currentAction = undefined;
+    this.completedActionStack = [];
+    this.savedActionStack = [];
+    this.startPoint = undefined;
+    this.waitingAnim = false;
+    this.remainingSteps = -1;
+    this.mapLoaded = false;
+
+    if (refresh) {
+      this.refreshMap();
+      this.refreshHistory();
+    }
   }
 
   /**
@@ -295,8 +318,8 @@ class Game {
    * @returns {Array<Entity>} List of entities in the given area
    */
   getEntitiesInArea(pos: Coordinates, area: Area, size: number): Array<Entity> {
-    let entities: Array<Entity> = [];
-    let clock = clockwise(pos);
+    const entities: Array<Entity> = [];
+    const clock = clockwise(pos);
 
     // maxCells = Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
     // Todo: increase efficiency of this function ?
@@ -322,10 +345,10 @@ class Game {
    * @returns {boolean} Returns true if one or more traps has been triggered
    */
   triggerTraps(pos: Coordinates): boolean {
-    let triggered: Array<number> = [];
+    const triggered: Array<number> = [];
     for (let i: number = 0; i < this.traps.length; i++) {
       if (this.traps[i].isInTrap(pos)) {
-        let localStack: Array<Action> = [];
+        const localStack: Array<Action> = [];
         for (let j: number = 0; j < this.traps[i].effects.length; j++) {
           let entities: Array<Entity> = this.getEntitiesInArea(this.traps[i].pos, this.traps[i].effects[j].area, this.traps[i].effects[j].size);
           if (this.traps[i].effects[j].type === EffectType.Push) { // anticlockwise for Push effects
