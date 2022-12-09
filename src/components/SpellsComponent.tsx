@@ -116,14 +116,14 @@ class SpellsComponent extends React.Component<Props, States>
       {spellCategories}
       <div className="controls">
         <button className={this.state.play ? "pause" : "play"} onClick={() => { this.state.play ? this.onPause() : this.onPlay(); }}>
-          <img className="img-play" src="/assets/img/other/play.png" alt="play" draggable="false" />
-          <img className="img-pause" src="/assets/img/other/pause.png" alt="pause" draggable="false" />
+          <img className="img-play" src="./assets/img/other/play.png" alt="play" draggable="false" />
+          <img className="img-pause" src="./assets/img/other/pause.png" alt="pause" draggable="false" />
         </button>
         <button className="step" onClick={() => { this.onStep(); }}>
-          <img className="img-step" src="/assets/img/other/step.png" alt="step" draggable="false" />
+          <img className="img-step" src="./assets/img/other/step.png" alt="step" draggable="false" />
         </button>
         <button className="stop" onClick={() => { this.onStop(); }}>
-          <img className="img-stop" src="/assets/img/other/stop.png"  alt="stop" draggable="false" />
+          <img className="img-stop" src="./assets/img/other/stop.png"  alt="stop" draggable="false" />
         </button>
       </div>
     </div>;
