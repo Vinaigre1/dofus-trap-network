@@ -4,7 +4,7 @@ import { Spell } from "@src/@types/SpellDataType";
 
 type Props = {
   spell: Spell;
-  onClick: Function;
+  onClick: (spell: Spell) => void;
   selected: boolean;
 };
 
