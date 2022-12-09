@@ -142,6 +142,7 @@ export interface EntityData {
   offsetX: number;
   offsetY: number;
   defaultScale: number;
+  movable: boolean;
 }
 
 export interface Coordinates {

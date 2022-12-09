@@ -1,4 +1,4 @@
-import { Coordinates, Direction, EffectType, EntityData, EntityName, Team } from "@src/enums";
+import { Coordinates, EntityData, EntityName, Team } from "@src/enums";
 import Entities from "@json/Entities.json";
 import EntityComponent from "@components/EntityComponent";
 import { v4 as uuidv4 } from "uuid";
@@ -39,7 +39,7 @@ class Entity {
    * @returns {boolean} true if the entity is movable
    */
   isMovable(): boolean {
-    return true;
+    return this.data.movable;
   }
 
   /**

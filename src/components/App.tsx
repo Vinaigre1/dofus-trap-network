@@ -17,7 +17,7 @@ const App = () => (
     <StatsComponent />
     <MapComponent ref={(component) => { Game.mapComponent = component; window.Game = Game; }} cellNum={Consts.mapWidth} rowNum={Consts.mapHeight} />
     <HistoryComponent ref={(component) => { Game.historyComponent = component; }} />
-    <SpellsComponent />
+    <SpellsComponent ref={(component) => { Game.spellsComponent = component; }} />
   </div>
 );
 

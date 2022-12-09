@@ -11,12 +11,14 @@ import { randomInt } from "@src/utils/utils";
 import MapComponent from "@components/MapComponent";
 import HistoryComponent from "@components/HistoryComponent";
 import { Spell } from "@src/@types/SpellDataType";
+import SpellsComponent from "@components/SpellsComponent";
 
 class Game {
   map: Array<Array<Cell>>;
   mapLoaded: boolean;
   mapComponent: MapComponent;
   historyComponent: HistoryComponent;
+  spellsComponent: SpellsComponent;
 
   entities: Array<Entity>;
   traps: Array<Trap>;
@@ -86,7 +88,10 @@ class Game {
    * Runs the trap network.
    */
   run() {
-    if (!this.startPoint) return;
+    if (!this.startPoint) {
+      this.spellsComponent.setPlay(false);
+      return;
+    }
 
     this.savedActionStack = [];
     this.triggerTraps(this.startPoint);
@@ -98,7 +103,10 @@ class Game {
    * Runs the trap network.
    */
   runOne() {
-    if (!this.startPoint) return;
+    if (!this.startPoint) {
+      this.spellsComponent.setPlay(false);
+      return;
+    }
 
     this.remainingSteps = 1;
     if (this.actionStack.length === 0) {
@@ -400,6 +408,7 @@ class Game {
         this.waitingAnim = false;
       }
     }
+    this.spellsComponent.setPlay(false);
     this.refreshMap();
   }
 

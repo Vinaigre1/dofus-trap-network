@@ -30,52 +30,31 @@ class SpellsComponent extends React.Component<Props, States>
 
   onClick(spell: Spell) {
     Game.selectSpell(spell);
-    this.setState((state) => {
-      return {
-        ...state,
-        selectedSpell: spell
-      };
-    });
+    this.setState((state) => ({ ...state, selectedSpell: spell }));
   }
 
   onPlay() {
+    this.setPlay(true);
     Game.run();
-    this.setState((state) => {
-      return {
-        ...state,
-        play: true
-      };
-    });
   }
 
   onPause() {
+    this.setPlay(false);
     Game.pause();
-    this.setState((state) => {
-      return {
-        ...state,
-        play: false
-      };
-    });
   }
 
   onStep() {
+    this.setPlay(false);
     Game.runOne();
-    this.setState((state) => {
-      return {
-        ...state,
-        play: false
-      };
-    });
   }
 
   onStop() {
+    this.setPlay(false);
     Game.resetAll();
-    this.setState((state) => {
-      return {
-        ...state,
-        play: false
-      };
-    });
+  }
+
+  setPlay(play: boolean) {
+    this.setState((state) => ({ ...state, play }));
   }
 
   render() {
