@@ -31,3 +31,30 @@
   box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.5);
   background-color: rgba(255, 255, 255, 0.3);
 }
+
+.controls button {
+  width: 60px;
+  height: 40px;
+  margin-left: 10px;
+  background-color: rgb(69, 69, 69);
+  border: 2px solid #CCC;
+  padding: 0;
+  box-shadow: 0 0 10px 5px #0008;
+  cursor: pointer;
+}
+
+.controls button:active,
+.controls button.pause {
+  background-color: rgb(186, 69, 69);
+}
+
+.controls button img {
+  vertical-align: middle;
+  display: inline;
+  height: 60%;
+}
+
+.controls button.play img.img-pause,
+.controls button.pause img.img-play {
+  display: none;
+}

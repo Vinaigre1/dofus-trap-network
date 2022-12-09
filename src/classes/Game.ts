@@ -86,6 +86,8 @@ class Game {
    * Runs the trap network.
    */
   run() {
+    if (!this.startPoint) return;
+
     this.savedActionStack = [];
     this.triggerTraps(this.startPoint);
     this.remainingSteps = -1;
@@ -96,6 +98,8 @@ class Game {
    * Runs the trap network.
    */
   runOne() {
+    if (!this.startPoint) return;
+
     this.remainingSteps = 1;
     if (this.actionStack.length === 0) {
       this.savedActionStack = [];
