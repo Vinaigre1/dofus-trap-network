@@ -1,6 +1,6 @@
 import Entity from "@classes/Entity";
 import Game from "@classes/Game";
-import { Area, Coordinates, EntityData, Team } from "@src/enums";
+import { Area, Coordinates, Team } from "@src/enums";
 import { isInArea } from "@src/utils/mapUtils";
 import * as React from "react";
 

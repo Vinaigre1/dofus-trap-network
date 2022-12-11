@@ -6,7 +6,7 @@ import TrapCellComponent from "./TrapCellComponent";
 
 type Props = {
   trap: Trap;
-  setHighlight: Function;
+  setHighlight: (uuid: string, highlight: boolean) => void;
   highlight: boolean;
 };
 
@@ -56,9 +56,9 @@ class TrapComponent extends React.Component<Props, States>
   }
 
   render() {
-    let cells: Array<JSX.Element> = [];
-    let cellWidth: number = 100 / (Game.width + 0.5);
-    let cellHeight: number = cellWidth / 2;
+    const cells: Array<JSX.Element> = [];
+    const cellWidth: number = 100 / (Game.width + 0.5);
+    const cellHeight: number = cellWidth / 2;
 
     const trapCells = this.props.trap.getTrapCells(this.props.highlight);
     for (let j: number = 0; j < trapCells.length; j++) {

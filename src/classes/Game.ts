@@ -558,4 +558,4 @@ class Game {
   }
 }
 
-export default new Game("empty");
+export default new Game("0");

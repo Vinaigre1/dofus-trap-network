@@ -11,7 +11,7 @@ type Props = {
   height: number;
   type: TrapType;
   borders: CellBorders;
-  setHighlight: Function;
+  setHighlight: (highlight: boolean) => void;
 };
 
 class TrapCellComponent extends React.Component<Props>
@@ -38,7 +38,7 @@ class TrapCellComponent extends React.Component<Props>
       y: this.props.y * (this.props.height / 2)
     };
 
-    let components: Array<JSX.Element> = [];
+    const components: Array<JSX.Element> = [];
     components.push(<polygon key='polygon' points={`
       ${root.x + this.props.width / 2},${root.y}
       ${root.x + this.props.width},${root.y + this.props.height / 2}
