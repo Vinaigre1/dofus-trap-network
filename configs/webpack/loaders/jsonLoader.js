@@ -17,10 +17,10 @@ module.exports = function (source) {
       AirDamage: 5,
       PushDamage: 6,
       IndirectPushDamage: 7,
-      MalusMP: 8,
+      MPDamage: 8,
       InsidiousGlyph: 9,
       MalevolentBoost: 10,
-      MiryHeal: 11
+      HealLastDamage: 11
     },
     Area: {
       Cell: 0,

@@ -69,7 +69,7 @@
         }
       },
       {
-        "type": ${EffectType.MiryHeal},
+        "type": ${EffectType.HealLastDamage},
         "value": {
           "min": 0.5,
           "max": 0.5
@@ -224,7 +224,7 @@
     },
     "effects": [
       {
-        "type": ${EffectType.MalusMP},
+        "type": ${EffectType.MPDamage},
         "value": {
           "min": 4,
           "max": 4

@@ -15,17 +15,20 @@ export enum EffectType {
   NeutralDamage,
   PushDamage,
   IndirectPushDamage,
-  MalusMP,
+  MPDamage,
+  DodgeDamage,
+  StealBestElement,
   PlaceTrap,
-  Spell,
+  SpellOnTarget,
+  SpellOnCaster,
   State,
   RemoveState,
   CancelSpell,
   BoostSpell,
+  HealLastDamage,
   PlaceEndTurnGlyph,
   InsidiousGlyph,
-  MalevolentBoost,
-  MiryHeal
+  MalevolentBoost
 }
 
 export enum AreaType {
@@ -141,7 +144,8 @@ export enum TriggerType {
 }
 
 export enum State {
-  MassTrap
+  MassTrap,
+  Gravity
 }
 
 export const TrapClasses = {

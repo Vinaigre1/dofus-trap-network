@@ -209,7 +209,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1004,
             max: 1,
             triggers: null,
             area: {
@@ -233,7 +233,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1004,
             max: 2,
             triggers: null,
             area: {
@@ -257,7 +257,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1004,
             max: 3,
             triggers: null,
             area: {
@@ -288,7 +288,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1005,
             max: 1,
             triggers: null,
             area: {
@@ -312,7 +312,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1005,
             max: 2,
             triggers: null,
             area: {
@@ -343,7 +343,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1006,
             max: 1,
             triggers: null,
             area: {
@@ -367,7 +367,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1006,
             max: 2,
             triggers: null,
             area: {
@@ -391,7 +391,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1006,
             max: 3,
             triggers: null,
             area: {
@@ -422,7 +422,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1007,
             max: 1,
             triggers: null,
             area: {
@@ -446,7 +446,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1007,
             max: 2,
             triggers: null,
             area: {
@@ -470,7 +470,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1007,
             max: 3,
             triggers: null,
             area: {
@@ -501,7 +501,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1008,
             max: 1,
             triggers: null,
             area: {
@@ -525,7 +525,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1008,
             max: 2,
             triggers: null,
             area: {
@@ -549,7 +549,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1008,
             max: 3,
             triggers: null,
             area: {
@@ -580,7 +580,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1009,
             max: 1,
             triggers: null,
             area: {
@@ -604,7 +604,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1009,
             max: 2,
             triggers: null,
             area: {
@@ -628,7 +628,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1009,
             max: 3,
             triggers: null,
             area: {
@@ -659,7 +659,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1011,
             max: 1,
             triggers: null,
             area: {
@@ -683,7 +683,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1011,
             max: 2,
             triggers: null,
             area: {
@@ -714,7 +714,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1012,
             max: 1,
             triggers: null,
             area: {
@@ -745,7 +745,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1013,
             max: 1,
             triggers: null,
             area: {
@@ -769,7 +769,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1013,
             max: 2,
             triggers: null,
             area: {
@@ -793,7 +793,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1013,
             max: 3,
             triggers: null,
             area: {
@@ -824,7 +824,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
-            min: 0,
+            min: 1014,
             max: 1,
             triggers: null,
             area: {
@@ -854,8 +854,8 @@ const spells: SpellDataType = {
         effects: [
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.Spell,
-            min: 0,
+            effectType: EffectType.SpellOnCaster,
+            min: 1015,
             max: 1,
             triggers: TriggerType.onDamage,
             area: {
@@ -878,8 +878,8 @@ const spells: SpellDataType = {
         effects: [
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.Spell,
-            min: 0,
+            effectType: EffectType.SpellOnCaster,
+            min: 1015,
             max: 2,
             triggers: TriggerType.onDamage,
             area: {
@@ -902,8 +902,8 @@ const spells: SpellDataType = {
         effects: [
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.Spell,
-            min: 0,
+            effectType: EffectType.SpellOnCaster,
+            min: 1015,
             max: 3,
             triggers: TriggerType.onDamage,
             area: {
@@ -1296,7 +1296,7 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
-            effectType: EffectType.Spell,
+            effectType: EffectType.SpellOnTarget,
             min: 1004,
             max: 4,
             triggers: null,
@@ -1344,7 +1344,7 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
-            effectType: EffectType.Spell,
+            effectType: EffectType.SpellOnTarget,
             min: 1004,
             max: 5,
             triggers: null,
@@ -1392,7 +1392,7 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
-            effectType: EffectType.Spell,
+            effectType: EffectType.SpellOnTarget,
             min: 1004,
             max: 6,
             triggers: null,
@@ -1570,7 +1570,7 @@ const spells: SpellDataType = {
     ]
   },
   1006: {
-    name: "Tricky Trap",
+    name: "Malevolent Trap",
     icon: null,
     category: SpellCategory.None,
     levels: [
@@ -1598,7 +1598,7 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.Spell,
+            effectType: EffectType.SpellOnCaster,
             min: 1006,
             max: 4,
             triggers: null,
@@ -1658,7 +1658,7 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.Spell,
+            effectType: EffectType.SpellOnCaster,
             min: 1006,
             max: 5,
             triggers: null,
@@ -1718,7 +1718,7 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.Spell,
+            effectType: EffectType.SpellOnCaster,
             min: 1006,
             max: 6,
             triggers: null,
@@ -1944,7 +1944,7 @@ const spells: SpellDataType = {
     ]
   },
   1008: {
-    name: "Repelling Trap",
+    name: "Insidious Trap",
     icon: null,
     category: SpellCategory.None,
     levels: [
@@ -2094,6 +2094,523 @@ const spells: SpellDataType = {
       }
     ]
   },
+  1009: {
+    name: "Miry Trap",
+    icon: null,
+    category: SpellCategory.None,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.WaterDamage,
+            min: 21,
+            max: 25,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.SpellOnTarget,
+            min: 1010,
+            max: 1,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Allies}`,
+            effectType: EffectType.SpellOnTarget,
+            min: 1010,
+            max: 2,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      },
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.WaterDamage,
+            min: 27,
+            max: 31,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.SpellOnTarget,
+            min: 1010,
+            max: 1,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Allies}`,
+            effectType: EffectType.SpellOnTarget,
+            min: 1010,
+            max: 2,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      },
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.WaterDamage,
+            min: 33,
+            max: 37,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.SpellOnTarget,
+            min: 1010,
+            max: 1,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Allies}`,
+            effectType: EffectType.SpellOnTarget,
+            min: 1010,
+            max: 2,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  1010: {
+    name: "Miry Trap",
+    icon: null,
+    category: SpellCategory.None,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.HealLastDamage,
+            min: 50,
+            max: 50,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 2
+            }
+          }
+        ]
+      },
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies}`,
+            effectType: EffectType.HealLastDamage,
+            min: 50,
+            max: 50,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 2
+            }
+          }
+        ]
+      }
+    ]
+  },
+  1011: {
+    name: "Sickrat Trap",
+    icon: null,
+    category: SpellCategory.None,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.Pull,
+            min: 3,
+            max: 3,
+            triggers: null,
+            area: {
+              type: AreaType.Cross,
+              min: 1,
+              max: 3
+            }
+          },
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.WaterDamage,
+            min: 13,
+            max: 15,
+            triggers: null,
+            area: {
+              type: AreaType.Cross,
+              min: 0,
+              max: 3
+            }
+          }
+        ]
+      },
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.Pull,
+            min: 3,
+            max: 3,
+            triggers: null,
+            area: {
+              type: AreaType.Cross,
+              min: 1,
+              max: 3
+            }
+          },
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.WaterDamage,
+            min: 17,
+            max: 19,
+            triggers: null,
+            area: {
+              type: AreaType.Cross,
+              min: 0,
+              max: 3
+            }
+          }
+        ]
+      }
+    ]
+  },
+  1012: {
+    name: "Calamity",
+    icon: null,
+    category: SpellCategory.None,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.WaterDamage,
+            min: 40,
+            max: 44,
+            triggers: null,
+            area: {
+              type: AreaType.Square,
+              min: 0,
+              max: 1
+            }
+          },
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.DodgeDamage,
+            min: 40,
+            max: 40,
+            triggers: null,
+            area: {
+              type: AreaType.Square,
+              min: 0,
+              max: 1
+            }
+          }
+        ]
+      }
+    ]
+  },
+  1013: {
+    name: "Paralysing Trap",
+    icon: null,
+    category: SpellCategory.None,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.MPDamage,
+            min: 4,
+            max: 4,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 3
+            }
+          }
+        ]
+      },
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.MPDamage,
+            min: 4,
+            max: 4,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 3
+            }
+          }
+        ]
+      },
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.MPDamage,
+            min: 4,
+            max: 4,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 3
+            }
+          }
+        ]
+      }
+    ]
+  },
+  1014: {
+    name: "Mass Grave",
+    icon: null,
+    category: SpellCategory.None,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.State,
+            min: State.Gravity,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 2
+            }
+          }
+        ]
+      }
+    ]
+  },
+  1015: {
+    name: "Chakra Concentration",
+    icon: null,
+    category: SpellCategory.None,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.StealBestElement,
+            min: 11,
+            max: 11,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      },
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.StealBestElement,
+            min: 13,
+            max: 13,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      },
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.StealBestElement,
+            min: 15,
+            max: 15,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      }
+    ]
+  }
   // [SpellType.Poutch]: {
   //   name: "Poutch Ingball",
   //   icon: "./assets/img/spells/Poutch.svg",

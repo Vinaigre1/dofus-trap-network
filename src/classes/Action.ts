@@ -99,8 +99,8 @@ export default class Action {
         console.log(`Applying effect "IndirectPushDamage" to ${this.targetEntity.data.name}`);
         break;
       }
-      case EffectType.MalusMP: {
-        console.log(`Applying effect "MalusMP" to ${this.targetEntity.data.name}`);
+      case EffectType.MPDamage: {
+        console.log(`Applying effect "MPDamage" to ${this.targetEntity.data.name}`);
         break;
       }
       case EffectType.InsidiousGlyph: {
@@ -111,8 +111,8 @@ export default class Action {
         console.log(`Applying effect "MalevolentBoost" to ${this.targetEntity.data.name}`);
         break;
       }
-      case EffectType.MiryHeal: {
-        console.log(`Applying effect "MiryHeal" to ${this.targetEntity.data.name}`);
+      case EffectType.HealLastDamage: {
+        console.log(`Applying effect "HealLastDamage" to ${this.targetEntity.data.name}`);
         break;
       }
     }
