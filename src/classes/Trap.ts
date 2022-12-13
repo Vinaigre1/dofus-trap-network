@@ -1,4 +1,4 @@
-import { Area, Coordinates, TrapType } from "@src/enums";
+import { AreaType, Coordinates, TrapType } from "@src/enums";
 import Effect from "@classes/Effect";
 import TrapCell from "@classes/TrapCell";
 import { TrapDataType } from "@src/@types/TrapDataType";
@@ -10,16 +10,14 @@ import _TrapData from "@json/Traps.json";
 import TrapComponent from "@components/TrapComponent";
 const TrapData: TrapDataType = _TrapData as unknown as TrapDataType;
 
-import _SpellData from "@json/Spells.json";
-import { SpellDataType } from "@src/@types/SpellDataType";
-const SpellData: SpellDataType = _SpellData as unknown as SpellDataType;
+import SpellData from "@json/Spells";
 
 class Trap {
   uuid: string;
   pos: Coordinates;
   type: TrapType;
   effects: Array<Effect>;
-  area: Area;
+  area: AreaType;
   size: number;
   image: string;
   caster: Entity;
@@ -60,7 +58,7 @@ class Trap {
   getTrapCells(force: boolean = false): Array<TrapCell> {
     if (!this.active && !force) return [];
 
-    let trapCells: Array<TrapCell> = [];
+    const trapCells: Array<TrapCell> = [];
     const cells: Array<Coordinates> = getCellsInArea({ x: this.pos.x, y: this.pos.y }, this.area, this.size);
 
     for (let i = 0; i < cells.length; i++) {

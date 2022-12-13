@@ -1,6 +1,6 @@
 import Entity from "@classes/Entity";
 import Game from "@classes/Game";
-import { Area, Coordinates, Team } from "@src/enums";
+import { AreaType, Coordinates, Team } from "@src/enums";
 import { isInArea } from "@src/utils/mapUtils";
 import * as React from "react";
 
@@ -51,7 +51,7 @@ class EntityComponent extends React.Component<Props, States>
    */
   move(fromPos: Coordinates, toPos: Coordinates) {
     this.transitionCounter = 2;
-    if (isInArea(fromPos, Area.Diagonal, toPos, 40)) {
+    if (isInArea(fromPos, AreaType.Diagonal, toPos, 40)) {
       this.transitionCounter = 1;
     }
 

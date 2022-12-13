@@ -12,15 +12,23 @@ export enum EffectType {
   FireDamage,
   EarthDamage,
   AirDamage,
+  NeutralDamage,
   PushDamage,
   IndirectPushDamage,
   MalusMP,
+  PlaceTrap,
+  Spell,
+  State,
+  RemoveState,
+  CancelSpell,
+  BoostSpell,
+  PlaceEndTurnGlyph,
   InsidiousGlyph,
   MalevolentBoost,
   MiryHeal
 }
 
-export enum Area {
+export enum AreaType {
   Cell,
   Cross,
   Circle,
@@ -83,6 +91,7 @@ export enum SpellCategory {
   MalusTrap,
   Summon,
   Other,
+  None,
   Action
 }
 
@@ -119,6 +128,22 @@ export enum ActionName {
   Remove = "Remove"
 }
 
+export enum TargetMask {
+  Allies,
+  Enemies,
+  State,
+  LifeAbove,
+  Caster
+}
+
+export enum TriggerType {
+  onDamage
+}
+
+export enum State {
+  MassTrap
+}
+
 export const TrapClasses = {
   [TrapType.Tricky]: "tricky",
   [TrapType.Insidious]: "insidious",
@@ -134,7 +159,7 @@ export const TrapClasses = {
   [TrapType.Calamity]: "calamity",
   [TrapType.MassGrave]: "massgrave",
   [TrapType.Test]: "test-trap"
-};
+}
 
 export interface EntityData {
   name: EntityName;

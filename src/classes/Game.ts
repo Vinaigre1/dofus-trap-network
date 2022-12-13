@@ -4,7 +4,7 @@ import Trap from "@classes/Trap";
 import Action from "@classes/Action";
 
 import Consts from "@json/Consts.json";
-import { ActionName, Area, CellBorders, CellType, Coordinates, Direction, EffectType, EntityName, Team, TrapType } from "@src/enums";
+import { ActionName, AreaType, CellBorders, CellType, Coordinates, Direction, EffectType, EntityName, Team, TrapType } from "@src/enums";
 import { clockwise, isInArea, moveInDirection } from "@src/utils/mapUtils";
 import TrapCell from "@classes/TrapCell";
 import { randomInt } from "@src/utils/utils";
@@ -321,17 +321,17 @@ class Game {
    * Returns all entities in the given area.
    * 
    * @param {Coordinates} pos Coordinates of the center of the area
-   * @param {Area} area Type of the area
+   * @param {AreaType} area Type of the area
    * @param {number} size Size of the area
    * @returns {Array<Entity>} List of entities in the given area
    */
-  getEntitiesInArea(pos: Coordinates, area: Area, size: number): Array<Entity> {
+  getEntitiesInArea(pos: Coordinates, area: AreaType, size: number): Array<Entity> {
     const entities: Array<Entity> = [];
     const clock = clockwise(pos);
 
     // maxCells = Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
     // Todo: increase efficiency of this function ?
-    const timesTwo: boolean = [Area.Diagonal, Area.Square].includes(area);
+    const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square].includes(area);
     const maxCells: number = ((size * (timesTwo ? 2 : 1)) * ((size * (timesTwo ? 2 : 1)) + 1)) * 2 + 1;
 
     for (let i: number = 0; i < maxCells; i++) {
