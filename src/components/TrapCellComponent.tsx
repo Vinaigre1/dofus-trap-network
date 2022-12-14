@@ -1,5 +1,5 @@
 import Game from "@classes/Game";
-import { CellBorders, Coordinates, TrapClasses, TrapType } from "@src/enums";
+import { CellBorders, Coordinates } from "@src/enums";
 import * as React from "react";
 
 type Props = {
@@ -9,7 +9,7 @@ type Props = {
   center: boolean;
   width: number;
   height: number;
-  type: TrapType;
+  type: string;
   borders: CellBorders;
   setHighlight: (highlight: boolean) => void;
 };
@@ -57,7 +57,7 @@ class TrapCellComponent extends React.Component<Props>
 
     components.push(<path key='path' d={path} />);
 
-    return <g className={`trap-cell ${this.props.center ? 'trap-center' : ''} ${TrapClasses[this.props.type]}`}>{components}</g>;
+    return <g className={`trap-cell ${this.props.center ? 'trap-center' : ''} trap-${this.props.type}`}>{components}</g>;
   }
 }
 

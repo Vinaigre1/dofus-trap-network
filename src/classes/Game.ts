@@ -2,16 +2,16 @@ import Cell from "@classes/Cell";
 import Entity from "@classes/Entity";
 import Trap from "@classes/Trap";
 import Action from "@classes/Action";
-
 import Consts from "@json/Consts.json";
-import { ActionName, AreaType, CellBorders, CellType, Coordinates, Direction, EffectType, EntityName, Team, TrapType } from "@src/enums";
+import { Area, AreaType, CellBorders, CellType, Coordinates, Direction, EffectType, EntityType, Team } from "@src/enums";
 import { clockwise, isInArea, moveInDirection } from "@src/utils/mapUtils";
 import TrapCell from "@classes/TrapCell";
 import { randomInt } from "@src/utils/utils";
 import MapComponent from "@components/MapComponent";
 import HistoryComponent from "@components/HistoryComponent";
-import { Spell } from "@src/@types/SpellDataType";
+import { Effect, Spell } from "@src/@types/SpellDataType";
 import SpellsComponent from "@components/SpellsComponent";
+import SpellData from "@json/Spells";
 
 class Game {
   map: Array<Array<Cell>>;
@@ -19,6 +19,8 @@ class Game {
   mapComponent: MapComponent;
   historyComponent: HistoryComponent;
   spellsComponent: SpellsComponent;
+  preparingEffects: Array<EffectType>;
+  mainCharacter: Entity;
 
   entities: Array<Entity>;
   traps: Array<Trap>;
@@ -52,27 +54,15 @@ class Game {
     this.mapComponent = undefined;
     this.startPoint = undefined;
     this.remainingSteps = -1;
+    this.preparingEffects = [
+      EffectType.PlaceTrap,
+      EffectType.CreateEntity,
+      EffectType.StartPoint,
+      EffectType.Remove
+    ];
+    this.mainCharacter = new Entity({ x: 0, y: 0 }, Team.Attacker, EntityType.Player);
 
     this.loadMap(mapName);
-
-    if (false) { // Debug
-      // @ts-ignore
-      window.Game = this;
-      this.placeEntity(new Entity({ x: 6, y: 34 }, Team.Attacker, EntityName.Poutch));
-      this.placeEntity(new Entity({ x: 3, y: 29 }, Team.Defender, EntityName.Poutch));
-      this.placeEntity(new Entity({ x: 4, y: 26 }, Team.Defender, EntityName.Poutch));
-      this.placeTrap(new Trap({ x: 3, y: 30 }, TrapType.Repelling, this.entities[0]));
-      this.placeTrap(new Trap({ x: 3, y: 28 }, TrapType.Repelling, this.entities[0]));
-      this.placeTrap(new Trap({ x: 3, y: 31 }, TrapType.Drift, this.entities[0]));
-      this.placeTrap(new Trap({ x: 5, y: 26 }, TrapType.Tricky, this.entities[0]));
-      this.placeTrap(new Trap({ x: 4, y: 27 }, TrapType.Sickrat, this.entities[0]));
-      this.placeTrap(new Trap({ x: 5, y: 30 }, TrapType.Repelling, this.entities[0]));
-      this.placeTrap(new Trap({ x: 6, y: 27 }, TrapType.Tricky, this.entities[0]));
-      this.placeTrap(new Trap({ x: 6, y: 28 }, TrapType.Sickrat, this.entities[0]));
-      this.placeTrap(new Trap({ x: 8, y: 28 }, TrapType.Tricky, this.entities[0]));
-      this.placeTrap(new Trap({ x: 7, y: 29 }, TrapType.Sickrat, this.entities[0]));
-      this.setStartPoint({ x: 3, y: 29 });
-    }
   }
 
   /**
@@ -321,22 +311,21 @@ class Game {
    * Returns all entities in the given area.
    * 
    * @param {Coordinates} pos Coordinates of the center of the area
-   * @param {AreaType} area Type of the area
-   * @param {number} size Size of the area
+   * @param {Area} area The area
    * @returns {Array<Entity>} List of entities in the given area
    */
-  getEntitiesInArea(pos: Coordinates, area: AreaType, size: number): Array<Entity> {
+  getEntitiesInArea(pos: Coordinates, area: Area): Array<Entity> {
     const entities: Array<Entity> = [];
     const clock = clockwise(pos);
 
     // maxCells = Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
     // Todo: increase efficiency of this function ?
-    const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square].includes(area);
-    const maxCells: number = ((size * (timesTwo ? 2 : 1)) * ((size * (timesTwo ? 2 : 1)) + 1)) * 2 + 1;
+    const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square].includes(area.type);
+    const maxCells: number = ((area.max * (timesTwo ? 2 : 1)) * ((area.max * (timesTwo ? 2 : 1)) + 1)) * 2 + 1;
 
     for (let i: number = 0; i < maxCells; i++) {
       const clockPos: Coordinates = clock.next().value;
-      if (isInArea(clockPos, area, pos, size)) {
+      if (isInArea(clockPos, area, pos)) {
         const entity: Entity = this.getEntity(clockPos);
         if (entity)
           entities.push(entity);
@@ -357,14 +346,16 @@ class Game {
     for (let i: number = 0; i < this.traps.length; i++) {
       if (this.traps[i].isInTrap(pos)) {
         const localStack: Array<Action> = [];
-        for (let j: number = 0; j < this.traps[i].effects.length; j++) {
-          let entities: Array<Entity> = this.getEntitiesInArea(this.traps[i].pos, this.traps[i].effects[j].area, this.traps[i].effects[j].size);
-          if (this.traps[i].effects[j].type === EffectType.Push) { // anticlockwise for Push effects
+        const level = this.traps[i].spellLevel;
+        const effects = SpellData[this.traps[i].spellId].levels[level].effects;
+        for (let j: number = 0; j < effects.length; j++) {
+          let entities: Array<Entity> = this.getEntitiesInArea(this.traps[i].pos, effects[j].area);
+          if (effects[j].effectType === EffectType.Push) { // anticlockwise for Push effects
             entities = entities.reverse();
           }
-          const value = randomInt(this.traps[i].effects[j].min, this.traps[i].effects[j].max);
+          const value = randomInt(effects[j].min, effects[j].max);
           for (let k: number = 0; k < entities.length; k++) {
-            localStack.unshift(new Action(this.traps[i].caster, entities[k], this.traps[i].pos, entities[k].pos, this.traps[i].effects[j].type, value, this.traps[i]));
+            localStack.unshift(new Action(this.traps[i].caster, entities[k], this.traps[i].pos, entities[k].pos, effects[j].effectType, value, this.traps[i]));
           }
         }
         this.addToActionStack(...localStack);
@@ -526,34 +517,25 @@ class Game {
   }
 
   onCellClick(pos: Coordinates) {
-    if (this.selectedSpell?.effect?.trap !== undefined) {
-      if (this.getTrap(pos) === undefined)
-        this.placeTrap(new Trap(pos, this.selectedSpell.effect.trap, this.entities[0]));
-    }
-    if (this.selectedSpell?.effect?.entity !== undefined) {
-      if (this.getEntity(pos) === undefined)
-        this.placeEntity(new Entity(pos, Team.Defender,this.selectedSpell.effect.entity))
-    }
-    if (this.selectedSpell?.effect?.action !== undefined) {
-      this.runActionSpell(pos, this.selectedSpell.effect.action);
-    }
+    if (this.selectedSpell === undefined) return;
+    // TODO: get spell level
+
+    const effects = this.selectedSpell?.levels[0].effects;
+    this.applyPreparingEffects(effects, pos);
+
     this.refreshMap();
   }
 
-  runActionSpell(pos: Coordinates, actionName: ActionName) {
-    switch (actionName) {
-      case ActionName.Remove:
-        if (this.getEntity(pos)) {
-          this.removeEntity(pos);
-        } else if (this.getTrap(pos)) {
-          this.removeTrap(pos);
-        }
-        break;
-      case ActionName.Select:
-        this.setStartPoint(pos);
-        break;
-      default:
-        break;
+  applyPreparingEffects(effects: Array<Effect>, pos: Coordinates) {
+    for (let i: number = 0; i < effects.length; i++) {
+      if (!this.preparingEffects.includes(effects[i].effectType)) continue;
+
+      const action = new Action(this.mainCharacter, null, this.mainCharacter.pos, pos, effects[i].effectType, effects[i]);
+      const gen = action.apply(false);
+      const ret = gen.next();
+      if (!ret.done) {
+        console.error('Preparing effect is yielding but should not.');
+      }
     }
   }
 }

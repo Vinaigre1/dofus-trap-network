@@ -1,10 +1,11 @@
 import { SpellDataType } from "@src/@types/SpellDataType"
-import { SpellCategory, SpellType, EffectType, TargetMask, AreaType, TriggerType, State } from "@src/enums"
+import { SpellCategory, SpellType, EffectType, TargetMask, AreaType, TriggerType, State, EntityType } from "@src/enums"
 
 const spells: SpellDataType = {
   [SpellType.TrickyTrap]: {
     name: "Tricky Trap",
     icon: "./assets/img/spells/TrickyTrap.svg",
+    sfx: "./assets/img/traps/Tricky.svg",
     category: SpellCategory.FireTrap,
     levels: [
       {
@@ -20,6 +21,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 12128795,
             min: 1001,
             max: 1,
             triggers: null,
@@ -44,6 +46,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 12128795,
             min: 1001,
             max: 2,
             triggers: null,
@@ -68,6 +71,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 12128795,
             min: 1001,
             max: 3,
             triggers: null,
@@ -84,6 +88,7 @@ const spells: SpellDataType = {
   [SpellType.DriftTrap]: {
     name: "Drift Trap",
     icon: "./assets/img/spells/DriftTrap.svg",
+    sfx: "./assets/img/traps/Drift.svg",
     category: SpellCategory.FireTrap,
     levels: [
       {
@@ -99,6 +104,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 12128795,
             min: 1002,
             max: 1,
             triggers: null,
@@ -115,6 +121,7 @@ const spells: SpellDataType = {
   [SpellType.FragmentationTrap]: {
     name: "Fragmentation Trap",
     icon: "./assets/img/spells/FragmentationTrap.svg",
+    sfx: "./assets/img/traps/Fragmentation.svg",
     category: SpellCategory.FireTrap,
     levels: [
       {
@@ -130,6 +137,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 12128795,
             min: 1003,
             max: 1,
             triggers: null,
@@ -154,6 +162,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 12128795,
             min: 1003,
             max: 2,
             triggers: null,
@@ -178,6 +187,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 12128795,
             min: 1003,
             max: 3,
             triggers: null,
@@ -194,6 +204,7 @@ const spells: SpellDataType = {
   [SpellType.MassTrap]: {
     name: "Mass Trap",
     icon: "./assets/img/spells/MassTrap.svg",
+    sfx: "./assets/img/traps/Mass.svg",
     category: SpellCategory.EarthTrap,
     levels: [
       {
@@ -209,13 +220,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 5911580,
             min: 1004,
             max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -233,13 +245,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 5911580,
             min: 1004,
             max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -257,13 +270,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 5911580,
             min: 1004,
             max: 3,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -273,6 +287,7 @@ const spells: SpellDataType = {
   [SpellType.LethalTrap]: {
     name: "Lethal Trap",
     icon: "./assets/img/spells/LethalTrap.svg",
+    sfx: "./assets/img/traps/Lethal.svg",
     category: SpellCategory.EarthTrap,
     levels: [
       {
@@ -288,13 +303,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 5911580,
             min: 1005,
             max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -312,13 +328,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 5911580,
             min: 1005,
             max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -328,6 +345,7 @@ const spells: SpellDataType = {
   [SpellType.MalevolentTrap]: {
     name: "Malevolent Trap",
     icon: "./assets/img/spells/MalevolentTrap.svg",
+    sfx: "./assets/img/traps/Malevolent.svg",
     category: SpellCategory.EarthTrap,
     levels: [
       {
@@ -343,13 +361,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 5911580,
             min: 1006,
             max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -367,13 +386,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 5911580,
             min: 1006,
             max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -391,13 +411,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 5911580,
             min: 1006,
             max: 3,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -407,6 +428,7 @@ const spells: SpellDataType = {
   [SpellType.RepellingTrap]: {
     name: "Repelling Trap",
     icon: "./assets/img/spells/RepellingTrap.svg",
+    sfx: "./assets/img/traps/Repelling.svg",
     category: SpellCategory.AirTrap,
     levels: [
       {
@@ -422,6 +444,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 9895830,
             min: 1007,
             max: 1,
             triggers: null,
@@ -446,6 +469,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 9895830,
             min: 1007,
             max: 2,
             triggers: null,
@@ -470,6 +494,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 9895830,
             min: 1007,
             max: 3,
             triggers: null,
@@ -486,6 +511,7 @@ const spells: SpellDataType = {
   [SpellType.InsidiousTrap]: {
     name: "Insidious Trap",
     icon: "./assets/img/spells/InsidiousTrap.svg",
+    sfx: "./assets/img/traps/Insidious.svg",
     category: SpellCategory.AirTrap,
     levels: [
       {
@@ -501,13 +527,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 9895830,
             min: 1008,
             max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -525,13 +552,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 9895830,
             min: 1008,
             max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -549,13 +577,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 9895830,
             min: 1008,
             max: 3,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -565,6 +594,7 @@ const spells: SpellDataType = {
   [SpellType.MiryTrap]: {
     name: "Miry Trap",
     icon: "./assets/img/spells/MiryTrap.svg",
+    sfx: "./assets/img/traps/Miry.svg",
     category: SpellCategory.WaterTrap,
     levels: [
       {
@@ -580,13 +610,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 1798857,
             min: 1009,
             max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -604,13 +635,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 1798857,
             min: 1009,
             max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -628,13 +660,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 1798857,
             min: 1009,
             max: 3,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -644,6 +677,7 @@ const spells: SpellDataType = {
   [SpellType.SickratTrap]: {
     name: "Sickrat Trap",
     icon: "./assets/img/spells/SickratTrap.svg",
+    sfx: "./assets/img/traps/Sickrat.svg",
     category: SpellCategory.WaterTrap,
     levels: [
       {
@@ -659,13 +693,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 1798857,
             min: 1011,
             max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -683,13 +718,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 1798857,
             min: 1011,
             max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -699,6 +735,7 @@ const spells: SpellDataType = {
   [SpellType.Calamity]: {
     name: "Calamity",
     icon: "./assets/img/spells/Calamity.svg",
+    sfx: "./assets/img/traps/Calamity.svg",
     category: SpellCategory.WaterTrap,
     levels: [
       {
@@ -714,13 +751,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 1798857,
             min: 1012,
             max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -730,6 +768,7 @@ const spells: SpellDataType = {
   [SpellType.ParalysingTrap]: {
     name: "Paralysing Trap",
     icon: "./assets/img/spells/ParalysingTrap.svg",
+    sfx: "./assets/img/traps/Paralysing.svg",
     category: SpellCategory.MalusTrap,
     levels: [
       {
@@ -745,6 +784,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 3222918,
             min: 1013,
             max: 1,
             triggers: null,
@@ -769,6 +809,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 3222918,
             min: 1013,
             max: 2,
             triggers: null,
@@ -793,6 +834,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 3222918,
             min: 1013,
             max: 3,
             triggers: null,
@@ -809,6 +851,7 @@ const spells: SpellDataType = {
   [SpellType.MassGrave]: {
     name: "Mass Grave",
     icon: "./assets/img/spells/MassGrave.svg",
+    sfx: "./assets/img/traps/Mass.svg",
     category: SpellCategory.MalusTrap,
     levels: [
       {
@@ -824,13 +867,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.PlaceTrap,
+            value: 3222918,
             min: 1014,
             max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -840,6 +884,7 @@ const spells: SpellDataType = {
   [SpellType.Chakra]: {
     name: "Chakra Concentration",
     icon: "./assets/img/spells/ChakraConcentration.svg",
+    sfx: null,
     category: SpellCategory.Other,
     levels: [
       {
@@ -855,13 +900,14 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnCaster,
+            value: 0,
             min: 1015,
             max: 1,
             triggers: TriggerType.onDamage,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -879,6 +925,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnCaster,
+            value: 0,
             min: 1015,
             max: 2,
             triggers: TriggerType.onDamage,
@@ -903,6 +950,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnCaster,
+            value: 0,
             min: 1015,
             max: 3,
             triggers: TriggerType.onDamage,
@@ -919,12 +967,14 @@ const spells: SpellDataType = {
   [SpellType.TestTrap]: {
     name: "Test Trap",
     icon: "./assets/img/spells/TestTrap.svg",
+    sfx: "./assets/img/traps/Test.svg",
     category: SpellCategory.Other,
     levels: []
   },
   1001: {
     name: "Tricky Trap",
-    icon: null,
+    icon: "./assets/img/spells/TrickyTrap.svg",
+    sfx: "./assets/img/traps/Tricky.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -940,6 +990,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 18,
             max: 20,
             triggers: null,
@@ -952,6 +1003,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.Pull,
+            value: 0,
             min: 1,
             max: 1,
             triggers: null,
@@ -976,6 +1028,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 22,
             max: 24,
             triggers: null,
@@ -988,6 +1041,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.Pull,
+            value: 0,
             min: 1,
             max: 1,
             triggers: null,
@@ -1012,6 +1066,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 26,
             max: 28,
             triggers: null,
@@ -1024,6 +1079,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.Pull,
+            value: 0,
             min: 1,
             max: 1,
             triggers: null,
@@ -1039,7 +1095,8 @@ const spells: SpellDataType = {
   },
   1002: {
     name: "Drift Trap",
-    icon: null,
+    icon: "./assets/img/spells/DriftTrap.svg",
+    sfx: "./assets/img/traps/Drift.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -1055,6 +1112,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 17,
             max: 19,
             triggers: null,
@@ -1067,6 +1125,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.Push,
+            value: 0,
             min: 2,
             max: 2,
             triggers: null,
@@ -1082,7 +1141,8 @@ const spells: SpellDataType = {
   },
   1003: {
     name: "Fragmentation Trap",
-    icon: null,
+    icon: "./assets/img/spells/FragmentationTrap.svg",
+    sfx: "./assets/img/traps/Fragmentation.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -1098,6 +1158,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 4,
             max: 7,
             triggers: null,
@@ -1110,6 +1171,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 8,
             max: 10,
             triggers: null,
@@ -1122,6 +1184,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 18,
             max: 20,
             triggers: null,
@@ -1134,6 +1197,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 28,
             max: 30,
             triggers: null,
@@ -1158,6 +1222,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 7,
             max: 10,
             triggers: null,
@@ -1170,6 +1235,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 17,
             max: 21,
             triggers: null,
@@ -1182,6 +1248,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 28,
             max: 31,
             triggers: null,
@@ -1194,6 +1261,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 38,
             max: 41,
             triggers: null,
@@ -1218,6 +1286,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 13,
             max: 17,
             triggers: null,
@@ -1230,6 +1299,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 27,
             max: 31,
             triggers: null,
@@ -1242,6 +1312,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 37,
             max: 41,
             triggers: null,
@@ -1254,6 +1325,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.FireDamage,
+            value: 0,
             min: 47,
             max: 51,
             triggers: null,
@@ -1269,7 +1341,8 @@ const spells: SpellDataType = {
   },
   1004: {
     name: "Mass Trap",
-    icon: null,
+    icon: "./assets/img/spells/MassTrap.svg",
+    sfx: "./assets/img/traps/Mass.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -1285,6 +1358,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies}`,
             effectType: EffectType.State,
+            value: 0,
             min: State.MassTrap,
             max: 0,
             triggers: null,
@@ -1297,6 +1371,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnTarget,
+            value: 0,
             min: 1004,
             max: 4,
             triggers: null,
@@ -1309,6 +1384,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies}`,
             effectType: EffectType.RemoveState,
+            value: 0,
             min: State.MassTrap,
             max: 0,
             triggers: null,
@@ -1333,6 +1409,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies}`,
             effectType: EffectType.State,
+            value: 0,
             min: State.MassTrap,
             max: 0,
             triggers: null,
@@ -1345,6 +1422,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnTarget,
+            value: 0,
             min: 1004,
             max: 5,
             triggers: null,
@@ -1357,6 +1435,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies}`,
             effectType: EffectType.RemoveState,
+            value: 0,
             min: State.MassTrap,
             max: 0,
             triggers: null,
@@ -1381,6 +1460,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies}`,
             effectType: EffectType.State,
+            value: 0,
             min: State.MassTrap,
             max: 0,
             triggers: null,
@@ -1393,6 +1473,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnTarget,
+            value: 0,
             min: 1004,
             max: 6,
             triggers: null,
@@ -1405,6 +1486,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies}`,
             effectType: EffectType.RemoveState,
+            value: 0,
             min: State.MassTrap,
             max: 0,
             triggers: null,
@@ -1429,6 +1511,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies},!${TargetMask.State}:${State.MassTrap}`,
             effectType: EffectType.EarthDamage,
+            value: 0,
             min: 24,
             max: 28,
             triggers: null,
@@ -1453,6 +1536,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies},!${TargetMask.State}:${State.MassTrap}`,
             effectType: EffectType.EarthDamage,
+            value: 0,
             min: 29,
             max: 33,
             triggers: null,
@@ -1477,6 +1561,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies},!${TargetMask.State}:${State.MassTrap}`,
             effectType: EffectType.EarthDamage,
+            value: 0,
             min: 34,
             max: 38,
             triggers: null,
@@ -1492,7 +1577,8 @@ const spells: SpellDataType = {
   },
   1005: {
     name: "Lethal Trap",
-    icon: null,
+    icon: "./assets/img/spells/LethalTrap.svg",
+    sfx: "./assets/img/traps/Lethal.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -1508,6 +1594,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies},${TargetMask.LifeAbove}:25`,
             effectType: EffectType.EarthDamage,
+            value: 0,
             min: 31,
             max: 35,
             triggers: null,
@@ -1520,6 +1607,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies},!${TargetMask.LifeAbove}:25`,
             effectType: EffectType.EarthDamage,
+            value: 0,
             min: 39,
             max: 44,
             triggers: null,
@@ -1544,6 +1632,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies},${TargetMask.LifeAbove}:25`,
             effectType: EffectType.EarthDamage,
+            value: 0,
             min: 39,
             max: 43,
             triggers: null,
@@ -1556,6 +1645,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies},!${TargetMask.LifeAbove}:25`,
             effectType: EffectType.EarthDamage,
+            value: 0,
             min: 49,
             max: 54,
             triggers: null,
@@ -1571,7 +1661,8 @@ const spells: SpellDataType = {
   },
   1006: {
     name: "Malevolent Trap",
-    icon: null,
+    icon: "./assets/img/spells/MalevolentTrap.svg",
+    sfx: "./assets/img/traps/Malevolent.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -1587,6 +1678,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Caster}`,
             effectType: EffectType.CancelSpell,
+            value: 0,
             min: 1006,
             max: 0,
             triggers: null,
@@ -1599,6 +1691,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnCaster,
+            value: 0,
             min: 1006,
             max: 4,
             triggers: null,
@@ -1611,6 +1704,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.EarthDamage,
+            value: 0,
             min: 18,
             max: 20,
             triggers: null,
@@ -1623,6 +1717,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Caster}`,
             effectType: EffectType.CancelSpell,
+            value: 0,
             min: 1006,
             max: 0,
             triggers: null,
@@ -1647,6 +1742,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Caster}`,
             effectType: EffectType.CancelSpell,
+            value: 0,
             min: 1006,
             max: 0,
             triggers: null,
@@ -1659,6 +1755,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnCaster,
+            value: 0,
             min: 1006,
             max: 5,
             triggers: null,
@@ -1671,6 +1768,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.EarthDamage,
+            value: 0,
             min: 23,
             max: 26,
             triggers: null,
@@ -1683,6 +1781,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Caster}`,
             effectType: EffectType.CancelSpell,
+            value: 0,
             min: 1006,
             max: 0,
             triggers: null,
@@ -1707,6 +1806,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Caster}`,
             effectType: EffectType.CancelSpell,
+            value: 0,
             min: 1006,
             max: 0,
             triggers: null,
@@ -1719,6 +1819,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnCaster,
+            value: 0,
             min: 1006,
             max: 6,
             triggers: null,
@@ -1731,6 +1832,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.EarthDamage,
+            value: 0,
             min: 28,
             max: 32,
             triggers: null,
@@ -1743,6 +1845,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Caster}`,
             effectType: EffectType.CancelSpell,
+            value: 0,
             min: 1006,
             max: 0,
             triggers: null,
@@ -1767,6 +1870,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Caster}`,
             effectType: EffectType.BoostSpell,
+            value: 0,
             min: 1006,
             max: 10,
             triggers: null,
@@ -1791,6 +1895,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Caster}`,
             effectType: EffectType.BoostSpell,
+            value: 0,
             min: 1006,
             max: 15,
             triggers: null,
@@ -1815,6 +1920,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Caster}`,
             effectType: EffectType.BoostSpell,
+            value: 0,
             min: 1006,
             max: 20,
             triggers: null,
@@ -1830,7 +1936,8 @@ const spells: SpellDataType = {
   },
   1007: {
     name: "Repelling Trap",
-    icon: null,
+    icon: "./assets/img/spells/RepellingTrap.svg",
+    sfx: "./assets/img/traps/Repelling.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -1846,6 +1953,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.Push,
+            value: 0,
             min: 2,
             max: 2,
             triggers: null,
@@ -1858,6 +1966,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.AirDamage,
+            value: 0,
             min: 8,
             max: 8,
             triggers: null,
@@ -1882,6 +1991,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.Push,
+            value: 0,
             min: 2,
             max: 2,
             triggers: null,
@@ -1894,6 +2004,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.AirDamage,
+            value: 0,
             min: 10,
             max: 10,
             triggers: null,
@@ -1918,6 +2029,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.Push,
+            value: 0,
             min: 2,
             max: 2,
             triggers: null,
@@ -1930,6 +2042,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.AirDamage,
+            value: 0,
             min: 12,
             max: 12,
             triggers: null,
@@ -1945,7 +2058,8 @@ const spells: SpellDataType = {
   },
   1008: {
     name: "Insidious Trap",
-    icon: null,
+    icon: "./assets/img/spells/InsidiousTrap.svg",
+    sfx: "./assets/img/traps/Insidious.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -1961,6 +2075,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.PlaceEndTurnGlyph,
+            value: 9895830,
             min: 1008,
             max: 4,
             triggers: null,
@@ -1985,6 +2100,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.PlaceEndTurnGlyph,
+            value: 9895830,
             min: 1008,
             max: 5,
             triggers: null,
@@ -2009,6 +2125,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.PlaceEndTurnGlyph,
+            value: 9895830,
             min: 1008,
             max: 6,
             triggers: null,
@@ -2033,6 +2150,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.AirDamage,
+            value: 0,
             min: 34,
             max: 38,
             triggers: null,
@@ -2057,6 +2175,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.AirDamage,
+            value: 0,
             min: 41,
             max: 45,
             triggers: null,
@@ -2081,6 +2200,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.AirDamage,
+            value: 0,
             min: 48,
             max: 52,
             triggers: null,
@@ -2096,7 +2216,8 @@ const spells: SpellDataType = {
   },
   1009: {
     name: "Miry Trap",
-    icon: null,
+    icon: "./assets/img/spells/MiryTrap.svg",
+    sfx: "./assets/img/traps/Miry.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -2112,6 +2233,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.WaterDamage,
+            value: 0,
             min: 21,
             max: 25,
             triggers: null,
@@ -2124,6 +2246,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnTarget,
+            value: 0,
             min: 1010,
             max: 1,
             triggers: null,
@@ -2136,6 +2259,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies}`,
             effectType: EffectType.SpellOnTarget,
+            value: 0,
             min: 1010,
             max: 2,
             triggers: null,
@@ -2160,6 +2284,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.WaterDamage,
+            value: 0,
             min: 27,
             max: 31,
             triggers: null,
@@ -2172,6 +2297,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnTarget,
+            value: 0,
             min: 1010,
             max: 1,
             triggers: null,
@@ -2184,6 +2310,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies}`,
             effectType: EffectType.SpellOnTarget,
+            value: 0,
             min: 1010,
             max: 2,
             triggers: null,
@@ -2208,6 +2335,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.WaterDamage,
+            value: 0,
             min: 33,
             max: 37,
             triggers: null,
@@ -2220,6 +2348,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.SpellOnTarget,
+            value: 0,
             min: 1010,
             max: 1,
             triggers: null,
@@ -2232,6 +2361,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies}`,
             effectType: EffectType.SpellOnTarget,
+            value: 0,
             min: 1010,
             max: 2,
             triggers: null,
@@ -2247,7 +2377,8 @@ const spells: SpellDataType = {
   },
   1010: {
     name: "Miry Trap",
-    icon: null,
+    icon: "./assets/img/spells/MiryTrap.svg",
+    sfx: "./assets/img/traps/Miry.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -2263,6 +2394,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.HealLastDamage,
+            value: 0,
             min: 50,
             max: 50,
             triggers: null,
@@ -2287,6 +2419,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies}`,
             effectType: EffectType.HealLastDamage,
+            value: 0,
             min: 50,
             max: 50,
             triggers: null,
@@ -2302,7 +2435,8 @@ const spells: SpellDataType = {
   },
   1011: {
     name: "Sickrat Trap",
-    icon: null,
+    icon: "./assets/img/spells/SickratTrap.svg",
+    sfx: "./assets/img/traps/Sickrat.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -2318,6 +2452,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.Pull,
+            value: 0,
             min: 3,
             max: 3,
             triggers: null,
@@ -2330,6 +2465,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.WaterDamage,
+            value: 0,
             min: 13,
             max: 15,
             triggers: null,
@@ -2354,6 +2490,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.Pull,
+            value: 0,
             min: 3,
             max: 3,
             triggers: null,
@@ -2366,6 +2503,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.WaterDamage,
+            value: 0,
             min: 17,
             max: 19,
             triggers: null,
@@ -2381,7 +2519,8 @@ const spells: SpellDataType = {
   },
   1012: {
     name: "Calamity",
-    icon: null,
+    icon: "./assets/img/spells/Calamity.svg",
+    sfx: "./assets/img/traps/Calamity.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -2397,6 +2536,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.WaterDamage,
+            value: 0,
             min: 40,
             max: 44,
             triggers: null,
@@ -2409,6 +2549,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.DodgeDamage,
+            value: 0,
             min: 40,
             max: 40,
             triggers: null,
@@ -2424,7 +2565,8 @@ const spells: SpellDataType = {
   },
   1013: {
     name: "Paralysing Trap",
-    icon: null,
+    icon: "./assets/img/spells/ParalysingTrap.svg",
+    sfx: "./assets/img/traps/Paralysing.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -2440,6 +2582,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.MPDamage,
+            value: 0,
             min: 4,
             max: 4,
             triggers: null,
@@ -2464,6 +2607,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.MPDamage,
+            value: 0,
             min: 4,
             max: 4,
             triggers: null,
@@ -2488,6 +2632,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.MPDamage,
+            value: 0,
             min: 4,
             max: 4,
             triggers: null,
@@ -2503,7 +2648,8 @@ const spells: SpellDataType = {
   },
   1014: {
     name: "Mass Grave",
-    icon: null,
+    icon: "./assets/img/spells/MassGrave.svg",
+    sfx: "./assets/img/traps/Mass.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -2519,6 +2665,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
             effectType: EffectType.State,
+            value: 0,
             min: State.Gravity,
             max: 0,
             triggers: null,
@@ -2534,7 +2681,8 @@ const spells: SpellDataType = {
   },
   1015: {
     name: "Chakra Concentration",
-    icon: null,
+    icon: "./assets/img/spells/ChakraConcentration.svg",
+    sfx: null,
     category: SpellCategory.None,
     levels: [
       {
@@ -2550,6 +2698,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.StealBestElement,
+            value: 0,
             min: 11,
             max: 11,
             triggers: null,
@@ -2574,6 +2723,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.StealBestElement,
+            value: 0,
             min: 13,
             max: 13,
             triggers: null,
@@ -2598,6 +2748,7 @@ const spells: SpellDataType = {
           {
             targetMask: `${TargetMask.Enemies}`,
             effectType: EffectType.StealBestElement,
+            value: 0,
             min: 15,
             max: 15,
             triggers: null,
@@ -2610,39 +2761,139 @@ const spells: SpellDataType = {
         ]
       }
     ]
+  },
+  [SpellType.Poutch]: {
+    name: "Poutch Ingball",
+    icon: "./assets/img/spells/Poutch.svg",
+    sfx: "./assets/img/entities/Poutch.png",
+    category: SpellCategory.Entity,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.CreateEntity,
+            value: EntityType.Poutch,
+            min: 0,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  [SpellType.Cawwot]: {
+    name: "Cawwot",
+    icon: "./assets/img/spells/Cawwot.svg",
+    sfx: "./assets/img/entities/Cawwot.png",
+    category: SpellCategory.Entity,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.CreateEntity,
+            value: EntityType.Cawwot,
+            min: 0,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  [SpellType.StartPoint]: {
+    name: "Start point",
+    icon: "./assets/img/spells/StartPoint.svg",
+    sfx: null,
+    category: SpellCategory.Action,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.StartPoint,
+            value: 0,
+            min: 0,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  [SpellType.Remove]: {
+    name: "Remove",
+    icon: "./assets/img/spells/Remove.svg",
+    sfx: null,
+    category: SpellCategory.Action,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.Remove,
+            value: 0,
+            min: 0,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      }
+    ]
   }
-  // [SpellType.Poutch]: {
-  //   name: "Poutch Ingball",
-  //   icon: "./assets/img/spells/Poutch.svg",
-  //   category: SpellCategory.Summon,
-  //   effect: {
-  //     "entity": "${EntityName.Poutch}"
-  //   }
-  // },
-  // [SpellType.Cawwot]: {
-  //   name: "Cawwot",
-  //   icon: "./assets/img/spells/Cawwot.svg",
-  //   category: SpellCategory.Summon,
-  //   effect: {
-  //     "entity": "${EntityName.Cawwot}"
-  //   }
-  // },
-  // [SpellType.Select]: {
-  //   name: "Select",
-  //   icon: "./assets/img/spells/Select.svg",
-  //   category: SpellCategory.Action,
-  //   effect: {
-  //     "action": "Select"
-  //   }
-  // },
-  // [SpellType.Remove]: {
-  //   name: "Remove",
-  //   icon: "./assets/img/spells/Remove.svg",
-  //   category: SpellCategory.Action,
-  //   effect: {
-  //     "action": "Remove"
-  //   }
-  // }
 };
 
 export default spells;

@@ -14,9 +14,9 @@ type Props = {
 class EntityLayerComponent extends React.Component<Props>
 {
   render() {
-    let entities: Array<JSX.Element> = [];
-    let cellWidth: number = 100 / (Game.width + 0.5);
-    let cellHeight: number = cellWidth / 2;
+    const entities: Array<JSX.Element> = [];
+    const cellWidth: number = 100 / (Game.width + 0.5);
+    const cellHeight: number = cellWidth / 2;
 
     for (let i: number = 0; i < this.props.entities.length; i++) {
       const entity = this.props.entities[i];

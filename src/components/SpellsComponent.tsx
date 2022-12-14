@@ -65,7 +65,7 @@ class SpellsComponent extends React.Component<Props, States>
       SpellCategory.EarthTrap,
       SpellCategory.WaterTrap,
       SpellCategory.MalusTrap,
-      SpellCategory.Summon,
+      SpellCategory.Entity,
       SpellCategory.Other,
       SpellCategory.Action
     ];

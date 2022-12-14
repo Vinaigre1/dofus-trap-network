@@ -3,6 +3,8 @@ import Trap from "@classes/Trap";
 import * as React from "react";
 import TrapComponent from "@components/TrapComponent";
 import { Coordinates, TrapClasses } from "@src/enums";
+import { colorToInt } from "@src/utils/utils";
+import SpellData from "@json/Spells";
 
 type Props = {
   rows: Array<JSX.Element>;
@@ -65,8 +67,8 @@ class CellLayerComponent extends React.Component<Props, States>
 
       if (!this.state.highlighted.includes(this.props.traps[i].uuid)) {
         trapImages.push(<image
-          className={`trap-image ${TrapClasses[trap.type]}`}
-          href={trap.image}
+          className={`trap-image ${TrapClasses[colorToInt(trap.color)]}`}
+          href={SpellData[trap.spellId].sfx}
           x={root.x + cellWidth * 0.15}
           y={root.y + celHeight * 0.15}
           width={cellWidth * 0.7}
@@ -85,8 +87,8 @@ class CellLayerComponent extends React.Component<Props, States>
         />);
 
         highlightedImages.push(<image
-          className={`trap-image ${TrapClasses[trap.type]}`}
-          href={trap.image}
+          className={`trap-image ${TrapClasses[colorToInt(trap.color)]}`}
+          href={SpellData[trap.spellId].sfx}
           x={root.x + cellWidth * 0.08}
           y={root.y + celHeight * 0.08}
           width={cellWidth * 0.84}

@@ -51,7 +51,7 @@ class EntityComponent extends React.Component<Props, States>
    */
   move(fromPos: Coordinates, toPos: Coordinates) {
     this.transitionCounter = 2;
-    if (isInArea(fromPos, AreaType.Diagonal, toPos, 40)) {
+    if (isInArea(fromPos, { type: AreaType.Diagonal, min: 0, max: 40 }, toPos)) {
       this.transitionCounter = 1;
     }
 

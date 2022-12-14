@@ -1,26 +1,25 @@
-import { AreaType, CellBorders, Coordinates, Direction } from "@src/enums";
+import { Area, AreaType, CellBorders, Coordinates, Direction } from "@src/enums";
 
 /**
  * Returns all cells present in the given area
  * 
  * @param {Coordinates} pos Position of the area
- * @param {AreaType} area Type of area
- * @param {number} size Size of the area
+ * @param {Area} area The area
  * @returns {Array<Coordinates>} List of all Coordinates in the given area
  */
-export function getCellsInArea(pos: Coordinates, area: AreaType, size: number): Array<Coordinates> {
+export function getCellsInArea(pos: Coordinates, area: Area): Array<Coordinates> {
   const cells: Array<Coordinates> = [];
   const clock: Generator<Coordinates> = clockwise(pos);
 
   // maxCells = Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
   // Todo: increase efficiency of this function ?
-  const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square].includes(area);
-  const maxCells: number = ((size * (timesTwo ? 2 : 1)) * ((size * (timesTwo ? 2 : 1)) + 1)) * 2 + 1;
+  const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square].includes(area.type);
+  const maxCells: number = ((area.max * (timesTwo ? 2 : 1)) * ((area.max * (timesTwo ? 2 : 1)) + 1)) * 2 + 1;
 
   for (let i: number = 0; i < maxCells; i++) {
     const clockPos: Coordinates = clock.next().value;
     
-    if (isInArea(clockPos, area, pos, size)) {
+    if (isInArea(clockPos, area, pos)) {
       cells.push(clockPos);
     }
   }
@@ -32,28 +31,25 @@ export function getCellsInArea(pos: Coordinates, area: AreaType, size: number): 
  * Checks if a given coordinates is present in a given area.
  * 
  * @param {Coordinates} pos Position to check
- * @param {AreaType} area Type of area
+ * @param {AreaType} area The area
  * @param {Coordinates} areaPos Position of the area
- * @param {number} size Size of the area
  * @returns {boolean} true if *pos* is in the given area
  */
-export function isInArea(pos: Coordinates, area: AreaType, areaPos: Coordinates, size: number): boolean {
+export function isInArea(pos: Coordinates, area: Area, areaPos: Coordinates): boolean {
   const distance = getDistance(areaPos, pos);
 
-  switch (area) {
+  switch (area.type) {
     case AreaType.Cell:
       return areaPos.x === pos.x && areaPos.y === pos.y;
     case AreaType.Cross:
-      return distance.real <= size && distance.absolute.x === distance.absolute.y;
+      return distance.real <= area.max && distance.real >= area.min && distance.absolute.x === distance.absolute.y;
     case AreaType.Circle:
-      return distance.real <= size;
+      return distance.real <= area.max && distance.real >= area.min ;
     case AreaType.Diagonal:
-      return (distance.absolute.x === 0 && distance.absolute.y <= size * 2) ||
-             (distance.absolute.y === 0 && distance.absolute.x <= size * 2);
-    case AreaType.Ring:
-      return distance.real === size;
+      return (distance.absolute.x === 0 && distance.absolute.y <= area.max * 2) ||
+             (distance.absolute.y === 0 && distance.absolute.x <= area.max * 2);
     case AreaType.Square:
-      return distance.absolute.x + distance.absolute.y <= size * 2;
+      return distance.absolute.x + distance.absolute.y <= area.max * 2 && distance.absolute.x + distance.absolute.y >= area.min * 2;
     default:
       return false;
   }
@@ -188,40 +184,36 @@ export function getDistance(pos1: Coordinates, pos2: Coordinates): { real: numbe
  * 
  * @param {Coordinates} areaPos Center coordinates of the area
  * @param {Coordinates} pos Coordinates of the cell
- * @param {AreaType} area Type of area
- * @param {number} size Size of the area
+ * @param {AreaType} area The area
  * @returns {CellBorders} The borders of the given cell in the given area
  */
-export function getBorders(areaPos: Coordinates, pos: Coordinates, area: AreaType, size: number): CellBorders {
+export function getBorders(areaPos: Coordinates, pos: Coordinates, area: Area): CellBorders {
   const distance = getDistance(areaPos, pos);
 
   let borders = 0;
-  if (size === 0) borders |= CellBorders.North | CellBorders.East | CellBorders.South | CellBorders.West;
+  if (area.max === 0) borders |= CellBorders.North | CellBorders.East | CellBorders.South | CellBorders.West;
 
-  switch (area) {
+  switch (area.type) {
     case AreaType.Cell:
     case AreaType.Diagonal:
-    case AreaType.Ring:
-      borders |= CellBorders.North | CellBorders.East | CellBorders.South | CellBorders.West;
-      break;
     case AreaType.Cross:
       if (distance.real === 0) break;
       if (distance.relative.x < 0 === distance.relative.y < 0) borders |= CellBorders.North | CellBorders.South;
       else borders |= CellBorders.East | CellBorders.West;
-      if (distance.relative.x > 0 && distance.relative.y < 0 && distance.real === size) borders |= CellBorders.North;
-      if (distance.relative.x > 0 && distance.relative.y > 0 && distance.real === size) borders |= CellBorders.East;
-      if (distance.relative.x < 0 && distance.relative.y > 0 && distance.real === size) borders |= CellBorders.South;
-      if (distance.relative.x < 0 && distance.relative.y < 0 && distance.real === size) borders |= CellBorders.West;
+      if (distance.relative.x > 0 && distance.relative.y < 0 && distance.real === area.max) borders |= CellBorders.North;
+      if (distance.relative.x > 0 && distance.relative.y > 0 && distance.real === area.max) borders |= CellBorders.East;
+      if (distance.relative.x < 0 && distance.relative.y > 0 && distance.real === area.max) borders |= CellBorders.South;
+      if (distance.relative.x < 0 && distance.relative.y < 0 && distance.real === area.max) borders |= CellBorders.West;
       break;
     case AreaType.Circle:
-      if (distance.real < size) break;
-      if (distance.relative.x === size)  borders |= CellBorders.North | CellBorders.East;
-      if (distance.relative.y === size)  borders |= CellBorders.South | CellBorders.East;
-      if (distance.relative.x === -size) borders |= CellBorders.South | CellBorders.West;
-      if (distance.relative.y === -size) borders |= CellBorders.North | CellBorders.West;
+      if (distance.real < area.max) break;
+      if (distance.relative.x === area.max)  borders |= CellBorders.North | CellBorders.East;
+      if (distance.relative.y === area.max)  borders |= CellBorders.South | CellBorders.East;
+      if (distance.relative.x === -area.max) borders |= CellBorders.South | CellBorders.West;
+      if (distance.relative.y === -area.max) borders |= CellBorders.North | CellBorders.West;
       break;
     case AreaType.Square:
-      if (distance.absolute.x + distance.absolute.y < size * 2) break;
+      if (distance.absolute.x + distance.absolute.y < area.max * 2) break;
       if (distance.relative.x >= 0 && distance.relative.y <= 0) borders |= CellBorders.North;
       if (distance.relative.x >= 0 && distance.relative.y >= 0) borders |= CellBorders.East;
       if (distance.relative.x <= 0 && distance.relative.y >= 0) borders |= CellBorders.South;

@@ -7,10 +7,7 @@ import _MapData from "@json/Maps.json";
 import { MapDataType } from "@src/@types/MapDataType";
 const MapData: MapDataType = _MapData as unknown as MapDataType;
 
-type Props = {
-};
-
-class StatsComponent extends React.Component<Props>
+class StatsComponent extends React.Component
 {
   onSelectMap(value: string) {
     if (confirm("Attention, changer la map réinitialisera tous les pièges et entités !")) {
