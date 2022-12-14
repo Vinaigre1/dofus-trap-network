@@ -9,7 +9,7 @@ import TrapCell from "@classes/TrapCell";
 import { randomInt } from "@src/utils/utils";
 import MapComponent from "@components/MapComponent";
 import HistoryComponent from "@components/HistoryComponent";
-import { Effect, Spell } from "@src/@types/SpellDataType";
+import { Effect, Spell, SpellLevel } from "@src/@types/SpellDataType";
 import SpellsComponent from "@components/SpellsComponent";
 import SpellData from "@json/Spells";
 
@@ -335,8 +335,7 @@ class Game {
   }
 
   /**
-   * Triggers all traps at the given coordinates and adds
-   * all actions in a specific order to the action stack.
+   * Triggers all traps at the given coordinates and executes their spells.
    * 
    * @param {Coordinates} pos Coordinates of the cell where traps are triggered
    * @returns {boolean} Returns true if one or more traps has been triggered
@@ -345,20 +344,7 @@ class Game {
     const triggered: Array<number> = [];
     for (let i: number = 0; i < this.traps.length; i++) {
       if (this.traps[i].isInTrap(pos)) {
-        const localStack: Array<Action> = [];
-        const level = this.traps[i].spellLevel;
-        const effects = SpellData[this.traps[i].spellId].levels[level].effects;
-        for (let j: number = 0; j < effects.length; j++) {
-          let entities: Array<Entity> = this.getEntitiesInArea(this.traps[i].pos, effects[j].area);
-          if (effects[j].effectType === EffectType.Push) { // anticlockwise for Push effects
-            entities = entities.reverse();
-          }
-          const value = randomInt(effects[j].min, effects[j].max);
-          for (let k: number = 0; k < entities.length; k++) {
-            localStack.unshift(new Action(this.traps[i].caster, entities[k], this.traps[i].pos, entities[k].pos, effects[j].effectType, value, this.traps[i]));
-          }
-        }
-        this.addToActionStack(...localStack);
+        this.executeSpell(SpellData[this.traps[i].spellId].levels[this.traps[i].spellLevel], this.traps[i].pos, this.traps[i].caster, this.traps[i]);
         triggered.push(i);
       }
     }
@@ -366,6 +352,30 @@ class Game {
       this.traps[triggered[i]].disable();
     }
     return (triggered.length > 0);
+  }
+
+  /**
+   * Execute a spell at a given coordinates and adds new actions to the action stack.
+   * 
+   * @param {SpellLevel} spell Spell to execute
+   * @param {Coordinates} pos Coordinates of the spell
+   * @param {Entity} caster Caster entity
+   * @param {Trap} originTrap Trap triggering the effect
+   */
+  executeSpell(spell: SpellLevel, pos: Coordinates, caster: Entity, originTrap: Trap) {
+    const localStack: Array<Action> = [];
+    const effects = spell.effects;
+    for (let i: number = 0; i < effects.length; i++) {
+      let entities: Array<Entity> = this.getEntitiesInArea(pos, effects[i].area);
+      if (effects[i].effectType === EffectType.Push) { // anticlockwise for Push effects
+        entities = entities.reverse();
+      }
+      const value = randomInt(effects[i].min, effects[i].max);
+      for (let j: number = 0; j < entities.length; j++) {
+        localStack.unshift(new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], originTrap));
+      }
+    }
+    this.addToActionStack(...localStack);
   }
 
   /**
@@ -530,7 +540,7 @@ class Game {
     for (let i: number = 0; i < effects.length; i++) {
       if (!this.preparingEffects.includes(effects[i].effectType)) continue;
 
-      const action = new Action(this.mainCharacter, null, this.mainCharacter.pos, pos, effects[i].effectType, effects[i]);
+      const action = new Action(this.mainCharacter, null, this.mainCharacter.pos, pos, effects[i].effectType, 0, effects[i]);
       const gen = action.apply(false);
       const ret = gen.next();
       if (!ret.done) {

@@ -29,9 +29,7 @@ export enum EffectType {
   CancelSpell,
   BoostSpell,
   HealLastDamage,
-  PlaceEndTurnGlyph,
-  InsidiousGlyph,
-  MalevolentBoost
+  PlaceEndTurnGlyph
 }
 
 export enum AreaType {

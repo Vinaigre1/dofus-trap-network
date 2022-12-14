@@ -46,14 +46,15 @@ class ActionComponent extends React.Component<Props, States>
     };
 
     const actionTexts = {
-      [EffectType.Push]: <Trans count={this.props.action.value as number}>Pushes back {{ value: this.props.action.value as number }} cells</Trans>,
-      [EffectType.Pull]: <Trans count={this.props.action.value as number}>Attracts {{ value: this.props.action.value as number }} cells</Trans>,
-      [EffectType.WaterDamage]: <Trans count={this.props.action.value as number}>{{ value: this.props.action.value as number }} water damage</Trans>,
-      [EffectType.FireDamage]: <Trans count={this.props.action.value as number}>{{ value: this.props.action.value as number }} fire damage</Trans>,
-      [EffectType.EarthDamage]: <Trans count={this.props.action.value as number}>{{ value: this.props.action.value as number }} earth damage</Trans>,
-      [EffectType.AirDamage]: <Trans count={this.props.action.value as number}>{{ value: this.props.action.value as number }} air damage</Trans>,
-      [EffectType.PushDamage]: <Trans count={this.props.action.value as number}>{{ value: this.props.action.value as number }} push damage</Trans>,
-      [EffectType.IndirectPushDamage]: <Trans count={this.props.action.value as number}>{{ value: this.props.action.value as number }} push damage (indirect)</Trans>
+      [EffectType.Push]: <Trans count={this.props.action.value}>Pushes back {{ value: this.props.action.value }} cells</Trans>,
+      [EffectType.Pull]: <Trans count={this.props.action.value}>Attracts {{ value: this.props.action.value }} cells</Trans>,
+      [EffectType.WaterDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} water damage</Trans>,
+      [EffectType.FireDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} fire damage</Trans>,
+      [EffectType.EarthDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} earth damage</Trans>,
+      [EffectType.AirDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} air damage</Trans>,
+      [EffectType.PushDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} push damage</Trans>,
+      [EffectType.IndirectPushDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} push damage (indirect)</Trans>,
+      [EffectType.SpellOnTarget]: <Trans count={this.props.action.effect.min}>Spell {{ value: this.props.action.effect.min }} on target</Trans>
     };
 
     return (

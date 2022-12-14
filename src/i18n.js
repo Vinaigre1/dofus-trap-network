@@ -25,6 +25,7 @@ const resources = {
       "{{value}} push damage (indirect)": "{{value}} push damage (indirect)",
       "{{value}} push damage (indirect)": "{{value}} push damage (indirect)",
       "Selected map": "Selected map",
+      "Spell {{value}} on target": "Spell {{value}} on target",
     }
   },
   fr: {
@@ -55,6 +56,7 @@ const resources = {
       "{{value}} push damage_one (indirect)": "{{value}} dommage de poussée (indirecte)",
       "{{value}} push damage (indirect)": "{{value}} dommages de poussée (indirecte)",
       "Selected map": "Map sélectionnée",
+      "Spell {{value}} on target": "Sort {{value}} sur la cible",
     }
   }
 };
