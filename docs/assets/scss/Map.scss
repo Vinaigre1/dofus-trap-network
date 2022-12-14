@@ -101,6 +101,7 @@ $animSpeed: calc(1s / 10); // 3 cells per second
 .trap.trap-water polygon   { fill: rgb( 64, 131, 164); } .trap.trap-water path   { stroke: rgb( 64, 131, 164); }
 .trap.trap-earth polygon   { fill: rgb( 90,  52,  28); } .trap.trap-earth path   { stroke: rgb( 90,  52,  28); }
 .trap.trap-utility polygon { fill: rgb( 49,  45, 134); } .trap.trap-utility path { stroke: rgb( 49,  45, 134); }
+.trap.trap-test polygon    { fill: rgb(255, 255, 255); } .trap.trap-test path    { stroke: rgb(255, 255, 255); }
 
 .entity-image {
   transition: x $animSpeed linear, y $animSpeed linear;

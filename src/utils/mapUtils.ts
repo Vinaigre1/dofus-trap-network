@@ -44,10 +44,10 @@ export function isInArea(pos: Coordinates, area: Area, areaPos: Coordinates): bo
     case AreaType.Cross:
       return distance.real <= area.max && distance.real >= area.min && distance.absolute.x === distance.absolute.y;
     case AreaType.Circle:
-      return distance.real <= area.max && distance.real >= area.min ;
+      return distance.real <= area.max && distance.real >= area.min;
     case AreaType.Diagonal:
-      return (distance.absolute.x === 0 && distance.absolute.y <= area.max * 2) ||
-             (distance.absolute.y === 0 && distance.absolute.x <= area.max * 2);
+      return (distance.absolute.x === 0 && distance.absolute.y <= area.max * 2 && distance.absolute.y >= area.min * 2) ||
+             (distance.absolute.y === 0 && distance.absolute.x <= area.max * 2 && distance.absolute.x >= area.min * 2);
     case AreaType.Square:
       return distance.absolute.x + distance.absolute.y <= area.max * 2 && distance.absolute.x + distance.absolute.y >= area.min * 2;
     default:
@@ -193,9 +193,12 @@ export function getBorders(areaPos: Coordinates, pos: Coordinates, area: Area): 
   let borders = 0;
   if (area.max === 0) borders |= CellBorders.North | CellBorders.East | CellBorders.South | CellBorders.West;
 
+  // Outside borders
   switch (area.type) {
     case AreaType.Cell:
     case AreaType.Diagonal:
+      borders |= CellBorders.North | CellBorders.East | CellBorders.South | CellBorders.West;
+      break;
     case AreaType.Cross:
       if (distance.real === 0) break;
       if (distance.relative.x < 0 === distance.relative.y < 0) borders |= CellBorders.North | CellBorders.South;
@@ -218,6 +221,40 @@ export function getBorders(areaPos: Coordinates, pos: Coordinates, area: Area): 
       if (distance.relative.x >= 0 && distance.relative.y >= 0) borders |= CellBorders.East;
       if (distance.relative.x <= 0 && distance.relative.y >= 0) borders |= CellBorders.South;
       if (distance.relative.x <= 0 && distance.relative.y <= 0) borders |= CellBorders.West;
+      break;
+    default:
+      break;
+  }
+
+  // Inside borders
+  switch (area.type) {
+    case AreaType.Cross:
+      if (distance.real === 0) break;
+      if (distance.relative.x > 0 && distance.relative.y < 0 && distance.real === area.min) borders |= CellBorders.South;
+      if (distance.relative.x > 0 && distance.relative.y > 0 && distance.real === area.min) borders |= CellBorders.West;
+      if (distance.relative.x < 0 && distance.relative.y > 0 && distance.real === area.min) borders |= CellBorders.North;
+      if (distance.relative.x < 0 && distance.relative.y < 0 && distance.real === area.min) borders |= CellBorders.East;
+      break;
+    case AreaType.Circle:
+      if (distance.real > area.min) break;
+      if (distance.absolute.x === distance.absolute.y) {
+        if (distance.relative.x < 0 && distance.relative.y > 0) borders |= CellBorders.North;
+        if (distance.relative.x < 0 && distance.relative.y < 0) borders |= CellBorders.East;
+        if (distance.relative.x > 0 && distance.relative.y < 0) borders |= CellBorders.South;
+        if (distance.relative.x > 0 && distance.relative.y > 0) borders |= CellBorders.West;
+        break;
+      }
+      if (distance.relative.x === area.min)  borders |= CellBorders.South | CellBorders.West;
+      if (distance.relative.y === area.min)  borders |= CellBorders.North | CellBorders.West;
+      if (distance.relative.x === -area.min) borders |= CellBorders.North | CellBorders.East;
+      if (distance.relative.y === -area.min) borders |= CellBorders.South | CellBorders.East;
+      break;
+    case AreaType.Square:
+      if (distance.absolute.x + distance.absolute.y > area.min * 2 || distance.absolute.x === 0 || distance.absolute.y === 0) break;
+      if (distance.relative.x >= 0 && distance.relative.y <= 0) borders |= CellBorders.South;
+      if (distance.relative.x >= 0 && distance.relative.y >= 0) borders |= CellBorders.West;
+      if (distance.relative.x <= 0 && distance.relative.y >= 0) borders |= CellBorders.North;
+      if (distance.relative.x <= 0 && distance.relative.y <= 0) borders |= CellBorders.East;
       break;
     default:
       break;

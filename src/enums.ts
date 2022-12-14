@@ -154,7 +154,8 @@ export const TrapClasses: { [key: number]: string } = {
   5911580: 'earth',
   1798857: 'water',
   9895830: 'air',
-  3222918: 'utility'
+  3222918: 'utility',
+  16777215: 'test'
 };
 
 export interface Coordinates {

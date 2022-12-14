@@ -17,6 +17,7 @@ class SpellComponent extends React.Component<Props>
         height="45"
         src={this.props.spell.icon}
         alt={this.props.spell.name}
+        draggable="false"
       />
     </div>;
   }

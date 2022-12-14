@@ -969,7 +969,33 @@ const spells: SpellDataType = {
     icon: "./assets/img/spells/TestTrap.svg",
     sfx: "./assets/img/traps/Test.svg",
     category: SpellCategory.Other,
-    levels: []
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.PlaceTrap,
+            value: 16777215,
+            min: 1016,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cross,
+              min: 0,
+              max: 1
+            }
+          }
+        ]
+      }
+    ]
   },
   1001: {
     name: "Tricky Trap",
@@ -2756,6 +2782,52 @@ const spells: SpellDataType = {
               type: AreaType.Cell,
               min: 0,
               max: 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  1016: {
+    name: "Test Trap",
+    icon: "./assets/img/spells/TestTrap.svg",
+    sfx: "./assets/img/traps/Test.svg",
+    category: SpellCategory.None,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.Push,
+            value: 0,
+            min: 2,
+            max: 2,
+            triggers: null,
+            area: {
+              type: AreaType.Cross,
+              min: 0,
+              max: 1
+            }
+          },
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.Pull,
+            value: 0,
+            min: 2,
+            max: 2,
+            triggers: null,
+            area: {
+              type: AreaType.Cross,
+              min: 0,
+              max: 1
             }
           }
         ]
