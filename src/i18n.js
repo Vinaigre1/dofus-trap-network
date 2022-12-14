@@ -27,6 +27,8 @@ const resources = {
       "Selected map": "Selected map",
       "Spell {{value}} as target": "Spell {{value}} as target",
       "Spell {{value}} as caster": "Spell {{value}} as caster",
+      "Add state {{value}}": "Add state {{value}}",
+      "Remove state {{value}}": "Remove state {{value}}",
     }
   },
   fr: {
@@ -59,6 +61,8 @@ const resources = {
       "Selected map": "Map sélectionnée",
       "Spell {{value}} as target": "Sort {{value}} par la cible",
       "Spell {{value}} as caster": "Sort {{value}} par le lanceur",
+      "Add state {{value}}": "Ajoute l'état {{value}}",
+      "Remove state {{value}}": "Retire l'état {{value}}",
     }
   }
 };

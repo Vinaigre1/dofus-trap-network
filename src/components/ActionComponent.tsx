@@ -55,7 +55,9 @@ class ActionComponent extends React.Component<Props, States>
       [EffectType.PushDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} push damage</Trans>,
       [EffectType.IndirectPushDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} push damage (indirect)</Trans>,
       [EffectType.SpellAsTarget]: <Trans count={this.props.action.effect.min}>Spell {{ value: this.props.action.effect.min }} as target</Trans>,
-      [EffectType.SpellAsCaster]: <Trans count={this.props.action.effect.min}>Spell {{ value: this.props.action.effect.min }} as caster</Trans>
+      [EffectType.SpellAsCaster]: <Trans count={this.props.action.effect.min}>Spell {{ value: this.props.action.effect.min }} as caster</Trans>,
+      [EffectType.State]: <Trans count={this.props.action.effect.min}>Add state {{ value: this.props.action.effect.min }}</Trans>,
+      [EffectType.RemoveState]: <Trans count={this.props.action.effect.min}>Remove state {{ value: this.props.action.effect.min }}</Trans>
     };
 
     return (

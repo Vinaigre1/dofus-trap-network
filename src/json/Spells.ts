@@ -2400,7 +2400,7 @@ const spells: SpellDataType = {
             triggers: null,
             area: {
               type: AreaType.Circle,
-              min: 0,
+              min: 1,
               max: 2
             }
           }
@@ -2425,7 +2425,7 @@ const spells: SpellDataType = {
             triggers: null,
             area: {
               type: AreaType.Circle,
-              min: 0,
+              min: 1,
               max: 2
             }
           }

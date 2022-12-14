@@ -271,14 +271,14 @@ export default class Action {
    * Function executed for the *state* action.
    */
   *stateAction() {
-    console.log('Non-implemented function: stateAction()');
+    this.targetEntity.addState(this.effect.min);
   }
 
   /**
    * Function executed for the *remove state* action.
    */
   *removeStateAction() {
-    console.log('Non-implemented function: removeStateAction()');
+    this.targetEntity.removeState(this.effect.min);
   }
 
   /**

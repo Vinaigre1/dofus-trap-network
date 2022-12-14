@@ -144,8 +144,8 @@ export enum TriggerType {
 }
 
 export enum State {
-  MassTrap,
-  Gravity
+  MassTrap = 1,
+  Gravity = 2
 }
 
 // Hardcoded colors
