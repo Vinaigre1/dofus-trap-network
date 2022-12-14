@@ -56,8 +56,8 @@ export default class Action {
       [EffectType.NeutralDamage]: this.neutralDamageAction.bind(this),
       [EffectType.DodgeDamage]: this.dodgeDamageAction.bind(this),
       [EffectType.StealBestElement]: this.stealBestElementAction.bind(this),
-      [EffectType.SpellOnTarget]: this.spellOnTargetAction.bind(this),
-      [EffectType.SpellOnCaster]: this.spellOnCasterAction.bind(this),
+      [EffectType.SpellAsTarget]: this.spellAsTargetAction.bind(this),
+      [EffectType.SpellAsCaster]: this.spellAsCasterAction.bind(this),
       [EffectType.State]: this.stateAction.bind(this),
       [EffectType.RemoveState]: this.removeStateAction.bind(this),
       [EffectType.CancelSpell]: this.cancelSpellAction.bind(this)
@@ -254,17 +254,17 @@ export default class Action {
   }
 
   /**
-   * Function executed for the *spell on target* action.
+   * Function executed for the *spell as target* action.
    */
-  *spellOnTargetAction() {
-    Game.executeSpell(SpellData[this.effect.min].levels[this.effect.max], this.targetEntity.pos, this.originEntity, this.originTrap);
+  *spellAsTargetAction() {
+    Game.executeSpell(SpellData[this.effect.min].levels[this.effect.max], this.targetEntity.pos, this.targetEntity, this.originTrap);
   }
 
   /**
-   * Function executed for the *spell on caster* action.
+   * Function executed for the *spell as caster* action.
    */
-  *spellOnCasterAction() {
-    Game.executeSpell(SpellData[this.effect.min].levels[this.effect.max], this.originEntity.pos, this.originEntity, this.originTrap);
+  *spellAsCasterAction() {
+    Game.executeSpell(SpellData[this.effect.min].levels[this.effect.max], this.targetEntity.pos, this.originEntity, this.originTrap);
   }
 
   /**

@@ -54,7 +54,8 @@ class ActionComponent extends React.Component<Props, States>
       [EffectType.AirDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} air damage</Trans>,
       [EffectType.PushDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} push damage</Trans>,
       [EffectType.IndirectPushDamage]: <Trans count={this.props.action.value}>{{ value: this.props.action.value }} push damage (indirect)</Trans>,
-      [EffectType.SpellOnTarget]: <Trans count={this.props.action.effect.min}>Spell {{ value: this.props.action.effect.min }} on target</Trans>
+      [EffectType.SpellAsTarget]: <Trans count={this.props.action.effect.min}>Spell {{ value: this.props.action.effect.min }} as target</Trans>,
+      [EffectType.SpellAsCaster]: <Trans count={this.props.action.effect.min}>Spell {{ value: this.props.action.effect.min }} as caster</Trans>
     };
 
     return (
@@ -63,7 +64,7 @@ class ActionComponent extends React.Component<Props, States>
           <img src={this.props.action.originTrap.getSpellIcon()} alt="" width="25px" height="25px" />
         </div>
         <div className="action-infos">
-          {actionTexts[this.props.action.type] ?? `?? Value = ${this.props.action.value}`}
+          {actionTexts[this.props.action.type] ?? `type =  ${this.props.action.type}, value = ${this.props.action.value}`}
         </div>
       </div>
     );

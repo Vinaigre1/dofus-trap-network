@@ -23,6 +23,31 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1001,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cross,
+              min: 0,
+              max: 1
+            }
+          }
+        ]
+      },
+      {
+        apCost: 3,
+        maxStack: 0,
+        maxCastPerTurn: 1,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 1,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.PlaceTrap,
+            value: 12128795,
+            min: 1001,
             max: 1,
             triggers: null,
             area: {
@@ -49,31 +74,6 @@ const spells: SpellDataType = {
             value: 12128795,
             min: 1001,
             max: 2,
-            triggers: null,
-            area: {
-              type: AreaType.Cross,
-              min: 0,
-              max: 1
-            }
-          }
-        ]
-      },
-      {
-        apCost: 3,
-        maxStack: 0,
-        maxCastPerTurn: 1,
-        maxCastPerTarget: 0,
-        minCastInterval: 0,
-        initialCooldown: 0,
-        globalCooldown: 0,
-        minPlayerLevel: 1,
-        effects: [
-          {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
-            effectType: EffectType.PlaceTrap,
-            value: 12128795,
-            min: 1001,
-            max: 3,
             triggers: null,
             area: {
               type: AreaType.Cross,
@@ -106,7 +106,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1002,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Diagonal,
@@ -139,7 +139,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1003,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -164,7 +164,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1003,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -189,7 +189,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1003,
-            max: 3,
+            max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -222,7 +222,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1004,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -247,7 +247,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1004,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -272,7 +272,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1004,
-            max: 3,
+            max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -305,7 +305,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1005,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -330,7 +330,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1005,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -363,7 +363,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1006,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -388,7 +388,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1006,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -413,7 +413,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1006,
-            max: 3,
+            max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -446,7 +446,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1007,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cross,
@@ -471,7 +471,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1007,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cross,
@@ -496,7 +496,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1007,
-            max: 3,
+            max: 2,
             triggers: null,
             area: {
               type: AreaType.Cross,
@@ -529,7 +529,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1008,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -554,7 +554,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1008,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -579,7 +579,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1008,
-            max: 3,
+            max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -612,7 +612,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1009,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -637,7 +637,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1009,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -662,7 +662,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1009,
-            max: 3,
+            max: 2,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -695,7 +695,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1011,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -720,7 +720,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1011,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -753,7 +753,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1012,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -786,7 +786,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 3222918,
             min: 1013,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Circle,
@@ -811,7 +811,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 3222918,
             min: 1013,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Circle,
@@ -836,7 +836,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 3222918,
             min: 1013,
-            max: 3,
+            max: 2,
             triggers: null,
             area: {
               type: AreaType.Circle,
@@ -869,7 +869,7 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceTrap,
             value: 3222918,
             min: 1014,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -899,10 +899,10 @@ const spells: SpellDataType = {
         effects: [
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnCaster,
+            effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1015,
-            max: 1,
+            max: 0,
             triggers: TriggerType.onDamage,
             area: {
               type: AreaType.Cell,
@@ -924,10 +924,10 @@ const spells: SpellDataType = {
         effects: [
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnCaster,
+            effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1015,
-            max: 2,
+            max: 1,
             triggers: TriggerType.onDamage,
             area: {
               type: AreaType.Cell,
@@ -949,10 +949,10 @@ const spells: SpellDataType = {
         effects: [
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnCaster,
+            effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1015,
-            max: 3,
+            max: 2,
             triggers: TriggerType.onDamage,
             area: {
               type: AreaType.Cell,
@@ -1370,7 +1370,58 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnTarget,
+            effectType: EffectType.SpellAsCaster,
+            value: 0,
+            min: 1004,
+            max: 3,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Allies}`,
+            effectType: EffectType.RemoveState,
+            value: 0,
+            min: State.MassTrap,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 1
+            }
+          }
+        ]
+      },
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Allies}`,
+            effectType: EffectType.State,
+            value: 0,
+            min: State.MassTrap,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1004,
             max: 4,
@@ -1421,61 +1472,10 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnTarget,
+            effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1004,
             max: 5,
-            triggers: null,
-            area: {
-              type: AreaType.Cell,
-              min: 0,
-              max: 0
-            }
-          },
-          {
-            targetMask: `${TargetMask.Allies}`,
-            effectType: EffectType.RemoveState,
-            value: 0,
-            min: State.MassTrap,
-            max: 0,
-            triggers: null,
-            area: {
-              type: AreaType.Cell,
-              min: 0,
-              max: 1
-            }
-          }
-        ]
-      },
-      {
-        apCost: 0,
-        maxStack: 0,
-        maxCastPerTurn: 0,
-        maxCastPerTarget: 0,
-        minCastInterval: 0,
-        initialCooldown: 0,
-        globalCooldown: 0,
-        minPlayerLevel: 0,
-        effects: [
-          {
-            targetMask: `${TargetMask.Allies}`,
-            effectType: EffectType.State,
-            value: 0,
-            min: State.MassTrap,
-            max: 0,
-            triggers: null,
-            area: {
-              type: AreaType.Cell,
-              min: 0,
-              max: 0
-            }
-          },
-          {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnTarget,
-            value: 0,
-            min: 1004,
-            max: 6,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -1690,10 +1690,10 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnCaster,
+            effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1006,
-            max: 4,
+            max: 3,
             triggers: null,
             area: {
               type: AreaType.Circle,
@@ -1754,10 +1754,10 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnCaster,
+            effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1006,
-            max: 5,
+            max: 4,
             triggers: null,
             area: {
               type: AreaType.Circle,
@@ -1818,10 +1818,10 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnCaster,
+            effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1006,
-            max: 6,
+            max: 5,
             triggers: null,
             area: {
               type: AreaType.Circle,
@@ -2077,6 +2077,31 @@ const spells: SpellDataType = {
             effectType: EffectType.PlaceEndTurnGlyph,
             value: 9895830,
             min: 1008,
+            max: 3,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 3
+            }
+          },
+        ]
+      },
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemies}`,
+            effectType: EffectType.PlaceEndTurnGlyph,
+            value: 9895830,
+            min: 1008,
             max: 4,
             triggers: null,
             area: {
@@ -2103,31 +2128,6 @@ const spells: SpellDataType = {
             value: 9895830,
             min: 1008,
             max: 5,
-            triggers: null,
-            area: {
-              type: AreaType.Circle,
-              min: 0,
-              max: 3
-            }
-          },
-        ]
-      },
-      {
-        apCost: 0,
-        maxStack: 0,
-        maxCastPerTurn: 0,
-        maxCastPerTarget: 0,
-        minCastInterval: 0,
-        initialCooldown: 0,
-        globalCooldown: 0,
-        minPlayerLevel: 0,
-        effects: [
-          {
-            targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.PlaceEndTurnGlyph,
-            value: 9895830,
-            min: 1008,
-            max: 6,
             triggers: null,
             area: {
               type: AreaType.Circle,
@@ -2245,10 +2245,10 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnTarget,
+            effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -2258,10 +2258,10 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Allies}`,
-            effectType: EffectType.SpellOnTarget,
+            effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -2296,10 +2296,10 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnTarget,
+            effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -2309,10 +2309,10 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Allies}`,
-            effectType: EffectType.SpellOnTarget,
+            effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -2347,10 +2347,10 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Enemies}`,
-            effectType: EffectType.SpellOnTarget,
+            effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
-            max: 1,
+            max: 0,
             triggers: null,
             area: {
               type: AreaType.Cell,
@@ -2360,10 +2360,10 @@ const spells: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Allies}`,
-            effectType: EffectType.SpellOnTarget,
+            effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
-            max: 2,
+            max: 1,
             triggers: null,
             area: {
               type: AreaType.Cell,
