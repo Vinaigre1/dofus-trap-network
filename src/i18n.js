@@ -25,6 +25,10 @@ const resources = {
       "{{value}} push damage (indirect)": "{{value}} push damage (indirect)",
       "{{value}} push damage (indirect)": "{{value}} push damage (indirect)",
       "Selected map": "Selected map",
+      "Spell {{value}} as target": "Spell {{value}} as target",
+      "Spell {{value}} as caster": "Spell {{value}} as caster",
+      "Add state {{value}}": "Add state {{value}}",
+      "Remove state {{value}}": "Remove state {{value}}",
     }
   },
   fr: {
@@ -55,6 +59,10 @@ const resources = {
       "{{value}} push damage_one (indirect)": "{{value}} dommage de poussée (indirecte)",
       "{{value}} push damage (indirect)": "{{value}} dommages de poussée (indirecte)",
       "Selected map": "Map sélectionnée",
+      "Spell {{value}} as target": "Sort {{value}} par la cible",
+      "Spell {{value}} as caster": "Sort {{value}} par le lanceur",
+      "Add state {{value}}": "Ajoute l'état {{value}}",
+      "Remove state {{value}}": "Retire l'état {{value}}",
     }
   }
 };

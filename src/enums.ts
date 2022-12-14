@@ -12,20 +12,31 @@ export enum EffectType {
   FireDamage,
   EarthDamage,
   AirDamage,
+  NeutralDamage,
   PushDamage,
   IndirectPushDamage,
-  MalusMP,
-  InsidiousGlyph,
-  MalevolentBoost,
-  MiryHeal
+  MPDamage,
+  DodgeDamage,
+  StealBestElement,
+  PlaceTrap,
+  CreateEntity,
+  StartPoint,
+  Remove,
+  SpellAsTarget,
+  SpellAsCaster,
+  State,
+  RemoveState,
+  CancelSpell,
+  BoostSpell,
+  HealLastDamage,
+  PlaceEndTurnGlyph
 }
 
-export enum Area {
+export enum AreaType {
   Cell,
   Cross,
   Circle,
   Diagonal,
-  Ring,
   Square
 }
 
@@ -45,10 +56,10 @@ export enum Direction {
   Northwest
 }
 
-export enum EntityName {
-  Player = "Player",
-  Cawwot = "Cawwot",
-  Poutch = "Poutch"
+export enum EntityType {
+  Player,
+  Cawwot,
+  Poutch
 }
 
 export enum TrapType {
@@ -81,8 +92,9 @@ export enum SpellCategory {
   EarthTrap,
   AirTrap,
   MalusTrap,
-  Summon,
+  Entity,
   Other,
+  None,
   Action
 }
 
@@ -104,7 +116,7 @@ export enum SpellType {
   Cawwot,
   Chakra,
   TestTrap,
-  Select,
+  StartPoint,
   Remove
 }
 
@@ -115,37 +127,49 @@ export enum ActionType {
 }
 
 export enum ActionName {
-  Select = "Select",
+  StartPoint = "Start Point",
   Remove = "Remove"
 }
 
-export const TrapClasses = {
-  [TrapType.Tricky]: "tricky",
-  [TrapType.Insidious]: "insidious",
-  [TrapType.Miry]: "miry",
-  [TrapType.Mass]: "mass",
-  [TrapType.Drift]: "drift",
-  [TrapType.Malevolent]: "malevolent",
-  [TrapType.Fragmentation]: "fragmentation",
-  [TrapType.Paralysing]: "paralysing",
-  [TrapType.Repelling]: "repelling",
-  [TrapType.Sickrat]: "sickrat",
-  [TrapType.Lethal]: "lethal",
-  [TrapType.Calamity]: "calamity",
-  [TrapType.MassGrave]: "massgrave",
-  [TrapType.Test]: "test-trap"
-};
-
-export interface EntityData {
-  name: EntityName;
-  image: string;
-  offsetX: number;
-  offsetY: number;
-  defaultScale: number;
-  movable: boolean;
+export enum TargetMask {
+  Allies,
+  Enemies,
+  State,
+  LifeAbove,
+  Caster
 }
+
+export enum TriggerType {
+  onDamage
+}
+
+export enum State {
+  MassTrap = 1,
+  Gravity = 2
+}
+
+// Hardcoded colors
+export const TrapClasses: { [key: number]: string } = {
+  12128795: 'fire',
+  5911580: 'earth',
+  1798857: 'water',
+  9895830: 'air',
+  3222918: 'utility'
+};
 
 export interface Coordinates {
   x: number;
   y: number;
+}
+
+export interface Area {
+  type: AreaType,
+  min: number,
+  max: number
+}
+
+export interface Color {
+  r: number;
+  g: number;
+  b: number;
 }

@@ -1,12 +1,11 @@
 import * as React from "react";
 import "@assets/scss/Spells.scss";
 import SpellComponent from "@components/SpellComponent";
-import _SpellData from "@json/Spells.json";
-import { Spell, SpellDataType } from "@src/@types/SpellDataType";
+import SpellData from "@json/Spells";
+import { Spell } from "@src/@types/SpellDataType";
 import { SpellCategory } from "@src/enums";
 import Game from "@classes/Game";
 
-const SpellData: SpellDataType = _SpellData as unknown as SpellDataType;
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type Props = {
@@ -66,7 +65,7 @@ class SpellsComponent extends React.Component<Props, States>
       SpellCategory.EarthTrap,
       SpellCategory.WaterTrap,
       SpellCategory.MalusTrap,
-      SpellCategory.Summon,
+      SpellCategory.Entity,
       SpellCategory.Other,
       SpellCategory.Action
     ];

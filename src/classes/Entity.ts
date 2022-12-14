@@ -1,7 +1,8 @@
-import { Coordinates, EntityData, EntityName, Team } from "@src/enums";
-import Entities from "@json/Entities.json";
+import { Coordinates, EntityType, State, Team } from "@src/enums";
+import Entities from "@json/Entities";
 import EntityComponent from "@components/EntityComponent";
 import { v4 as uuidv4 } from "uuid";
+import { EntityData } from "@src/@types/EntityDataType";
 
 class Entity {
   uuid: string;
@@ -11,26 +12,16 @@ class Entity {
   data: EntityData;
   animPos: Coordinates;
   component: EntityComponent;
+  states: State;
 
-  static entityData: Map<EntityName, EntityData> = new Map(Object.entries(Entities) as Array<[EntityName, EntityData]>);
-
-  constructor(pos: Coordinates, team: Team, name: EntityName) {
+  constructor(pos: Coordinates, team: Team, type: EntityType) {
     this.uuid = uuidv4();
     this.pos = pos;
     this.initialPos = pos;
     this.team = team;
-    this.data = Entity.getEntityData(name);
+    this.data = Entities[type];
     this.animPos = undefined;
-  }
-
-  /**
-   * Returns an Entity object with data from Entities.json.
-   * 
-   * @param {EntityName} name Name of the entity
-   * @returns {Entity} An Entity object
-   */
-  static getEntityData(name: EntityName): EntityData {
-    return Entity.entityData.get(name);
+    this.states = 0;
   }
 
   /**
@@ -49,6 +40,34 @@ class Entity {
     this.pos = this.initialPos;
     this.component?.show();
     return true;
+  }
+
+  /**
+   * Removes a state from the entity
+   * 
+   * @param {State} state State to remove
+   */
+  removeState(state: State) {
+    this.states &= ~state;
+  }
+
+  /**
+   * Adds a state to the entity
+   * 
+   * @param {State} state State to add
+   */
+  addState(state: State) {
+    this.states |= state;
+  }
+
+  /**
+   * Checks if the entity has a given state
+   * 
+   * @param {State} state State to check
+   * @returns {boolean} If the entity has the given state
+   */
+  hasState(state: State): boolean {
+    return !!(this.states & state);
   }
 }
 

@@ -96,20 +96,11 @@ $animSpeed: calc(1s / 10); // 3 cells per second
   opacity: 0.6;
 }
 
-.trap.tricky polygon        { fill: rgb(185,  18,  27); } .trap.tricky path        { stroke: rgb(185,  18,  27); }
-.trap.insidious polygon     { fill: rgb(150, 255, 150); } .trap.insidious path     { stroke: rgb(150, 255, 150); }
-.trap.miry polygon          { fill: rgb( 64, 131, 164); } .trap.miry path          { stroke: rgb( 64, 131, 164); }
-.trap.mass polygon          { fill: rgb( 90,  52,  28); } .trap.mass path          { stroke: rgb( 90,  52,  28); }
-.trap.drift polygon         { fill: rgb(185,  18,  27); } .trap.drift path         { stroke: rgb(185,  18,  27); }
-.trap.malevolent polygon    { fill: rgb( 90,  52,  28); } .trap.malevolent path    { stroke: rgb( 90,  52,  28); }
-.trap.fragmentation polygon { fill: rgb(185,  18,  27); } .trap.fragmentation path { stroke: rgb(185,  18,  27); }
-.trap.paralysing polygon    { fill: rgb( 49,  45, 134); } .trap.paralysing path    { stroke: rgb( 49,  45, 134); }
-.trap.repelling polygon     { fill: rgb(150, 255, 150); } .trap.repelling path     { stroke: rgb(150, 255, 150); }
-.trap.sickrat polygon       { fill: rgb( 64, 131, 164); } .trap.sickrat path       { stroke: rgb( 64, 131, 164); }
-.trap.lethal polygon        { fill: rgb( 90,  52,  28); } .trap.lethal path        { stroke: rgb( 90,  52,  28); }
-.trap.calamity polygon      { fill: rgb( 64, 131, 164); } .trap.calamity path      { stroke: rgb( 64, 131, 164); }
-.trap.massgrave polygon     { fill: rgb( 49,  45, 134); } .trap.massgrave path     { stroke: rgb( 49,  45, 134); }
-.trap.test-trap polygon     { fill: rgb(255, 255, 255); } .trap.test-trap path     { stroke: rgb(255, 255, 255); }
+.trap.trap-fire polygon    { fill: rgb(185,  18,  27); } .trap.trap-fire path    { stroke: rgb(185,  18,  27); }
+.trap.trap-air polygon     { fill: rgb(150, 255, 150); } .trap.trap-air path     { stroke: rgb(150, 255, 150); }
+.trap.trap-water polygon   { fill: rgb( 64, 131, 164); } .trap.trap-water path   { stroke: rgb( 64, 131, 164); }
+.trap.trap-earth polygon   { fill: rgb( 90,  52,  28); } .trap.trap-earth path   { stroke: rgb( 90,  52,  28); }
+.trap.trap-utility polygon { fill: rgb( 49,  45, 134); } .trap.trap-utility path { stroke: rgb( 49,  45, 134); }
 
 .entity-image {
   transition: x $animSpeed linear, y $animSpeed linear;

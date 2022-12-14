@@ -1,6 +1,7 @@
 import Game from "@classes/Game";
 import Trap from "@classes/Trap";
 import { CellType, TrapClasses } from "@src/enums";
+import { colorToInt } from "@src/utils/utils";
 import * as React from "react";
 import TrapCellComponent from "./TrapCellComponent";
 
@@ -75,13 +76,13 @@ class TrapComponent extends React.Component<Props, States>
         setHighlight={(highlight: boolean) => { this.setHighlight(highlight); }}
         width={cellWidth}
         height={cellHeight}
-        type={trapCells[j].type}
+        type={TrapClasses[colorToInt(trapCells[j].color)]}
         borders={trapCells[j].borders}
         key={j}
       />);
     }
     return (
-      <g className={`trap ${TrapClasses[this.props.trap.type]}`}>
+      <g className={`trap trap-${TrapClasses[colorToInt(this.props.trap.color)]}`}>
         {cells}
       </g>
     );

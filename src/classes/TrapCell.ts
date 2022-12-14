@@ -1,16 +1,16 @@
-import { CellBorders, CellType, Coordinates, TrapType } from "@src/enums";
+import { CellBorders, Color, Coordinates } from "@src/enums";
 import Trap from "./Trap";
 
 class TrapCell {
   pos: Coordinates;
   id: number;
-  type: TrapType;
+  color: Color;
   borders: CellBorders;
   trap: Trap;
 
-  constructor(pos: Coordinates, type: TrapType, borders: CellBorders, trap: Trap) {
+  constructor(pos: Coordinates, color: Color, borders: CellBorders, trap: Trap) {
     this.pos = pos;
-    this.type = type;
+    this.color = color;
     this.borders = borders;
     this.trap = trap;
   }

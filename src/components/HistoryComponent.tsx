@@ -4,10 +4,7 @@ import "@assets/scss/History.scss";
 import ActionComponent from "./ActionComponent";
 import { ActionType } from "@src/enums";
 
-type Props = {
-};
-
-class HistoryComponent extends React.Component<Props>
+class HistoryComponent extends React.Component
 {
   render() {
     const actions = Game.getActionStack();
