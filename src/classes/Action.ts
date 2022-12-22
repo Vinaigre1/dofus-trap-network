@@ -1,5 +1,5 @@
 import Entity from "@classes/Entity";
-import { Coordinates, Direction, EffectType } from "@src/enums";
+import { Coordinates, Direction, EffectType, Mask, TargetMask } from "@src/enums";
 import { getDirection, moveInDirection } from "@src/utils/mapUtils";
 import Game from "@classes/Game";
 import ActionComponent from "@components/ActionComponent";
@@ -7,11 +7,12 @@ import { v4 as uuidv4 } from "uuid";
 import Trap from "./Trap";
 import { Effect } from "@src/@types/SpellDataType";
 import SpellData from "@json/Spells";
+import { strToMaskArray } from "@src/utils/utils";
 
 export default class Action {
   uuid: string;
-  originEntity: Entity;
-  targetEntity: Entity;
+  caster: Entity;
+  target: Entity;
   originPos: Coordinates;
   targetPos: Coordinates;
   type: EffectType;
@@ -19,23 +20,92 @@ export default class Action {
   effect: Effect;
   component: ActionComponent;
   originTrap?: Trap;
+  targetMask?: Array<Mask>;
+  passedMask: boolean;
 
-  constructor(originEntity: Entity, targetEntity: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, effect: Effect, originTrap?: Trap) {
+  constructor(originEntity: Entity, targetEntity: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, effect: Effect, originTrap?: Trap, targetMask?: string) {
     this.uuid = uuidv4();
-    this.originEntity = originEntity;
-    this.targetEntity = targetEntity;
+    this.caster = originEntity;
+    this.target = targetEntity;
     this.originPos = originPos;
     this.targetPos = targetPos;
     this.type = type;
     this.value = value;
     this.effect = effect;
     this.originTrap = originTrap;
+    this.passedMask = false;
+    this.targetMask = strToMaskArray(targetMask);
+  }
+
+  /**
+   * Groups the given array of masks in conditional groups
+   * 
+   * @param {Array<Mask>} masks Array of masks
+   * @returns {Array<Array<Mask>>} Masks groupped in conditional groups
+   */
+  groupMasks(masks: Array<Mask>): Array<Array<Mask>> {
+    const EXCLUSIVE_MASKS = ["b", "e", "E", "f", "K", "o", "O", "p", "P", "q", "Q", "r", "R", "T", "U", "v", "V", "W", "z"];
+    const INCLUSIVE_MASKS = ["a", "A", "c", "C", "d", "D", "g", "h", "H", "i", "I", "j", "J", "l", "L", "m", "M", "s", "S"];
+    const ONE_OF_MASKS = ["B", "F", "Z"];
+    const sorted: Array<Array<Mask>> = [[], [], [], []];
+
+    for (let i: number = 0; i < masks.length; i++) {
+      if (EXCLUSIVE_MASKS.includes(masks[i].mask)) {
+        sorted.push([masks[i]]);
+      } else if (INCLUSIVE_MASKS.includes(masks[i].mask)) {
+        sorted[0].push(masks[i]);
+      } else if (ONE_OF_MASKS.includes(masks[i].mask)) {
+        sorted[1 + ONE_OF_MASKS.indexOf(masks[i].mask)].push(masks[i]);
+      } else {
+        console.error(`Unknown mask: ${masks[i].mask}`);
+      }
+    }
+    return sorted;
+  }
+
+  checkEntityMask() {
+    if (!this.targetMask || !this.target) return true;
+
+    const masks: Array<Array<Mask>> = this.groupMasks(this.targetMask);
+    console.log(masks);
+
+    for (let i: number = 0; i < masks.length; i++) {
+      let pass = false;
+      for (let j: number = 0; j < masks[i].length; j++) {
+        if (this.checkSingleMask(masks[i][j])) {
+          pass = true;
+        }
+      }
+      if (!pass && masks[i].length > 0) {
+        this.passedMask = false;
+        return false;
+      }
+    }
+
+    this.passedMask = true;
+    return true;
+  }
+
+  checkSingleMask(mask: Mask): boolean {
+    console.log(`Checking mask ${mask.mask} for action ${this.effect.effectType} on target ${this.target.uuid} with caster ${this.caster.uuid}`);
+    switch (mask.mask) {
+      case TargetMask.Ally:
+        return this.caster.team === this.target.team;
+        break;
+      case TargetMask.Enemy:
+        return this.caster.team !== this.target.team;
+        break;
+      default:
+        break;
+    }
   }
 
   /**
    * Applies the action from the originEntity to the targetEntity.
    */
   *apply(_yield: boolean = true) {
+    if (!this.checkEntityMask()) return; 
+
     const actions = {
       [EffectType.Pull]: this.pullAction.bind(this),
       [EffectType.Push]: this.pushAction.bind(this),
@@ -75,20 +145,20 @@ export default class Action {
    * @param {boolean} _yield `true` if the function should yield a value when an animation should play.
    */
   *pullAction(_yield: boolean) {
-    if (!this.targetEntity.isMovable()) return;
+    if (!this.target.isMovable()) return;
     this.value = this.value as number;
 
     const dir: Direction = getDirection(this.targetPos, this.originPos);
     const diagonal: boolean = [Direction.Northeast, Direction.Southeast, Direction.Southwest, Direction.Northwest].includes(dir);
 
     for (let i: number = 0; i < (diagonal ? Math.ceil(this.value / 2) : this.value); i++) {
-      const nextCell: Coordinates = moveInDirection(this.targetEntity.pos, dir, 1);
-      if (!Game.isMovementPossible(this.targetEntity.pos, nextCell, dir)) break;
+      const nextCell: Coordinates = moveInDirection(this.target.pos, dir, 1);
+      if (!Game.isMovementPossible(this.target.pos, nextCell, dir)) break;
 
-      this.targetEntity.animPos = nextCell;
-      if (_yield) yield this.targetEntity; // Yield for animation
-      this.targetEntity.pos = this.targetEntity.animPos;
-      this.targetEntity.animPos = undefined;
+      this.target.animPos = nextCell;
+      if (_yield) yield this.target; // Yield for animation
+      this.target.pos = this.target.animPos;
+      this.target.animPos = undefined;
 
       if (Game.triggerTraps(nextCell)) break;
     }
@@ -100,23 +170,23 @@ export default class Action {
    * @param {boolean} _yield `true` if the function should yield a value when an animation should play.
    */
   *pushAction(_yield: boolean) {
-    if (!this.targetEntity.isMovable()) return;
+    if (!this.target.isMovable()) return;
     this.value = this.value as number;
 
     const dir: Direction = getDirection(this.originPos, this.targetPos);
     const diagonal: boolean = [Direction.Northeast, Direction.Southeast, Direction.Southwest, Direction.Northwest].includes(dir);
 
     for (let i: number = 0; i < (diagonal ? Math.ceil(this.value / 2) : this.value); i++) {
-      const nextCell: Coordinates = moveInDirection(this.targetEntity.pos, dir, 1);
-      if (!Game.isMovementPossible(this.targetEntity.pos, nextCell, dir)) {
-        Game.addToActionStack(new Action(this.originEntity, this.targetEntity, this.targetEntity.pos, nextCell, EffectType.PushDamage, diagonal ? Math.ceil(this.value / 2) * 2 : (this.value - i), this.effect, this.originTrap));
+      const nextCell: Coordinates = moveInDirection(this.target.pos, dir, 1);
+      if (!Game.isMovementPossible(this.target.pos, nextCell, dir)) {
+        Game.addToActionStack(new Action(this.caster, this.target, this.target.pos, nextCell, EffectType.PushDamage, diagonal ? Math.ceil(this.value / 2) * 2 : (this.value - i), this.effect, this.originTrap));
         break;
       }
 
-      this.targetEntity.animPos = nextCell;
-      if (_yield) yield this.targetEntity; // Yield for animation
-      this.targetEntity.pos = this.targetEntity.animPos;
-      this.targetEntity.animPos = undefined;
+      this.target.animPos = nextCell;
+      if (_yield) yield this.target; // Yield for animation
+      this.target.pos = this.target.animPos;
+      this.target.animPos = undefined;
 
       if (Game.triggerTraps(nextCell)) break;
     }
@@ -130,7 +200,7 @@ export default class Action {
     // The following line is a condition used in the real game, but not on the simulator.
     // if (Game.getEntity(this.targetPos) !== undefined) return;
 
-    Game.placeTrap(new Trap(this.targetPos, this.originEntity, this.effect.min, this.effect.max, this.effect.area, this.effect.value));
+    Game.placeTrap(new Trap(this.targetPos, this.caster, this.effect.min, this.effect.max, this.effect.area, this.effect.value));
   }
 
   /**
@@ -166,6 +236,7 @@ export default class Action {
    * Function executed for the *water damage* action.
    */
   *waterDamageAction() {
+    this.target.onDamage();
     console.log('Non-implemented function: waterDamageAction()');
   }
 
@@ -173,6 +244,7 @@ export default class Action {
    * Function executed for the *fire damage* action.
    */
   *fireDamageAction() {
+    this.target.onDamage();
     console.log('Non-implemented function: fireDamageAction()');
   }
 
@@ -180,6 +252,7 @@ export default class Action {
    * Function executed for the *earth damage* action.
    */
   *earthDamageAction() {
+    this.target.onDamage();
     console.log('Non-implemented function: earthDamageAction()');
   }
 
@@ -187,6 +260,7 @@ export default class Action {
    * Function executed for the *air damage* action.
    */
   *airDamageAction() {
+    this.target.onDamage();
     console.log('Non-implemented function: airDamageAction()');
   }
 
@@ -257,28 +331,28 @@ export default class Action {
    * Function executed for the *spell as target* action.
    */
   *spellAsTargetAction() {
-    Game.executeSpell(SpellData[this.effect.min].levels[this.effect.max], this.targetEntity.pos, this.targetEntity, this.originTrap);
+    Game.executeSpell(SpellData[this.effect.min].levels[this.effect.max], this.target.pos, this.target, this.originTrap);
   }
 
   /**
    * Function executed for the *spell as caster* action.
    */
   *spellAsCasterAction() {
-    Game.executeSpell(SpellData[this.effect.min].levels[this.effect.max], this.targetEntity.pos, this.originEntity, this.originTrap);
+    Game.executeSpell(SpellData[this.effect.min].levels[this.effect.max], this.target.pos, this.caster, this.originTrap);
   }
 
   /**
    * Function executed for the *state* action.
    */
   *stateAction() {
-    this.targetEntity.addState(this.effect.min);
+    this.target.addState(this.effect.min);
   }
 
   /**
    * Function executed for the *remove state* action.
    */
   *removeStateAction() {
-    this.targetEntity.removeState(this.effect.min);
+    this.target.removeState(this.effect.min);
   }
 
   /**

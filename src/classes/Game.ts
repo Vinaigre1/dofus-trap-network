@@ -372,7 +372,7 @@ class Game {
       }
       const value = randomInt(effects[i].min, effects[i].max);
       for (let j: number = 0; j < entities.length; j++) {
-        localStack.unshift(new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], originTrap));
+        localStack.unshift(new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], originTrap, effects[i].targetMask));
       }
     }
     this.addToActionStack(...localStack);

@@ -1,5 +1,5 @@
 import { SpellDataType } from "@src/@types/SpellDataType"
-import { SpellCategory, SpellType, EffectType, TargetMask, AreaType, TriggerType, State, EntityType } from "@src/enums"
+import { SpellCategory, SpellType, EffectType, TargetMask, AreaType, TriggerType, State, EntityType, Team } from "@src/enums"
 
 const spells: SpellDataType = {
   [SpellType.TrickyTrap]: {
@@ -19,7 +19,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 1,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1001,
@@ -44,7 +44,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 1,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1001,
@@ -69,7 +69,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 1,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1001,
@@ -102,7 +102,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 140,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1002,
@@ -135,7 +135,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 40,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1003,
@@ -160,7 +160,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 107,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1003,
@@ -185,7 +185,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 174,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 12128795,
             min: 1003,
@@ -218,7 +218,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 25,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1004,
@@ -243,7 +243,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 92,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1004,
@@ -268,7 +268,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 159,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1004,
@@ -301,7 +301,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 85,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1005,
@@ -326,7 +326,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 152,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1005,
@@ -359,7 +359,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 35,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1006,
@@ -384,7 +384,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 102,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1006,
@@ -409,7 +409,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 169,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 5911580,
             min: 1006,
@@ -442,7 +442,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 55,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1007,
@@ -467,7 +467,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 122,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1007,
@@ -492,7 +492,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 189,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1007,
@@ -525,7 +525,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 6,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1008,
@@ -550,7 +550,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 71,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1008,
@@ -575,7 +575,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 138,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 9895830,
             min: 1008,
@@ -608,7 +608,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 20,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1009,
@@ -633,7 +633,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 87,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1009,
@@ -658,7 +658,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 154,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1009,
@@ -691,7 +691,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 75,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1011,
@@ -716,7 +716,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 142,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1011,
@@ -749,7 +749,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 180,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 1798857,
             min: 1012,
@@ -782,7 +782,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 45,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 3222918,
             min: 1013,
@@ -807,7 +807,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 112,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 3222918,
             min: 1013,
@@ -832,7 +832,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 179,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 3222918,
             min: 1013,
@@ -865,7 +865,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 155,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 3222918,
             min: 1014,
@@ -898,7 +898,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 65,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1015,
@@ -923,7 +923,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 131,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1015,
@@ -948,7 +948,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 198,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1015,
@@ -981,7 +981,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceTrap,
             value: 16777215,
             min: 1016,
@@ -1014,7 +1014,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 18,
@@ -1027,7 +1027,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 1,
@@ -1052,7 +1052,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 22,
@@ -1065,7 +1065,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 1,
@@ -1090,7 +1090,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 26,
@@ -1103,7 +1103,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 1,
@@ -1136,7 +1136,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 17,
@@ -1149,7 +1149,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Push,
             value: 0,
             min: 2,
@@ -1182,7 +1182,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 4,
@@ -1195,7 +1195,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 8,
@@ -1208,7 +1208,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 18,
@@ -1221,7 +1221,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 28,
@@ -1246,7 +1246,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 7,
@@ -1259,7 +1259,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 17,
@@ -1272,7 +1272,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 28,
@@ -1285,7 +1285,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 38,
@@ -1310,7 +1310,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 13,
@@ -1323,7 +1323,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 27,
@@ -1336,7 +1336,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 37,
@@ -1349,7 +1349,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.FireDamage,
             value: 0,
             min: 47,
@@ -1382,7 +1382,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies}`,
+            targetMask: `${TargetMask.Ally}`,
             effectType: EffectType.State,
             value: 0,
             min: State.MassTrap,
@@ -1395,7 +1395,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1004,
@@ -1408,7 +1408,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies}`,
+            targetMask: `${TargetMask.Ally}`,
             effectType: EffectType.RemoveState,
             value: 0,
             min: State.MassTrap,
@@ -1433,7 +1433,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies}`,
+            targetMask: `${TargetMask.Ally}`,
             effectType: EffectType.State,
             value: 0,
             min: State.MassTrap,
@@ -1446,7 +1446,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1004,
@@ -1459,7 +1459,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies}`,
+            targetMask: `${TargetMask.Ally}`,
             effectType: EffectType.RemoveState,
             value: 0,
             min: State.MassTrap,
@@ -1484,7 +1484,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies}`,
+            targetMask: `${TargetMask.Ally}`,
             effectType: EffectType.State,
             value: 0,
             min: State.MassTrap,
@@ -1497,7 +1497,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1004,
@@ -1510,7 +1510,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies}`,
+            targetMask: `${TargetMask.Ally}`,
             effectType: EffectType.RemoveState,
             value: 0,
             min: State.MassTrap,
@@ -1535,7 +1535,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies},!${TargetMask.State}:${State.MassTrap}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy},${TargetMask.NotState}${State.MassTrap}`,
             effectType: EffectType.EarthDamage,
             value: 0,
             min: 24,
@@ -1560,7 +1560,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies},!${TargetMask.State}:${State.MassTrap}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy},${TargetMask.NotState}${State.MassTrap}`,
             effectType: EffectType.EarthDamage,
             value: 0,
             min: 29,
@@ -1585,7 +1585,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies},!${TargetMask.State}:${State.MassTrap}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy},${TargetMask.NotState}${State.MassTrap}`,
             effectType: EffectType.EarthDamage,
             value: 0,
             min: 34,
@@ -1618,7 +1618,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies},${TargetMask.LifeAbove}:25`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy},${TargetMask.LifeAbove}25`,
             effectType: EffectType.EarthDamage,
             value: 0,
             min: 31,
@@ -1631,7 +1631,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies},!${TargetMask.LifeAbove}:25`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy},${TargetMask.NotLifeAbove}25`,
             effectType: EffectType.EarthDamage,
             value: 0,
             min: 39,
@@ -1656,7 +1656,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies},${TargetMask.LifeAbove}:25`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy},${TargetMask.LifeAbove}25`,
             effectType: EffectType.EarthDamage,
             value: 0,
             min: 39,
@@ -1669,7 +1669,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies},!${TargetMask.LifeAbove}:25`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy},${TargetMask.NotLifeAbove}25`,
             effectType: EffectType.EarthDamage,
             value: 0,
             min: 49,
@@ -1702,7 +1702,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Caster}`,
+            targetMask: `${TargetMask.CasterEverywhere}`,
             effectType: EffectType.CancelSpell,
             value: 0,
             min: 1006,
@@ -1715,7 +1715,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1006,
@@ -1728,7 +1728,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.EarthDamage,
             value: 0,
             min: 18,
@@ -1741,7 +1741,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Caster}`,
+            targetMask: `${TargetMask.CasterEverywhere}`,
             effectType: EffectType.CancelSpell,
             value: 0,
             min: 1006,
@@ -1766,7 +1766,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Caster}`,
+            targetMask: `${TargetMask.CasterEverywhere}`,
             effectType: EffectType.CancelSpell,
             value: 0,
             min: 1006,
@@ -1779,7 +1779,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1006,
@@ -1792,7 +1792,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.EarthDamage,
             value: 0,
             min: 23,
@@ -1805,7 +1805,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Caster}`,
+            targetMask: `${TargetMask.CasterEverywhere}`,
             effectType: EffectType.CancelSpell,
             value: 0,
             min: 1006,
@@ -1830,7 +1830,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Caster}`,
+            targetMask: `${TargetMask.CasterEverywhere}`,
             effectType: EffectType.CancelSpell,
             value: 0,
             min: 1006,
@@ -1843,7 +1843,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1006,
@@ -1856,7 +1856,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.EarthDamage,
             value: 0,
             min: 28,
@@ -1869,7 +1869,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Caster}`,
+            targetMask: `${TargetMask.CasterEverywhere}`,
             effectType: EffectType.CancelSpell,
             value: 0,
             min: 1006,
@@ -1894,7 +1894,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Caster}`,
+            targetMask: `${TargetMask.CasterEverywhere}`,
             effectType: EffectType.BoostSpell,
             value: 0,
             min: 1006,
@@ -1919,7 +1919,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Caster}`,
+            targetMask: `${TargetMask.CasterEverywhere}`,
             effectType: EffectType.BoostSpell,
             value: 0,
             min: 1006,
@@ -1944,7 +1944,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Caster}`,
+            targetMask: `${TargetMask.CasterEverywhere}`,
             effectType: EffectType.BoostSpell,
             value: 0,
             min: 1006,
@@ -1977,7 +1977,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Push,
             value: 0,
             min: 2,
@@ -1990,7 +1990,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.AirDamage,
             value: 0,
             min: 8,
@@ -2015,7 +2015,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Push,
             value: 0,
             min: 2,
@@ -2028,7 +2028,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.AirDamage,
             value: 0,
             min: 10,
@@ -2053,7 +2053,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Push,
             value: 0,
             min: 2,
@@ -2066,7 +2066,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.AirDamage,
             value: 0,
             min: 12,
@@ -2099,7 +2099,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.PlaceEndTurnGlyph,
             value: 9895830,
             min: 1008,
@@ -2124,7 +2124,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.PlaceEndTurnGlyph,
             value: 9895830,
             min: 1008,
@@ -2149,7 +2149,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.PlaceEndTurnGlyph,
             value: 9895830,
             min: 1008,
@@ -2174,7 +2174,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.AirDamage,
             value: 0,
             min: 34,
@@ -2199,7 +2199,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.AirDamage,
             value: 0,
             min: 41,
@@ -2224,7 +2224,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.AirDamage,
             value: 0,
             min: 48,
@@ -2257,7 +2257,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.WaterDamage,
             value: 0,
             min: 21,
@@ -2270,7 +2270,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
@@ -2283,7 +2283,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies}`,
+            targetMask: `${TargetMask.Ally}`,
             effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
@@ -2308,7 +2308,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.WaterDamage,
             value: 0,
             min: 27,
@@ -2321,7 +2321,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
@@ -2334,7 +2334,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies}`,
+            targetMask: `${TargetMask.Ally}`,
             effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
@@ -2359,7 +2359,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.WaterDamage,
             value: 0,
             min: 33,
@@ -2372,7 +2372,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
@@ -2385,7 +2385,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Allies}`,
+            targetMask: `${TargetMask.Ally}`,
             effectType: EffectType.SpellAsTarget,
             value: 0,
             min: 1010,
@@ -2418,7 +2418,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.HealLastDamage,
             value: 0,
             min: 50,
@@ -2443,7 +2443,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies}`,
+            targetMask: `${TargetMask.Ally}`,
             effectType: EffectType.HealLastDamage,
             value: 0,
             min: 50,
@@ -2476,7 +2476,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 3,
@@ -2489,7 +2489,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.WaterDamage,
             value: 0,
             min: 13,
@@ -2514,7 +2514,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 3,
@@ -2527,7 +2527,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.WaterDamage,
             value: 0,
             min: 17,
@@ -2560,7 +2560,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.WaterDamage,
             value: 0,
             min: 40,
@@ -2573,7 +2573,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.DodgeDamage,
             value: 0,
             min: 40,
@@ -2606,7 +2606,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.MPDamage,
             value: 0,
             min: 4,
@@ -2631,7 +2631,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.MPDamage,
             value: 0,
             min: 4,
@@ -2656,7 +2656,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.MPDamage,
             value: 0,
             min: 4,
@@ -2689,7 +2689,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.State,
             value: 0,
             min: State.Gravity,
@@ -2722,7 +2722,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.StealBestElement,
             value: 0,
             min: 11,
@@ -2747,7 +2747,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.StealBestElement,
             value: 0,
             min: 13,
@@ -2772,7 +2772,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.StealBestElement,
             value: 0,
             min: 15,
@@ -2805,7 +2805,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.Push,
             value: 0,
             min: 2,
@@ -2818,7 +2818,7 @@ const spells: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 2,
@@ -2851,10 +2851,43 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.CreateEntity,
             value: EntityType.Poutch,
-            min: 0,
+            min: Team.Defender,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  [SpellType.Player]: {
+    name: "Sram",
+    icon: "./assets/img/spells/Double.svg",
+    sfx: "./assets/img/entities/Sram.png",
+    category: SpellCategory.Entity,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
+            effectType: EffectType.CreateEntity,
+            value: EntityType.Player,
+            min: Team.Attacker,
             max: 0,
             triggers: null,
             area: {
@@ -2884,10 +2917,10 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.CreateEntity,
             value: EntityType.Cawwot,
-            min: 0,
+            min: Team.Attacker,
             max: 0,
             triggers: null,
             area: {
@@ -2917,7 +2950,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.StartPoint,
             value: 0,
             min: 0,
@@ -2950,7 +2983,7 @@ const spells: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Allies},${TargetMask.Enemies}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Remove,
             value: 0,
             min: 0,

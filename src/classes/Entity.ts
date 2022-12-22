@@ -69,6 +69,13 @@ class Entity {
   hasState(state: State): boolean {
     return !!(this.states & state);
   }
+
+  /**
+   * Executed when the entity receive direct damage
+   */
+  onDamage() {
+    alert('test');
+  }
 }
 
 export default Entity;
