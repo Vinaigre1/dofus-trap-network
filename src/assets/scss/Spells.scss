@@ -18,8 +18,25 @@
   flex: 8;
 }
 
-.spells-padding {
+.spells-options {
   flex: 8;
+}
+
+.spells-options img {
+  width: 35px;
+  height: 35px;
+}
+
+.spells-options .btn {
+  background-color: rgb(69, 69, 69);
+  border: 2px solid #CCC;
+  padding: 5px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.spells-options .btn.active {
+  background-color: rgb(186, 69, 69);
 }
 
 .spell {

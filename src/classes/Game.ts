@@ -3,7 +3,7 @@ import Entity from "@classes/Entity";
 import Trap from "@classes/Trap";
 import Action from "@classes/Action";
 import Consts from "@json/Consts.json";
-import { Area, AreaType, CellBorders, CellType, Coordinates, Direction, EffectType, EntityType, Team } from "@src/enums";
+import { Area, AreaType, CellBorders, CellType, Coordinates, Direction, EffectType, EntityType, GameOptions, SpellType, Team } from "@src/enums";
 import { clockwise, isInArea, moveInDirection } from "@src/utils/mapUtils";
 import TrapCell from "@classes/TrapCell";
 import { randomInt } from "@src/utils/utils";
@@ -37,8 +37,10 @@ class Game {
   actionGenerator: Generator<Entity>;
   waitingAnim: boolean;
   remainingSteps: number;
+  isRunning: boolean;
 
   selectedSpell: Spell;
+  options: GameOptions;
 
   constructor(mapName: string) {
     this.width = Consts.mapWidth;
@@ -54,6 +56,7 @@ class Game {
     this.mapComponent = undefined;
     this.startPoint = undefined;
     this.remainingSteps = -1;
+    this.isRunning = false;
     this.preparingEffects = [
       EffectType.PlaceTrap,
       EffectType.CreateEntity,
@@ -61,6 +64,9 @@ class Game {
       EffectType.Remove
     ];
     this.mainCharacter = new Entity({ x: 0, y: 0 }, Team.Attacker, EntityType.Player);
+    this.options = {
+      leukide: false
+    };
 
     this.loadMap(mapName);
   }
@@ -83,6 +89,7 @@ class Game {
       return;
     }
 
+    this.isRunning = true;
     this.savedActionStack = [];
     this.triggerTraps(this.startPoint);
     this.remainingSteps = -1;
@@ -98,6 +105,7 @@ class Game {
       return;
     }
 
+    this.isRunning = true;
     this.remainingSteps = 1;
     if (this.actionStack.length === 0) {
       this.savedActionStack = [];
@@ -106,6 +114,9 @@ class Game {
     this.triggerStack();
   }
 
+  /**
+   * Stops all actions from triggering
+   */
   pause() {
     this.remainingSteps = 0;
   }
@@ -151,6 +162,13 @@ class Game {
    * @param {Entity} entity 
    */
   placeEntity(entity: Entity) {
+    if (entity.team === Team.Defender && this.options.leukide) {
+      entity.addTrigger({
+        triggers: [EffectType.AirDamage, EffectType.EarthDamage, EffectType.FireDamage, EffectType.WaterDamage, EffectType.NeutralDamage],
+        spellId: SpellType.Leukide,
+        spellLevel: 0
+      });
+    }
     this.entities.push(entity);
   }
 
@@ -320,7 +338,7 @@ class Game {
 
     // maxCells = Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
     // Todo: increase efficiency of this function ?
-    const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square].includes(area.type);
+    const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square, AreaType.Star].includes(area.type);
     const maxCells: number = ((area.max * (timesTwo ? 2 : 1)) * ((area.max * (timesTwo ? 2 : 1)) + 1)) * 2 + 1;
 
     for (let i: number = 0; i < maxCells; i++) {
@@ -372,7 +390,7 @@ class Game {
       }
       const value = randomInt(effects[i].min, effects[i].max);
       for (let j: number = 0; j < entities.length; j++) {
-        localStack.unshift(new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], originTrap));
+        localStack.unshift(new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], originTrap, effects[i].targetMask));
       }
     }
     this.addToActionStack(...localStack);
@@ -477,6 +495,7 @@ class Game {
     this.actionStack = [];
     this.currentAction = undefined;
     this.waitingAnim = false;
+    this.isRunning = false;
 
     this.refreshMap();
   }
@@ -526,8 +545,13 @@ class Game {
     this.selectedSpell = spell;
   }
 
+  /**
+   * Function triggered when a cell is clicked
+   * 
+   * @param {Coordinates} pos Coordinates of the clicked cell
+   */
   onCellClick(pos: Coordinates) {
-    if (this.selectedSpell === undefined) return;
+    if (this.selectedSpell === undefined || this.isRunning) return;
     // TODO: get spell level
 
     const effects = this.selectedSpell?.levels[0].effects;
@@ -536,6 +560,12 @@ class Game {
     this.refreshMap();
   }
 
+  /**
+   * Applies effects used to prepare the terrain
+   * 
+   * @param {Array<Effect>} effects Effects to apply
+   * @param {Coordinates} pos Coordinates of the effects to apply
+   */
   applyPreparingEffects(effects: Array<Effect>, pos: Coordinates) {
     for (let i: number = 0; i < effects.length; i++) {
       if (!this.preparingEffects.includes(effects[i].effectType)) continue;
@@ -547,6 +577,29 @@ class Game {
         console.error('Preparing effect is yielding but should not.');
       }
     }
+  }
+
+  /**
+   * Toggles the Leukide trigger effect
+   * 
+   * @returns {boolean} returns if the Leukide is acrive
+   */
+  toggleLeukide(): boolean {
+    this.options.leukide = !this.options.leukide;
+    for (let i: number = 0; i < this.entities.length; i++) {
+      if (this.entities[i].team === Team.Defender) {
+        if (this.options.leukide) {
+          this.entities[i].addTrigger({
+            triggers: [EffectType.WaterDamage, EffectType.FireDamage, EffectType.EarthDamage, EffectType.AirDamage, EffectType.NeutralDamage],
+            spellId: SpellType.Leukide,
+            spellLevel: 0
+          });
+        } else {
+          this.entities[i].removeTrigger(SpellType.Leukide);
+        }
+      }
+    }
+    return this.options.leukide;
   }
 }
 

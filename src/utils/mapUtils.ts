@@ -13,7 +13,7 @@ export function getCellsInArea(pos: Coordinates, area: Area): Array<Coordinates>
 
   // maxCells = Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
   // Todo: increase efficiency of this function ?
-  const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square].includes(area.type);
+  const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square, AreaType.Star].includes(area.type);
   const maxCells: number = ((area.max * (timesTwo ? 2 : 1)) * ((area.max * (timesTwo ? 2 : 1)) + 1)) * 2 + 1;
 
   for (let i: number = 0; i < maxCells; i++) {
@@ -46,10 +46,13 @@ export function isInArea(pos: Coordinates, area: Area, areaPos: Coordinates): bo
     case AreaType.Circle:
       return distance.real <= area.max && distance.real >= area.min;
     case AreaType.Diagonal:
-      return (distance.absolute.x === 0 && distance.absolute.y <= area.max * 2 && distance.absolute.y >= area.min * 2) ||
-             (distance.absolute.y === 0 && distance.absolute.x <= area.max * 2 && distance.absolute.x >= area.min * 2);
+      return (distance.absolute.x === 0 && distance.absolute.y <= area.max * 2 && distance.absolute.y >= area.min * 2)
+          || (distance.absolute.y === 0 && distance.absolute.x <= area.max * 2 && distance.absolute.x >= area.min * 2);
     case AreaType.Square:
       return distance.absolute.x + distance.absolute.y <= area.max * 2 && distance.absolute.x + distance.absolute.y >= area.min * 2;
+    case AreaType.Star:
+      return isInArea(pos, { type: AreaType.Cross, min: area.min, max: area.max }, areaPos)
+          || isInArea(pos, { type: AreaType.Diagonal, min: area.min, max: area.max }, areaPos);
     default:
       return false;
   }
