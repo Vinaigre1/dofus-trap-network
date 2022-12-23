@@ -67,7 +67,6 @@ export default class Action {
     if (!this.targetMask || !this.target) return true;
 
     const masks: Array<Array<Mask>> = this.groupMasks(this.targetMask);
-    console.log(masks);
 
     for (let i: number = 0; i < masks.length; i++) {
       let pass = false;
@@ -87,7 +86,6 @@ export default class Action {
   }
 
   checkSingleMask(mask: Mask): boolean {
-    console.log(`Checking mask ${mask.mask} for action ${this.effect.effectType} on target ${this.target.uuid} with caster ${this.caster.uuid}`);
     switch (mask.mask) {
       case TargetMask.Ally:
         return this.caster.team === this.target.team;
@@ -252,7 +250,7 @@ export default class Action {
    * Function executed for the *water damage* action.
    */
   *waterDamageAction() {
-    this.target.trigger(EffectType.WaterDamage);
+    this.target.trigger(EffectType.WaterDamage, this.originTrap);
     console.log('Non-implemented function: waterDamageAction()');
   }
 
@@ -260,7 +258,7 @@ export default class Action {
    * Function executed for the *fire damage* action.
    */
   *fireDamageAction() {
-    this.target.trigger(EffectType.FireDamage);
+    this.target.trigger(EffectType.FireDamage, this.originTrap);
     console.log('Non-implemented function: fireDamageAction()');
   }
 
@@ -268,7 +266,7 @@ export default class Action {
    * Function executed for the *earth damage* action.
    */
   *earthDamageAction() {
-    this.target.trigger(EffectType.EarthDamage);
+    this.target.trigger(EffectType.EarthDamage, this.originTrap);
     console.log('Non-implemented function: earthDamageAction()');
   }
 
@@ -276,7 +274,7 @@ export default class Action {
    * Function executed for the *air damage* action.
    */
   *airDamageAction() {
-    this.target.trigger(EffectType.AirDamage);
+    this.target.trigger(EffectType.AirDamage, this.originTrap);
     console.log('Non-implemented function: airDamageAction()');
   }
 

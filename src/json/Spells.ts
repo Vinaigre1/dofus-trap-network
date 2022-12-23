@@ -2805,7 +2805,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Push,
             value: 0,
             min: 2,
@@ -2818,7 +2818,7 @@ const SpellData: SpellDataType = {
             }
           },
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 2,

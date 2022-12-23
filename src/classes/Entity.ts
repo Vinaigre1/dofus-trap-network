@@ -5,6 +5,7 @@ import { v4 as uuidv4 } from "uuid";
 import { EntityData } from "@src/@types/EntityDataType";
 import Game from "./Game";
 import SpellData from "@json/Spells";
+import Trap from "./Trap";
 
 class Entity {
   uuid: string;
@@ -87,13 +88,23 @@ class Entity {
    * Triggers all spells listening to the corresponding effect
    * 
    * @param {EffectType} effect Type of the effect
+   * @param {Trap} originTrap Trap triggering the effect
    */
-  trigger(effect: EffectType) {
+  trigger(effect: EffectType, originTrap: Trap) {
     for (let i: number = 0; i < this.triggers.length; i++) {
       if (this.triggers[i].triggers.includes(effect)) {
-        Game.executeSpell(SpellData[this.triggers[i].spellId].levels[this.triggers[i].spellLevel], this.pos, this, Game.traps[0]);
+        Game.executeSpell(SpellData[this.triggers[i].spellId].levels[this.triggers[i].spellLevel], this.pos, this, originTrap);
       }
     }
+  }
+
+  /**
+   * Removes all triggers with the given spellId
+   * 
+   * @param {number} spellId ID of the spell to remove from triggers
+   */
+  removeTrigger(spellId: number) {
+    this.triggers = this.triggers.filter((trigger) => trigger.spellId !== spellId);
   }
 }
 

@@ -14,6 +14,7 @@ type Props = {
 type States = {
   selectedSpell: Spell;
   play: boolean;
+  leukide: boolean;
 };
 
 class SpellsComponent extends React.Component<Props, States>
@@ -23,7 +24,8 @@ class SpellsComponent extends React.Component<Props, States>
 
     this.state = {
       selectedSpell: undefined,
-      play: false
+      play: false,
+      leukide: false
     };
   }
 
@@ -50,6 +52,13 @@ class SpellsComponent extends React.Component<Props, States>
   onStop() {
     this.setPlay(false);
     Game.resetAll();
+  }
+
+  onLeukide() {
+    if (Game.isRunning) return;
+
+    const active = Game.toggleLeukide();
+    this.setState((state) => ({ ...state, leukide: active }));
   }
 
   setPlay(play: boolean) {
@@ -90,7 +99,11 @@ class SpellsComponent extends React.Component<Props, States>
     }
 
     return <div className="spells">
-      <div className="spells-padding"></div>
+      <div className="spells-options">
+        <div className={`btn btn-leukide ${this.state.leukide ? 'active' : ''}`} onClick={() => { this.onLeukide(); }}>
+          <img className="img-leukide" src="./assets/img/other/leukide.png" alt="leukide" />
+        </div>
+      </div>
       {spellCategories}
       <div className="controls">
         <button className={this.state.play ? "pause" : "play"} onClick={() => { this.state.play ? this.onPause() : this.onPlay(); }}>

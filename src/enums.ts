@@ -230,3 +230,7 @@ export interface SpellTrigger {
   spellId: number;
   spellLevel: number;
 }
+
+export interface GameOptions {
+  leukide: boolean;
+}
