@@ -1,7 +1,7 @@
 import { SpellDataType } from "@src/@types/SpellDataType"
 import { SpellCategory, SpellType, EffectType, TargetMask, AreaType, TriggerType, State, EntityType, Team } from "@src/enums"
 
-const spells: SpellDataType = {
+const SpellData: SpellDataType = {
   [SpellType.TrickyTrap]: {
     name: "Tricky Trap",
     icon: "./assets/img/spells/TrickyTrap.svg",
@@ -851,7 +851,7 @@ const spells: SpellDataType = {
   [SpellType.MassGrave]: {
     name: "Mass Grave",
     icon: "./assets/img/spells/MassGrave.svg",
-    sfx: "./assets/img/traps/Mass.svg",
+    sfx: "./assets/img/traps/MassGrave.svg",
     category: SpellCategory.MalusTrap,
     levels: [
       {
@@ -2675,7 +2675,7 @@ const spells: SpellDataType = {
   1014: {
     name: "Mass Grave",
     icon: "./assets/img/spells/MassGrave.svg",
-    sfx: "./assets/img/traps/Mass.svg",
+    sfx: "./assets/img/traps/MassGrave.svg",
     category: SpellCategory.None,
     levels: [
       {
@@ -2998,7 +2998,40 @@ const spells: SpellDataType = {
         ]
       }
     ]
+  },
+  [SpellType.Leukide]: {
+    name: "Leukide",
+    icon: null,
+    sfx: null,
+    category: null,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.Pull,
+            value: 0,
+            min: 63,
+            max: 63,
+            triggers: null,
+            area: {
+              type: AreaType.Star,
+              min: 0,
+              max: 63
+            }
+          }
+        ]
+      }
+    ]
   }
 };
 
-export default spells;
+export default SpellData;

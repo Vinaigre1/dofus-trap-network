@@ -25,10 +25,11 @@ const resources = {
       "{{value}} push damage (indirect)": "{{value}} push damage (indirect)",
       "{{value}} push damage (indirect)": "{{value}} push damage (indirect)",
       "Selected map": "Selected map",
-      "Spell {{value}} as target": "Spell {{value}} as target",
-      "Spell {{value}} as caster": "Spell {{value}} as caster",
-      "Add state {{value}}": "Add state {{value}}",
-      "Remove state {{value}}": "Remove state {{value}}",
+      "Spell '{{value}}' casted as target": "Spell '{{value}}' casted as target",
+      "Spell '{{value}}' casted as caster": "Spell '{{value}}' casted as caster",
+      "Add state '{{value}}'": "Add state '{{value}}'",
+      "Remove state '{{value}}'": "Remove state '{{value}}'",
+      "Mass Trap": "Mass Trap",
     }
   },
   fr: {
@@ -59,10 +60,11 @@ const resources = {
       "{{value}} push damage_one (indirect)": "{{value}} dommage de poussée (indirecte)",
       "{{value}} push damage (indirect)": "{{value}} dommages de poussée (indirecte)",
       "Selected map": "Map sélectionnée",
-      "Spell {{value}} as target": "Sort {{value}} par la cible",
-      "Spell {{value}} as caster": "Sort {{value}} par le lanceur",
-      "Add state {{value}}": "Ajoute l'état {{value}}",
-      "Remove state {{value}}": "Retire l'état {{value}}",
+      "Spell '{{value}}' casted as target": "Sort '{{value}}' lancé par la cible",
+      "Spell '{{value}}' casted as caster": "Sort '{{value}}' lancé par le lanceur",
+      "Add state '{{value}}'": "Ajoute l'état '{{value}}'",
+      "Remove state '{{value}}'": "Retire l'état '{{value}}'",
+      "Mass Trap": "Piège de Masse",
     }
   }
 };

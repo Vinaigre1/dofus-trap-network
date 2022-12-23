@@ -37,7 +37,8 @@ export enum AreaType {
   Cross,
   Circle,
   Diagonal,
-  Square
+  Square,
+  Star
 }
 
 export enum Team {
@@ -118,7 +119,8 @@ export enum SpellType {
   Chakra,
   TestTrap,
   StartPoint,
-  Remove
+  Remove,
+  Leukide
 }
 
 export enum ActionType {
@@ -185,6 +187,11 @@ export enum State {
   Gravity = 2
 }
 
+export const StateName = {
+  [State.MassTrap]: "Mass Trap",
+  [State.Gravity]: "Gravity"
+}
+
 // Hardcoded colors
 export const TrapClasses: { [key: number]: string } = {
   12128795: 'fire',
@@ -216,4 +223,10 @@ export interface Mask {
   onCaster: boolean;
   mask: string;
   param: number;
+}
+
+export interface SpellTrigger {
+  triggers: Array<EffectType>;
+  spellId: number;
+  spellLevel: number;
 }

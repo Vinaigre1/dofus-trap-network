@@ -37,6 +37,7 @@ class Game {
   actionGenerator: Generator<Entity>;
   waitingAnim: boolean;
   remainingSteps: number;
+  isRunning: boolean;
 
   selectedSpell: Spell;
 
@@ -54,6 +55,7 @@ class Game {
     this.mapComponent = undefined;
     this.startPoint = undefined;
     this.remainingSteps = -1;
+    this.isRunning = false;
     this.preparingEffects = [
       EffectType.PlaceTrap,
       EffectType.CreateEntity,
@@ -83,6 +85,7 @@ class Game {
       return;
     }
 
+    this.isRunning = true;
     this.savedActionStack = [];
     this.triggerTraps(this.startPoint);
     this.remainingSteps = -1;
@@ -98,6 +101,7 @@ class Game {
       return;
     }
 
+    this.isRunning = true;
     this.remainingSteps = 1;
     if (this.actionStack.length === 0) {
       this.savedActionStack = [];
@@ -320,7 +324,7 @@ class Game {
 
     // maxCells = Number of cells in a circle twice the size of the area // Small hack to avoid checking the entire map
     // Todo: increase efficiency of this function ?
-    const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square].includes(area.type);
+    const timesTwo: boolean = [AreaType.Diagonal, AreaType.Square, AreaType.Star].includes(area.type);
     const maxCells: number = ((area.max * (timesTwo ? 2 : 1)) * ((area.max * (timesTwo ? 2 : 1)) + 1)) * 2 + 1;
 
     for (let i: number = 0; i < maxCells; i++) {
@@ -477,6 +481,7 @@ class Game {
     this.actionStack = [];
     this.currentAction = undefined;
     this.waitingAnim = false;
+    this.isRunning = false;
 
     this.refreshMap();
   }
@@ -527,7 +532,7 @@ class Game {
   }
 
   onCellClick(pos: Coordinates) {
-    if (this.selectedSpell === undefined) return;
+    if (this.selectedSpell === undefined || this.isRunning) return;
     // TODO: get spell level
 
     const effects = this.selectedSpell?.levels[0].effects;

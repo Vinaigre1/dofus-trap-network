@@ -43,7 +43,7 @@
 }
 
 .action.masked {
-  display: none;
+  // display: none;
   opacity: 0.3;
   background-image: linear-gradient(to bottom right, transparent calc(50% - 1px), white, transparent calc(50% + 1px)), linear-gradient(to bottom left, transparent calc(50% - 1px), white, transparent calc(50% + 1px))
 }

@@ -33,7 +33,7 @@ export default class Action {
     this.value = value;
     this.effect = effect;
     this.originTrap = originTrap;
-    this.passedMask = false;
+    this.passedMask = true;
     this.targetMask = strToMaskArray(targetMask);
   }
 
@@ -95,7 +95,23 @@ export default class Action {
       case TargetMask.Enemy:
         return this.caster.team !== this.target.team;
         break;
+      case TargetMask.State:
+        return this.target.hasState(mask.param);
+        break;
+      case TargetMask.NotState:
+        return !this.target.hasState(mask.param);
+        break;
+      case TargetMask.LifeAbove:
+        return true; // TODO
+        break;
+      case TargetMask.NotLifeAbove:
+        return true; // TODO
+        break;
+      case TargetMask.CasterEverywhere:
+        return true; // TODO
+        break;
       default:
+        return true; // If mask is unknown, ignore it.
         break;
     }
   }
@@ -236,7 +252,7 @@ export default class Action {
    * Function executed for the *water damage* action.
    */
   *waterDamageAction() {
-    this.target.onDamage();
+    this.target.trigger(EffectType.WaterDamage);
     console.log('Non-implemented function: waterDamageAction()');
   }
 
@@ -244,7 +260,7 @@ export default class Action {
    * Function executed for the *fire damage* action.
    */
   *fireDamageAction() {
-    this.target.onDamage();
+    this.target.trigger(EffectType.FireDamage);
     console.log('Non-implemented function: fireDamageAction()');
   }
 
@@ -252,7 +268,7 @@ export default class Action {
    * Function executed for the *earth damage* action.
    */
   *earthDamageAction() {
-    this.target.onDamage();
+    this.target.trigger(EffectType.EarthDamage);
     console.log('Non-implemented function: earthDamageAction()');
   }
 
@@ -260,7 +276,7 @@ export default class Action {
    * Function executed for the *air damage* action.
    */
   *airDamageAction() {
-    this.target.onDamage();
+    this.target.trigger(EffectType.AirDamage);
     console.log('Non-implemented function: airDamageAction()');
   }
 
