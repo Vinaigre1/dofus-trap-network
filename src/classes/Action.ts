@@ -103,7 +103,7 @@ export default class Action {
         return true; // TODO
         break;
       case TargetMask.NotLifeAbove:
-        return true; // TODO
+        return false; // TODO
         break;
       case TargetMask.CasterEverywhere:
         return true; // TODO

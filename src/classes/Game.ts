@@ -12,6 +12,7 @@ import HistoryComponent from "@components/HistoryComponent";
 import { Effect, Spell, SpellLevel } from "@src/@types/SpellDataType";
 import SpellsComponent from "@components/SpellsComponent";
 import SpellData from "@json/Spells";
+import StatsComponent from "@components/StatsComponent";
 
 class Game {
   map: Array<Array<Cell>>;
@@ -19,6 +20,7 @@ class Game {
   mapComponent: MapComponent;
   historyComponent: HistoryComponent;
   spellsComponent: SpellsComponent;
+  statsComponent: StatsComponent;
   preparingEffects: Array<EffectType>;
   mainCharacter: Entity;
 
@@ -136,6 +138,13 @@ class Game {
   }
 
   /**
+   * Forces the map component to update its values and children.
+   */
+  refreshStats() {
+    this.statsComponent?.forceUpdate();
+  }
+
+  /**
    * Returns the trap cells of all placed traps.
    * 
    * @returns {Array<TrapCell>} The trap cells of all placed traps
@@ -229,6 +238,7 @@ class Game {
           }
           this.refreshMap();
           this.refreshHistory();
+          this.refreshStats();
           this.mapLoaded = true;
         },
         (error) => {
@@ -558,6 +568,7 @@ class Game {
     this.applyPreparingEffects(effects, pos);
 
     this.refreshMap();
+    this.refreshStats();
   }
 
   /**
@@ -600,6 +611,22 @@ class Game {
       }
     }
     return this.options.leukide;
+  }
+
+  /**
+   * Moves a trap order in the traps array
+   * 
+   * @param {number} trapIdx Old trap index
+   * @param {number} newIdx New trap index
+   */
+  reorderTraps(trapIdx: number, newIdx: number, reloadComponents: boolean = false) {
+    if (trapIdx >= this.traps.length || newIdx >= this.traps.length || trapIdx < 0 || newIdx < 0) return;
+
+    this.traps.splice(newIdx, 0, this.traps.splice(trapIdx, 1)[0]);
+    if (reloadComponents) {
+      this.refreshMap();
+      this.refreshStats();
+    }
   }
 }
 
