@@ -1,4 +1,6 @@
-{
+import { MapDataType } from "@src/@types/MapDataType";
+
+const MapData: MapDataType = {
 	"0": {
 		"name_fr": "Map vide",
 		"filename": "0.json"
@@ -548,3 +550,5 @@
 		"filename": "225185792.json"
 	}
 }
+
+export default MapData;

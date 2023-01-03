@@ -14,7 +14,7 @@ declare global { // Debug
 
 const App = () => (
   <div className="app">
-    <StatsComponent />
+    <StatsComponent ref={(component) => { Game.statsComponent = component; }} />
     <MapComponent ref={(component) => { Game.mapComponent = component; window.Game = Game; }} cellNum={Consts.mapWidth} rowNum={Consts.mapHeight} />
     <HistoryComponent ref={(component) => { Game.historyComponent = component; }} />
     <SpellsComponent ref={(component) => { Game.spellsComponent = component; }} />

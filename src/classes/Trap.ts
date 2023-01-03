@@ -1,11 +1,10 @@
 import { Area, Color, Coordinates } from "@src/enums";
 import TrapCell from "@classes/TrapCell";
 import { getBorders, getCellsInArea, isInArea } from "@src/utils/mapUtils";
-import Entity from "@classes/Entity";
 import { v4 as uuidv4 } from "uuid";
 import TrapComponent from "@components/TrapComponent";
 import SpellData from "@json/Spells";
-import { intToColor } from "@src/utils/utils";
+import { colorToInt, intToColor } from "@src/utils/utils";
 
 class Trap {
   uuid: string;
@@ -13,17 +12,17 @@ class Trap {
   spellId: number;
   spellLevel: number;
   area: Area;
-  caster: Entity;
+  casterUuid: string;
   color: Color;
   component: TrapComponent;
   imgComponent: SVGImageElement;
   active: boolean;
 
-  constructor(pos: Coordinates, caster: Entity, spellId: number, spellLevel: number, area: Area, value: number) {
+  constructor(pos: Coordinates, casterUuid: string, spellId: number, spellLevel: number, area: Area, value: number) {
     this.uuid = uuidv4();
     this.pos = pos;
     this.area = area;
-    this.caster = caster;
+    this.casterUuid = casterUuid;
     this.spellId = spellId;
     this.spellLevel = spellLevel;
     this.color = intToColor(value);
@@ -68,6 +67,41 @@ class Trap {
 
   getSpellIcon(): string {
     return SpellData[this.spellId].icon;
+  }
+
+  /**
+   * Returns a string representing the trap.
+   * 
+   * @returns {string} The string representing the trap
+   */
+  serialize(): string {
+    let str = "<";
+    str += this.pos.x + "|" + this.pos.y + "|";
+    str += this.spellId + "|" + this.spellLevel + "|";
+    str += this.area.min + "|" + this.area.max + "|" + this.area.type + "|";
+    str += this.casterUuid + "|";
+    str += colorToInt(this.color) + ">";
+    return str;
+  }
+
+  /**
+   * Returns a new trap from the serialized string.
+   * 
+   * @param {string} str The string representing the trap
+   */
+  static unserialize(str: string): Trap {
+    const parts: Array<string> = str.split("|");
+    let n: number = 0;
+
+    const _pos: Coordinates = { x: parseInt(parts[n++]), y: parseInt(parts[n++]) };
+    const _spellId: number = parseInt(parts[n++]);
+    const _spellLevel: number = parseInt(parts[n++]);
+    const _area: Area = { min: parseInt(parts[n++]), max: parseInt(parts[n++]), type: parseInt(parts[n++]) };
+    const _caster: string = parts[n++];
+    const _value: number = parseInt(parts[n++]);
+
+    const trap = new Trap(_pos, _caster, _spellId, _spellLevel, _area, _value);
+    return trap;
   }
 }
 

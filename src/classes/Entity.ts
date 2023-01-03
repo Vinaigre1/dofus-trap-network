@@ -106,6 +106,39 @@ class Entity {
   removeTrigger(spellId: number) {
     this.triggers = this.triggers.filter((trigger) => trigger.spellId !== spellId);
   }
+
+  /**
+   * Returns a string representing the entity.
+   * 
+   * @returns {string} The string representing the entity
+   */
+  serialize(): string {
+    let str: string = "<";
+    str += this.uuid + "|";
+    str += this.initialPos.x + "|" + this.initialPos.y + "|";
+    str += this.team + "|";
+    str += this.data.type + ">";
+    // TODO: add this.triggers
+    return str;
+  }
+
+  /**
+   * Returns a new entity from the serialized string.
+   * 
+   * @param {string} str The string representing the entity
+   */
+  static unserialize(str: string): Entity {
+    const parts: Array<string> = str.split("|");
+    let n: number = 0;
+
+    const _uuid: string = parts[n++];
+    const _pos: Coordinates = { x: parseInt(parts[n++]), y: parseInt(parts[n++]) };
+    const _team: Team = parseInt(parts[n++]);
+    const _type: EntityType = parseInt(parts[n++])
+    const entity = new Entity(_pos, _team, _type);
+    entity.uuid = _uuid;
+    return entity;
+  }
 }
 
 export default Entity;

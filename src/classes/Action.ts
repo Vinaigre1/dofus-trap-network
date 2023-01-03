@@ -103,7 +103,7 @@ export default class Action {
         return true; // TODO
         break;
       case TargetMask.NotLifeAbove:
-        return true; // TODO
+        return false; // TODO
         break;
       case TargetMask.CasterEverywhere:
         return true; // TODO
@@ -118,8 +118,6 @@ export default class Action {
    * Applies the action from the originEntity to the targetEntity.
    */
   *apply(_yield: boolean = true) {
-    if (!this.checkEntityMask()) return; 
-
     const actions = {
       [EffectType.Pull]: this.pullAction.bind(this),
       [EffectType.Push]: this.pushAction.bind(this),
@@ -214,7 +212,7 @@ export default class Action {
     // The following line is a condition used in the real game, but not on the simulator.
     // if (Game.getEntity(this.targetPos) !== undefined) return;
 
-    Game.placeTrap(new Trap(this.targetPos, this.caster, this.effect.min, this.effect.max, this.effect.area, this.effect.value));
+    Game.placeTrap(new Trap(this.targetPos, this.caster.uuid, this.effect.min, this.effect.max, this.effect.area, this.effect.value));
   }
 
   /**
