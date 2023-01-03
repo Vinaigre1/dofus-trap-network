@@ -688,59 +688,59 @@ class Game {
    * @param {string} str The serialized object
    */
   unserialize(str: string): boolean {
-    const parts: Array<string> = str.split("|");
-    const rawData: string = (parts[0] === "1")
-      ? zlib.inflateSync(Buffer.from(parts[1], "base64")).toString("ascii")
-      : str.slice(2)
-    ;
+    try {
+      const parts: Array<string> = str.split("|");
+      const rawData: string = (parts[0] === "1")
+        ? zlib.inflateSync(Buffer.from(parts[1], "base64")).toString("ascii")
+        : str.slice(2)
+      ;
 
-    const groups: Array<string> = [];
-    let data = "";
-    for (let i: number = 0; i < rawData.length; i++) {
-      if (rawData[i] === "<") {
-        const idx = rawData.indexOf(">", i);
-        if (idx === -1) {
-          i = rawData.length;
+      const groups: Array<string> = [];
+      let data = "";
+      for (let i: number = 0; i < rawData.length; i++) {
+        if (rawData[i] === "<") {
+          const idx = rawData.indexOf(">", i);
+          if (idx === -1) {
+            i = rawData.length;
+          } else {
+            groups.push(rawData.slice(i + 1, idx));
+            i = idx;
+            data += groups.length - 1;
+          }
         } else {
-          groups.push(rawData.slice(i + 1, idx));
-          i = idx;
-          data += groups.length - 1;
+          data += rawData[i];
         }
-      } else {
-        data += rawData[i];
       }
-    }
-    
-    const dataParts: Array<string> = data.split("|");
-    let n = 0;
+      
+      const dataParts: Array<string> = data.split("|");
+      let n = 0;
 
-    console.log("rawData:", rawData);
-    console.log("data:", data);
-    console.log("groups:", groups);
-    console.log("dataParts:", dataParts);
+      const _mapName: string = dataParts[n++];
+      const _mainCharacter: Entity = Entity.unserialize(groups[parseInt(dataParts[n++])]);
+      const _entitiesLength: number = parseInt(dataParts[n++]);
+      const _entities: Array<Entity> = [];
+      for (let i: number = 0; i < _entitiesLength; i++) {
+        _entities.push(Entity.unserialize(groups[parseInt(dataParts[n++])]));
+      }
+      const _trapsLength: number = parseInt(dataParts[n++])
+      const _traps: Array<Trap> = [];
+      for (let i: number = 0; i < _trapsLength; i++) {
+        _traps.push(Trap.unserialize(groups[parseInt(dataParts[n++])]));
+      }
+      let _startPoint: Coordinates = { x: parseInt(dataParts[n++]), y: parseInt(dataParts[n++]) };
+      if (isNaN(_startPoint.x)) _startPoint = undefined;
+      const _leukide: boolean = dataParts[n++] === "1";
 
-    const _mapName: string = dataParts[n++];
-    const _mainCharacter: Entity = Entity.unserialize(groups[parseInt(dataParts[n++])]);
-    const _entitiesLength: number = parseInt(dataParts[n++]);
-    const _entities: Array<Entity> = [];
-    for (let i: number = 0; i < _entitiesLength; i++) {
-      _entities.push(Entity.unserialize(groups[parseInt(dataParts[n++])]));
+      this.prepareNewMap();
+      this.mainCharacter = _mainCharacter;
+      this.entities = _entities;
+      this.traps = _traps;
+      this.startPoint = _startPoint;
+      this.options.leukide = _leukide;
+      this.loadMap(_mapName, false);
+    } catch {
+      return false;
     }
-    const _trapsLength: number = parseInt(dataParts[n++])
-    const _traps: Array<Trap> = [];
-    for (let i: number = 0; i < _trapsLength; i++) {
-      _traps.push(Trap.unserialize(groups[parseInt(dataParts[n++])]));
-    }
-    const _startPoint: Coordinates = { x: parseInt(dataParts[n++]), y: parseInt(dataParts[n++]) };
-    const _leukide: boolean = dataParts[n++] === "1";
-
-    this.prepareNewMap();
-    this.mainCharacter = _mainCharacter;
-    this.entities = _entities;
-    this.traps = _traps;
-    this.startPoint = _startPoint;
-    this.options.leukide = _leukide;
-    this.loadMap(_mapName, false);
     
     return true;
   }

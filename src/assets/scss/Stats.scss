@@ -83,3 +83,26 @@
     }
   }
 }
+
+.stats .share {
+  margin-top: 10px;
+  .shareBtn {
+    border: 2px solid #CCC;
+    background-color: rgb(69, 69, 69);
+    color: #CCC;
+    padding: 5px 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .shareBtn:active {
+    background-color: rgb(186, 69, 69);
+  }
+  .shareText {
+    padding: 10px;
+    background-color: #0006;
+    overflow: scroll;
+    white-space: nowrap;
+  }
+}

@@ -30,6 +30,8 @@ const resources = {
       "Add state '{{value}}'": "Add state '{{value}}'",
       "Remove state '{{value}}'": "Remove state '{{value}}'",
       "Mass Trap": "Mass Trap",
+      "Export": "Export",
+      "Import": "Import",
     }
   },
   fr: {
@@ -65,6 +67,8 @@ const resources = {
       "Add state '{{value}}'": "Ajoute l'état '{{value}}'",
       "Remove state '{{value}}'": "Retire l'état '{{value}}'",
       "Mass Trap": "Piège de Masse",
+      "Export": "Exporter",
+      "Import": "Importer",
     }
   }
 };

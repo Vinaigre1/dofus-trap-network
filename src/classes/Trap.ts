@@ -1,7 +1,6 @@
 import { Area, Color, Coordinates } from "@src/enums";
 import TrapCell from "@classes/TrapCell";
 import { getBorders, getCellsInArea, isInArea } from "@src/utils/mapUtils";
-import Entity from "@classes/Entity";
 import { v4 as uuidv4 } from "uuid";
 import TrapComponent from "@components/TrapComponent";
 import SpellData from "@json/Spells";

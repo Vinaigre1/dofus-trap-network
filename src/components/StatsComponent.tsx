@@ -37,13 +37,30 @@ class StatsComponent extends React.Component<Props, State>
     Game.reorderTraps(oldIdx, newIdx, true);
   }
 
-  onShare() {
+  onExport() {
     this.setState((state) => {
       return {
         ...state,
         shareText: Game.serialize()
       };
-    })
+    });
+  }
+
+  onImport() {
+    const str = prompt("Importer un réseau :");
+    if (str !== null) {
+      if (!Game.unserialize(str)) {
+        alert("L'importation a échoué");
+      }
+    }
+  }
+
+  selectContents(el: any) {
+    const range = document.createRange();
+    range.selectNodeContents(el);
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
   }
 
   render() {
@@ -77,8 +94,11 @@ class StatsComponent extends React.Component<Props, State>
       <select onChange={(e) => { this.onSelectMap(e.target.value); }}>
         {mapOptions}
       </select>
-      <button className="share" onClick={() => { this.onShare(); }}>Share</button>
-      <span>{this.state.shareText ?? ""}</span>
+      <div className="share">
+        <button className="shareBtn" onClick={() => { this.onImport(); }}><Trans>Import</Trans></button>
+        <button className="shareBtn" onClick={() => { this.onExport(); }}><Trans>Export</Trans></button>
+        <div className="shareText" onClick={(e) => { this.selectContents(e.target); }}>{this.state.shareText ?? ""}</div>
+      </div>
       {/* <ul className="entity-list">
         <li>one</li>
         <li>two</li>
