@@ -117,9 +117,17 @@ class Entity {
     str += this.uuid + "|";
     str += this.initialPos.x + "|" + this.initialPos.y + "|";
     str += this.team + "|";
-    str += this.data.type + ">";
-    // TODO: add this.triggers
-    return str;
+    str += this.data.type + "|";
+    str += this.triggers.length + "|";
+    for (let i: number = 0; i < this.triggers.length; i++) {
+      str += this.triggers[i].triggers.length + "|";
+      for (let j: number = 0; j < this.triggers[i].triggers.length; j++) {
+        str += this.triggers[i].triggers[j] + "|";
+      }
+      str += this.triggers[i].spellId + "|";
+      str += this.triggers[i].spellLevel + "|";
+    }
+    return str + ">";
   }
 
   /**
@@ -135,8 +143,24 @@ class Entity {
     const _pos: Coordinates = { x: parseInt(parts[n++]), y: parseInt(parts[n++]) };
     const _team: Team = parseInt(parts[n++]);
     const _type: EntityType = parseInt(parts[n++])
+    const _triggersLength: number = parseInt(parts[n++]);
+    const _triggers: Array<SpellTrigger> = [];
+    for (let i: number = 0; i < _triggersLength; i++) {
+      const _trtrLength: number = parseInt(parts[n++]);
+      const _trtr: Array<EffectType> = [];
+      for (let j: number = 0; j < _trtrLength; j++) {
+        _trtr.push(parseInt(parts[n++]));
+      }
+      _triggers.push({
+        triggers: _trtr,
+        spellId: parseInt(parts[n++]),
+        spellLevel: parseInt(parts[n++])
+      });
+    }
+
     const entity = new Entity(_pos, _team, _type);
     entity.uuid = _uuid;
+    entity.triggers = _triggers;
     return entity;
   }
 }
