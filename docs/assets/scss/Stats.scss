@@ -3,3 +3,106 @@
   margin: 5px;
   overflow-y: scroll;
 }
+
+.stats .entity-list,
+.stats .trap-list {
+  overflow: scroll;
+  height: 150px;
+  margin: 10px;
+  padding: 0;
+  background-color: #0006;
+  list-style: none;
+  li:not(:last-child) {
+    border-bottom: 1px solid white;
+  }
+  li.placeholder {
+    opacity: 0;
+  }
+  li {
+    * {
+      vertical-align: middle;
+    }
+    .trap-order {
+      padding-top: 7px;
+      padding-bottom: 7px;
+      cursor: grab;
+      display: inline-block;
+      width: 10%;
+      text-align: center;
+      span {
+        display: inline-block;
+        width: 100%;
+        font-size: 9px;
+        position: relative;
+        margin-right: 8px;
+        color: #CCC;
+        font-weight: 100;
+        user-select: none;
+      }
+      span:before,
+      span:after {
+        left: 0;
+        width: 100%;
+        font-size: 12px;
+        position: absolute;
+      }
+      span:before {
+        content: '^';
+        top: -8px;
+      }
+      span:after {
+        content: '^';
+        transform: scaleY(-1);
+        top: 3px;
+      }
+    }
+    .img-container {
+    padding-top: 7px;
+    padding-bottom: 7px;
+      cursor: grab;
+      user-select: none;
+      display: inline-block;
+      width: 10%;
+      img {
+        user-select: none;
+        width: 18px;
+        margin-right: 5px;
+      }
+    }
+    .trap-name {
+      padding-top: 7px;
+      padding-bottom: 7px;
+      cursor: grab;
+      user-select: none;
+      width: 80%;
+      display: inline-block;
+      span {
+        font-size: 15px;
+        color: #EEE;
+      }
+    }
+  }
+}
+
+.stats .share {
+  margin-top: 10px;
+  .shareBtn {
+    border: 2px solid #CCC;
+    background-color: rgb(69, 69, 69);
+    color: #CCC;
+    padding: 5px 10px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  .shareBtn:active {
+    background-color: rgb(186, 69, 69);
+  }
+  .shareText {
+    padding: 10px;
+    background-color: #0006;
+    overflow: scroll;
+    white-space: nowrap;
+  }
+}
