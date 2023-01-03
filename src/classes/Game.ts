@@ -13,9 +13,12 @@ import { Effect, Spell, SpellLevel } from "@src/@types/SpellDataType";
 import SpellsComponent from "@components/SpellsComponent";
 import SpellData from "@json/Spells";
 import StatsComponent from "@components/StatsComponent";
+import zlib from "react-zlib-js";
+import { Buffer } from 'buffer';
 
 class Game {
   map: Array<Array<Cell>>;
+  mapName: string;
   mapLoaded: boolean;
   mapComponent: MapComponent;
   historyComponent: HistoryComponent;
@@ -53,6 +56,7 @@ class Game {
     this.completedActionStack = [];
     this.savedActionStack = [];
     this.currentAction = undefined;
+    this.mapName = undefined;
     this.mapLoaded = false;
     this.waitingAnim = false;
     this.mapComponent = undefined;
@@ -221,13 +225,14 @@ class Game {
    * 
    * @param {string} name The name of the json map to load
    */
-  loadMap(name: string) {
+  loadMap(name: string, newMap: boolean = true) {
     const fileURL: string = `./assets/maps/${name}.json`;
     fetch(fileURL)
       .then(res => res.json())
       .then(
         (res) => {
-          this.prepareNewMap();
+          if (newMap) this.prepareNewMap();
+          this.mapName = name;
           const map = res.Data[0].Cells;
           this.map = new Array<Array<Cell>>(map[0].length);
           for (let i = 0; i < map[0].length; i++) {
@@ -262,6 +267,7 @@ class Game {
     this.waitingAnim = false;
     this.remainingSteps = -1;
     this.mapLoaded = false;
+    this.isRunning = false;
 
     if (refresh) {
       this.refreshMap();
@@ -288,6 +294,22 @@ class Game {
   getEntity(pos: Coordinates): Entity {
     for (let i: number = 0; i < this.entities.length; i++) {
       if (this.entities[i].pos.x === pos.x && this.entities[i].pos.y === pos.y)
+        return this.entities[i];
+    }
+    return undefined;
+  }
+
+  /**
+   * Returns the entity with the given uuid.
+   * 
+   * @param {string} uuid Uuid of the entity
+   * @returns {Entity} The entity, or undefined if there is none
+   */
+  getEntityById(uuid: string): Entity {
+    if (this.mainCharacter.uuid === uuid) return this.mainCharacter;
+
+    for (let i: number = 0; i < this.entities.length; i++) {
+      if (this.entities[i].uuid === uuid)
         return this.entities[i];
     }
     return undefined;
@@ -372,7 +394,7 @@ class Game {
     const triggered: Array<number> = [];
     for (let i: number = 0; i < this.traps.length; i++) {
       if (this.traps[i].isInTrap(pos)) {
-        this.executeSpell(SpellData[this.traps[i].spellId].levels[this.traps[i].spellLevel], this.traps[i].pos, this.traps[i].caster, this.traps[i]);
+        this.executeSpell(SpellData[this.traps[i].spellId].levels[this.traps[i].spellLevel], this.traps[i].pos, this.getEntityById(this.traps[i].casterUuid), this.traps[i]);
         triggered.push(i);
       }
     }
@@ -400,7 +422,10 @@ class Game {
       }
       const value = randomInt(effects[i].min, effects[i].max);
       for (let j: number = 0; j < entities.length; j++) {
-        localStack.unshift(new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], originTrap, effects[i].targetMask));
+        const action = new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], originTrap, effects[i].targetMask);
+        if (action.checkEntityMask()) {
+          localStack.unshift(action);
+        }
       }
     }
     this.addToActionStack(...localStack);
@@ -556,12 +581,12 @@ class Game {
   }
 
   /**
-   * Function triggered when a cell is clicked
+   * Function triggered when a cell is clicked.
    * 
    * @param {Coordinates} pos Coordinates of the clicked cell
    */
   onCellClick(pos: Coordinates) {
-    if (this.selectedSpell === undefined || this.isRunning) return;
+    if (this.selectedSpell === undefined || this.map[pos.x][pos.y].type !== CellType.Ground || this.isRunning) return;
     // TODO: get spell level
 
     const effects = this.selectedSpell?.levels[0].effects;
@@ -572,7 +597,7 @@ class Game {
   }
 
   /**
-   * Applies effects used to prepare the terrain
+   * Applies effects used to prepare the terrain.
    * 
    * @param {Array<Effect>} effects Effects to apply
    * @param {Coordinates} pos Coordinates of the effects to apply
@@ -591,7 +616,7 @@ class Game {
   }
 
   /**
-   * Toggles the Leukide trigger effect
+   * Toggles the Leukide trigger effect.
    * 
    * @returns {boolean} returns if the Leukide is acrive
    */
@@ -614,7 +639,7 @@ class Game {
   }
 
   /**
-   * Moves a trap order in the traps array
+   * Moves a trap order in the traps array.
    * 
    * @param {number} trapIdx Old trap index
    * @param {number} newIdx New trap index
@@ -627,6 +652,97 @@ class Game {
       this.refreshMap();
       this.refreshStats();
     }
+  }
+
+  /**
+   * Returns a string representing the game object.
+   * 
+   * @returns {string} The string representing the game object
+   */
+  serialize(compress: boolean = true): string {
+    let str: string = "";
+    str += this.mapName + "|";
+    str += this.mainCharacter.serialize() + "|";
+    str += this.entities.length + "|";
+    for (let i: number = 0; i < this.entities.length; i++) {
+      str += this.entities[i].serialize() + "|";
+    }
+    str += this.traps.length + "|";
+    for (let i: number = 0; i < this.traps.length; i++) {
+      str += this.traps[i].serialize() + "|";
+    }
+    str += (this.startPoint?.x ?? "-") + "|" + (this.startPoint?.y ?? "-") + "|";
+    str += +this.options.leukide;
+  
+    if (compress) {
+      str = "1|" + zlib.deflateSync(str).toString("base64");
+    } else {
+      str = "0|" + str;
+    }
+    return str;
+  }
+
+  /**
+   * Loads all data from a serialized object.
+   * 
+   * @param {string} str The serialized object
+   */
+  unserialize(str: string): boolean {
+    const parts: Array<string> = str.split("|");
+    const rawData: string = (parts[0] === "1")
+      ? zlib.inflateSync(Buffer.from(parts[1], "base64")).toString("ascii")
+      : str.slice(2)
+    ;
+
+    const groups: Array<string> = [];
+    let data = "";
+    for (let i: number = 0; i < rawData.length; i++) {
+      if (rawData[i] === "<") {
+        const idx = rawData.indexOf(">", i);
+        if (idx === -1) {
+          i = rawData.length;
+        } else {
+          groups.push(rawData.slice(i + 1, idx));
+          i = idx;
+          data += groups.length - 1;
+        }
+      } else {
+        data += rawData[i];
+      }
+    }
+    
+    const dataParts: Array<string> = data.split("|");
+    let n = 0;
+
+    console.log("rawData:", rawData);
+    console.log("data:", data);
+    console.log("groups:", groups);
+    console.log("dataParts:", dataParts);
+
+    const _mapName: string = dataParts[n++];
+    const _mainCharacter: Entity = Entity.unserialize(groups[parseInt(dataParts[n++])]);
+    const _entitiesLength: number = parseInt(dataParts[n++]);
+    const _entities: Array<Entity> = [];
+    for (let i: number = 0; i < _entitiesLength; i++) {
+      _entities.push(Entity.unserialize(groups[parseInt(dataParts[n++])]));
+    }
+    const _trapsLength: number = parseInt(dataParts[n++])
+    const _traps: Array<Trap> = [];
+    for (let i: number = 0; i < _trapsLength; i++) {
+      _traps.push(Trap.unserialize(groups[parseInt(dataParts[n++])]));
+    }
+    const _startPoint: Coordinates = { x: parseInt(dataParts[n++]), y: parseInt(dataParts[n++]) };
+    const _leukide: boolean = dataParts[n++] === "1";
+
+    this.prepareNewMap();
+    this.mainCharacter = _mainCharacter;
+    this.entities = _entities;
+    this.traps = _traps;
+    this.startPoint = _startPoint;
+    this.options.leukide = _leukide;
+    this.loadMap(_mapName, false);
+    
+    return true;
   }
 }
 

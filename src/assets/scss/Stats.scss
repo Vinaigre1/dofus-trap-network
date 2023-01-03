@@ -6,9 +6,11 @@
 
 .stats .entity-list,
 .stats .trap-list {
-  overflow: auto;
+  overflow: scroll;
+  height: 150px;
   margin: 10px;
   padding: 0;
+  background-color: #0006;
   list-style: none;
   li:not(:last-child) {
     border-bottom: 1px solid white;
@@ -17,7 +19,6 @@
     opacity: 0;
   }
   li {
-    background-color: #0006;
     * {
       vertical-align: middle;
     }

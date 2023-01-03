@@ -1,4 +1,7 @@
+import { EntityType } from "@src/enums";
+
 export type EntityData = {
+  type: EntityType;
   name: string;
   image: string;
   offsetX: number;

@@ -3,6 +3,7 @@ import { EntityType } from "@src/enums"
 
 const entities: EntityDataType = {
   [EntityType.Cawwot]: {
+    "type": EntityType.Cawwot,
     "name": "Cawwot",
     "image": "./assets/img/entities/Cawwot.png",
     "offsetX": 0.03,
@@ -11,6 +12,7 @@ const entities: EntityDataType = {
     "movable": false
   },
   [EntityType.Poutch]: {
+    "type": EntityType.Poutch,
     "name": "Poutch",
     "image": "./assets/img/entities/Poutch.png",
     "offsetX": -0.05,
@@ -19,6 +21,7 @@ const entities: EntityDataType = {
     "movable": true
   },
   [EntityType.Player]: {
+    "type": EntityType.Player,
     "name": "Player",
     "image": "./assets/img/entities/Sram.png",
     "offsetX": -0.06,

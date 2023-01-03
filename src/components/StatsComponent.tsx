@@ -6,8 +6,25 @@ import Reorder from 'react-reorder';
 import MapData from "@json/Maps";
 import SpellData from "@json/Spells";
 
-class StatsComponent extends React.Component
+// eslint-disable-next-line @typescript-eslint/ban-types
+type Props = {
+};
+
+type State = {
+  shareText: string;
+};
+
+
+class StatsComponent extends React.Component<Props, State>
 {
+  constructor(props: Props | Readonly<Props>) {
+    super(props);
+
+    this.state = {
+      shareText: ""
+    };
+  }
+
   onSelectMap(value: string) {
     if (confirm("Attention, changer la map réinitialisera tous les pièges et entités !")) {
       Game.loadMap(value);
@@ -18,6 +35,15 @@ class StatsComponent extends React.Component
     const oldIdx: number = Game.traps.length - oldPos - 1;
     const newIdx: number = Game.traps.length - newPos - 1;
     Game.reorderTraps(oldIdx, newIdx, true);
+  }
+
+  onShare() {
+    this.setState((state) => {
+      return {
+        ...state,
+        shareText: Game.serialize()
+      };
+    })
   }
 
   render() {
@@ -51,13 +77,14 @@ class StatsComponent extends React.Component
       <select onChange={(e) => { this.onSelectMap(e.target.value); }}>
         {mapOptions}
       </select>
-      <button className="share">Share</button>
-      <ul className="entity-list">
+      <button className="share" onClick={() => { this.onShare(); }}>Share</button>
+      <span>{this.state.shareText ?? ""}</span>
+      {/* <ul className="entity-list">
         <li>one</li>
         <li>two</li>
         <li>three</li>
-      </ul>
-      <div className="main-character">main character</div>
+      </ul> */}
+      {/* <div className="main-character">main character</div> */}
       <Reorder
         className="trap-list"
         reorderId="trap-list"
@@ -83,7 +110,7 @@ class StatsComponent extends React.Component
           );
         })}
       </Reorder>
-      <span>requires 12 turns to place</span>
+      {/* <span>requires 12 turns to place</span> */}
       {help}
     </div>;
   }
