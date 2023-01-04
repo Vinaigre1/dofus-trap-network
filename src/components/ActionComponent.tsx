@@ -1,6 +1,6 @@
 import * as React from "react";
 import "@assets/scss/Spells.scss";
-import { ActionType, EffectType, StateName, TrapClasses } from "@src/enums";
+import { ActionType, EffectCategory, EffectType, EffectTypeCategory, StateName, TrapClasses } from "@src/enums";
 import Action from "@classes/Action";
 import { Trans } from "react-i18next";
 import { colorToInt } from "@src/utils/utils";
@@ -46,6 +46,15 @@ class ActionComponent extends React.Component<Props, States>
       [ActionType.Completed]: "completed"
     };
 
+    const effectClasses = {
+      [EffectCategory.Meta]: "effect-meta",
+      [EffectCategory.Movement]: "effect-movement",
+      [EffectCategory.Damage]: "effect-damage",
+      [EffectCategory.State]: "effect-state",
+      [EffectCategory.Secondary]: "effect-secondary",
+      [EffectCategory.Spell]: "effect-spell",
+    };
+
     const actionTexts = {
       [EffectType.Pull]: { count: this.props.action.value, text: <>Attracts {{ value: this.props.action.value }} cells</> },
       [EffectType.Push]: { count: this.props.action.value, text: <>Pushes back {{ value: this.props.action.value }} cells</> },
@@ -62,7 +71,7 @@ class ActionComponent extends React.Component<Props, States>
     };
 
     return (
-      <div className={`action ${actionClasses[this.props.type]} ${this.state.highlighted ? 'highlighted' : ''} action-${TrapClasses[colorToInt(this.props.action.originTrap.color)]} ${this.props.action.passedMask ? '' : 'masked'}`} onMouseEnter={() => { this.onMouseEnter(); }} onMouseLeave={() => { this.onMouseLeave(); }} >
+      <div className={`action ${actionClasses[this.props.type]} ${effectClasses[EffectTypeCategory[this.props.action.effect.effectType]]} ${this.state.highlighted ? 'highlighted' : ''} action-${TrapClasses[colorToInt(this.props.action.originTrap.color)]} ${this.props.action.passedMask ? '' : 'masked'}`} onMouseEnter={() => { this.onMouseEnter(); }} onMouseLeave={() => { this.onMouseLeave(); }} >
         <div className="action-img">
           <img src={this.props.action.originTrap.getSpellIcon()} alt="" width="25px" height="25px" />
         </div>

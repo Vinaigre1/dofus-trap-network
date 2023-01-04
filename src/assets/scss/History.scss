@@ -1,10 +1,32 @@
 .history {
   flex: 1;
   margin: 5px;
-  overflow-y: scroll;
-  display: flex;
-  flex-direction: column-reverse;
   background-color: #0008;
+  .actions {
+    display: flex;
+    flex-direction: column-reverse;
+    overflow-y: scroll;
+    height: 92%;
+  }
+  .filters {
+    height: 8%;
+    display: flex;
+    bottom: 0;
+    button {
+      flex: 1;
+      background-color: rgb(69, 69, 69);
+      border: 2px solid #CCC;
+      line-height: 100%;
+      padding: 0;
+      cursor: pointer;
+      img {
+        width: 50%;
+      }
+    }
+    button.active {
+      background-color: rgb(186, 69, 69);
+    }
+  }
 }
 
 .action {
@@ -55,3 +77,10 @@
 .highlighted.action-earth   { background-color: rgb( 90,  52,  28, 0.6); }
 .highlighted.action-utility { background-color: rgb( 49,  45, 134, 0.5); }
 .highlighted.action-test    { background-color: rgb(255, 255, 255, 0.4); }
+
+.history.no-meta      .action:not(.waiting, .current).effect-meta      { display: none; }
+.history.no-movement  .action:not(.waiting, .current).effect-movement  { display: none; }
+.history.no-damage    .action:not(.waiting, .current).effect-damage    { display: none; }
+.history.no-state     .action:not(.waiting, .current).effect-state     { display: none; }
+.history.no-secondary .action:not(.waiting, .current).effect-secondary { display: none; }
+.history.no-spell     .action:not(.waiting, .current).effect-spell     { display: none; }

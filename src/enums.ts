@@ -32,6 +32,15 @@ export enum EffectType {
   PlaceEndTurnGlyph
 }
 
+export enum EffectCategory {
+  Meta,
+  Movement,
+  Damage,
+  State,
+  Secondary,
+  Spell
+}
+
 export enum AreaType {
   Cell,
   Cross,
@@ -200,6 +209,33 @@ export const TrapClasses: { [key: number]: string } = {
   9895830: 'air',
   3222918: 'utility',
   16777215: 'test'
+};
+
+export const EffectTypeCategory = {
+  [EffectType.Pull]: EffectCategory.Movement,
+  [EffectType.Push]: EffectCategory.Movement,
+  [EffectType.WaterDamage]: EffectCategory.Damage,
+  [EffectType.FireDamage]: EffectCategory.Damage,
+  [EffectType.EarthDamage]: EffectCategory.Damage,
+  [EffectType.AirDamage]: EffectCategory.Damage,
+  [EffectType.NeutralDamage]: EffectCategory.Damage,
+  [EffectType.PushDamage]: EffectCategory.Damage,
+  [EffectType.IndirectPushDamage]: EffectCategory.Damage,
+  [EffectType.MPDamage]: EffectCategory.Secondary,
+  [EffectType.DodgeDamage]: EffectCategory.Secondary,
+  [EffectType.StealBestElement]: EffectCategory.Damage,
+  [EffectType.PlaceTrap]: EffectCategory.Meta,
+  [EffectType.CreateEntity]: EffectCategory.Meta,
+  [EffectType.StartPoint]: EffectCategory.Meta,
+  [EffectType.Remove]: EffectCategory.Meta,
+  [EffectType.SpellAsTarget]: EffectCategory.Spell,
+  [EffectType.SpellAsCaster]: EffectCategory.Spell,
+  [EffectType.State]: EffectCategory.State,
+  [EffectType.RemoveState]: EffectCategory.State,
+  [EffectType.CancelSpell]: EffectCategory.Secondary,
+  [EffectType.BoostSpell]: EffectCategory.Secondary,
+  [EffectType.HealLastDamage]: EffectCategory.Secondary,
+  [EffectType.PlaceEndTurnGlyph]: EffectCategory.Secondary
 };
 
 export interface Coordinates {
