@@ -20,15 +20,14 @@ class MapComponent extends React.Component<Props>
     super(props);
   }
 
-  onMouseEnterCell(pos: Coordinates) {
+  onMouseEnterCell(pos: Coordinates, entityPriority: boolean) {
     const entity = Game.getEntity(pos);
-    if (entity) {
+    const trap = Game.getTrap(pos);
+    if (entityPriority && entity
+    || !entityPriority && !trap && entity) {
       entity.component.setHighlight(true);
-    } else {
-      const trap = Game.getTrap(pos);
-      if (trap) {
-        trap.component.setHighlight(true);
-      }
+    } else if (trap) {
+      trap.component.setHighlight(true);
     }
   }
 
@@ -63,7 +62,7 @@ class MapComponent extends React.Component<Props>
             key={`cell-${i * this.props.cellNum + j}`} y={i} x={j} id={i * this.props.cellNum + j}
             width={cellWidth}
             height={cellHeight}
-            onMouseEnter={(pos: Coordinates) => { this.onMouseEnterCell(pos); }}
+            onMouseEnter={(pos: Coordinates, entityPriority: boolean) => { this.onMouseEnterCell(pos, entityPriority); }}
             onMouseLeave={(pos: Coordinates) => { this.onMouseLeaveCell(pos); }}
           />);
         }

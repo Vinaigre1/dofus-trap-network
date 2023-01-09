@@ -18,8 +18,10 @@ $animSpeed: calc(1s / 10); // 3 cells per second
     stroke: none;
     pointer-events: all;
   }
-  .ground .base:hover {
+  .ground {
     cursor: pointer;
+  }
+  .ground.hover .base {
     fill:rgb(185,  18,  27);
   }
 }

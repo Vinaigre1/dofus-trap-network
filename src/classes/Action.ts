@@ -237,7 +237,8 @@ export default class Action {
    * Function executed for the *remove* action.
    */
   *removeAction() {
-    if (Game.getEntity(this.targetPos)) {
+    if (this.value && Game.getEntity(this.targetPos)
+    || !this.value && !Game.getTrap(this.targetPos) && Game.getEntity(this.targetPos)) {
       Game.removeEntity(this.targetPos);
     } else if (Game.getTrap(this.targetPos)) {
       Game.removeTrap(this.targetPos);

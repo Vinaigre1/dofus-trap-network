@@ -8,26 +8,42 @@ type Props = {
   id: number;
   width: number;
   height: number;
-  onMouseEnter: (pos: Coordinates) => void;
-  onMouseLeave: (pos: Coordinates) => void;
+  onMouseEnter: (pos: Coordinates, entityPriority: boolean) => void;
+  onMouseLeave: (pos: Coordinates, entityPriority: boolean) => void;
 };
 
-class CellComponent extends React.Component<Props>
+type State = {
+  highlighted: boolean
+};
+
+class CellComponent extends React.Component<Props, State>
 {
   constructor(props: Props | Readonly<Props>) {
     super(props);
+
+    this.state = {
+      highlighted: false
+    };
   }
 
-  onClick() {
-    Game.onCellClick({ x: this.props.x, y: this.props.y });
+  onClick(top: boolean) {
+    Game.onCellClick({ x: this.props.x, y: this.props.y }, top);
   }
 
-  onMouseEnter() {
-    this.props.onMouseEnter({ x: this.props.x, y: this.props.y });
+  onMouseEnter(top: boolean) {
+    this.setState((state) => ({
+      ...state,
+      highlighted: true
+    }));
+    this.props.onMouseEnter({ x: this.props.x, y: this.props.y }, top);
   }
 
-  onMouseLeave() {
-    this.props.onMouseLeave({ x: this.props.x, y: this.props.y });
+  onMouseLeave(top: boolean) {
+    this.setState((state) => ({
+      ...state,
+      highlighted: false
+    }));
+    this.props.onMouseLeave({ x: this.props.x, y: this.props.y }, top);
   }
 
   render() {
@@ -75,15 +91,23 @@ class CellComponent extends React.Component<Props>
       ></polygon>);
     }
 
-    poly.push(<polygon className='base' key='base' points={`
+    poly.push(<polygon className='base top' key='base-top' points={`
       ${root.x + this.props.width / 2},${root.y}
+      ${root.x + this.props.width},${root.y + this.props.height / 2}
+      ${root.x},${root.y + this.props.height / 2}
+    `}
+      onMouseEnter={() => { this.onMouseEnter(true); }}
+      onMouseLeave={() => { this.onMouseLeave(true); }}
+      onClick={() => { this.onClick(true); }}
+    ></polygon>,
+    <polygon className='base bottom' key='base-bottom' points={`
       ${root.x + this.props.width},${root.y + this.props.height / 2}
       ${root.x + this.props.width / 2},${root.y + this.props.height}
       ${root.x},${root.y + this.props.height / 2}
     `}
-      onMouseEnter={() => { this.onMouseEnter(); }}
-      onMouseLeave={() => { this.onMouseLeave(); }}
-      onClick={() => { this.onClick(); }}
+      onMouseEnter={() => { this.onMouseEnter(false); }}
+      onMouseLeave={() => { this.onMouseLeave(false); }}
+      onClick={() => { this.onClick(false); }}
     ></polygon>);
 
     // poly.push(<text key='text'
@@ -93,7 +117,7 @@ class CellComponent extends React.Component<Props>
     //   stroke="black"
     // >{this.props.x},{this.props.y}</text>);
 
-    return <g className={`cell ${even ? 'even' : 'odd'} ${typeClasses[type]}`}>{poly}</g>;
+    return <g className={`cell ${even ? 'even' : 'odd'} ${this.state.highlighted ? 'hover' : ''} ${typeClasses[type]}`}>{poly}</g>;
   }
 }
 

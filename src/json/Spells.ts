@@ -791,7 +791,7 @@ const SpellData: SpellDataType = {
             area: {
               type: AreaType.Circle,
               min: 0,
-              max: 3
+              max: 2
             }
           }
         ]

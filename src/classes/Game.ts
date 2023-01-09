@@ -584,13 +584,14 @@ class Game {
    * Function triggered when a cell is clicked.
    * 
    * @param {Coordinates} pos Coordinates of the clicked cell
+   * @param {boolean} entityPriority If there are an entity and a trap on the same cell, `entityPriority` defines which one should be used
    */
-  onCellClick(pos: Coordinates) {
+  onCellClick(pos: Coordinates, entityPriority: boolean) {
     if (this.selectedSpell === undefined || this.map[pos.x][pos.y].type !== CellType.Ground || this.isRunning) return;
     // TODO: get spell level
 
-    const effects = this.selectedSpell?.levels[0].effects;
-    this.applyPreparingEffects(effects, pos);
+    const effects = this.selectedSpell?.levels[this.selectedSpell?.levels.length - 1].effects;
+    this.applyPreparingEffects(effects, pos, entityPriority);
 
     this.refreshMap();
     this.refreshStats();
@@ -601,12 +602,13 @@ class Game {
    * 
    * @param {Array<Effect>} effects Effects to apply
    * @param {Coordinates} pos Coordinates of the effects to apply
+   * @param {boolean} entityPriority If there are an entity and a trap on the same cell, `entityPriority` defines which one should be used
    */
-  applyPreparingEffects(effects: Array<Effect>, pos: Coordinates) {
+  applyPreparingEffects(effects: Array<Effect>, pos: Coordinates, entityPriority: boolean) {
     for (let i: number = 0; i < effects.length; i++) {
       if (!this.preparingEffects.includes(effects[i].effectType)) continue;
 
-      const action = new Action(this.mainCharacter, null, this.mainCharacter.pos, pos, effects[i].effectType, 0, effects[i]);
+      const action = new Action(this.mainCharacter, null, this.mainCharacter.pos, pos, effects[i].effectType, +entityPriority, effects[i]);
       const gen = action.apply(false);
       const ret = gen.next();
       if (!ret.done) {
