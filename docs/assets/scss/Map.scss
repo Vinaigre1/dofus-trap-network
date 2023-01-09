@@ -11,10 +11,19 @@ $animSpeed: calc(1s / 10); // 3 cells per second
 .map svg.tiles, .map svg.entities {
   grid-column: 1;
   grid-row: 1;
-}
-
-.map svg.entities {
+  user-select: none;
   pointer-events: none;
+  .base {
+    fill: none;
+    stroke: none;
+    pointer-events: all;
+  }
+  .ground {
+    cursor: pointer;
+  }
+  .ground.hover .base {
+    fill:rgb(185,  18,  27);
+  }
 }
 
 .row {
@@ -28,15 +37,6 @@ $animSpeed: calc(1s / 10); // 3 cells per second
 
 .cell.odd.ground {
   fill: #968E67;
-}
-
-.cell.ground:hover polygon {
-  fill:rgb(185,  18,  27);
-}
-
-.cell text {
-  user-select: none;
-  pointer-events: none;
 }
 
 .cell.empty {
@@ -55,12 +55,12 @@ $animSpeed: calc(1s / 10); // 3 cells per second
   stroke-width: 0.3;
 }
 
-.entity-circle.defender {
+.entity.defender .entity-circle{
   fill: #00F3;
   stroke: #00F;
 }
 
-.entity-circle.attacker {
+.entity.attacker .entity-circle {
   fill: #F003;
   stroke: #F00;
 }
@@ -74,18 +74,6 @@ $animSpeed: calc(1s / 10); // 3 cells per second
 
 .trap polygon {
   opacity: 0.3;
-}
-
-.trap-cell path, .trap-image, .trap-cell:not(.trap-center) {
-  pointer-events: none;
-}
-
-.trap-center {
-  cursor: pointer;
-}
-
-.trap-highlighted {
-  pointer-events: none;
 }
 
 .trap-highlighted .trap {
@@ -103,10 +91,18 @@ $animSpeed: calc(1s / 10); // 3 cells per second
 .trap.trap-utility polygon { fill: rgb( 49,  45, 134); } .trap.trap-utility path { stroke: rgb( 49,  45, 134); }
 .trap.trap-test polygon    { fill: rgb(255, 255, 255); } .trap.trap-test path    { stroke: rgb(255, 255, 255); }
 
-.entity-image {
+.entity .entity-image {
   transition: x $animSpeed linear, y $animSpeed linear;
 }
 
 .entity-circle {
   transition: cx $animSpeed linear, cy $animSpeed linear;
+}
+
+.entity.attacker.highlighted .entity-image {
+  filter: drop-shadow(0 0 1px red) contrast(120%) brightness(110%);
+}
+
+.entity.defender.highlighted .entity-image {
+  filter: drop-shadow(0 0 1px blue) contrast(120%) brightness(110%);
 }
