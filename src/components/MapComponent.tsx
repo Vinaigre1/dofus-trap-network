@@ -2,7 +2,7 @@ import Cell from "@classes/Cell";
 import Entity from "@classes/Entity";
 import Game from "@classes/Game";
 import Trap from "@classes/Trap";
-import { CellType } from "@src/enums";
+import { CellType, Coordinates } from "@src/enums";
 import * as React from "react";
 import "@assets/scss/Map.scss";
 import CellComponent from "@components/CellComponent";
@@ -20,6 +20,30 @@ class MapComponent extends React.Component<Props>
     super(props);
   }
 
+  onMouseEnterCell(pos: Coordinates) {
+    const entity = Game.getEntity(pos);
+    if (entity) {
+      entity.component.setHighlight(true);
+    } else {
+      const trap = Game.getTrap(pos);
+      if (trap) {
+        trap.component.setHighlight(true);
+      }
+    }
+  }
+
+  onMouseLeaveCell(pos: Coordinates) {
+    const entity = Game.getEntity(pos);
+    if (entity) {
+      entity.component.setHighlight(false);
+    }
+    const trap = Game.getTrap(pos);
+    if (trap) {
+      trap.component.setHighlight(false);
+    }
+  }
+
+
   render() {
     const rows: Array<JSX.Element> = [];
     const traps: Array<Trap> = [];
@@ -35,7 +59,13 @@ class MapComponent extends React.Component<Props>
         if (cell?.type === CellType.Wall) {
           walls.push(cell);
         } else {
-          cells.push(<CellComponent key={`cell-${i * this.props.cellNum + j}`} y={i} x={j} id={i * this.props.cellNum + j} width={cellWidth} height={cellHeight} />);
+          cells.push(<CellComponent
+            key={`cell-${i * this.props.cellNum + j}`} y={i} x={j} id={i * this.props.cellNum + j}
+            width={cellWidth}
+            height={cellHeight}
+            onMouseEnter={(pos: Coordinates) => { this.onMouseEnterCell(pos); }}
+            onMouseLeave={(pos: Coordinates) => { this.onMouseLeaveCell(pos); }}
+          />);
         }
       }
       rows.push(<g className={`row ${i % 2 === 0 ? "even" : "odd"}`} key={`row-${i}`}>{cells}</g>);

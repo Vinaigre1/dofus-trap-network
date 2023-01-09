@@ -28,6 +28,8 @@ class EntityLayerComponent extends React.Component<Props>
           width={cellWidth}
           height={cellHeight}
           key={entity.uuid}
+          onMouseEnter={() => {return;} }
+          onMouseLeave={() => {return;} }
         />);
       } else {
         entities.push(<EntityComponent

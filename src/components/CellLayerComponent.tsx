@@ -100,7 +100,7 @@ class CellLayerComponent extends React.Component<Props, States>
     }
 
     return [
-      <g key='g-1' className="ground">
+      <g key='g-1' className="tiles">
         {this.props.rows}
       </g>,
       <g key='g-2' className="traps">

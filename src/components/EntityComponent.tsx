@@ -12,6 +12,7 @@ type States = {
   animX: number;
   animY: number;
   display: boolean;
+  highlight: boolean;
 }
 
 class EntityComponent extends React.Component<Props, States>
@@ -24,7 +25,8 @@ class EntityComponent extends React.Component<Props, States>
     this.state ={
       animX: undefined,
       animY: undefined,
-      display: true
+      display: true,
+      highlight: false
     };
     this.transitionCounter = 0;
   }
@@ -76,6 +78,10 @@ class EntityComponent extends React.Component<Props, States>
     }
   }
 
+  setHighlight(highlight: boolean) {
+    this.setState((state) => ({ ...state, highlight }));
+  }
+
   render() {
     if (!this.state.display) return;
 
@@ -91,9 +97,9 @@ class EntityComponent extends React.Component<Props, States>
     };
 
     return (
-      <g className="entity">
+      <g className={`entity ${this.props.entity.team === Team.Attacker ? "attacker" : "defender"} ${this.state.highlight ? "highlighted" : ""}`}>
         <ellipse
-          className={`entity-circle ${this.props.entity.team === Team.Attacker ? "attacker" : "defender"}`}
+          className="entity-circle"
           cx={root.x + cellWidth / 2}
           cy={root.y + cellHeight / 2}
           rx={cellWidth * 0.3}

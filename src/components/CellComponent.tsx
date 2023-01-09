@@ -1,5 +1,5 @@
 import Game from "@classes/Game";
-import { CellType } from "@src/enums";
+import { CellType, Coordinates } from "@src/enums";
 import * as React from "react";
 
 type Props = {
@@ -8,6 +8,8 @@ type Props = {
   id: number;
   width: number;
   height: number;
+  onMouseEnter: (pos: Coordinates) => void;
+  onMouseLeave: (pos: Coordinates) => void;
 };
 
 class CellComponent extends React.Component<Props>
@@ -18,6 +20,14 @@ class CellComponent extends React.Component<Props>
 
   onClick() {
     Game.onCellClick({ x: this.props.x, y: this.props.y });
+  }
+
+  onMouseEnter() {
+    this.props.onMouseEnter({ x: this.props.x, y: this.props.y });
+  }
+
+  onMouseLeave() {
+    this.props.onMouseLeave({ x: this.props.x, y: this.props.y });
   }
 
   render() {
@@ -62,9 +72,19 @@ class CellComponent extends React.Component<Props>
         ${root.x + this.props.width / 2},${root.y + this.props.height}
         ${root.x},${root.y + this.props.height / 2}
       `}
-        onClick={() => { this.onClick(); }}
       ></polygon>);
     }
+
+    poly.push(<polygon className='base' key='base' points={`
+      ${root.x + this.props.width / 2},${root.y}
+      ${root.x + this.props.width},${root.y + this.props.height / 2}
+      ${root.x + this.props.width / 2},${root.y + this.props.height}
+      ${root.x},${root.y + this.props.height / 2}
+    `}
+      onMouseEnter={() => { this.onMouseEnter(); }}
+      onMouseLeave={() => { this.onMouseLeave(); }}
+      onClick={() => { this.onClick(); }}
+    ></polygon>);
 
     // poly.push(<text key='text'
     //   x={root.x + this.props.width / 2 - 0.5}

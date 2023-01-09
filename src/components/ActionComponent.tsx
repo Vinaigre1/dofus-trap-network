@@ -27,10 +27,12 @@ class ActionComponent extends React.Component<Props, States>
 
   onMouseEnter() {
     this.props.action?.originTrap?.component?.setHighlight(true);
+    this.props.action?.target?.component?.setHighlight(true);
   }
 
   onMouseLeave() {
     this.props.action?.originTrap?.component?.setHighlight(false);
+    this.props.action?.target?.component?.setHighlight(false);
   }
 
   setHighlight(highlight: boolean) {
@@ -71,7 +73,7 @@ class ActionComponent extends React.Component<Props, States>
     };
 
     return (
-      <div className={`action ${actionClasses[this.props.type]} ${effectClasses[EffectTypeCategory[this.props.action.effect.effectType]]} ${this.state.highlighted ? 'highlighted' : ''} action-${TrapClasses[colorToInt(this.props.action.originTrap.color)]} ${this.props.action.passedMask ? '' : 'masked'}`} onMouseEnter={() => { this.onMouseEnter(); }} onMouseLeave={() => { this.onMouseLeave(); }} >
+      <div className={`action ${actionClasses[this.props.type]} ${effectClasses[EffectTypeCategory[this.props.action.type]]} ${this.state.highlighted ? 'highlighted' : ''} action-${TrapClasses[colorToInt(this.props.action.originTrap.color)]} ${this.props.action.passedMask ? '' : 'masked'}`} onMouseEnter={() => { this.onMouseEnter(); }} onMouseLeave={() => { this.onMouseLeave(); }} >
         <div className="action-img">
           <img src={this.props.action.originTrap.getSpellIcon()} alt="" width="25px" height="25px" />
         </div>
