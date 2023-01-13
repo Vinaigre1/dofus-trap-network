@@ -67,7 +67,8 @@ class Game {
       EffectType.PlaceTrap,
       EffectType.CreateEntity,
       EffectType.StartPoint,
-      EffectType.Remove
+      EffectType.Remove,
+      EffectType.Select,
     ];
     this.mainCharacter = new Entity({ x: 0, y: 0 }, Team.Attacker, EntityType.Player);
     this.options = {
@@ -654,6 +655,28 @@ class Game {
       this.refreshMap();
       this.refreshStats();
     }
+  }
+
+  /**
+   * Selects an entity and opens its configuration page
+   * 
+   * @param {Coordinates} pos The position of the entity
+   */
+  selectEntity(pos: Coordinates) {
+    const entity = this.getEntity(pos);
+    if (entity)
+      this.statsComponent.openConfig(entity);
+  }
+
+  /**
+   * Selects a trap and opens its configuration page
+   * 
+   * @param {Coordinates} pos The position of the trap
+   */
+  selectTrap(pos: Coordinates) {
+    const trap = this.getTrap(pos);
+    if (trap)
+    this.statsComponent.openConfig(trap);
   }
 
   /**

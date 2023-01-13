@@ -3128,6 +3128,39 @@ const SpellData: SpellDataType = {
       }
     ]
   },
+  [SpellType.Select]: {
+    name: "Select",
+    icon: "./assets/img/spells/Select.svg",
+    sfx: null,
+    category: SpellCategory.Action,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
+            effectType: EffectType.Select,
+            value: 0,
+            min: 0,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      }
+    ]
+  },
   [SpellType.Leukide]: {
     name: "Leukide",
     icon: null,

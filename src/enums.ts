@@ -22,6 +22,7 @@ export enum EffectType {
   CreateEntity,
   StartPoint,
   Remove,
+  Select,
   SpellAsTarget,
   SpellAsCaster,
   State,
@@ -130,8 +131,9 @@ export enum SpellType {
   TestTrap,
   StartPoint,
   Remove,
-  Leukide,
-  Desynchronisation
+  Desynchronisation,
+  Select,
+  Leukide
 }
 
 export enum ActionType {
@@ -272,4 +274,25 @@ export interface SpellTrigger {
 
 export interface GameOptions {
   leukide: boolean;
+}
+
+export interface Stats {
+  vitality: number;
+  strength: number;
+  chance: number;
+  intelligence: number;
+  agility: number;
+  power: number;
+  powerTrap: number;
+  damage: number;
+  damageEarth: number;
+  damageWater: number;
+  damageFire: number;
+  damageAir: number;
+  damageNeutral: number;
+  damagePush: number;
+  damageTrap: number;
+  damageRanged: number;
+  damageMelee: number;
+  damageSpell: number;
 }

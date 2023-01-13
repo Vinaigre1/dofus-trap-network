@@ -1,4 +1,4 @@
-import { Coordinates, EffectType, EntityType, SpellTrigger, State, Team } from "@src/enums";
+import { Coordinates, EffectType, EntityType, SpellTrigger, State, Stats, Team } from "@src/enums";
 import Entities from "@json/Entities";
 import EntityComponent from "@components/EntityComponent";
 import { v4 as uuidv4 } from "uuid";
@@ -17,6 +17,7 @@ class Entity {
   component: EntityComponent;
   states: State;
   triggers: Array<SpellTrigger>;
+  stats: Stats;
 
   constructor(pos: Coordinates, team: Team, type: EntityType) {
     this.uuid = uuidv4();
@@ -27,6 +28,26 @@ class Entity {
     this.animPos = undefined;
     this.states = 0;
     this.triggers = [];
+    this.stats = {
+      vitality: 0,
+      strength: 0,
+      chance: 0,
+      intelligence: 0,
+      agility: 0,
+      power: 0,
+      powerTrap: 0,
+      damage: 0,
+      damageEarth: 0,
+      damageWater: 0,
+      damageFire: 0,
+      damageAir: 0,
+      damageNeutral: 0,
+      damagePush: 0,
+      damageTrap: 0,
+      damageRanged: 0,
+      damageMelee: 0,
+      damageSpell: 0
+    };
   }
 
   /**

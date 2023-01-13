@@ -140,6 +140,7 @@ export default class Action {
       [EffectType.CreateEntity]: this.createEntityAction.bind(this),
       [EffectType.StartPoint]: this.startPointAction.bind(this),
       [EffectType.Remove]: this.removeAction.bind(this),
+      [EffectType.Select]: this.selectAction.bind(this),
       [EffectType.NeutralDamage]: this.neutralDamageAction.bind(this),
       [EffectType.DodgeDamage]: this.dodgeDamageAction.bind(this),
       [EffectType.StealBestElement]: this.stealBestElementAction.bind(this),
@@ -248,6 +249,18 @@ export default class Action {
       Game.removeEntity(this.targetPos);
     } else if (Game.getTrap(this.targetPos)) {
       Game.removeTrap(this.targetPos);
+    }
+  }
+
+  /**
+   * Function executed for the *select* action.
+   */
+  *selectAction() {
+    if (this.value && Game.getEntity(this.targetPos)
+    || !this.value && !Game.getTrap(this.targetPos) && Game.getEntity(this.targetPos)) {
+      Game.selectEntity(this.targetPos);
+    } else if (Game.getTrap(this.targetPos)) {
+      Game.selectTrap(this.targetPos);
     }
   }
 
