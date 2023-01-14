@@ -32,6 +32,7 @@ const resources = {
       "Mass Trap": "Mass Trap",
       "Export": "Export",
       "Import": "Import",
+      "Symmetrical TP": "Symmetrical TP",
     }
   },
   fr: {
@@ -69,6 +70,7 @@ const resources = {
       "Mass Trap": "Piège de Masse",
       "Export": "Exporter",
       "Import": "Importer",
+      "Symmetrical TP": "TP symétrique",
     }
   }
 };

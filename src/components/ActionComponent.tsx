@@ -70,6 +70,7 @@ class ActionComponent extends React.Component<Props, States>
       [EffectType.SpellAsCaster]: { text: <>Spell &apos;{{ value: SpellData[this.props.action.effect.min]?.name }}&apos; casted as caster</> },
       [EffectType.State]: { text: <>Add state &apos;{{ value: StateName[this.props.action.effect.min] }}&apos;</> },
       [EffectType.RemoveState]: { text: <>Remove state &apos;{{ value: StateName[this.props.action.effect.min] }}&apos;</> },
+      [EffectType.SymmetricalTeleport]: { text: <>Symmetrical TP</> },
     };
 
     return (
