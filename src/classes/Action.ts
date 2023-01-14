@@ -23,6 +23,7 @@ export default class Action {
   originTrap?: Trap;
   targetMask?: Array<Mask>;
   passedMask: boolean;
+  cancelled: boolean;
 
   constructor(originEntity: Entity, targetEntity: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, effect: Effect, originTrap?: Trap, targetMask?: string) {
     this.uuid = uuidv4();
@@ -35,6 +36,7 @@ export default class Action {
     this.effect = effect;
     this.originTrap = originTrap;
     this.passedMask = true;
+    this.cancelled = false;
     this.targetMask = strToMaskArray(targetMask);
   }
 
@@ -119,6 +121,8 @@ export default class Action {
    * Applies the action from the originEntity to the targetEntity.
    */
   *apply(_yield: boolean = true) {
+    if (this.cancelled) return;
+
     const actions = {
       [EffectType.Pull]: this.pullAction.bind(this),
       [EffectType.Push]: this.pushAction.bind(this),
@@ -393,7 +397,13 @@ export default class Action {
       if (finalPosEntity) {
         finalPosEntity.pos = this.target.pos;
         this.target.pos = finalPos;
-        // todo delete the symmetrical tp of that entity from the same effect
+        for (let i: number = 0; i < Game.actionStack.length; i++) {
+          // TODO: using 'originTrap' to check if the effect has the same origin creates a bug where, when a single trap has multiple "symmetrycal teleport" effects, it can delete the wrong one.
+          if (Game.actionStack[i].originTrap === this.originTrap && Game.actionStack[i].target === finalPosEntity) {
+            Game.actionStack[i].cancelled = true;
+            break;
+          }
+        }
       } else {
         this.target.pos = finalPos;
         Game.triggerTraps(finalPos);
