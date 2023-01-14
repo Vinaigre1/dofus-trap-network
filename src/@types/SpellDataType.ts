@@ -26,6 +26,7 @@ export type Spell = {
   name: string,
   icon: string,
   sfx: string,
+  sfxSize: number,
   category: SpellCategory,
   levels: Array<SpellLevel>
 }
