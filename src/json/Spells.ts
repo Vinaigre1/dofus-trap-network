@@ -6,6 +6,7 @@ const SpellData: SpellDataType = {
     name: "Tricky Trap",
     icon: "./assets/img/spells/TrickyTrap.svg",
     sfx: "./assets/img/traps/Tricky.svg",
+    sfxSize: 1,
     category: SpellCategory.FireTrap,
     levels: [
       {
@@ -89,6 +90,7 @@ const SpellData: SpellDataType = {
     name: "Drift Trap",
     icon: "./assets/img/spells/DriftTrap.svg",
     sfx: "./assets/img/traps/Drift.svg",
+    sfxSize: 1,
     category: SpellCategory.FireTrap,
     levels: [
       {
@@ -122,6 +124,7 @@ const SpellData: SpellDataType = {
     name: "Fragmentation Trap",
     icon: "./assets/img/spells/FragmentationTrap.svg",
     sfx: "./assets/img/traps/Fragmentation.svg",
+    sfxSize: 1,
     category: SpellCategory.FireTrap,
     levels: [
       {
@@ -205,6 +208,7 @@ const SpellData: SpellDataType = {
     name: "Mass Trap",
     icon: "./assets/img/spells/MassTrap.svg",
     sfx: "./assets/img/traps/Mass.svg",
+    sfxSize: 1,
     category: SpellCategory.EarthTrap,
     levels: [
       {
@@ -288,6 +292,7 @@ const SpellData: SpellDataType = {
     name: "Lethal Trap",
     icon: "./assets/img/spells/LethalTrap.svg",
     sfx: "./assets/img/traps/Lethal.svg",
+    sfxSize: 1,
     category: SpellCategory.EarthTrap,
     levels: [
       {
@@ -346,6 +351,7 @@ const SpellData: SpellDataType = {
     name: "Malevolent Trap",
     icon: "./assets/img/spells/MalevolentTrap.svg",
     sfx: "./assets/img/traps/Malevolent.svg",
+    sfxSize: 1,
     category: SpellCategory.EarthTrap,
     levels: [
       {
@@ -429,6 +435,7 @@ const SpellData: SpellDataType = {
     name: "Repelling Trap",
     icon: "./assets/img/spells/RepellingTrap.svg",
     sfx: "./assets/img/traps/Repelling.svg",
+    sfxSize: 1,
     category: SpellCategory.AirTrap,
     levels: [
       {
@@ -512,6 +519,7 @@ const SpellData: SpellDataType = {
     name: "Insidious Trap",
     icon: "./assets/img/spells/InsidiousTrap.svg",
     sfx: "./assets/img/traps/Insidious.svg",
+    sfxSize: 1,
     category: SpellCategory.AirTrap,
     levels: [
       {
@@ -595,6 +603,7 @@ const SpellData: SpellDataType = {
     name: "Miry Trap",
     icon: "./assets/img/spells/MiryTrap.svg",
     sfx: "./assets/img/traps/Miry.svg",
+    sfxSize: 1,
     category: SpellCategory.WaterTrap,
     levels: [
       {
@@ -678,6 +687,7 @@ const SpellData: SpellDataType = {
     name: "Sickrat Trap",
     icon: "./assets/img/spells/SickratTrap.svg",
     sfx: "./assets/img/traps/Sickrat.svg",
+    sfxSize: 1,
     category: SpellCategory.WaterTrap,
     levels: [
       {
@@ -736,6 +746,7 @@ const SpellData: SpellDataType = {
     name: "Calamity",
     icon: "./assets/img/spells/Calamity.svg",
     sfx: "./assets/img/traps/Calamity.svg",
+    sfxSize: 1,
     category: SpellCategory.WaterTrap,
     levels: [
       {
@@ -769,6 +780,7 @@ const SpellData: SpellDataType = {
     name: "Paralysing Trap",
     icon: "./assets/img/spells/ParalysingTrap.svg",
     sfx: "./assets/img/traps/Paralysing.svg",
+    sfxSize: 1,
     category: SpellCategory.MalusTrap,
     levels: [
       {
@@ -852,6 +864,7 @@ const SpellData: SpellDataType = {
     name: "Mass Grave",
     icon: "./assets/img/spells/MassGrave.svg",
     sfx: "./assets/img/traps/MassGrave.svg",
+    sfxSize: 1,
     category: SpellCategory.MalusTrap,
     levels: [
       {
@@ -885,6 +898,7 @@ const SpellData: SpellDataType = {
     name: "Chakra Concentration",
     icon: "./assets/img/spells/ChakraConcentration.svg",
     sfx: null,
+    sfxSize: 1,
     category: SpellCategory.Other,
     levels: [
       {
@@ -964,10 +978,70 @@ const SpellData: SpellDataType = {
       }
     ]
   },
+  [SpellType.Desynchronisation]: {
+    name: "Desynchronisation",
+    icon: "./assets/img/spells/Desynchronisation.svg",
+    sfx: "./assets/img/traps/Desynchronisation.svg",
+    sfxSize: 3.5,
+    category: SpellCategory.Other,
+    levels: [
+      {
+        apCost: 2,
+        maxStack: 0,
+        maxCastPerTurn: 2,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 90,
+        effects: [
+          {
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
+            effectType: EffectType.PlaceTrap,
+            value: 0,
+            min: 1017,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      },
+      {
+        apCost: 2,
+        maxStack: 0,
+        maxCastPerTurn: 2,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 157,
+        effects: [
+          {
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
+            effectType: EffectType.PlaceTrap,
+            value: 0,
+            min: 1017,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      }
+    ]
+  },
   [SpellType.TestTrap]: {
     name: "Test Trap",
     icon: "./assets/img/spells/TestTrap.svg",
     sfx: "./assets/img/traps/Test.svg",
+    sfxSize: 1,
     category: SpellCategory.Other,
     levels: [
       {
@@ -1001,6 +1075,7 @@ const SpellData: SpellDataType = {
     name: "Tricky Trap",
     icon: "./assets/img/spells/TrickyTrap.svg",
     sfx: "./assets/img/traps/Tricky.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -1123,6 +1198,7 @@ const SpellData: SpellDataType = {
     name: "Drift Trap",
     icon: "./assets/img/spells/DriftTrap.svg",
     sfx: "./assets/img/traps/Drift.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -1169,6 +1245,7 @@ const SpellData: SpellDataType = {
     name: "Fragmentation Trap",
     icon: "./assets/img/spells/FragmentationTrap.svg",
     sfx: "./assets/img/traps/Fragmentation.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -1369,6 +1446,7 @@ const SpellData: SpellDataType = {
     name: "Mass Trap",
     icon: "./assets/img/spells/MassTrap.svg",
     sfx: "./assets/img/traps/Mass.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -1605,6 +1683,7 @@ const SpellData: SpellDataType = {
     name: "Lethal Trap",
     icon: "./assets/img/spells/LethalTrap.svg",
     sfx: "./assets/img/traps/Lethal.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -1689,6 +1768,7 @@ const SpellData: SpellDataType = {
     name: "Malevolent Trap",
     icon: "./assets/img/spells/MalevolentTrap.svg",
     sfx: "./assets/img/traps/Malevolent.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -1964,6 +2044,7 @@ const SpellData: SpellDataType = {
     name: "Repelling Trap",
     icon: "./assets/img/spells/RepellingTrap.svg",
     sfx: "./assets/img/traps/Repelling.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -2086,6 +2167,7 @@ const SpellData: SpellDataType = {
     name: "Insidious Trap",
     icon: "./assets/img/spells/InsidiousTrap.svg",
     sfx: "./assets/img/traps/Insidious.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -2244,6 +2326,7 @@ const SpellData: SpellDataType = {
     name: "Miry Trap",
     icon: "./assets/img/spells/MiryTrap.svg",
     sfx: "./assets/img/traps/Miry.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -2405,6 +2488,7 @@ const SpellData: SpellDataType = {
     name: "Miry Trap",
     icon: "./assets/img/spells/MiryTrap.svg",
     sfx: "./assets/img/traps/Miry.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -2463,6 +2547,7 @@ const SpellData: SpellDataType = {
     name: "Sickrat Trap",
     icon: "./assets/img/spells/SickratTrap.svg",
     sfx: "./assets/img/traps/Sickrat.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -2547,6 +2632,7 @@ const SpellData: SpellDataType = {
     name: "Calamity",
     icon: "./assets/img/spells/Calamity.svg",
     sfx: "./assets/img/traps/Calamity.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -2593,6 +2679,7 @@ const SpellData: SpellDataType = {
     name: "Paralysing Trap",
     icon: "./assets/img/spells/ParalysingTrap.svg",
     sfx: "./assets/img/traps/Paralysing.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -2676,6 +2763,7 @@ const SpellData: SpellDataType = {
     name: "Mass Grave",
     icon: "./assets/img/spells/MassGrave.svg",
     sfx: "./assets/img/traps/MassGrave.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -2709,6 +2797,7 @@ const SpellData: SpellDataType = {
     name: "Chakra Concentration",
     icon: "./assets/img/spells/ChakraConcentration.svg",
     sfx: null,
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -2792,6 +2881,7 @@ const SpellData: SpellDataType = {
     name: "Test Trap",
     icon: "./assets/img/spells/TestTrap.svg",
     sfx: "./assets/img/traps/Test.svg",
+    sfxSize: 1,
     category: SpellCategory.None,
     levels: [
       {
@@ -2834,10 +2924,45 @@ const SpellData: SpellDataType = {
       }
     ]
   },
+  1017: {
+    name: "Desynchronisation",
+    icon: "./assets/img/spells/Desynchronisation.svg",
+    sfx: "./assets/img/traps/Desynchronisation.svg",
+    sfxSize: 3.5,
+    category: SpellCategory.None,
+    levels: [
+      {
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
+            effectType: EffectType.SymmetricalTeleport,
+            value: 0,
+            min: 0,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 1,
+              max: 2
+            }
+          }
+        ]
+      }
+    ]
+  },
   [SpellType.Poutch]: {
     name: "Poutch Ingball",
     icon: "./assets/img/spells/Poutch.svg",
     sfx: "./assets/img/entities/Poutch.png",
+    sfxSize: 1,
     category: SpellCategory.Entity,
     levels: [
       {
@@ -2871,6 +2996,7 @@ const SpellData: SpellDataType = {
     name: "Sram",
     icon: "./assets/img/spells/Double.svg",
     sfx: "./assets/img/entities/Sram.png",
+    sfxSize: 1,
     category: SpellCategory.Entity,
     levels: [
       {
@@ -2904,6 +3030,7 @@ const SpellData: SpellDataType = {
     name: "Cawwot",
     icon: "./assets/img/spells/Cawwot.svg",
     sfx: "./assets/img/entities/Cawwot.png",
+    sfxSize: 1,
     category: SpellCategory.Entity,
     levels: [
       {
@@ -2937,6 +3064,7 @@ const SpellData: SpellDataType = {
     name: "Start point",
     icon: "./assets/img/spells/StartPoint.svg",
     sfx: null,
+    sfxSize: 1,
     category: SpellCategory.Action,
     levels: [
       {
@@ -2970,6 +3098,7 @@ const SpellData: SpellDataType = {
     name: "Remove",
     icon: "./assets/img/spells/Remove.svg",
     sfx: null,
+    sfxSize: 1,
     category: SpellCategory.Action,
     levels: [
       {
@@ -3003,6 +3132,7 @@ const SpellData: SpellDataType = {
     name: "Leukide",
     icon: null,
     sfx: null,
+    sfxSize: 1,
     category: null,
     levels: [
       {

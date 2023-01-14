@@ -11,6 +11,7 @@ type Props = {
 type States = {
   animX: number;
   animY: number;
+  animate: boolean;
   display: boolean;
   highlight: boolean;
 }
@@ -25,6 +26,7 @@ class EntityComponent extends React.Component<Props, States>
     this.state ={
       animX: undefined,
       animY: undefined,
+      animate: false,
       display: true,
       highlight: false
     };
@@ -59,7 +61,8 @@ class EntityComponent extends React.Component<Props, States>
 
     this.setState({
       animX: toPos.x,
-      animY: toPos.y
+      animY: toPos.y,
+      animate: true
     });
   }
 
@@ -70,7 +73,8 @@ class EntityComponent extends React.Component<Props, States>
     if (this.transitionCounter <= 1) {
       this.setState({
         animX: undefined,
-        animY: undefined
+        animY: undefined,
+        animate: false
       });
       Game.onEntityTransitionEnd();
     } else {
@@ -97,7 +101,7 @@ class EntityComponent extends React.Component<Props, States>
     };
 
     return (
-      <g className={`entity ${this.props.entity.team === Team.Attacker ? "attacker" : "defender"} ${this.state.highlight ? "highlighted" : ""}`}>
+      <g className={`entity ${this.state.animate ? "animating" : ""} ${this.props.entity.team === Team.Attacker ? "attacker" : "defender"} ${this.state.highlight ? "highlighted" : ""}`}>
         <ellipse
           className="entity-circle"
           cx={root.x + cellWidth / 2}

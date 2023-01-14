@@ -39,10 +39,20 @@ class Entity {
   }
 
   /**
+   * Returns true if the entity is teleportable.
+   * 
+   * @returns {boolean} true if the entity is teleportable
+   */
+  isTeleportable(): boolean {
+    return !this.hasState(State.Gravity);
+  }
+
+  /**
    * Resets the entity values.
    */
   reset() {
     this.pos = this.initialPos;
+    this.states = 0;
     this.component?.show();
     return true;
   }

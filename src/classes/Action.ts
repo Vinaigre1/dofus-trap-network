@@ -1,5 +1,5 @@
 import Entity from "@classes/Entity";
-import { Coordinates, Direction, EffectType, Mask, TargetMask } from "@src/enums";
+import { CellType, Coordinates, Direction, EffectType, Mask, TargetMask } from "@src/enums";
 import { getDirection, moveInDirection } from "@src/utils/mapUtils";
 import Game from "@classes/Game";
 import ActionComponent from "@components/ActionComponent";
@@ -8,6 +8,7 @@ import Trap from "./Trap";
 import { Effect } from "@src/@types/SpellDataType";
 import SpellData from "@json/Spells";
 import { strToMaskArray } from "@src/utils/utils";
+import Cell from "./Cell";
 
 export default class Action {
   uuid: string;
@@ -22,6 +23,7 @@ export default class Action {
   originTrap?: Trap;
   targetMask?: Array<Mask>;
   passedMask: boolean;
+  cancelled: boolean;
 
   constructor(originEntity: Entity, targetEntity: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, effect: Effect, originTrap?: Trap, targetMask?: string) {
     this.uuid = uuidv4();
@@ -34,6 +36,7 @@ export default class Action {
     this.effect = effect;
     this.originTrap = originTrap;
     this.passedMask = true;
+    this.cancelled = false;
     this.targetMask = strToMaskArray(targetMask);
   }
 
@@ -118,6 +121,8 @@ export default class Action {
    * Applies the action from the originEntity to the targetEntity.
    */
   *apply(_yield: boolean = true) {
+    if (this.cancelled) return;
+
     const actions = {
       [EffectType.Pull]: this.pullAction.bind(this),
       [EffectType.Push]: this.pushAction.bind(this),
@@ -142,7 +147,8 @@ export default class Action {
       [EffectType.SpellAsCaster]: this.spellAsCasterAction.bind(this),
       [EffectType.State]: this.stateAction.bind(this),
       [EffectType.RemoveState]: this.removeStateAction.bind(this),
-      [EffectType.CancelSpell]: this.cancelSpellAction.bind(this)
+      [EffectType.CancelSpell]: this.cancelSpellAction.bind(this),
+      [EffectType.SymmetricalTeleport]: this.symmetricalTeleportAction.bind(this),
     }
 
     if (actions[this.type])
@@ -375,4 +381,34 @@ export default class Action {
     console.log('Non-implemented function: cancelSpellAction()');
   }
 
+  /**
+   * Function executed for the *symmetrical teleport* action.
+   */
+  *symmetricalTeleportAction() {
+    if (!this.target.isTeleportable()) return;
+
+    const finalPos: Coordinates = { x: this.target.pos.x, y: this.target.pos.y };
+    finalPos.y -= 2 * (finalPos.y - this.originPos.y);
+    finalPos.x -= 2 * (finalPos.x - this.originPos.x) - (this.originPos.y % 2 - this.target.pos.y % 2);
+
+    const finalCell: Cell = Game.getCell(finalPos);
+    const finalPosEntity: Entity = Game.getEntity(finalPos);
+    if (finalCell && finalCell.type === CellType.Ground && (!finalPosEntity || finalPosEntity.isTeleportable())) {
+      if (finalPosEntity) {
+        finalPosEntity.pos = this.target.pos;
+        this.target.pos = finalPos;
+        for (let i: number = 0; i < Game.actionStack.length; i++) {
+          // TODO: using 'originTrap' to check if the effect has the same origin creates a bug where, when a single trap has multiple "symmetrycal teleport" effects, it can delete the wrong one.
+          if (Game.actionStack[i].originTrap === this.originTrap && Game.actionStack[i].target === finalPosEntity) {
+            Game.actionStack[i].cancelled = true;
+            break;
+          }
+        }
+      } else {
+        this.target.pos = finalPos;
+        Game.triggerTraps(finalPos);
+      }
+      this.target.pos = finalPos;
+    }
+  }
 }

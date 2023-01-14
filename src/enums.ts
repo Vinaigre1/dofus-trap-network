@@ -29,7 +29,8 @@ export enum EffectType {
   CancelSpell,
   BoostSpell,
   HealLastDamage,
-  PlaceEndTurnGlyph
+  PlaceEndTurnGlyph,
+  SymmetricalTeleport
 }
 
 export enum EffectCategory {
@@ -129,7 +130,8 @@ export enum SpellType {
   TestTrap,
   StartPoint,
   Remove,
-  Leukide
+  Leukide,
+  Desynchronisation
 }
 
 export enum ActionType {
@@ -208,7 +210,8 @@ export const TrapClasses: { [key: number]: string } = {
   1798857: 'water',
   9895830: 'air',
   3222918: 'utility',
-  16777215: 'test'
+  16777215: 'test',
+  0: 'desynchro',
 };
 
 export const EffectTypeCategory = {

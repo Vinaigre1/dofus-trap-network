@@ -50,7 +50,8 @@ class CellLayerComponent extends React.Component<Props, States>
     const celHeight: number = cellWidth / 2;
 
     for (let i: number = this.props.traps.length - 1; i >= 0; i--) {
-      const trap = this.props.traps[i];
+      const trap: Trap = this.props.traps[i];
+      const sizeCoef: number = 0.7 * SpellData[trap.spellId].sfxSize;
 
       const root: Coordinates = {
         x: trap.pos.x * cellWidth + (trap.pos.y % 2 === 0 ? 0 : cellWidth / 2),
@@ -69,10 +70,10 @@ class CellLayerComponent extends React.Component<Props, States>
         trapImages.push(<image
           className={`trap-image ${TrapClasses[colorToInt(trap.color)]}`}
           href={SpellData[trap.spellId].sfx}
-          x={root.x + cellWidth * 0.15}
-          y={root.y + celHeight * 0.15}
-          width={cellWidth * 0.7}
-          height={celHeight * 0.7}
+          x={root.x + cellWidth * ((1 - sizeCoef) / 2)}
+          y={root.y + celHeight * ((1 - sizeCoef) / 2)}
+          width={cellWidth * sizeCoef}
+          height={celHeight * sizeCoef}
           key={trap.uuid}
           ref={(component) => { trap.imgComponent = component; }}
           style={{ display: this.props.traps[i].active ? "" : "none" }}
@@ -89,10 +90,10 @@ class CellLayerComponent extends React.Component<Props, States>
         highlightedImages.push(<image
           className={`trap-image ${TrapClasses[colorToInt(trap.color)]}`}
           href={SpellData[trap.spellId].sfx}
-          x={root.x + cellWidth * 0.08}
-          y={root.y + celHeight * 0.08}
-          width={cellWidth * 0.84}
-          height={celHeight * 0.84}
+          x={root.x + cellWidth * ((1 - (sizeCoef * 1.2)) / 2)}
+          y={root.y + celHeight * ((1 - (sizeCoef * 1.2)) / 2)}
+          width={cellWidth * sizeCoef * 1.2}
+          height={celHeight * sizeCoef * 1.2}
           key={trap.uuid}
           ref={(component) => { trap.imgComponent = component; }}
         />);
