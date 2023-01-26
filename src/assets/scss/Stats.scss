@@ -106,3 +106,56 @@
     white-space: nowrap;
   }
 }
+
+.stats.config {
+  background-color: #222;
+  .close {
+    float: right;
+    width: 15%;
+    height: 0;
+    padding: 0 0 15% 0;
+    margin: 0;
+    border: none;
+    position: relative;
+    background-color: rgb(69, 69, 69);
+    cursor: pointer;
+  }
+  .close::before {
+    content: "";
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-image: url('/assets/img/other/cross.png');
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: 50% 50%;
+    filter: brightness(75%);
+    z-index: 0;
+  }
+  .entity-infos {
+    display: flex;
+    align-items: center;
+    .image {
+      flex-shrink: 0;
+      width: 20%;
+      height: 0;
+      border: 2px solid #CCC;
+      padding: 5px;
+      padding-bottom: calc(5px + 20%);
+      margin: 10px;
+      overflow: hidden;
+      vertical-align: middle;
+      img {
+        width: 100%;
+      }
+    }
+    .team {
+      width: 8%;
+      img {
+        width: 100%;
+      }
+    }
+  }
+}

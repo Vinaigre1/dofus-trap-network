@@ -15,7 +15,7 @@ type Props = {
 
 type State = {
   shareText: string;
-  config: Entity | Trap;
+  configObj: Entity | Trap;
 };
 
 
@@ -26,7 +26,7 @@ class StatsComponent extends React.Component<Props, State>
 
     this.state = {
       shareText: "",
-      config: undefined
+      configObj: undefined
     };
   }
 
@@ -71,29 +71,19 @@ class StatsComponent extends React.Component<Props, State>
   openConfig(obj: Entity | Trap) {
     this.setState((state) => ({
       ...state,
-      config: obj
+      configObj: obj
     }));
   }
 
-  renderConfig() {
-    let configElement: JSX.Element = undefined;
-
-    if (this.state.config instanceof Entity) {
-      configElement = <ConfigComponent config={this.state.config.stats}></ConfigComponent>;
-    }
-
-    return <div className="stats config">
-      <button
-        className="close"
-        onClick={() => { this.setState((state) => ({ ...state, config: undefined })); }}
-      >Close</button>
-      {configElement}
-    </div>;
-  }
-
   render() {
-    if (this.state.config !== undefined) {
-      return this.renderConfig();
+    if (this.state.configObj !== undefined) {
+      return <div className="stats config">
+        <button
+          className="close"
+          onClick={() => { this.setState((state) => ({ ...state, configObj: undefined })); }}
+        ></button>
+        <ConfigComponent configObj={this.state.configObj}></ConfigComponent>
+      </div>;
     }
 
     const help: JSX.Element = <div><hr /><h3>Important</h3><p>Pour démarrer un réseau de pièges:</p><p>1- Utiliser le sort &quot;Cibler&quot; sur la case où le réseau commence.</p><p>2- Appuyer sur le bouton &quot;play&quot; ou &quot;step&quot;.</p><p>3- Avant de poser de nouveaux pièges, appuyer sur &quot;stop&quot;.</p><hr /><p>Cet outil est en plein développement et risque de contenir beaucoup de bugs, mais il sera mis à jour très régulièrement. (Je ne suis pas responsable si un ordinateur prend feu :eyes:)</p><p>Je suis ouvert à toutes propositions pour l&apos;outil mais j&apos;ai déjà beaucoup d&apos;idées qui attendent d&apos;être implémentées.</p><p>Fait par Vinaigre (Discord: Vinaigre#4083)</p><p><a style={{ color: "yellow" }} href="https://github.com/Vinaigre1/dofus-trap-network">Le code est open-source !</a></p></div>;
