@@ -17,6 +17,8 @@ class Entity {
   component: EntityComponent;
   states: State;
   triggers: Array<SpellTrigger>;
+  health: number;
+  currentHealth: number;
   stats: Stats;
 
   constructor(pos: Coordinates, team: Team, type: EntityType) {
@@ -28,6 +30,8 @@ class Entity {
     this.animPos = undefined;
     this.states = 0;
     this.triggers = [];
+    this.health = 10000;
+    this.currentHealth = this.health * 0.5;
     this.stats = {
       vitality: 0,
       strength: 0,

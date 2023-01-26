@@ -136,26 +136,74 @@
   }
   .entity-infos {
     display: flex;
-    align-items: center;
+    padding: 10px;
     .image {
       flex-shrink: 0;
       width: 20%;
       height: 0;
-      border: 2px solid #CCC;
       padding: 5px;
       padding-bottom: calc(5px + 20%);
-      margin: 10px;
+      margin-right: 10px;
       overflow: hidden;
       vertical-align: middle;
       img {
         width: 100%;
       }
     }
-    .team {
-      width: 8%;
-      img {
-        width: 100%;
+    .image.team-red {
+      border: 2px solid #F00;
+      background-color: #F003;
+    }
+    .image.team-blue {
+      border: 2px solid #00F;
+      background-color: #00F3;
+    }
+    .team-name {
+      width: 80%;
+      display: block;
+      .team {
+        height: 15px;
+        padding-bottom: 8px;
+        img {
+          width: 15px;
+          height: 15px;
+          display: block;
+          margin-bottom: 5px;
+        }
       }
+    }
+  }
+  .health {
+    margin-left: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    position: relative;
+    height: 50px;
+    width: 60px;
+    img.hp-full {
+      height: 50px;
+      width: 60px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      z-index: 0;
+    }
+    img.hp-empty {
+      height: 50px;
+      width: 60px;
+      position: absolute;
+      top: 0;
+      left: 0;
+      object-fit: cover;
+      object-position: top;
+      z-index: 1;
+    }
+    span {
+      text-shadow: 1px 1px 0 black;
+      display: block;
+      z-index: 2;
     }
   }
 }
