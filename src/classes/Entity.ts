@@ -31,7 +31,7 @@ class Entity {
     this.states = 0;
     this.triggers = [];
     this.health = 10000;
-    this.currentHealth = this.health * 0.5;
+    this.currentHealth = this.health * Math.random();
     this.stats = {
       vitality: 0,
       strength: 0,
