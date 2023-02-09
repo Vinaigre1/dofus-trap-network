@@ -579,6 +579,7 @@ class Game {
    */
   selectSpell(spell: Spell) {
     this.selectedSpell = spell;
+    this.mapComponent.setMouseIcon(spell?.icon);
   }
 
   /**
@@ -588,10 +589,11 @@ class Game {
    * @param {boolean} entityPriority If there are an entity and a trap on the same cell, `entityPriority` defines which one should be used
    */
   onCellClick(pos: Coordinates, entityPriority: boolean) {
-    if (this.selectedSpell === undefined || this.map[pos.x][pos.y].type !== CellType.Ground || this.isRunning) return;
+    if (this.map[pos.x][pos.y].type !== CellType.Ground || this.isRunning) return;
     // TODO: get spell level
 
-    const effects = this.selectedSpell?.levels[this.selectedSpell?.levels.length - 1].effects;
+    const spell: Spell = this.selectedSpell ?? SpellData[SpellType.Select];
+    const effects: Array<Effect> = spell.levels[spell.levels.length - 1].effects;
     this.applyPreparingEffects(effects, pos, entityPriority);
 
     this.refreshMap();

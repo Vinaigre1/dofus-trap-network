@@ -3132,6 +3132,7 @@ const SpellData: SpellDataType = {
     name: "Select",
     icon: "./assets/img/spells/Select.svg",
     sfx: null,
+    sfxSize: 1,
     category: SpellCategory.Action,
     levels: [
       {

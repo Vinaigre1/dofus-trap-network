@@ -30,6 +30,9 @@ class SpellsComponent extends React.Component<Props, States>
   }
 
   onClick(spell: Spell) {
+    if (this.state.selectedSpell === spell) {
+      spell = undefined;
+    }
     Game.selectSpell(spell);
     this.setState((state) => ({ ...state, selectedSpell: spell }));
   }

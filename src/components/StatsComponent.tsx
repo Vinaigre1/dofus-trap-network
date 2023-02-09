@@ -82,7 +82,7 @@ class StatsComponent extends React.Component<Props, State>
           className="close"
           onClick={() => { this.setState((state) => ({ ...state, configObj: undefined })); }}
         ></button>
-        <ConfigComponent configObj={this.state.configObj}></ConfigComponent>
+        <ConfigComponent key={this.state.configObj.uuid} configObj={this.state.configObj}></ConfigComponent>
       </div>;
     }
 
@@ -119,14 +119,19 @@ class StatsComponent extends React.Component<Props, State>
       <div className="share">
         <button className="shareBtn" onClick={() => { this.onImport(); }}><Trans>Import</Trans></button>
         <button className="shareBtn" onClick={() => { this.onExport(); }}><Trans>Export</Trans></button>
-        <div className="shareText" onClick={(e) => { this.selectContents(e.target as Node); }}>{this.state.shareText ?? ""}</div>
+        {this.state.shareText
+          ? <div className="shareText" onClick={(e) => { this.selectContents(e.target as Node); }}>{this.state.shareText ?? ""}</div>
+          : undefined
+        }
       </div>
+      <hr />
       {/* <ul className="entity-list">
         <li>one</li>
         <li>two</li>
         <li>three</li>
       </ul> */}
-      {/* <div className="main-character">main character</div> */}
+      <div className="main-character">main character TODO</div>
+      <hr />
       <Reorder
         className="trap-list"
         reorderId="trap-list"
