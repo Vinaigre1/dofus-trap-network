@@ -9,6 +9,7 @@ import { Effect } from "@src/@types/SpellDataType";
 import SpellData from "@json/Spells";
 import { strToMaskArray } from "@src/utils/utils";
 import Cell from "./Cell";
+import { receiveDamages, sendDamages } from "@src/utils/damageUtils";
 
 export default class Action {
   uuid: string;
@@ -268,6 +269,23 @@ export default class Action {
    * Function executed for the *water damage* action.
    */
   *waterDamageAction() {
+    const finalValue = receiveDamages(
+      sendDamages(
+        this.value,
+        this.caster,
+        this.target,
+        this.originPos,
+        this.targetPos,
+        this.effect,
+        true // TODO
+      ),
+      this.caster,
+      this.target,
+      this.originPos,
+      this.targetPos,
+      this.effect
+    );
+    this.value = finalValue;
     this.target.trigger(EffectType.WaterDamage, this.originTrap);
     console.log('Non-implemented function: waterDamageAction()');
   }
@@ -276,6 +294,23 @@ export default class Action {
    * Function executed for the *fire damage* action.
    */
   *fireDamageAction() {
+    const finalValue = receiveDamages(
+      sendDamages(
+        this.value,
+        this.caster,
+        this.target,
+        this.originPos,
+        this.targetPos,
+        this.effect,
+        true // TODO
+      ),
+      this.caster,
+      this.target,
+      this.originPos,
+      this.targetPos,
+      this.effect
+    );
+    this.value = finalValue;
     this.target.trigger(EffectType.FireDamage, this.originTrap);
     console.log('Non-implemented function: fireDamageAction()');
   }
@@ -284,6 +319,23 @@ export default class Action {
    * Function executed for the *earth damage* action.
    */
   *earthDamageAction() {
+    const finalValue = receiveDamages(
+      sendDamages(
+        this.value,
+        this.caster,
+        this.target,
+        this.originPos,
+        this.targetPos,
+        this.effect,
+        true // TODO
+      ),
+      this.caster,
+      this.target,
+      this.originPos,
+      this.targetPos,
+      this.effect
+    );
+    this.value = finalValue;
     this.target.trigger(EffectType.EarthDamage, this.originTrap);
     console.log('Non-implemented function: earthDamageAction()');
   }
@@ -292,6 +344,23 @@ export default class Action {
    * Function executed for the *air damage* action.
    */
   *airDamageAction() {
+    const finalValue = receiveDamages(
+      sendDamages(
+        this.value,
+        this.caster,
+        this.target,
+        this.originPos,
+        this.targetPos,
+        this.effect,
+        true // TODO
+      ),
+      this.caster,
+      this.target,
+      this.originPos,
+      this.targetPos,
+      this.effect
+    );
+    this.value = finalValue;
     this.target.trigger(EffectType.AirDamage, this.originTrap);
     console.log('Non-implemented function: airDamageAction()');
   }

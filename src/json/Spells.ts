@@ -1525,7 +1525,7 @@ const SpellData: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
-            effectType: EffectType.SpellAsTarget,
+            effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1004,
             max: 4,
@@ -1576,7 +1576,7 @@ const SpellData: SpellDataType = {
           },
           {
             targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
-            effectType: EffectType.SpellAsTarget,
+            effectType: EffectType.SpellAsCaster,
             value: 0,
             min: 1004,
             max: 5,
@@ -3133,7 +3133,7 @@ const SpellData: SpellDataType = {
     icon: "./assets/img/spells/Select.svg",
     sfx: null,
     sfxSize: 1,
-    category: SpellCategory.Action,
+    category: undefined,
     levels: [
       {
         apCost: 0,

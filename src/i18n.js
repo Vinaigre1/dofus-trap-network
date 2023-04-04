@@ -50,7 +50,24 @@ const resources = {
       "Ranged %": "Ranged %",
       "Melee %": "Melee %",
       "Spell %": "Spell %",
-      "Offensive characteristics": "Offensive characteristics"
+      "Final %": "Final %",
+      "Offensive characteristics": "Offensive characteristics",
+      "Defensive characteristics": "Defensive characteristics",
+      "My character": "My character",
+      "Neutral %": "Neutral %",
+      "Earth %": "Earth %",
+      "Water %": "Water %",
+      "Fire %": "Fire %",
+      "Air %": "Air %",
+      "Neutral res.": "Neutral res.",
+      "Earth res.": "Earth res.",
+      "Water res.": "Water res.",
+      "Fire res.": "Fire res.",
+      "Air res.": "Air res.",
+      "Push res.": "Push res.",
+      "Ranged res. %": "Ranged res. %",
+      "Melee res. %": "Melee res. %",
+      "Spell res. %": "Spell res. %"
     }
   },
   fr: {
@@ -106,7 +123,24 @@ const resources = {
       "Ranged %": "% Distance",
       "Melee %": "% Mêlée",
       "Spell %": "% Sorts",
-      "Offensive characteristics": "Caractéristiques offensives"
+      "Final %": "% Finaux",
+      "Offensive characteristics": "Caractéristiques offensives",
+      "Defensive characteristics": "Caractéristiques défensives",
+      "My character": "Mon personnage",
+      "Neutral %": "% Neutre",
+      "Earth %": "% Terre",
+      "Water %": "% Eau",
+      "Fire %": "% Feu",
+      "Air %": "% Air",
+      "Neutral res.": "Res. Neutre",
+      "Earth res.": "Res. Terre",
+      "Water res.": "Res. Eau",
+      "Fire res.": "Res. Feu",
+      "Air res.": "Res. Air",
+      "Push res.": "Res. Poussée",
+      "Ranged res. %": "% Res. Ditance",
+      "Melee res. %": "% Res. Mêlée",
+      "Spell res. %": "% Res. Sorts"
     }
   }
 };

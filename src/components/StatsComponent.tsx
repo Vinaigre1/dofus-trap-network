@@ -60,6 +60,10 @@ class StatsComponent extends React.Component<Props, State>
     }
   }
 
+  onClickMainChara() {
+    this.openConfig(Game.mainCharacter);
+  }
+
   selectContents(el: Node) {
     const range = document.createRange();
     range.selectNodeContents(el);
@@ -130,7 +134,7 @@ class StatsComponent extends React.Component<Props, State>
         <li>two</li>
         <li>three</li>
       </ul> */}
-      <div className="main-character">main character TODO</div>
+      <div className="main-character" onClick={() => { this.onClickMainChara(); }}><Trans>My character</Trans></div>
       <hr />
       <Reorder
         className="trap-list"

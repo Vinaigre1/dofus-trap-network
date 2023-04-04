@@ -276,7 +276,7 @@ export interface GameOptions {
   leukide: boolean;
 }
 
-export interface Stats {
+export interface OffensiveStats {
   vitality: number;
   strength: number;
   chance: number;
@@ -295,4 +295,22 @@ export interface Stats {
   damageRanged: number;
   damageMelee: number;
   damageSpell: number;
+  damageFinal: number;
+}
+
+export interface DefensiveStats {
+  neutral: number;
+  earth: number;
+  water: number;
+  fire: number;
+  air: number;
+  resistanceEarth: number;
+  resistanceWater: number;
+  resistanceFire: number;
+  resistanceAir: number;
+  resistanceNeutral: number;
+  resistancePush: number;
+  resistanceRanged: number;
+  resistanceMelee: number;
+  resistanceSpell: number;
 }
