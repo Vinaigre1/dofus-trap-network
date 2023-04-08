@@ -67,7 +67,8 @@ class Game {
       EffectType.PlaceTrap,
       EffectType.CreateEntity,
       EffectType.StartPoint,
-      EffectType.Remove
+      EffectType.Remove,
+      EffectType.Select,
     ];
     this.mainCharacter = new Entity({ x: 0, y: 0 }, Team.Attacker, EntityType.Player);
     this.options = {
@@ -272,6 +273,7 @@ class Game {
     if (refresh) {
       this.refreshMap();
       this.refreshHistory();
+      this.refreshStats();
     }
   }
 
@@ -448,6 +450,7 @@ class Game {
   triggerStack() {
     while (this.waitingAnim || (this.remainingSteps-- !== 0 && (this.currentAction = this.actionStack.pop()))) {
       this.refreshHistory();
+      this.refreshStats();
       if (!this.waitingAnim) {
         this.actionGenerator = this.currentAction.apply();
       }
@@ -533,6 +536,7 @@ class Game {
     this.isRunning = false;
 
     this.refreshMap();
+    this.refreshStats();
   }
 
   /**
@@ -578,6 +582,7 @@ class Game {
    */
   selectSpell(spell: Spell) {
     this.selectedSpell = spell;
+    this.mapComponent.setMouseIcon(spell?.icon);
   }
 
   /**
@@ -587,10 +592,15 @@ class Game {
    * @param {boolean} entityPriority If there are an entity and a trap on the same cell, `entityPriority` defines which one should be used
    */
   onCellClick(pos: Coordinates, entityPriority: boolean) {
-    if (this.selectedSpell === undefined || this.map[pos.x][pos.y].type !== CellType.Ground || this.isRunning) return;
+    if (this.map[pos.x][pos.y].type !== CellType.Ground) return;
+    if (this.isRunning) {
+      if (this.selectedSpell !== undefined) return;
+      this.pause();
+    }
     // TODO: get spell level
 
-    const effects = this.selectedSpell?.levels[this.selectedSpell?.levels.length - 1].effects;
+    const spell: Spell = this.selectedSpell ?? SpellData[SpellType.Select];
+    const effects: Array<Effect> = spell.levels[spell.levels.length - 1].effects;
     this.applyPreparingEffects(effects, pos, entityPriority);
 
     this.refreshMap();
@@ -654,6 +664,28 @@ class Game {
       this.refreshMap();
       this.refreshStats();
     }
+  }
+
+  /**
+   * Selects an entity and opens its configuration page
+   * 
+   * @param {Coordinates} pos The position of the entity
+   */
+  selectEntity(pos: Coordinates) {
+    const entity = this.getEntity(pos);
+    if (entity)
+      this.statsComponent.openConfig(entity);
+  }
+
+  /**
+   * Selects a trap and opens its configuration page
+   * 
+   * @param {Coordinates} pos The position of the trap
+   */
+  selectTrap(pos: Coordinates) {
+    const trap = this.getTrap(pos);
+    if (trap)
+    this.statsComponent.openConfig(trap);
   }
 
   /**

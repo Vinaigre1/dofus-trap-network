@@ -1,3 +1,4 @@
+import "@assets/js/followMouse.js";
 import Cell from "@classes/Cell";
 import Entity from "@classes/Entity";
 import Game from "@classes/Game";
@@ -14,10 +15,18 @@ type Props = {
   rowNum: number;
 };
 
-class MapComponent extends React.Component<Props>
+type State = {
+  mouseIcon: string;
+};
+
+class MapComponent extends React.Component<Props, State>
 {
   constructor(props: Props | Readonly<Props>) {
     super(props);
+
+    this.state = {
+      mouseIcon: undefined
+    };
   }
 
   onMouseEnterCell(pos: Coordinates, entityPriority: boolean) {
@@ -42,6 +51,12 @@ class MapComponent extends React.Component<Props>
     }
   }
 
+  setMouseIcon(icon: string) {
+    this.setState((state) => ({
+      ...state,
+      mouseIcon: icon
+    }));
+  }
 
   render() {
     const rows: Array<JSX.Element> = [];
@@ -82,6 +97,12 @@ class MapComponent extends React.Component<Props>
     const height: number = h / w * 100;
     return (
       <div className="relative-height-source map">
+        <div className="mouse-icon">
+          {this.state.mouseIcon
+            ? <img src={this.state.mouseIcon} />
+            : undefined
+          }
+        </div>
         <svg className="tiles" viewBox={`0 0 100 ${height}`}>
           <CellLayerComponent rows={rows} traps={traps} />
         </svg>

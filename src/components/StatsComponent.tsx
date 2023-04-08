@@ -5,6 +5,9 @@ import { Trans } from "react-i18next";
 import Reorder from 'react-reorder';
 import MapData from "@json/Maps";
 import SpellData from "@json/Spells";
+import Entity from "@classes/Entity";
+import Trap from "@classes/Trap";
+import ConfigComponent from "./ConfigComponent";
 
 // eslint-disable-next-line @typescript-eslint/ban-types
 type Props = {
@@ -12,6 +15,7 @@ type Props = {
 
 type State = {
   shareText: string;
+  configObj: Entity | Trap;
 };
 
 
@@ -21,7 +25,8 @@ class StatsComponent extends React.Component<Props, State>
     super(props);
 
     this.state = {
-      shareText: ""
+      shareText: "",
+      configObj: undefined
     };
   }
 
@@ -55,7 +60,11 @@ class StatsComponent extends React.Component<Props, State>
     }
   }
 
-  selectContents(el: any) {
+  onClickMainChara() {
+    this.openConfig(Game.mainCharacter);
+  }
+
+  selectContents(el: Node) {
     const range = document.createRange();
     range.selectNodeContents(el);
     const sel = window.getSelection();
@@ -63,7 +72,24 @@ class StatsComponent extends React.Component<Props, State>
     sel.addRange(range);
   }
 
+  openConfig(obj: Entity | Trap) {
+    this.setState((state) => ({
+      ...state,
+      configObj: obj
+    }));
+  }
+
   render() {
+    if (this.state.configObj !== undefined) {
+      return <div className="stats config">
+        <button
+          className="close"
+          onClick={() => { this.setState((state) => ({ ...state, configObj: undefined })); }}
+        ></button>
+        <ConfigComponent key={this.state.configObj.uuid} configObj={this.state.configObj}></ConfigComponent>
+      </div>;
+    }
+
     const help: JSX.Element = <div><hr /><h3>Important</h3><p>Pour démarrer un réseau de pièges:</p><p>1- Utiliser le sort &quot;Cibler&quot; sur la case où le réseau commence.</p><p>2- Appuyer sur le bouton &quot;play&quot; ou &quot;step&quot;.</p><p>3- Avant de poser de nouveaux pièges, appuyer sur &quot;stop&quot;.</p><hr /><p>Cet outil est en plein développement et risque de contenir beaucoup de bugs, mais il sera mis à jour très régulièrement. (Je ne suis pas responsable si un ordinateur prend feu :eyes:)</p><p>Je suis ouvert à toutes propositions pour l&apos;outil mais j&apos;ai déjà beaucoup d&apos;idées qui attendent d&apos;être implémentées.</p><p>Fait par Vinaigre (Discord: Vinaigre#4083)</p><p><a style={{ color: "yellow" }} href="https://github.com/Vinaigre1/dofus-trap-network">Le code est open-source !</a></p></div>;
     const mapOptions: Array<JSX.Element> = [];
 
@@ -97,14 +123,19 @@ class StatsComponent extends React.Component<Props, State>
       <div className="share">
         <button className="shareBtn" onClick={() => { this.onImport(); }}><Trans>Import</Trans></button>
         <button className="shareBtn" onClick={() => { this.onExport(); }}><Trans>Export</Trans></button>
-        <div className="shareText" onClick={(e) => { this.selectContents(e.target); }}>{this.state.shareText ?? ""}</div>
+        {this.state.shareText
+          ? <div className="shareText" onClick={(e) => { this.selectContents(e.target as Node); }}>{this.state.shareText ?? ""}</div>
+          : undefined
+        }
       </div>
+      <hr />
       {/* <ul className="entity-list">
         <li>one</li>
         <li>two</li>
         <li>three</li>
       </ul> */}
-      {/* <div className="main-character">main character</div> */}
+      <div className="main-character" onClick={() => { this.onClickMainChara(); }}><Trans>My character</Trans></div>
+      <hr />
       <Reorder
         className="trap-list"
         reorderId="trap-list"

@@ -1,4 +1,4 @@
-import { Coordinates, EffectType, EntityType, SpellTrigger, State, Team } from "@src/enums";
+import { Coordinates, EffectType, EntityType, SpellTrigger, State, OffensiveStats, Team, DefensiveStats } from "@src/enums";
 import Entities from "@json/Entities";
 import EntityComponent from "@components/EntityComponent";
 import { v4 as uuidv4 } from "uuid";
@@ -17,6 +17,10 @@ class Entity {
   component: EntityComponent;
   states: State;
   triggers: Array<SpellTrigger>;
+  health: number;
+  currentHealth: number;
+  offensiveStats: OffensiveStats;
+  defensiveStats: DefensiveStats;
 
   constructor(pos: Coordinates, team: Team, type: EntityType) {
     this.uuid = uuidv4();
@@ -27,6 +31,45 @@ class Entity {
     this.animPos = undefined;
     this.states = 0;
     this.triggers = [];
+    this.health = 10000;
+    this.currentHealth = 10000;
+    this.offensiveStats = {
+      vitality: 0,
+      strength: 0,
+      chance: 0,
+      intelligence: 0,
+      agility: 0,
+      power: 0,
+      powerTrap: 0,
+      damage: 0,
+      damageEarth: 0,
+      damageWater: 0,
+      damageFire: 0,
+      damageAir: 0,
+      damageNeutral: 0,
+      damagePush: 0,
+      damageTrap: 0,
+      damageRanged: 0,
+      damageMelee: 0,
+      damageSpell: 0,
+      damageFinal: 0
+    };
+    this.defensiveStats = {
+      neutral: 0,
+      earth: 0,
+      water: 0,
+      fire: 0,
+      air: 0,
+      resistanceEarth: 0,
+      resistanceWater: 0,
+      resistanceFire: 0,
+      resistanceAir: 0,
+      resistanceNeutral: 0,
+      resistancePush: 0,
+      resistanceRanged: 0,
+      resistanceMelee: 0,
+      resistanceSpell: 0
+    };
   }
 
   /**
@@ -54,6 +97,7 @@ class Entity {
     this.pos = this.initialPos;
     this.states = 0;
     this.component?.show();
+    this.currentHealth = this.health;
     return true;
   }
 

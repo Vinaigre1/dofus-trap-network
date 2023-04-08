@@ -9,6 +9,7 @@ import { Effect } from "@src/@types/SpellDataType";
 import SpellData from "@json/Spells";
 import { strToMaskArray } from "@src/utils/utils";
 import Cell from "./Cell";
+import { receiveDamages, sendDamages } from "@src/utils/damageUtils";
 
 export default class Action {
   uuid: string;
@@ -103,10 +104,10 @@ export default class Action {
         return !this.target.hasState(mask.param);
         break;
       case TargetMask.LifeAbove:
-        return true; // TODO
+        return Math.floor(this.target.currentHealth / this.target.health * 100) > mask.param;
         break;
       case TargetMask.NotLifeAbove:
-        return false; // TODO
+        return Math.floor(this.target.currentHealth / this.target.health * 100) <= mask.param;
         break;
       case TargetMask.CasterEverywhere:
         return true; // TODO
@@ -140,6 +141,7 @@ export default class Action {
       [EffectType.CreateEntity]: this.createEntityAction.bind(this),
       [EffectType.StartPoint]: this.startPointAction.bind(this),
       [EffectType.Remove]: this.removeAction.bind(this),
+      [EffectType.Select]: this.selectAction.bind(this),
       [EffectType.NeutralDamage]: this.neutralDamageAction.bind(this),
       [EffectType.DodgeDamage]: this.dodgeDamageAction.bind(this),
       [EffectType.StealBestElement]: this.stealBestElementAction.bind(this),
@@ -252,35 +254,115 @@ export default class Action {
   }
 
   /**
+   * Function executed for the *select* action.
+   */
+  *selectAction() {
+    if (this.value && Game.getEntity(this.targetPos)
+    || !this.value && !Game.getTrap(this.targetPos) && Game.getEntity(this.targetPos)) {
+      Game.selectEntity(this.targetPos);
+    } else if (Game.getTrap(this.targetPos)) {
+      Game.selectTrap(this.targetPos);
+    }
+  }
+
+  /**
    * Function executed for the *water damage* action.
    */
   *waterDamageAction() {
+    const finalValue = receiveDamages(
+      sendDamages(
+        this.value,
+        this.caster,
+        this.target,
+        this.originPos,
+        this.targetPos,
+        this.effect,
+        true // TODO
+      ),
+      this.caster,
+      this.target,
+      this.originPos,
+      this.targetPos,
+      this.effect
+    );
+    this.value = Math.max(0, finalValue);
+    this.target.currentHealth -= this.value;
     this.target.trigger(EffectType.WaterDamage, this.originTrap);
-    console.log('Non-implemented function: waterDamageAction()');
   }
 
   /**
    * Function executed for the *fire damage* action.
    */
   *fireDamageAction() {
+    const finalValue = receiveDamages(
+      sendDamages(
+        this.value,
+        this.caster,
+        this.target,
+        this.originPos,
+        this.targetPos,
+        this.effect,
+        true // TODO
+      ),
+      this.caster,
+      this.target,
+      this.originPos,
+      this.targetPos,
+      this.effect
+    );
+    this.value = Math.max(0, finalValue);
+    this.target.currentHealth -= this.value;
     this.target.trigger(EffectType.FireDamage, this.originTrap);
-    console.log('Non-implemented function: fireDamageAction()');
   }
 
   /**
    * Function executed for the *earth damage* action.
    */
   *earthDamageAction() {
+    const finalValue = receiveDamages(
+      sendDamages(
+        this.value,
+        this.caster,
+        this.target,
+        this.originPos,
+        this.targetPos,
+        this.effect,
+        true // TODO
+      ),
+      this.caster,
+      this.target,
+      this.originPos,
+      this.targetPos,
+      this.effect
+    );
+    this.value = Math.max(0, finalValue);
+    this.target.currentHealth -= this.value;
     this.target.trigger(EffectType.EarthDamage, this.originTrap);
-    console.log('Non-implemented function: earthDamageAction()');
   }
 
   /**
    * Function executed for the *air damage* action.
    */
   *airDamageAction() {
+    const finalValue = receiveDamages(
+      sendDamages(
+        this.value,
+        this.caster,
+        this.target,
+        this.originPos,
+        this.targetPos,
+        this.effect,
+        true // TODO
+      ),
+      this.caster,
+      this.target,
+      this.originPos,
+      this.targetPos,
+      this.effect
+    );
+    this.value = Math.max(0, finalValue);
+    this.target.currentHealth -= this.value;
     this.target.trigger(EffectType.AirDamage, this.originTrap);
-    console.log('Non-implemented function: airDamageAction()');
   }
 
   /**

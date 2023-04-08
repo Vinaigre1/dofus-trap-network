@@ -98,7 +98,7 @@ class CellComponent extends React.Component<Props, State>
     `}
       onMouseEnter={() => { this.onMouseEnter(true); }}
       onMouseLeave={() => { this.onMouseLeave(true); }}
-      onClick={() => { this.onClick(true); }}
+      onMouseUp={() => { this.onClick(true); }}
     ></polygon>,
     <polygon className='base bottom' key='base-bottom' points={`
       ${root.x + this.props.width},${root.y + this.props.height / 2}
@@ -107,7 +107,7 @@ class CellComponent extends React.Component<Props, State>
     `}
       onMouseEnter={() => { this.onMouseEnter(false); }}
       onMouseLeave={() => { this.onMouseLeave(false); }}
-      onClick={() => { this.onClick(false); }}
+      onMouseUp={() => { this.onClick(false); }}
     ></polygon>);
 
     // poly.push(<text key='text'

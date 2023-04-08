@@ -24,9 +24,9 @@ const entities: EntityDataType = {
     "type": EntityType.Player,
     "name": "Player",
     "image": "./assets/img/entities/Sram.png",
-    "offsetX": -0.06,
-    "offsetY": -0.05,
-    "defaultScale": 0.8,
+    "offsetX": 0,
+    "offsetY": 0.05,
+    "defaultScale": 1.1,
     "movable": true
   }
 }
