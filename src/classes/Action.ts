@@ -104,10 +104,10 @@ export default class Action {
         return !this.target.hasState(mask.param);
         break;
       case TargetMask.LifeAbove:
-        return true; // TODO
+        return Math.floor(this.target.currentHealth / this.target.health * 100) > mask.param;
         break;
       case TargetMask.NotLifeAbove:
-        return false; // TODO
+        return Math.floor(this.target.currentHealth / this.target.health * 100) <= mask.param;
         break;
       case TargetMask.CasterEverywhere:
         return true; // TODO
@@ -285,9 +285,9 @@ export default class Action {
       this.targetPos,
       this.effect
     );
-    this.value = finalValue;
+    this.value = Math.max(0, finalValue);
+    this.target.currentHealth -= this.value;
     this.target.trigger(EffectType.WaterDamage, this.originTrap);
-    console.log('Non-implemented function: waterDamageAction()');
   }
 
   /**
@@ -310,9 +310,9 @@ export default class Action {
       this.targetPos,
       this.effect
     );
-    this.value = finalValue;
+    this.value = Math.max(0, finalValue);
+    this.target.currentHealth -= this.value;
     this.target.trigger(EffectType.FireDamage, this.originTrap);
-    console.log('Non-implemented function: fireDamageAction()');
   }
 
   /**
@@ -335,9 +335,9 @@ export default class Action {
       this.targetPos,
       this.effect
     );
-    this.value = finalValue;
+    this.value = Math.max(0, finalValue);
+    this.target.currentHealth -= this.value;
     this.target.trigger(EffectType.EarthDamage, this.originTrap);
-    console.log('Non-implemented function: earthDamageAction()');
   }
 
   /**
@@ -360,9 +360,9 @@ export default class Action {
       this.targetPos,
       this.effect
     );
-    this.value = finalValue;
+    this.value = Math.max(0, finalValue);
+    this.target.currentHealth -= this.value;
     this.target.trigger(EffectType.AirDamage, this.originTrap);
-    console.log('Non-implemented function: airDamageAction()');
   }
 
   /**

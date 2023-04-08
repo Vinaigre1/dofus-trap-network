@@ -32,7 +32,7 @@ class Entity {
     this.states = 0;
     this.triggers = [];
     this.health = 10000;
-    this.currentHealth = this.health * Math.random();
+    this.currentHealth = 10000;
     this.offensiveStats = {
       vitality: 0,
       strength: 0,
@@ -97,6 +97,7 @@ class Entity {
     this.pos = this.initialPos;
     this.states = 0;
     this.component?.show();
+    this.currentHealth = this.health;
     return true;
   }
 

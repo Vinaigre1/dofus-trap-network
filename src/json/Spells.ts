@@ -1042,7 +1042,7 @@ const SpellData: SpellDataType = {
     icon: "./assets/img/spells/TestTrap.svg",
     sfx: "./assets/img/traps/Test.svg",
     sfxSize: 1,
-    category: SpellCategory.Other,
+    category: null, // DEBUG: Chance to SpellCategory.Other to show in menu
     levels: [
       {
         apCost: 0,

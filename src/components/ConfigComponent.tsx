@@ -77,7 +77,7 @@ class ConfigComponent extends React.Component<Props, State>
 
   render() {
     if (this.props.configObj instanceof Entity) {
-      const healthPercent = (this.props.configObj.currentHealth / (this.props.configObj.health <= 0 ? 1 : this.props.configObj.health));
+      const healthPercent = Math.max(0, this.props.configObj.currentHealth / (this.props.configObj.health <= 0 ? 1 : this.props.configObj.health));
       return <div>
         <div className="entity-infos">
           <div className={`image team-${this.props.configObj.team === Team.Attacker ? 'red' : 'blue'}`}>
