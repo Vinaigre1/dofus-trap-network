@@ -9,7 +9,7 @@ import { Effect } from "@src/@types/SpellDataType";
 import SpellData from "@json/Spells";
 import { strToMaskArray } from "@src/utils/utils";
 import Cell from "./Cell";
-import { receiveDamages, sendDamages } from "@src/utils/damageUtils";
+import { receiveDamages, sendDamages, receivePushDamages } from "@src/utils/damageUtils";
 
 export default class Action {
   uuid: string;
@@ -26,10 +26,10 @@ export default class Action {
   passedMask: boolean;
   cancelled: boolean;
 
-  constructor(originEntity: Entity, targetEntity: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, effect: Effect, originTrap?: Trap, targetMask?: string) {
+  constructor(caster: Entity, target: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, effect: Effect, originTrap?: Trap, targetMask?: string) {
     this.uuid = uuidv4();
-    this.caster = originEntity;
-    this.target = targetEntity;
+    this.caster = caster;
+    this.target = target;
     this.originPos = originPos;
     this.targetPos = targetPos;
     this.type = type;
@@ -119,7 +119,7 @@ export default class Action {
   }
 
   /**
-   * Applies the action from the originEntity to the targetEntity.
+   * Applies the action from the caster to the target.
    */
   *apply(_yield: boolean = true) {
     if (this.cancelled) return;
@@ -199,7 +199,9 @@ export default class Action {
     for (let i: number = 0; i < (diagonal ? Math.ceil(this.value / 2) : this.value); i++) {
       const nextCell: Coordinates = moveInDirection(this.target.pos, dir, 1);
       if (!Game.isMovementPossible(this.target.pos, nextCell, dir)) {
-        Game.addToActionStack(new Action(this.caster, this.target, this.target.pos, nextCell, EffectType.PushDamage, diagonal ? Math.ceil(this.value / 2) * 2 : (this.value - i), this.effect, this.originTrap));
+        if (dir !== Direction.None) {
+          Game.addToActionStack(new Action(this.caster, this.target, this.target.pos, nextCell, EffectType.PushDamage, diagonal ? Math.ceil(this.value / 2) * 2 : (this.value - i), this.effect, this.originTrap));
+        }
         break;
       }
 
@@ -369,14 +371,36 @@ export default class Action {
    * Function executed for the *push damage* action.
    */
   *pushDamageAction() {
-    console.log('Non-implemented function: pushDamageAction()');
+    const remainingDistance = this.value;
+    const finalValue = receivePushDamages(
+      this.value,
+      this.caster,
+      this.target
+    );
+    this.value = Math.max(0, finalValue);
+    this.target.currentHealth -= this.value;
+    
+    const dir: Direction = getDirection(this.originPos, this.targetPos);
+    let indirectPushValue: number = this.value;
+    const pushActions: Action[] = [];
+    for (let distance: number = 1; distance <= remainingDistance; distance++) {
+      const nextCell: Coordinates = moveInDirection(this.originPos, dir, distance, false);
+      const indirectTarget: Entity = Game.getEntity(nextCell);
+      if (!indirectTarget) break;
+
+      indirectPushValue = Math.floor(indirectPushValue / 2);
+      pushActions.unshift(new Action(this.caster, indirectTarget, this.target.pos, indirectTarget.pos, EffectType.IndirectPushDamage, indirectPushValue, this.effect, this.originTrap));
+    }
+    Game.addToActionStack(...pushActions);
+    this.target.trigger(EffectType.PushDamage, this.originTrap);
   }
 
   /**
    * Function executed for the *indirect push damage* action.
    */
   *indirectPushDamageAction() {
-    console.log('Non-implemented function: indirectPushDamageAction()');
+    this.target.currentHealth -= this.value;
+    this.target.trigger(EffectType.IndirectPushDamage, this.originTrap);
   }
 
   /**

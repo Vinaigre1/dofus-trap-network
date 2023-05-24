@@ -19,6 +19,7 @@ class Entity {
   triggers: Array<SpellTrigger>;
   health: number;
   currentHealth: number;
+  level: number;
   offensiveStats: OffensiveStats;
   defensiveStats: DefensiveStats;
 
@@ -33,6 +34,7 @@ class Entity {
     this.triggers = [];
     this.health = 10000;
     this.currentHealth = 10000;
+    this.level = 200; // TODO
     this.offensiveStats = {
       vitality: 0,
       strength: 0,

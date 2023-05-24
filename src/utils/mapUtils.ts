@@ -109,7 +109,7 @@ export function *clockwise(pos: Coordinates): Generator<Coordinates> {
  * @param {number} distance Number of cells to move
  * @returns {Coordinates} The calculated coordinates
  */
-export function moveInDirection(pos: Coordinates, direction: Direction, distance: number): Coordinates {
+export function moveInDirection(pos: Coordinates, direction: Direction, distance: number, reduceInDiagonal: boolean = true): Coordinates {
   pos = { ...pos };
   switch (direction) {
     case Direction.North:
@@ -129,16 +129,16 @@ export function moveInDirection(pos: Coordinates, direction: Direction, distance
       pos.y -= distance;
       break;
     case Direction.Northeast:
-      pos.x += Math.ceil(distance / 2);
+      pos.x += reduceInDiagonal ? Math.ceil(distance / 2) : distance;
       break;
     case Direction.Southeast:
-      pos.y += Math.ceil(distance / 2) * 2;
+      pos.y += reduceInDiagonal ? Math.ceil(distance / 2) * 2 : distance * 2;
       break;
     case Direction.Southwest:
-      pos.x -= Math.ceil(distance / 2);
+      pos.x -= reduceInDiagonal ? Math.ceil(distance / 2) : distance;
       break;
     case Direction.Northwest:
-      pos.y -= Math.ceil(distance / 2) * 2;
+      pos.y -= reduceInDiagonal ? Math.ceil(distance / 2) * 2 : distance * 2;
       break;
     default:
       break;
@@ -284,7 +284,7 @@ export function getDirection(fromPos: Coordinates, toPos: Coordinates): Directio
     } else if (distance.relative.y < 0) {
       return Direction.Northwest;
     } else {
-      return undefined;
+      return Direction.None;
     }
   } else if (distance.absolute.y === 0) {
     if (distance.relative.x > 0) {
@@ -305,5 +305,5 @@ export function getDirection(fromPos: Coordinates, toPos: Coordinates): Directio
     return Direction.West;
   }
 
-  return undefined;
+  return Direction.None;
 }

@@ -65,7 +65,8 @@ export enum Direction {
   Northeast,
   Southeast,
   Southwest,
-  Northwest
+  Northwest,
+  None
 }
 
 export enum EntityType {

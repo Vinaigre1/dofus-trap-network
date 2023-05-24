@@ -74,3 +74,7 @@ export function receiveDamages(value: number, fromEntity: Entity, toEntity: Enti
                    * (1 - (isDistance ? toEntity.defensiveStats.resistanceRanged : toEntity.defensiveStats.resistanceMelee) / 100);
   return Math.floor(received * multiplier);
 }
+
+export function receivePushDamages(value: number, fromEntity: Entity, toEntity: Entity): number {
+  return Math.floor((32 + Math.floor(fromEntity.level / 2) + fromEntity.offensiveStats.damagePush - toEntity.defensiveStats.resistancePush) * value / 4);
+}
