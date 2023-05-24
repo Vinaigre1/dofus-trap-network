@@ -1,6 +1,6 @@
 import Entity from "@classes/Entity";
 import Game from "@classes/Game";
-import { AreaType, Coordinates, Team } from "@src/enums";
+import { AreaType, Coordinates, State, Team } from "@src/enums";
 import { isInArea } from "@src/utils/mapUtils";
 import * as React from "react";
 
@@ -100,6 +100,28 @@ class EntityComponent extends React.Component<Props, States>
       y: (this.state.animY ?? this.props.entity.pos.y) * cellHeight / 2
     };
 
+    const states = {
+      [State.Chakra]: "./assets/img/states/Chakra.svg",
+      [State.Gravity]: "./assets/img/states/Gravity.svg"
+    };
+
+    const stateComponents: Array<JSX.Element> = [];
+    const stateNum: number = this.props.entity.states.toString(2).split('1').length - 1;
+    let i: number = 0;
+    for (const key in states) {
+      if (this.props.entity.hasState(parseInt(key))) {
+        stateComponents.push(<image
+          className="entity-state"
+          href={states[key]}
+          x={root.x - cellWidth / 5 + cellWidth / 2 + (2 * i - (stateNum - 1)) * cellWidth / 8}
+          y={root.y - cellWidth / 5}
+          width={cellWidth / 2.5}
+          height={cellWidth / 2.5}
+        />);
+        i++;
+      }
+    }
+
     return (
       <g className={`entity ${this.state.animate ? "animating" : ""} ${this.props.entity.team === Team.Attacker ? "attacker" : "defender"} ${this.state.highlight ? "highlighted" : ""}`}>
         <ellipse
@@ -118,6 +140,7 @@ class EntityComponent extends React.Component<Props, States>
           width={width}
           height={height}
         />
+        {stateComponents}
       </g>
     );
   }

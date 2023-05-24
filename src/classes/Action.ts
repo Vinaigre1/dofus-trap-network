@@ -1,11 +1,11 @@
 import Entity from "@classes/Entity";
-import { CellType, Coordinates, Direction, EffectType, Mask, TargetMask } from "@src/enums";
+import { CellType, Coordinates, Direction, EffectType, Mask, TargetMask, TriggerType } from "@src/enums";
 import { getDirection, moveInDirection } from "@src/utils/mapUtils";
 import Game from "@classes/Game";
 import ActionComponent from "@components/ActionComponent";
 import { v4 as uuidv4 } from "uuid";
 import Trap from "./Trap";
-import { Effect } from "@src/@types/SpellDataType";
+import { Effect, SpellLevel } from "@src/@types/SpellDataType";
 import SpellData from "@json/Spells";
 import { strToMaskArray } from "@src/utils/utils";
 import Cell from "./Cell";
@@ -151,6 +151,7 @@ export default class Action {
       [EffectType.RemoveState]: this.removeStateAction.bind(this),
       [EffectType.CancelSpell]: this.cancelSpellAction.bind(this),
       [EffectType.SymmetricalTeleport]: this.symmetricalTeleportAction.bind(this),
+      [EffectType.Toggle]: this.toggleAction.bind(this),
     }
 
     if (actions[this.type])
@@ -289,7 +290,8 @@ export default class Action {
     );
     this.value = Math.max(0, finalValue);
     this.target.currentHealth -= this.value;
-    this.target.trigger(EffectType.WaterDamage, this.originTrap);
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
+    this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
 
   /**
@@ -314,7 +316,8 @@ export default class Action {
     );
     this.value = Math.max(0, finalValue);
     this.target.currentHealth -= this.value;
-    this.target.trigger(EffectType.FireDamage, this.originTrap);
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
+    this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
 
   /**
@@ -339,7 +342,8 @@ export default class Action {
     );
     this.value = Math.max(0, finalValue);
     this.target.currentHealth -= this.value;
-    this.target.trigger(EffectType.EarthDamage, this.originTrap);
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
+    this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
 
   /**
@@ -364,7 +368,8 @@ export default class Action {
     );
     this.value = Math.max(0, finalValue);
     this.target.currentHealth -= this.value;
-    this.target.trigger(EffectType.AirDamage, this.originTrap);
+    this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
   }
 
   /**
@@ -392,7 +397,6 @@ export default class Action {
       pushActions.unshift(new Action(this.caster, indirectTarget, this.target.pos, indirectTarget.pos, EffectType.IndirectPushDamage, indirectPushValue, this.effect, this.originTrap));
     }
     Game.addToActionStack(...pushActions);
-    this.target.trigger(EffectType.PushDamage, this.originTrap);
   }
 
   /**
@@ -400,7 +404,6 @@ export default class Action {
    */
   *indirectPushDamageAction() {
     this.target.currentHealth -= this.value;
-    this.target.trigger(EffectType.IndirectPushDamage, this.originTrap);
   }
 
   /**
@@ -515,6 +518,34 @@ export default class Action {
         Game.triggerTraps(finalPos);
       }
       this.target.pos = finalPos;
+    }
+  }
+
+  /**
+   * Function executed for the *toggle* action.
+   * Toggles On and Off a spell; compatible with `EffectType.State` and triggers
+   */
+  *toggleAction() {
+    const spell: SpellLevel = SpellData[this.effect.min].levels[this.effect.max];
+    for (let i: number = 0; i < spell.effects.length; i++) {
+      if (spell.effects[i].effectType === EffectType.State) {
+        if (this.target.hasState(spell.effects[i].min)) {
+          this.target.removeState(spell.effects[i].min);
+        } else {
+          this.target.addState(spell.effects[i].min);
+        }
+      } else if (spell.effects[i].triggers !== null) {
+        if (this.target.hasTrigger(spell.effects[i].min, spell.effects[i].max)) {
+          this.target.removeTrigger(spell.effects[i].min, spell.effects[i].max);
+        } else {
+          this.target.addTrigger({
+            triggers: [spell.effects[i].triggers],
+            spellId: spell.effects[i].min,
+            spellLevel: spell.effects[i].max,
+            caster: Game.mainCharacter
+          });
+        }
+      }
     }
   }
 }

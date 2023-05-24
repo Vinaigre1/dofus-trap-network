@@ -902,7 +902,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.Other,
     levels: [
       {
-        apCost: 4,
+        apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 0,
         maxCastPerTarget: 0,
@@ -913,11 +913,11 @@ const SpellData: SpellDataType = {
         effects: [
           {
             targetMask: `${TargetMask.Enemy}`,
-            effectType: EffectType.SpellAsCaster,
+            effectType: EffectType.Toggle,
             value: 0,
-            min: 1015,
+            min: 1018,
             max: 0,
-            triggers: TriggerType.onDamage,
+            triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
@@ -927,7 +927,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
-        apCost: 4,
+        apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 0,
         maxCastPerTarget: 0,
@@ -938,21 +938,21 @@ const SpellData: SpellDataType = {
         effects: [
           {
             targetMask: `${TargetMask.Enemy}`,
-            effectType: EffectType.SpellAsCaster,
+            effectType: EffectType.Toggle,
             value: 0,
-            min: 1015,
+            min: 1018,
             max: 1,
-            triggers: TriggerType.onDamage,
+            triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
       },
       {
-        apCost: 4,
+        apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 0,
         maxCastPerTarget: 0,
@@ -963,15 +963,15 @@ const SpellData: SpellDataType = {
         effects: [
           {
             targetMask: `${TargetMask.Enemy}`,
-            effectType: EffectType.SpellAsCaster,
+            effectType: EffectType.Toggle,
             value: 0,
-            min: 1015,
+            min: 1018,
             max: 2,
-            triggers: TriggerType.onDamage,
+            triggers: null,
             area: {
               type: AreaType.Cell,
               min: 0,
-              max: 1
+              max: 0
             }
           }
         ]
@@ -2952,6 +2952,129 @@ const SpellData: SpellDataType = {
               type: AreaType.Circle,
               min: 1,
               max: 2
+            }
+          }
+        ]
+      }
+    ]
+  },
+  1018: {
+    name: "Chakra Concentration",
+    icon: "./assets/img/spells/ChakraConcentration.svg",
+    sfx: null,
+    sfxSize: 1,
+    category: SpellCategory.None,
+    levels: [
+      {
+        apCost: 2,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 4,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 65,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.State,
+            value: 0,
+            min: State.Chakra,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.SpellAsCaster,
+            value: 0,
+            min: 1015,
+            max: 0,
+            triggers: TriggerType.onTrapDamage,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      },
+      {
+        apCost: 2,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 4,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 131,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.State,
+            value: 0,
+            min: State.Chakra,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.SpellAsCaster,
+            value: 0,
+            min: 1015,
+            max: 1,
+            triggers: TriggerType.onTrapDamage,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 1
+            }
+          }
+        ]
+      },
+      {
+        apCost: 2,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 3,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 198,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.State,
+            value: 0,
+            min: State.Chakra,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.SpellAsCaster,
+            value: 0,
+            min: 1015,
+            max: 2,
+            triggers: TriggerType.onTrapDamage,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 1
             }
           }
         ]

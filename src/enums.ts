@@ -1,3 +1,5 @@
+import Entity from "@classes/Entity";
+
 export enum CellType {
   Ground,
   Empty,
@@ -31,7 +33,8 @@ export enum EffectType {
   BoostSpell,
   HealLastDamage,
   PlaceEndTurnGlyph,
-  SymmetricalTeleport
+  SymmetricalTeleport,
+  Toggle
 }
 
 export enum EffectCategory {
@@ -193,12 +196,14 @@ export enum TargetMask {
 }
 
 export enum TriggerType {
-  onDamage
+  onDamage,
+  onTrapDamage
 }
 
 export enum State {
   MassTrap = 1,
-  Gravity = 2
+  Gravity = 2,
+  Chakra = 4
 }
 
 export const StateName = {
@@ -268,9 +273,10 @@ export interface Mask {
 }
 
 export interface SpellTrigger {
-  triggers: Array<EffectType>;
+  triggers: Array<TriggerType>;
   spellId: number;
   spellLevel: number;
+  caster: Entity;
 }
 
 export interface GameOptions {
