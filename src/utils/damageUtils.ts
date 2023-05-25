@@ -73,7 +73,7 @@ export function receiveDamages(value: number, fromEntity: Entity, toEntity: Enti
   };
   const percent: number = typeToElem[element];
   const fixed: number = typeToFixed[element];
-  const isDistance: boolean = getDistance(fromPos, toPos).real > 1;
+  const isDistance: boolean = getDistance(fromEntity.pos, toEntity.pos).real > 1;
 
   const received: number = Math.floor((value - fixed) * (1 - percent / 100));
   // TODO: Calculate resistance triggers here
