@@ -137,6 +137,7 @@ class Game {
     for (let i: number = 0; i < this.entities.length; i++) {
       this.entities[i].reset();
     }
+    this.mainCharacter.reset();
 
     for (let i: number = 0; i < this.traps.length; i++) {
       this.traps[i].enable();
@@ -620,7 +621,7 @@ class Game {
     for (let i: number = 0; i < effects.length; i++) {
       if (!this.preparingEffects.includes(effects[i].effectType)) continue;
 
-      const action = new Action(this.mainCharacter, this.getEntity(pos), this.mainCharacter.pos, pos, effects[i].effectType, +entityPriority, effects[i]);
+      const action = new Action(this.mainCharacter, this.getEntity(pos), this.mainCharacter.pos, pos, effects[i].effectType, +entityPriority, effects[i], null, effects[i].targetMask);
       const gen = action.apply(false);
       const ret = gen.next();
       if (!ret.done) {

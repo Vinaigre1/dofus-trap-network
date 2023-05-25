@@ -290,7 +290,7 @@ export default class Action {
       element
     );
     this.value = Math.max(0, finalValue);
-    this.target.currentHealth -= this.value;
+    this.target.loseHealth(this.value);
     this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
@@ -317,7 +317,7 @@ export default class Action {
       element
     );
     this.value = Math.max(0, finalValue);
-    this.target.currentHealth -= this.value;
+    this.target.loseHealth(this.value);
     this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
@@ -344,7 +344,7 @@ export default class Action {
       element
     );
     this.value = Math.max(0, finalValue);
-    this.target.currentHealth -= this.value;
+    this.target.loseHealth(this.value);
     this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
@@ -371,7 +371,7 @@ export default class Action {
       element
     );
     this.value = Math.max(0, finalValue);
-    this.target.currentHealth -= this.value;
+    this.target.loseHealth(this.value);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
     this.target.trigger(TriggerType.onDamage, this.originTrap);
   }
@@ -387,7 +387,7 @@ export default class Action {
       this.target
     );
     this.value = Math.max(0, finalValue);
-    this.target.currentHealth -= this.value;
+    this.target.loseHealth(this.value);
     
     const dir: Direction = getDirection(this.originPos, this.targetPos);
     let indirectPushValue: number = this.value;
@@ -407,7 +407,7 @@ export default class Action {
    * Function executed for the *indirect push damage* action.
    */
   *indirectPushDamageAction() {
-    this.target.currentHealth -= this.value;
+    this.target.loseHealth(this.value);
   }
 
   /**
@@ -435,7 +435,9 @@ export default class Action {
    * Function executed for the *heal last damage* action.
    */
   *healLastDamageAction() {
-    console.log('Non-implemented function: healLastDamageAction()');
+    const lastDamage: number = this.caster.lastDamageTaken;
+    this.value = Math.floor(lastDamage * this.value / 100);
+    this.target.gainHealth(this.value);
   }
 
   /**
@@ -474,8 +476,8 @@ export default class Action {
       element
     );
     this.value = Math.max(0, finalValue);
-    this.target.currentHealth -= this.value;
-    // TODO: heal caster
+    this.target.loseHealth(this.value);
+    this.caster.gainHealth(Math.floor(this.value / 2));
   }
 
   /**
@@ -549,18 +551,20 @@ export default class Action {
    * Toggles On and Off a spell; compatible with `EffectType.State` and triggers
    */
   *toggleAction() {
+    if (!this.target) return;
+
     const spell: SpellLevel = SpellData[this.effect.min].levels[this.effect.max];
     for (let i: number = 0; i < spell.effects.length; i++) {
       if (spell.effects[i].effectType === EffectType.State) {
         if (this.target.hasState(spell.effects[i].min)) {
           this.target.removeState(spell.effects[i].min);
-        } else {
+        } else if (this.checkEntityMask()) {
           this.target.addState(spell.effects[i].min);
         }
       } else if (spell.effects[i].triggers !== null) {
         if (this.target.hasTrigger(spell.effects[i].min, spell.effects[i].max)) {
           this.target.removeTrigger(spell.effects[i].min, spell.effects[i].max);
-        } else {
+        } else if (this.checkEntityMask()) {
           this.target.addTrigger({
             triggers: [spell.effects[i].triggers],
             spellId: spell.effects[i].min,

@@ -23,6 +23,7 @@ class Entity {
   level: number;
   offensiveStats: OffensiveStats;
   defensiveStats: DefensiveStats;
+  lastDamageTaken: number;
 
   constructor(pos: Coordinates, team: Team, type: EntityType) {
     this.uuid = uuidv4();
@@ -180,6 +181,29 @@ class Entity {
    */
   removeTrigger(spellId: number, spellLevel: number) {
     this.triggers = this.triggers.filter((trigger) => trigger.spellId !== spellId || trigger.spellLevel !== spellLevel);
+  }
+
+  /**
+   * Reduces the entity's health
+   * 
+   * @param {number} amount how many health is lost
+   */
+  loseHealth(amount: number) {
+    if (amount < 0) return;
+
+    this.currentHealth -= amount;
+    this.lastDamageTaken = amount;
+  }
+
+  /**
+   * Increases the entity's health
+   * 
+   * @param {number} amount how many health is gained
+   */
+  gainHealth(amount: number) {
+    if (amount < 0) return;
+
+    this.currentHealth += amount;
   }
 
   /**

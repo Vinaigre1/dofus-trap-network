@@ -187,6 +187,7 @@ export enum TargetMask {
   StaticSummonAlly = "s",
   StaticSummonEnemy = "S",
   Telefragged = "T",
+  PlayerSummon = "u",
   JustAppeared = "U",
   LifeAbove = "v",
   NotLifeAbove = "V",

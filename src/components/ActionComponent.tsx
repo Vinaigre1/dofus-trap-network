@@ -72,6 +72,7 @@ class ActionComponent extends React.Component<Props, States>
       [EffectType.RemoveState]: { text: <>Remove state &apos;{{ value: StateName[this.props.action.effect.min] }}&apos;</> },
       [EffectType.SymmetricalTeleport]: { text: <>Symmetrical TP</> },
       [EffectType.StealBestElement]: { text: <>Steals {{ value: this.props.action.value }} in best element</> },
+      [EffectType.HealLastDamage]: { text: <>Heals {{ value: this.props.action.value }} (last damage taken)</> },
     };
 
     return (
