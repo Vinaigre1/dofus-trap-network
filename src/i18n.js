@@ -67,7 +67,9 @@ const resources = {
       "Push res.": "Push res.",
       "Ranged res. %": "Ranged res. %",
       "Melee res. %": "Melee res. %",
-      "Spell res. %": "Spell res. %"
+      "Spell res. %": "Spell res. %",
+      "Steals {{value}} in best element": "Steals {{value}} in best element",
+      "Heals {{value}} (last damage taken)": "Heals {{value}} (last damage taken)"
     }
   },
   fr: {
@@ -140,7 +142,9 @@ const resources = {
       "Push res.": "Res. Poussée",
       "Ranged res. %": "% Res. Ditance",
       "Melee res. %": "% Res. Mêlée",
-      "Spell res. %": "% Res. Sorts"
+      "Spell res. %": "% Res. Sorts",
+      "Steals {{value}} in best element": "Vole {{value}} dans le meilleur élément",
+      "Heals {{value}} (last damage taken)": "Soigne {{value}} (derniers dégâts reçus)"
     }
   }
 };

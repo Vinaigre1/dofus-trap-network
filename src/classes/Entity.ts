@@ -1,4 +1,4 @@
-import { Coordinates, EffectType, EntityType, SpellTrigger, State, OffensiveStats, Team, DefensiveStats } from "@src/enums";
+import { Coordinates, EntityType, SpellTrigger, State, OffensiveStats, Team, DefensiveStats, TriggerType } from "@src/enums";
 import Entities from "@json/Entities";
 import EntityComponent from "@components/EntityComponent";
 import { v4 as uuidv4 } from "uuid";
@@ -16,11 +16,14 @@ class Entity {
   animPos: Coordinates;
   component: EntityComponent;
   states: State;
+  initialStates: State;
   triggers: Array<SpellTrigger>;
   health: number;
   currentHealth: number;
+  level: number;
   offensiveStats: OffensiveStats;
   defensiveStats: DefensiveStats;
+  lastDamageTaken: number;
 
   constructor(pos: Coordinates, team: Team, type: EntityType) {
     this.uuid = uuidv4();
@@ -30,9 +33,11 @@ class Entity {
     this.data = Entities[type];
     this.animPos = undefined;
     this.states = 0;
+    this.initialStates = this.states;
     this.triggers = [];
     this.health = 10000;
     this.currentHealth = 10000;
+    this.level = 200; // TODO
     this.offensiveStats = {
       vitality: 0,
       strength: 0,
@@ -95,7 +100,7 @@ class Entity {
    */
   reset() {
     this.pos = this.initialPos;
-    this.states = 0;
+    this.states = this.initialStates;
     this.component?.show();
     this.currentHealth = this.health;
     return true;
@@ -108,6 +113,9 @@ class Entity {
    */
   removeState(state: State) {
     this.states &= ~state;
+    if (!Game.isRunning) {
+      this.initialStates &= ~state;
+    }
   }
 
   /**
@@ -117,6 +125,9 @@ class Entity {
    */
   addState(state: State) {
     this.states |= state;
+    if (!Game.isRunning) {
+      this.initialStates |= state;
+    }
   }
 
   /**
@@ -137,28 +148,62 @@ class Entity {
   addTrigger(trigger: SpellTrigger) {
     this.triggers.push(trigger);
   }
+  
+  /**
+   * Checks if the entity has a trigger with the given spellId and spellLevel
+   * 
+   * @param {number} spellId ID of the spell to check
+   * @param {number} spellLevel ID of the spellLevel to check
+   */
+  hasTrigger(spellId: number, spellLevel: number) {
+    return this.triggers.some((trigger) => trigger.spellId === spellId && trigger.spellLevel === spellLevel);
+  }
 
   /**
-   * Triggers all spells listening to the corresponding effect
+   * Triggers all spells listening to the corresponding trigger
    * 
-   * @param {EffectType} effect Type of the effect
-   * @param {Trap} originTrap Trap triggering the effect
+   * @param {TriggerType} trigger Type of the trigger
+   * @param {Trap} originTrap Trap triggering the trigger
    */
-  trigger(effect: EffectType, originTrap: Trap) {
+  trigger(trigger: TriggerType, originTrap: Trap) {
     for (let i: number = 0; i < this.triggers.length; i++) {
-      if (this.triggers[i].triggers.includes(effect)) {
-        Game.executeSpell(SpellData[this.triggers[i].spellId].levels[this.triggers[i].spellLevel], this.pos, this, originTrap);
+      if (this.triggers[i].triggers.includes(trigger)) {
+        Game.executeSpell(SpellData[this.triggers[i].spellId].levels[this.triggers[i].spellLevel], this.pos, this.triggers[i].caster, originTrap);
       }
     }
   }
 
   /**
-   * Removes all triggers with the given spellId
+   * Removes all triggers with the given spellId and spellLevel
    * 
    * @param {number} spellId ID of the spell to remove from triggers
+   * @param {number} spellLevel ID of the spellLevel to remove from triggers
    */
-  removeTrigger(spellId: number) {
-    this.triggers = this.triggers.filter((trigger) => trigger.spellId !== spellId);
+  removeTrigger(spellId: number, spellLevel: number) {
+    this.triggers = this.triggers.filter((trigger) => trigger.spellId !== spellId || trigger.spellLevel !== spellLevel);
+  }
+
+  /**
+   * Reduces the entity's health
+   * 
+   * @param {number} amount how many health is lost
+   */
+  loseHealth(amount: number) {
+    if (amount < 0) return;
+
+    this.currentHealth -= amount;
+    this.lastDamageTaken = amount;
+  }
+
+  /**
+   * Increases the entity's health
+   * 
+   * @param {number} amount how many health is gained
+   */
+  gainHealth(amount: number) {
+    if (amount < 0) return;
+
+    this.currentHealth += amount;
   }
 
   /**
@@ -180,7 +225,9 @@ class Entity {
       }
       str += this.triggers[i].spellId + "|";
       str += this.triggers[i].spellLevel + "|";
+      str += this.triggers[i].caster.uuid + "|";
     }
+    str += this.initialStates + "|";
     return str + ">";
   }
 
@@ -199,22 +246,30 @@ class Entity {
     const _type: EntityType = parseInt(parts[n++])
     const _triggersLength: number = parseInt(parts[n++]);
     const _triggers: Array<SpellTrigger> = [];
+
+    const entity = new Entity(_pos, _team, _type);
+
     for (let i: number = 0; i < _triggersLength; i++) {
       const _trtrLength: number = parseInt(parts[n++]);
-      const _trtr: Array<EffectType> = [];
+      const _trtr: Array<TriggerType> = [];
       for (let j: number = 0; j < _trtrLength; j++) {
         _trtr.push(parseInt(parts[n++]));
       }
       _triggers.push({
         triggers: _trtr,
         spellId: parseInt(parts[n++]),
-        spellLevel: parseInt(parts[n++])
+        spellLevel: parseInt(parts[n++]),
+        caster: undefined,
+        _casterUuid: parts[n++]
       });
     }
 
-    const entity = new Entity(_pos, _team, _type);
+    const _states = parseInt(parts[n++]);
+
     entity.uuid = _uuid;
     entity.triggers = _triggers;
+    entity.initialStates = _states;
+    entity.states = _states;
     return entity;
   }
 }

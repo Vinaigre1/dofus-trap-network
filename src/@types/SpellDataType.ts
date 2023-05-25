@@ -5,7 +5,7 @@ export type Effect = {
   value: number,
   min: number, // DiceNum in SpellLevels
   max: number, // DiceSide in SpellLevels
-  triggers: TriggerType,
+  triggers: TriggerType, // TODO: need to be able to put multiple triggers
   effectType: EffectType,
   area: Area
 }

@@ -3,7 +3,7 @@ import Entity from "@classes/Entity";
 import Trap from "@classes/Trap";
 import Action from "@classes/Action";
 import Consts from "@json/Consts.json";
-import { Area, AreaType, CellBorders, CellType, Coordinates, Direction, EffectType, EntityType, GameOptions, SpellType, Team } from "@src/enums";
+import { Area, AreaType, CellBorders, CellType, Coordinates, Direction, EffectType, EntityType, GameOptions, SpellType, Team, TriggerType } from "@src/enums";
 import { clockwise, isInArea, moveInDirection } from "@src/utils/mapUtils";
 import TrapCell from "@classes/TrapCell";
 import { randomInt } from "@src/utils/utils";
@@ -69,6 +69,7 @@ class Game {
       EffectType.StartPoint,
       EffectType.Remove,
       EffectType.Select,
+      EffectType.Toggle,
     ];
     this.mainCharacter = new Entity({ x: 0, y: 0 }, Team.Attacker, EntityType.Player);
     this.options = {
@@ -129,6 +130,31 @@ class Game {
   }
 
   /**
+   * Reset all traps and entities to their original position,
+   * save the completed action stack and reset some properties.
+   */
+  resetAll() {
+    for (let i: number = 0; i < this.entities.length; i++) {
+      this.entities[i].reset();
+    }
+    this.mainCharacter.reset();
+
+    for (let i: number = 0; i < this.traps.length; i++) {
+      this.traps[i].enable();
+    }
+
+    this.savedActionStack = this.completedActionStack;
+    this.completedActionStack = [];
+    this.actionStack = [];
+    this.currentAction = undefined;
+    this.waitingAnim = false;
+    this.isRunning = false;
+
+    this.refreshMap();
+    this.refreshStats();
+  }
+
+  /**
    * Forces the map component to update its values and children.
    */
   refreshMap() {
@@ -178,9 +204,10 @@ class Game {
   placeEntity(entity: Entity) {
     if (entity.team === Team.Defender && this.options.leukide) {
       entity.addTrigger({
-        triggers: [EffectType.AirDamage, EffectType.EarthDamage, EffectType.FireDamage, EffectType.WaterDamage, EffectType.NeutralDamage],
+        triggers: [TriggerType.onDamage],
         spellId: SpellType.Leukide,
-        spellLevel: 0
+        spellLevel: 0,
+        caster: entity
       });
     }
     this.entities.push(entity);
@@ -516,30 +543,6 @@ class Game {
   }
 
   /**
-   * Reset all traps and entities to their original position,
-   * save the completed action stack and reset some properties.
-   */
-  resetAll() {
-    for (let i: number = 0; i < this.entities.length; i++) {
-      this.entities[i].reset();
-    }
-
-    for (let i: number = 0; i < this.traps.length; i++) {
-      this.traps[i].enable();
-    }
-
-    this.savedActionStack = this.completedActionStack;
-    this.completedActionStack = [];
-    this.actionStack = [];
-    this.currentAction = undefined;
-    this.waitingAnim = false;
-    this.isRunning = false;
-
-    this.refreshMap();
-    this.refreshStats();
-  }
-
-  /**
    * Returns all actions corresponding to the given trap.
    * 
    * @param {Trap} trap
@@ -618,7 +621,7 @@ class Game {
     for (let i: number = 0; i < effects.length; i++) {
       if (!this.preparingEffects.includes(effects[i].effectType)) continue;
 
-      const action = new Action(this.mainCharacter, null, this.mainCharacter.pos, pos, effects[i].effectType, +entityPriority, effects[i]);
+      const action = new Action(this.mainCharacter, this.getEntity(pos), this.mainCharacter.pos, pos, effects[i].effectType, +entityPriority, effects[i], null, effects[i].targetMask);
       const gen = action.apply(false);
       const ret = gen.next();
       if (!ret.done) {
@@ -638,12 +641,13 @@ class Game {
       if (this.entities[i].team === Team.Defender) {
         if (this.options.leukide) {
           this.entities[i].addTrigger({
-            triggers: [EffectType.WaterDamage, EffectType.FireDamage, EffectType.EarthDamage, EffectType.AirDamage, EffectType.NeutralDamage],
+            triggers: [TriggerType.onDamage],
             spellId: SpellType.Leukide,
-            spellLevel: 0
+            spellLevel: 0,
+            caster: this.entities[i]
           });
         } else {
-          this.entities[i].removeTrigger(SpellType.Leukide);
+          this.entities[i].removeTrigger(SpellType.Leukide, 0);
         }
       }
     }
@@ -768,6 +772,19 @@ class Game {
       this.prepareNewMap();
       this.mainCharacter = _mainCharacter;
       this.entities = _entities;
+
+      // Set trigger casters
+      _entities.forEach(_entity => {
+        _entity.triggers.forEach(_trigger => {
+          if (_trigger.caster !== undefined) return;
+          if (_trigger._casterUuid === undefined) {
+            _trigger.caster = _entity;
+            return;
+          }
+          _trigger.caster = this.getEntityById(_trigger._casterUuid);
+        });
+      });
+
       this.traps = _traps;
       this.startPoint = _startPoint;
       this.options.leukide = _leukide;

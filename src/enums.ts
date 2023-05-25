@@ -1,3 +1,5 @@
+import Entity from "@classes/Entity";
+
 export enum CellType {
   Ground,
   Empty,
@@ -31,7 +33,8 @@ export enum EffectType {
   BoostSpell,
   HealLastDamage,
   PlaceEndTurnGlyph,
-  SymmetricalTeleport
+  SymmetricalTeleport,
+  Toggle
 }
 
 export enum EffectCategory {
@@ -65,7 +68,8 @@ export enum Direction {
   Northeast,
   Southeast,
   Southwest,
-  Northwest
+  Northwest,
+  None
 }
 
 export enum EntityType {
@@ -183,6 +187,7 @@ export enum TargetMask {
   StaticSummonAlly = "s",
   StaticSummonEnemy = "S",
   Telefragged = "T",
+  PlayerSummon = "u",
   JustAppeared = "U",
   LifeAbove = "v",
   NotLifeAbove = "V",
@@ -192,12 +197,22 @@ export enum TargetMask {
 }
 
 export enum TriggerType {
-  onDamage
+  onDamage,
+  onTrapDamage
 }
 
 export enum State {
   MassTrap = 1,
-  Gravity = 2
+  Gravity = 2,
+  Chakra = 4
+}
+
+export enum SpellElement {
+  Neutral,
+  Earth,
+  Fire,
+  Water,
+  Air
 }
 
 export const StateName = {
@@ -267,9 +282,11 @@ export interface Mask {
 }
 
 export interface SpellTrigger {
-  triggers: Array<EffectType>;
+  triggers: Array<TriggerType>;
   spellId: number;
   spellLevel: number;
+  caster: Entity;
+  _casterUuid?: string;
 }
 
 export interface GameOptions {

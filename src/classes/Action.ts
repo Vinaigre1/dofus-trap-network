@@ -1,15 +1,15 @@
 import Entity from "@classes/Entity";
-import { CellType, Coordinates, Direction, EffectType, Mask, TargetMask } from "@src/enums";
+import { CellType, Coordinates, Direction, EffectType, Mask, SpellElement, TargetMask, TriggerType } from "@src/enums";
 import { getDirection, moveInDirection } from "@src/utils/mapUtils";
 import Game from "@classes/Game";
 import ActionComponent from "@components/ActionComponent";
 import { v4 as uuidv4 } from "uuid";
 import Trap from "./Trap";
-import { Effect } from "@src/@types/SpellDataType";
+import { Effect, SpellLevel } from "@src/@types/SpellDataType";
 import SpellData from "@json/Spells";
 import { strToMaskArray } from "@src/utils/utils";
 import Cell from "./Cell";
-import { receiveDamages, sendDamages } from "@src/utils/damageUtils";
+import { receiveDamages, sendDamages, receivePushDamages, getBestElement, effectToElement } from "@src/utils/damageUtils";
 
 export default class Action {
   uuid: string;
@@ -26,10 +26,10 @@ export default class Action {
   passedMask: boolean;
   cancelled: boolean;
 
-  constructor(originEntity: Entity, targetEntity: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, effect: Effect, originTrap?: Trap, targetMask?: string) {
+  constructor(caster: Entity, target: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, effect: Effect, originTrap?: Trap, targetMask?: string) {
     this.uuid = uuidv4();
-    this.caster = originEntity;
-    this.target = targetEntity;
+    this.caster = caster;
+    this.target = target;
     this.originPos = originPos;
     this.targetPos = targetPos;
     this.type = type;
@@ -119,7 +119,7 @@ export default class Action {
   }
 
   /**
-   * Applies the action from the originEntity to the targetEntity.
+   * Applies the action from the caster to the target.
    */
   *apply(_yield: boolean = true) {
     if (this.cancelled) return;
@@ -151,6 +151,7 @@ export default class Action {
       [EffectType.RemoveState]: this.removeStateAction.bind(this),
       [EffectType.CancelSpell]: this.cancelSpellAction.bind(this),
       [EffectType.SymmetricalTeleport]: this.symmetricalTeleportAction.bind(this),
+      [EffectType.Toggle]: this.toggleAction.bind(this),
     }
 
     if (actions[this.type])
@@ -199,7 +200,9 @@ export default class Action {
     for (let i: number = 0; i < (diagonal ? Math.ceil(this.value / 2) : this.value); i++) {
       const nextCell: Coordinates = moveInDirection(this.target.pos, dir, 1);
       if (!Game.isMovementPossible(this.target.pos, nextCell, dir)) {
-        Game.addToActionStack(new Action(this.caster, this.target, this.target.pos, nextCell, EffectType.PushDamage, diagonal ? Math.ceil(this.value / 2) * 2 : (this.value - i), this.effect, this.originTrap));
+        if (dir !== Direction.None) {
+          Game.addToActionStack(new Action(this.caster, this.target, this.target.pos, nextCell, EffectType.PushDamage, diagonal ? Math.ceil(this.value / 2) * 2 : (this.value - i), this.effect, this.originTrap));
+        }
         break;
       }
 
@@ -269,114 +272,142 @@ export default class Action {
    * Function executed for the *water damage* action.
    */
   *waterDamageAction() {
+    const element = effectToElement(this.effect.effectType);
     const finalValue = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
-        this.target,
         this.originPos,
         this.targetPos,
-        this.effect,
+        element,
+        this.effect.area.min,
         true // TODO
       ),
       this.caster,
       this.target,
       this.originPos,
       this.targetPos,
-      this.effect
+      element
     );
     this.value = Math.max(0, finalValue);
-    this.target.currentHealth -= this.value;
-    this.target.trigger(EffectType.WaterDamage, this.originTrap);
+    this.target.loseHealth(this.value);
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
+    this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
 
   /**
    * Function executed for the *fire damage* action.
    */
   *fireDamageAction() {
+    const element = effectToElement(this.effect.effectType);
     const finalValue = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
-        this.target,
         this.originPos,
         this.targetPos,
-        this.effect,
+        element,
+        this.effect.area.min,
         true // TODO
       ),
       this.caster,
       this.target,
       this.originPos,
       this.targetPos,
-      this.effect
+      element
     );
     this.value = Math.max(0, finalValue);
-    this.target.currentHealth -= this.value;
-    this.target.trigger(EffectType.FireDamage, this.originTrap);
+    this.target.loseHealth(this.value);
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
+    this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
 
   /**
    * Function executed for the *earth damage* action.
    */
   *earthDamageAction() {
+    const element = effectToElement(this.effect.effectType);
     const finalValue = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
-        this.target,
         this.originPos,
         this.targetPos,
-        this.effect,
+        element,
+        this.effect.area.min,
         true // TODO
       ),
       this.caster,
       this.target,
       this.originPos,
       this.targetPos,
-      this.effect
+      element
     );
     this.value = Math.max(0, finalValue);
-    this.target.currentHealth -= this.value;
-    this.target.trigger(EffectType.EarthDamage, this.originTrap);
+    this.target.loseHealth(this.value);
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
+    this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
 
   /**
    * Function executed for the *air damage* action.
    */
   *airDamageAction() {
+    const element = effectToElement(this.effect.effectType);
     const finalValue = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
-        this.target,
         this.originPos,
         this.targetPos,
-        this.effect,
+        element,
+        this.effect.area.min,
         true // TODO
       ),
       this.caster,
       this.target,
       this.originPos,
       this.targetPos,
-      this.effect
+      element
     );
     this.value = Math.max(0, finalValue);
-    this.target.currentHealth -= this.value;
-    this.target.trigger(EffectType.AirDamage, this.originTrap);
+    this.target.loseHealth(this.value);
+    this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
   }
 
   /**
    * Function executed for the *push damage* action.
    */
   *pushDamageAction() {
-    console.log('Non-implemented function: pushDamageAction()');
+    const remainingDistance = this.value;
+    const finalValue = receivePushDamages(
+      this.value,
+      this.caster,
+      this.target
+    );
+    this.value = Math.max(0, finalValue);
+    this.target.loseHealth(this.value);
+    
+    const dir: Direction = getDirection(this.originPos, this.targetPos);
+    let indirectPushValue: number = this.value;
+    const pushActions: Action[] = [];
+    for (let distance: number = 1; distance <= remainingDistance; distance++) {
+      const nextCell: Coordinates = moveInDirection(this.originPos, dir, distance, false);
+      const indirectTarget: Entity = Game.getEntity(nextCell);
+      if (!indirectTarget) break;
+
+      indirectPushValue = Math.floor(indirectPushValue / 2);
+      pushActions.unshift(new Action(this.caster, indirectTarget, this.target.pos, indirectTarget.pos, EffectType.IndirectPushDamage, indirectPushValue, this.effect, this.originTrap));
+    }
+    Game.addToActionStack(...pushActions);
   }
 
   /**
    * Function executed for the *indirect push damage* action.
    */
   *indirectPushDamageAction() {
-    console.log('Non-implemented function: indirectPushDamageAction()');
+    this.target.loseHealth(this.value);
   }
 
   /**
@@ -404,7 +435,9 @@ export default class Action {
    * Function executed for the *heal last damage* action.
    */
   *healLastDamageAction() {
-    console.log('Non-implemented function: healLastDamageAction()');
+    const lastDamage: number = this.caster.lastDamageTaken;
+    this.value = Math.floor(lastDamage * this.value / 100);
+    this.target.gainHealth(this.value);
   }
 
   /**
@@ -425,7 +458,26 @@ export default class Action {
    * Function executed for the *steal best element* action.
    */
   *stealBestElementAction() {
-    console.log('Non-implemented function: stealBestElementAction()');
+    const element: SpellElement = getBestElement(this.caster);
+    const finalValue = receiveDamages(
+      sendDamages(
+        this.value,
+        this.caster,
+        this.originPos,
+        this.targetPos,
+        element,
+        this.effect.area.min,
+        true // TODO
+      ),
+      this.caster,
+      this.target,
+      this.originPos,
+      this.targetPos,
+      element
+    );
+    this.value = Math.max(0, finalValue);
+    this.target.loseHealth(this.value);
+    this.caster.gainHealth(Math.floor(this.value / 2));
   }
 
   /**
@@ -491,6 +543,36 @@ export default class Action {
         Game.triggerTraps(finalPos);
       }
       this.target.pos = finalPos;
+    }
+  }
+
+  /**
+   * Function executed for the *toggle* action.
+   * Toggles On and Off a spell; compatible with `EffectType.State` and triggers
+   */
+  *toggleAction() {
+    if (!this.target) return;
+
+    const spell: SpellLevel = SpellData[this.effect.min].levels[this.effect.max];
+    for (let i: number = 0; i < spell.effects.length; i++) {
+      if (spell.effects[i].effectType === EffectType.State) {
+        if (this.target.hasState(spell.effects[i].min)) {
+          this.target.removeState(spell.effects[i].min);
+        } else if (this.checkEntityMask()) {
+          this.target.addState(spell.effects[i].min);
+        }
+      } else if (spell.effects[i].triggers !== null) {
+        if (this.target.hasTrigger(spell.effects[i].min, spell.effects[i].max)) {
+          this.target.removeTrigger(spell.effects[i].min, spell.effects[i].max);
+        } else if (this.checkEntityMask()) {
+          this.target.addTrigger({
+            triggers: [spell.effects[i].triggers],
+            spellId: spell.effects[i].min,
+            spellLevel: spell.effects[i].max,
+            caster: Game.mainCharacter
+          });
+        }
+      }
     }
   }
 }
