@@ -1,5 +1,5 @@
 import Entity from "@classes/Entity";
-import { CellType, Coordinates, Direction, EffectType, Mask, TargetMask, TriggerType } from "@src/enums";
+import { CellType, Coordinates, Direction, EffectType, Mask, SpellElement, TargetMask, TriggerType } from "@src/enums";
 import { getDirection, moveInDirection } from "@src/utils/mapUtils";
 import Game from "@classes/Game";
 import ActionComponent from "@components/ActionComponent";
@@ -9,7 +9,7 @@ import { Effect, SpellLevel } from "@src/@types/SpellDataType";
 import SpellData from "@json/Spells";
 import { strToMaskArray } from "@src/utils/utils";
 import Cell from "./Cell";
-import { receiveDamages, sendDamages, receivePushDamages } from "@src/utils/damageUtils";
+import { receiveDamages, sendDamages, receivePushDamages, getBestElement, effectToElement } from "@src/utils/damageUtils";
 
 export default class Action {
   uuid: string;
@@ -272,21 +272,22 @@ export default class Action {
    * Function executed for the *water damage* action.
    */
   *waterDamageAction() {
+    const element = effectToElement(this.effect.effectType);
     const finalValue = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
-        this.target,
         this.originPos,
         this.targetPos,
-        this.effect,
+        element,
+        this.effect.area.min,
         true // TODO
       ),
       this.caster,
       this.target,
       this.originPos,
       this.targetPos,
-      this.effect
+      element
     );
     this.value = Math.max(0, finalValue);
     this.target.currentHealth -= this.value;
@@ -298,21 +299,22 @@ export default class Action {
    * Function executed for the *fire damage* action.
    */
   *fireDamageAction() {
+    const element = effectToElement(this.effect.effectType);
     const finalValue = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
-        this.target,
         this.originPos,
         this.targetPos,
-        this.effect,
+        element,
+        this.effect.area.min,
         true // TODO
       ),
       this.caster,
       this.target,
       this.originPos,
       this.targetPos,
-      this.effect
+      element
     );
     this.value = Math.max(0, finalValue);
     this.target.currentHealth -= this.value;
@@ -324,21 +326,22 @@ export default class Action {
    * Function executed for the *earth damage* action.
    */
   *earthDamageAction() {
+    const element = effectToElement(this.effect.effectType);
     const finalValue = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
-        this.target,
         this.originPos,
         this.targetPos,
-        this.effect,
+        element,
+        this.effect.area.min,
         true // TODO
       ),
       this.caster,
       this.target,
       this.originPos,
       this.targetPos,
-      this.effect
+      element
     );
     this.value = Math.max(0, finalValue);
     this.target.currentHealth -= this.value;
@@ -350,21 +353,22 @@ export default class Action {
    * Function executed for the *air damage* action.
    */
   *airDamageAction() {
+    const element = effectToElement(this.effect.effectType);
     const finalValue = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
-        this.target,
         this.originPos,
         this.targetPos,
-        this.effect,
+        element,
+        this.effect.area.min,
         true // TODO
       ),
       this.caster,
       this.target,
       this.originPos,
       this.targetPos,
-      this.effect
+      element
     );
     this.value = Math.max(0, finalValue);
     this.target.currentHealth -= this.value;
@@ -452,7 +456,26 @@ export default class Action {
    * Function executed for the *steal best element* action.
    */
   *stealBestElementAction() {
-    console.log('Non-implemented function: stealBestElementAction()');
+    const element: SpellElement = getBestElement(this.caster);
+    const finalValue = receiveDamages(
+      sendDamages(
+        this.value,
+        this.caster,
+        this.originPos,
+        this.targetPos,
+        element,
+        this.effect.area.min,
+        true // TODO
+      ),
+      this.caster,
+      this.target,
+      this.originPos,
+      this.targetPos,
+      element
+    );
+    this.value = Math.max(0, finalValue);
+    this.target.currentHealth -= this.value;
+    // TODO: heal caster
   }
 
   /**

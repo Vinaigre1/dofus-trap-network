@@ -206,6 +206,14 @@ export enum State {
   Chakra = 4
 }
 
+export enum SpellElement {
+  Neutral,
+  Earth,
+  Fire,
+  Water,
+  Air
+}
+
 export const StateName = {
   [State.MassTrap]: "Mass Trap",
   [State.Gravity]: "Gravity"

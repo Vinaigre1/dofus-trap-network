@@ -1,68 +1,78 @@
 import Entity from "@classes/Entity";
-import { Coordinates, EffectType } from "@src/enums";
+import { Coordinates, EffectType, SpellElement } from "@src/enums";
 import { getDistance } from "./mapUtils";
-import { Effect } from "@src/@types/SpellDataType";
+
+export function effectToElement(effect: EffectType) {
+  return {
+    [EffectType.NeutralDamage]: SpellElement.Neutral,
+    [EffectType.WaterDamage]: SpellElement.Water,
+    [EffectType.FireDamage]: SpellElement.Fire,
+    [EffectType.EarthDamage]: SpellElement.Earth,
+    [EffectType.AirDamage]: SpellElement.Air
+  }[effect];
+}
 
 /**
- * Returns the inflicted damages without taking into account how much the target resists.
+ * Returns the calculated damages without taking into account how much the target resists.
  * @param {number} value Base value
  * @param {Entity} fromEntity Entity casting the spell effect
- * @param {Entity} toEntity Entity receiving the spell effect
  * @param {Coordinates} fromPos Targetted cell
  * @param {Coordinates} toPos Position of the entity when the spell was casted
- * @param {Effect} effect Casted effect
+ * @param {SpellElement} element Casted element
  * @param {boolean} isTrap Is the effect from a trap
- * @returns {number} Inflicted damages without target resistances
+ * @returns {number} Calculated damages without target resistances
  */
-export function sendDamages(value: number, fromEntity: Entity, toEntity: Entity, fromPos: Coordinates, toPos: Coordinates, effect: Effect, isTrap: boolean): number {
-  const typeToElem = {
-    [EffectType.NeutralDamage]: fromEntity.offensiveStats.strength,
-    [EffectType.WaterDamage]: fromEntity.offensiveStats.chance,
-    [EffectType.FireDamage]: fromEntity.offensiveStats.intelligence,
-    [EffectType.EarthDamage]: fromEntity.offensiveStats.strength,
-    [EffectType.AirDamage]: fromEntity.offensiveStats.agility
+export function sendDamages(value: number, fromEntity: Entity, fromPos: Coordinates, toPos: Coordinates, element: SpellElement, areaMin: number, isTrap: boolean): number {
+  const elemToStat = {
+    [SpellElement.Neutral]: fromEntity.offensiveStats.strength,
+    [SpellElement.Water]: fromEntity.offensiveStats.chance,
+    [SpellElement.Fire]: fromEntity.offensiveStats.intelligence,
+    [SpellElement.Earth]: fromEntity.offensiveStats.strength,
+    [SpellElement.Air]: fromEntity.offensiveStats.agility
   };
-  const typeToDamage = {
-    [EffectType.NeutralDamage]: fromEntity.offensiveStats.damageNeutral,
-    [EffectType.WaterDamage]: fromEntity.offensiveStats.damageWater,
-    [EffectType.FireDamage]: fromEntity.offensiveStats.damageFire,
-    [EffectType.EarthDamage]: fromEntity.offensiveStats.damageEarth,
-    [EffectType.AirDamage]: fromEntity.offensiveStats.damageAir
+  const elemToDamage = {
+    [SpellElement.Neutral]: fromEntity.offensiveStats.damageNeutral,
+    [SpellElement.Water]: fromEntity.offensiveStats.damageWater,
+    [SpellElement.Fire]: fromEntity.offensiveStats.damageFire,
+    [SpellElement.Earth]: fromEntity.offensiveStats.damageEarth,
+    [SpellElement.Air]: fromEntity.offensiveStats.damageAir
   };
-  const stats: number = 100 + fromEntity.offensiveStats.power + (isTrap ? fromEntity.offensiveStats.powerTrap : 0) + typeToElem[effect.effectType];
-  const damages: number = fromEntity.offensiveStats.damage + (isTrap ? fromEntity.offensiveStats.damageTrap : 0) + typeToDamage[effect.effectType];
-  const distanceMalus = 1 - Math.min(0.5, (getDistance(fromPos, toPos).real - effect.area.min) * 0.1);
+  const stats: number = 100 + fromEntity.offensiveStats.power + (isTrap ? fromEntity.offensiveStats.powerTrap : 0) + elemToStat[element];
+  const damages: number = fromEntity.offensiveStats.damage + (isTrap ? fromEntity.offensiveStats.damageTrap : 0) + elemToDamage[element];
+  const distanceMalus = 1 - Math.min(0.5, (getDistance(fromPos, toPos).real - areaMin) * 0.1);
 
   return Math.floor((Math.floor(Math.max(100, stats) / 100 * value) + damages) * distanceMalus);
 }
 
 /**
+ * Returns the calculated damages after taking into account the target resistance.
  * 
+ * This function does not take into account the caster's characteristics.
  * @param {number} value Received base value
  * @param {Entity} fromEntity Entity casting the spell effect
  * @param {Entity} toEntity Entity receiving the spell effect
  * @param {Coordinates} fromPos Targetted cell
  * @param {Coordinates} toPos Position of the entity when the spell was casted
- * @param {Effect} effect Casted effect
- * @returns {number} Final inflicted damages
+ * @param {SpellElement} element Casted element
+ * @returns {number} Final calculated damages
  */
-export function receiveDamages(value: number, fromEntity: Entity, toEntity: Entity, fromPos: Coordinates, toPos: Coordinates, effect: Effect): number {
+export function receiveDamages(value: number, fromEntity: Entity, toEntity: Entity, fromPos: Coordinates, toPos: Coordinates, element: SpellElement): number {
   const typeToElem = {
-    [EffectType.NeutralDamage]: toEntity.defensiveStats.neutral,
-    [EffectType.WaterDamage]: toEntity.defensiveStats.water,
-    [EffectType.FireDamage]: toEntity.defensiveStats.fire,
-    [EffectType.EarthDamage]: toEntity.defensiveStats.earth,
-    [EffectType.AirDamage]: toEntity.defensiveStats.air
+    [SpellElement.Neutral]: toEntity.defensiveStats.neutral,
+    [SpellElement.Water]: toEntity.defensiveStats.water,
+    [SpellElement.Fire]: toEntity.defensiveStats.fire,
+    [SpellElement.Earth]: toEntity.defensiveStats.earth,
+    [SpellElement.Air]: toEntity.defensiveStats.air
   };
   const typeToFixed = {
-    [EffectType.NeutralDamage]: toEntity.defensiveStats.resistanceNeutral,
-    [EffectType.WaterDamage]: toEntity.defensiveStats.resistanceWater,
-    [EffectType.FireDamage]: toEntity.defensiveStats.resistanceFire,
-    [EffectType.EarthDamage]: toEntity.defensiveStats.resistanceEarth,
-    [EffectType.AirDamage]: toEntity.defensiveStats.resistanceAir
+    [SpellElement.Neutral]: toEntity.defensiveStats.resistanceNeutral,
+    [SpellElement.Water]: toEntity.defensiveStats.resistanceWater,
+    [SpellElement.Fire]: toEntity.defensiveStats.resistanceFire,
+    [SpellElement.Earth]: toEntity.defensiveStats.resistanceEarth,
+    [SpellElement.Air]: toEntity.defensiveStats.resistanceAir
   };
-  const percent: number = typeToElem[effect.effectType];
-  const fixed: number = typeToFixed[effect.effectType];
+  const percent: number = typeToElem[element];
+  const fixed: number = typeToFixed[element];
   const isDistance: boolean = getDistance(fromPos, toPos).real > 1;
 
   const received: number = Math.floor((value - fixed) * (1 - percent / 100));
@@ -75,6 +85,44 @@ export function receiveDamages(value: number, fromEntity: Entity, toEntity: Enti
   return Math.floor(received * multiplier);
 }
 
+/**
+ * Calculates inflicted push damages.
+ * @param {number} value Received base value
+ * @param {Entity} fromEntity Entity casting the spell effect
+ * @param {Entity} toEntity Entity receiving the spell effect
+ * @returns {number} Final inflicted damages
+ */
 export function receivePushDamages(value: number, fromEntity: Entity, toEntity: Entity): number {
   return Math.floor((32 + Math.floor(fromEntity.level / 2) + fromEntity.offensiveStats.damagePush - toEntity.defensiveStats.resistancePush) * value / 4);
+}
+
+/**
+ * Returns the best element for the given entity.
+ * @param {Entity} entity
+ * @returns {SpellElement} The element
+ */
+export function getBestElement(entity: Entity) {
+  const stats = [
+    { element: 'strength', damage: 'damageEarth', effect: SpellElement.Earth },
+    { element: 'strength', damage: 'damageNeutral', effect: SpellElement.Neutral },
+    { element: 'intelligence', damage: 'damageFire', effect: SpellElement.Fire },
+    { element: 'chance', damage: 'damageWater', effect: SpellElement.Water },
+    { element: 'agility', damage: 'damageAir', effect: SpellElement.Air }
+  ];
+
+  stats.sort((a, b) => {
+    if (entity.offensiveStats[a.element] > entity.offensiveStats[b.element]) {
+      return -1;
+    } else if (entity.offensiveStats[a.element] < entity.offensiveStats[b.element]) {
+      return 1;
+    } else if (entity.offensiveStats[a.damage] > entity.offensiveStats[b.damage]) {
+      return -1;
+    } else if (entity.offensiveStats[a.damage] < entity.offensiveStats[b.damage]) {
+      return 1;
+    } else {
+      return 0;
+    }
+  });
+
+  return stats[0].effect;
 }
