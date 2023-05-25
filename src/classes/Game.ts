@@ -771,6 +771,19 @@ class Game {
       this.prepareNewMap();
       this.mainCharacter = _mainCharacter;
       this.entities = _entities;
+
+      // Set trigger casters
+      _entities.forEach(_entity => {
+        _entity.triggers.forEach(_trigger => {
+          if (_trigger.caster !== undefined) return;
+          if (_trigger._casterUuid === undefined) {
+            _trigger.caster = _entity;
+            return;
+          }
+          _trigger.caster = this.getEntityById(_trigger._casterUuid);
+        });
+      });
+
       this.traps = _traps;
       this.startPoint = _startPoint;
       this.options.leukide = _leukide;

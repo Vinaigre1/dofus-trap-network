@@ -92,7 +92,8 @@ $animSpeed: calc(1s / 10); // 3 cells per second
 .trap.trap-test polygon      { fill: rgb(255, 255, 255); } .trap.trap-test path      { stroke: rgb(255, 255, 255); }
 .trap.trap-desynchro polygon { fill: rgb(  0,   0,   0); } .trap.trap-desynchro path { stroke: rgb(  0,   0,   0); }
 
-.entity.animating .entity-image {
+.entity.animating .entity-image,
+.entity.animating .entity-state {
   transition: x $animSpeed linear, y $animSpeed linear;
 }
 

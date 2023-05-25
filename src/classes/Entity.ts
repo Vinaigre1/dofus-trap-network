@@ -201,7 +201,9 @@ class Entity {
       }
       str += this.triggers[i].spellId + "|";
       str += this.triggers[i].spellLevel + "|";
+      str += this.triggers[i].caster.uuid + "|";
     }
+    str += this.initialStates + "|";
     return str + ">";
   }
 
@@ -233,12 +235,17 @@ class Entity {
         triggers: _trtr,
         spellId: parseInt(parts[n++]),
         spellLevel: parseInt(parts[n++]),
-        caster: entity // TODO: in version 2, save the trigger caster
+        caster: undefined,
+        _casterUuid: parts[n++]
       });
     }
 
+    const _states = parseInt(parts[n++]);
+
     entity.uuid = _uuid;
     entity.triggers = _triggers;
+    entity.initialStates = _states;
+    entity.states = _states;
     return entity;
   }
 }

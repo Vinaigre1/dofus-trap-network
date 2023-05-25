@@ -285,6 +285,7 @@ export interface SpellTrigger {
   spellId: number;
   spellLevel: number;
   caster: Entity;
+  _casterUuid?: string;
 }
 
 export interface GameOptions {
