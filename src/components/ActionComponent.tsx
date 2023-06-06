@@ -73,6 +73,9 @@ class ActionComponent extends React.Component<Props, States>
       [EffectType.SymmetricalTeleport]: { text: <>Symmetrical TP</> },
       [EffectType.StealBestElement]: { text: <>Steals {{ value: this.props.action.value }} in best element</> },
       [EffectType.HealLastDamage]: { text: <>Heals {{ value: this.props.action.value }} (last damage taken)</> },
+      [EffectType.PlaceEndTurnGlyph]: { text: <>Places a glyph</> },
+      [EffectType.BoostSpell]: { text: <>Boosts the spell {{ spell: SpellData[this.props.action.effect.min]?.name }} by {{ value: this.props.action.effect.max }}</> },
+      [EffectType.CancelSpell]: { text: <>Cancels the effects of {{ spell: 'Malevolent Trap' }}</> },
     };
 
     return (
