@@ -1,4 +1,5 @@
 import Entity from "@classes/Entity";
+import Game from "@classes/Game";
 import Trap from "@classes/Trap";
 import { DefensiveStats, OffensiveStats, Team } from "@src/enums";
 import * as React from "react";
@@ -12,6 +13,7 @@ type State = {
   entity: {
     off: OffensiveStats;
     def: DefensiveStats;
+    moving: boolean;
   }
 }
 
@@ -24,14 +26,16 @@ class ConfigComponent extends React.Component<Props, State>
       this.state = {
         entity: {
           off: this.props.configObj.offensiveStats,
-          def: this.props.configObj.defensiveStats
+          def: this.props.configObj.defensiveStats,
+          moving: false
         }
       };
     }
   }
 
   onChange(key: string, value: string) {
-    // TODO: prevent modifying when simulation is playing
+    if (Game.isRunning) return;
+
     const parsed: number = value.length === 0 ? 0 : parseInt(value);
     if (isNaN(parsed)) return;
     this.setState((state) => {
@@ -75,22 +79,42 @@ class ConfigComponent extends React.Component<Props, State>
     });
   }
 
+  onMoveBtnClick() {
+    const moving: boolean = !this.state.entity.moving;
+    this.setState((state) => {
+      return {
+        ...state,
+        entity: {
+          ...state.entity,
+          moving
+        }
+      };
+    });
+
+    if (moving && this.props.configObj instanceof Entity) {
+      Game.setMovingEntity(this.props.configObj);
+    } else {
+      Game.setMovingEntity(null);
+    }
+  }
+
   render() {
     if (this.props.configObj instanceof Entity) {
-      const healthPercent = Math.max(0, this.props.configObj.currentHealth / (this.props.configObj.health <= 0 ? 1 : this.props.configObj.health));
+      const healthPercent = Math.max(0, Math.min(1, this.props.configObj.currentHealth / (this.props.configObj.health <= 0 ? 1 : this.props.configObj.health)));
       return <div>
         <div className="entity-infos">
           <div className={`image team-${this.props.configObj.team === Team.Attacker ? 'red' : 'blue'}`}>
             <img src={this.props.configObj.data.image} alt="" />
           </div>
           <div className="base-infos">
-            <span>{this.props.configObj.data.name}</span>
+            <span><Trans>{this.props.configObj.data.name}</Trans></span>
             <div className="health">
               <img className="hp-full" src="./assets/img/other/icon_hp_full.png" alt="Life" />
               <img style={{ height: 50 * (1 - healthPercent) }} className="hp-empty" src="./assets/img/other/icon_hp_empty.png" alt="Life" />
               <span className="hp-current">{Math.floor(this.props.configObj.currentHealth)}</span>
               <span className="hp-max">{this.props.configObj.health}</span>
             </div>
+            <div className={`btn-move ${this.state.entity.moving ? 'active' : ''}`} onClick={() => { this.onMoveBtnClick(); }}><Trans>Move</Trans></div>
           </div>
         </div>
         <h3><Trans>Offensive characteristics</Trans></h3>

@@ -90,8 +90,10 @@ const resources = {
       "Desynchronisation": "Desynchronisation",
       "Test Trap": "Test Trap",
       "Poutch Ingball": "Poutch Ingball",
-      "Sram": "Sram",
-      "Cawwot": "Cawwot"
+      "Player": "Player",
+      "Ally": "Ally",
+      "Cawwot": "Cawwot",
+      "Move": "Move"
     }
   },
   fr: {
@@ -187,8 +189,10 @@ const resources = {
       "Desynchronisation": "Désynchronisation",
       "Test Trap": "Piège Test",
       "Poutch Ingball": "Poutch Ingball",
-      "Sram": "Sram",
-      "Cawwot": "Cawotte"
+      "Player": "Joueur",
+      "Ally": "Allié",
+      "Cawwot": "Cawotte",
+      "Move": "Déplacer"
     }
   }
 };

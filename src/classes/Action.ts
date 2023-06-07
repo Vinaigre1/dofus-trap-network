@@ -248,10 +248,16 @@ export default class Action {
    * Function executed for the *remove* action.
    */
   *removeAction() {
-    if (this.value && Game.getEntity(this.targetPos)
-    || !this.value && !Game.getTrap(this.targetPos) && Game.getEntity(this.targetPos)) {
+    const targetEntity: Entity = Game.getEntity(this.targetPos);
+    const targetTrap: Trap = Game.getTrap(this.targetPos);
+
+    if (this.value && targetEntity
+    || !this.value && !targetTrap && targetEntity) {
       Game.removeEntity(this.targetPos);
-    } else if (Game.getTrap(this.targetPos)) {
+      if (targetEntity === Game.mainCharacter) {
+        Game.mainCharacter.setPosition({ x: 0, y: 0 });
+      }
+    } else if (targetTrap) {
       Game.removeTrap(this.targetPos);
     }
   }
@@ -260,10 +266,13 @@ export default class Action {
    * Function executed for the *select* action.
    */
   *selectAction() {
-    if (this.value && Game.getEntity(this.targetPos)
-    || !this.value && !Game.getTrap(this.targetPos) && Game.getEntity(this.targetPos)) {
+    const targetEntity: Entity = Game.getEntity(this.targetPos);
+    const targetTrap: Trap = Game.getTrap(this.targetPos);
+
+    if (this.value && targetEntity
+    || !this.value && !targetTrap && targetEntity) {
       Game.selectEntity(this.targetPos);
-    } else if (Game.getTrap(this.targetPos)) {
+    } else if (targetTrap) {
       Game.selectTrap(this.targetPos);
     }
   }
