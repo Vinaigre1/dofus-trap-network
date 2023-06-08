@@ -601,7 +601,7 @@ class Game {
       if (this.selectedSpell !== undefined) return;
       this.pause();
     }
-    if (this.movingEntity) {
+    if (!this.isRunning && this.movingEntity) {
       if (this.getEntity(pos)) return;
 
       this.movingEntity.setPosition(pos);
@@ -711,6 +711,8 @@ class Game {
    * @param {Entity} entity Entity to move
    */
   setMovingEntity(entity: Entity) {
+    if (this.isRunning) return;
+
     this.movingEntity = entity;
   }
 

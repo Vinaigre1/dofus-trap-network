@@ -80,6 +80,8 @@ class ConfigComponent extends React.Component<Props, State>
   }
 
   onMoveBtnClick() {
+    if (Game.isRunning) return;
+
     const moving: boolean = !this.state.entity.moving;
     this.setState((state) => {
       return {
