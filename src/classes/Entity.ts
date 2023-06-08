@@ -207,6 +207,16 @@ class Entity {
   }
 
   /**
+   * Changes the coordinates of the entity
+   * 
+   * @param {Coordinates} pos Coordinates of the new position
+   */
+  setPosition(pos: Coordinates) {
+    this.initialPos = pos;
+    this.pos = pos;
+  }
+
+  /**
    * Returns a string representing the entity.
    * 
    * @returns {string} The string representing the entity

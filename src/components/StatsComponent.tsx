@@ -79,12 +79,17 @@ class StatsComponent extends React.Component<Props, State>
     }));
   }
 
+  closeConfig() {
+    this.setState((state) => ({ ...state, configObj: undefined }));
+    Game.setMovingEntity(null);
+  }
+
   render() {
     if (this.state.configObj !== undefined) {
       return <div className="stats config">
         <button
           className="close"
-          onClick={() => { this.setState((state) => ({ ...state, configObj: undefined })); }}
+          onClick={() => { this.closeConfig(); }}
         ></button>
         <ConfigComponent key={this.state.configObj.uuid} configObj={this.state.configObj}></ConfigComponent>
       </div>;
@@ -155,7 +160,7 @@ class StatsComponent extends React.Component<Props, State>
                 <img draggable={false} src={trap.img} alt="" />
               </div>
               <div className="trap-name">
-                <span>{trap.name}</span>
+                <span><Trans>{trap.name}</Trans></span>
               </div>
             </li>
           );

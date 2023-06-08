@@ -28,6 +28,15 @@ const entities: EntityDataType = {
     "offsetY": 0.05,
     "defaultScale": 1.1,
     "movable": true
+  },
+  [EntityType.Ally]: {
+    "type": EntityType.Ally,
+    "name": "Ally",
+    "image": "./assets/img/entities/Ally.png",
+    "offsetX": 0,
+    "offsetY": 0.05,
+    "defaultScale": 1.1,
+    "movable": true
   }
 }
 

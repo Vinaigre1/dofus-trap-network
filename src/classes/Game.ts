@@ -26,6 +26,7 @@ class Game {
   statsComponent: StatsComponent;
   preparingEffects: Array<EffectType>;
   mainCharacter: Entity;
+  movingEntity: Entity;
 
   entities: Array<Entity>;
   traps: Array<Trap>;
@@ -600,6 +601,18 @@ class Game {
       if (this.selectedSpell !== undefined) return;
       this.pause();
     }
+    if (this.movingEntity) {
+      if (this.getEntity(pos)) return;
+
+      this.movingEntity.setPosition(pos);
+      if (!this.entities.includes(this.movingEntity)) {
+        this.entities.push(this.movingEntity);
+      }
+      this.statsComponent.closeConfig();
+      this.movingEntity = null;
+      this.refreshMap();
+      return;
+    }
     // TODO: get spell level
 
     const spell: Spell = this.selectedSpell ?? SpellData[SpellType.Select];
@@ -690,6 +703,15 @@ class Game {
     const trap = this.getTrap(pos);
     if (trap)
     this.statsComponent.openConfig(trap);
+  }
+
+  /**
+   * Sets the moving entity
+   * 
+   * @param {Entity} entity Entity to move
+   */
+  setMovingEntity(entity: Entity) {
+    this.movingEntity = entity;
   }
 
   /**

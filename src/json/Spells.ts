@@ -2181,7 +2181,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceEndTurnGlyph,
             value: 9895830,
             min: 1008,
@@ -2206,7 +2206,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceEndTurnGlyph,
             value: 9895830,
             min: 1008,
@@ -2231,7 +2231,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceEndTurnGlyph,
             value: 9895830,
             min: 1008,
@@ -3115,10 +3115,10 @@ const SpellData: SpellDataType = {
       }
     ]
   },
-  [SpellType.Player]: {
-    name: "Sram",
+  [SpellType.Ally]: {
+    name: "Ally",
     icon: "./assets/img/spells/Double.svg",
-    sfx: "./assets/img/entities/Sram.png",
+    sfx: "./assets/img/entities/Ally.png",
     sfxSize: 1,
     category: SpellCategory.Entity,
     levels: [
@@ -3135,7 +3135,7 @@ const SpellData: SpellDataType = {
           {
             targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.CreateEntity,
-            value: EntityType.Player,
+            value: EntityType.Ally,
             min: Team.Attacker,
             max: 0,
             triggers: null,

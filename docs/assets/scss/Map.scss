@@ -1,4 +1,5 @@
-$animSpeed: calc(1s / 10); // 3 cells per second
+$cps: 10; // cells per second
+$animSpeed: calc(1s / $cps);
 
 .map {
   flex: 3;

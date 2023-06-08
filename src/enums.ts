@@ -75,7 +75,8 @@ export enum Direction {
 export enum EntityType {
   Player,
   Cawwot,
-  Poutch
+  Poutch,
+  Ally
 }
 
 export enum TrapType {
@@ -128,7 +129,7 @@ export enum SpellType {
   Calamity,
   ParalysingTrap,
   MassGrave,
-  Player,
+  Ally,
   Poutch,
   Cawwot,
   Chakra,
