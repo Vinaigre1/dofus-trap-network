@@ -120,8 +120,8 @@ class ConfigComponent extends React.Component<Props, State>
         <h3><Trans>Offensive characteristics</Trans></h3>
         <ul className="offensive-stats">
           <li><img src="./assets/img/characteristics/tx_strength.png" alt="" /><span><Trans>Strength</Trans></span><input onChange={(e) => { this.onChange('str', e.target.value); }} type="number" value={this.state.entity.off.strength} /></li>
-          <li><img src="./assets/img/characteristics/tx_chance.png" alt="" /><span><Trans>Chance</Trans></span><input onChange={(e) => { this.onChange('cha', e.target.value); }} type="number" value={this.state.entity.off.chance} /></li>
           <li><img src="./assets/img/characteristics/tx_intelligence.png" alt="" /><span><Trans>Intelligence</Trans></span><input onChange={(e) => { this.onChange('int', e.target.value); }} type="number" value={this.state.entity.off.intelligence} /></li>
+          <li><img src="./assets/img/characteristics/tx_chance.png" alt="" /><span><Trans>Chance</Trans></span><input onChange={(e) => { this.onChange('cha', e.target.value); }} type="number" value={this.state.entity.off.chance} /></li>
           <li><img src="./assets/img/characteristics/tx_agility.png" alt="" /><span><Trans>Agility</Trans></span><input onChange={(e) => { this.onChange('agi', e.target.value); }} type="number" value={this.state.entity.off.agility} /></li>
           <li><img src="./assets/img/characteristics/tx_damagesPercent.png" alt="" /><span><Trans>Power</Trans></span><input onChange={(e) => { this.onChange('power', e.target.value); }} type="number" value={this.state.entity.off.power} /></li>
           <li><img src="./assets/img/characteristics/tx_trapPercent.png" alt="" /><span><Trans>Trap Power</Trans></span><input onChange={(e) => { this.onChange('trap', e.target.value); }} type="number" value={this.state.entity.off.powerTrap} /></li>
@@ -129,8 +129,8 @@ class ConfigComponent extends React.Component<Props, State>
           <li><img src="./assets/img/characteristics/tx_damage.png" alt="" /><span><Trans>Damage</Trans></span><input onChange={(e) => { this.onChange('damage', e.target.value); }} type="number" value={this.state.entity.off.damage} /></li>
           <li><img src="" alt="" /><span><Trans>Neutral da.</Trans></span><input onChange={(e) => { this.onChange('daNeutral', e.target.value); }} type="number" value={this.state.entity.off.damageNeutral} /></li>
           <li><img src="" alt="" /><span><Trans>Earth da.</Trans></span><input onChange={(e) => { this.onChange('daEarth', e.target.value); }} type="number" value={this.state.entity.off.damageEarth} /></li>
-          <li><img src="" alt="" /><span><Trans>Water da.</Trans></span><input onChange={(e) => { this.onChange('daWater', e.target.value); }} type="number" value={this.state.entity.off.damageWater} /></li>
           <li><img src="" alt="" /><span><Trans>Fire da.</Trans></span><input onChange={(e) => { this.onChange('daFire', e.target.value); }} type="number" value={this.state.entity.off.damageFire} /></li>
+          <li><img src="" alt="" /><span><Trans>Water da.</Trans></span><input onChange={(e) => { this.onChange('daWater', e.target.value); }} type="number" value={this.state.entity.off.damageWater} /></li>
           <li><img src="" alt="" /><span><Trans>Air da.</Trans></span><input onChange={(e) => { this.onChange('daAir', e.target.value); }} type="number" value={this.state.entity.off.damageAir} /></li>
           <li><img src="./assets/img/characteristics/tx_trap.png" alt="" /><span><Trans>Trap da.</Trans></span><input onChange={(e) => { this.onChange('daTrap', e.target.value); }} type="number" value={this.state.entity.off.damageTrap} /></li>
           <li><img src="./assets/img/characteristics/tx_push.png" alt="" /><span><Trans>Push da.</Trans></span><input onChange={(e) => { this.onChange('daPush', e.target.value); }} type="number" value={this.state.entity.off.damagePush} /></li>
@@ -144,14 +144,14 @@ class ConfigComponent extends React.Component<Props, State>
         <ul className="offensive-stats">
           <li><img src="./assets/img/characteristics/tx_neutral.png" alt="" /><span><Trans>Neutral %</Trans></span><input onChange={(e) => { this.onChange('neutral', e.target.value); }} type="number" value={this.state.entity.def.neutral} /></li>
           <li><img src="./assets/img/characteristics/tx_strength.png" alt="" /><span><Trans>Earth %</Trans></span><input onChange={(e) => { this.onChange('earth', e.target.value); }} type="number" value={this.state.entity.def.earth} /></li>
-          <li><img src="./assets/img/characteristics/tx_chance.png" alt="" /><span><Trans>Water %</Trans></span><input onChange={(e) => { this.onChange('water', e.target.value); }} type="number" value={this.state.entity.def.water} /></li>
           <li><img src="./assets/img/characteristics/tx_intelligence.png" alt="" /><span><Trans>Fire %</Trans></span><input onChange={(e) => { this.onChange('fire', e.target.value); }} type="number" value={this.state.entity.def.fire} /></li>
+          <li><img src="./assets/img/characteristics/tx_chance.png" alt="" /><span><Trans>Water %</Trans></span><input onChange={(e) => { this.onChange('water', e.target.value); }} type="number" value={this.state.entity.def.water} /></li>
           <li><img src="./assets/img/characteristics/tx_agility.png" alt="" /><span><Trans>Air %</Trans></span><input onChange={(e) => { this.onChange('air', e.target.value); }} type="number" value={this.state.entity.def.air} /></li>
           <hr />
           <li><img src="" alt="" /><span><Trans>Neutral res.</Trans></span><input onChange={(e) => { this.onChange('resNeutral', e.target.value); }} type="number" value={this.state.entity.def.resistanceNeutral} /></li>
           <li><img src="" alt="" /><span><Trans>Earth res.</Trans></span><input onChange={(e) => { this.onChange('resEarth', e.target.value); }} type="number" value={this.state.entity.def.resistanceEarth} /></li>
-          <li><img src="" alt="" /><span><Trans>Water res.</Trans></span><input onChange={(e) => { this.onChange('resWater', e.target.value); }} type="number" value={this.state.entity.def.resistanceWater} /></li>
           <li><img src="" alt="" /><span><Trans>Fire res.</Trans></span><input onChange={(e) => { this.onChange('resFire', e.target.value); }} type="number" value={this.state.entity.def.resistanceFire} /></li>
+          <li><img src="" alt="" /><span><Trans>Water res.</Trans></span><input onChange={(e) => { this.onChange('resWater', e.target.value); }} type="number" value={this.state.entity.def.resistanceWater} /></li>
           <li><img src="" alt="" /><span><Trans>Air res.</Trans></span><input onChange={(e) => { this.onChange('resAir', e.target.value); }} type="number" value={this.state.entity.def.resistanceAir} /></li>
           <li><img src="./assets/img/characteristics/tx_push.png" alt="" /><span><Trans>Push res.</Trans></span><input onChange={(e) => { this.onChange('resPush', e.target.value); }} type="number" value={this.state.entity.def.resistancePush} /></li>
           <hr />

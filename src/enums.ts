@@ -74,9 +74,9 @@ export enum Direction {
 
 export enum EntityType {
   Player,
-  Ally,
   Cawwot,
-  Poutch
+  Poutch,
+  Ally
 }
 
 export enum TrapType {

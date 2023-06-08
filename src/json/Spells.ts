@@ -2181,7 +2181,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceEndTurnGlyph,
             value: 9895830,
             min: 1008,
@@ -2206,7 +2206,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceEndTurnGlyph,
             value: 9895830,
             min: 1008,
@@ -2231,7 +2231,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.PlaceEndTurnGlyph,
             value: 9895830,
             min: 1008,

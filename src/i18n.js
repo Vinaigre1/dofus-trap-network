@@ -93,7 +93,9 @@ const resources = {
       "Player": "Player",
       "Ally": "Ally",
       "Cawwot": "Cawwot",
-      "Move": "Move"
+      "Move": "Move",
+      "Removes {{value}} MP": "Removes {{value}} MP",
+      "Removes {{value}} dodge": "Removes {{value}} dodge"
     }
   },
   fr: {
@@ -139,7 +141,7 @@ const resources = {
       "Power": "Puissance",
       "Trap Power": "Pui. Pièges",
       "Damage": "Dommages",
-      "Neutral da.": "Do. neutres",
+      "Neutral da.": "Do. neutre",
       "Earth da.": "Do. terre",
       "Water da.": "Do. eau",
       "Fire da.": "Do. feu",
@@ -192,7 +194,9 @@ const resources = {
       "Player": "Joueur",
       "Ally": "Allié",
       "Cawwot": "Cawotte",
-      "Move": "Déplacer"
+      "Move": "Déplacer",
+      "Removes {{value}} MP": "Retire {{value}} PM",
+      "Removes {{value}} dodge": "Retire {{value}} de fuite"
     }
   }
 };

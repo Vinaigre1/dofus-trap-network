@@ -34,20 +34,20 @@ class MapComponent extends React.Component<Props, State>
     const trap = Game.getTrap(pos);
     if (entityPriority && entity
     || !entityPriority && !trap && entity) {
-      entity.component.setHighlight(true);
+      entity.component?.setHighlight(true);
     } else if (trap) {
-      trap.component.setHighlight(true);
+      trap.component?.setHighlight(true);
     }
   }
 
   onMouseLeaveCell(pos: Coordinates) {
     const entity = Game.getEntity(pos);
     if (entity) {
-      entity.component.setHighlight(false);
+      entity.component?.setHighlight(false);
     }
     const trap = Game.getTrap(pos);
     if (trap) {
-      trap.component.setHighlight(false);
+      trap.component?.setHighlight(false);
     }
   }
 
