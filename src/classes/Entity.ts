@@ -1,4 +1,4 @@
-import { Coordinates, EntityType, SpellTrigger, State, OffensiveStats, Team, DefensiveStats, TriggerType } from "@src/enums";
+import { Coordinates, EntityType, SpellTrigger, State, OffensiveStats, Team, DefensiveStats, TriggerType, Buff } from "@src/enums";
 import Entities from "@json/Entities";
 import EntityComponent from "@components/EntityComponent";
 import { v4 as uuidv4 } from "uuid";
@@ -21,6 +21,7 @@ class Entity {
   health: number;
   currentHealth: number;
   level: number;
+  buffs: Array<Buff>;
   offensiveStats: OffensiveStats;
   defensiveStats: DefensiveStats;
   lastDamageTaken: number;
@@ -38,6 +39,7 @@ class Entity {
     this.health = 10000;
     this.currentHealth = 10000;
     this.level = 200; // TODO
+    this.buffs = [];
     this.offensiveStats = {
       vitality: 0,
       strength: 0,
@@ -103,6 +105,7 @@ class Entity {
     this.states = this.initialStates;
     this.component?.show();
     this.currentHealth = this.health;
+    this.buffs = [];
     return true;
   }
 
@@ -204,6 +207,24 @@ class Entity {
     if (amount < 0) return;
 
     this.currentHealth += amount;
+  }
+
+  /**
+   * Adds a buff to the buffs list
+   * 
+   * @param {Buff} buff Buff to add
+   */
+  addBuff(buff: Buff) {
+    this.buffs.push(buff);
+  }
+
+  /**
+   * Removes all buffs that have the given spellId
+   * 
+   * @param spellId spellId of all the buffs to remove
+   */
+  removeBuff(spellId: number) {
+    this.buffs = this.buffs.filter((buff) => buff.spell !== spellId);
   }
 
   /**

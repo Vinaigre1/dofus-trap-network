@@ -452,7 +452,7 @@ class Game {
       }
       const value = randomInt(effects[i].min, effects[i].max);
       for (let j: number = 0; j < entities.length; j++) {
-        const action = new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], originTrap, effects[i].targetMask);
+        const action = new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], spell, originTrap, effects[i].targetMask);
         if (action.checkEntityMask()) {
           localStack.unshift(action);
         }
@@ -634,7 +634,7 @@ class Game {
     for (let i: number = 0; i < effects.length; i++) {
       if (!this.preparingEffects.includes(effects[i].effectType)) continue;
 
-      const action = new Action(this.mainCharacter, this.getEntity(pos), this.mainCharacter.pos, pos, effects[i].effectType, +entityPriority, effects[i], null, effects[i].targetMask);
+      const action = new Action(this.mainCharacter, this.getEntity(pos), this.mainCharacter.pos, pos, effects[i].effectType, +entityPriority, effects[i], null, null, effects[i].targetMask);
       const gen = action.apply(false);
       const ret = gen.next();
       if (!ret.done) {

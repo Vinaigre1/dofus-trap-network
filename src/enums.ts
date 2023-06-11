@@ -97,6 +97,7 @@ export enum TrapType {
 }
 
 export enum CellBorders {
+  None = 0,
   North = 1,
   East = 2,
   South = 4,
@@ -203,6 +204,7 @@ export enum TriggerType {
 }
 
 export enum State {
+  None = 0,
   MassTrap = 1,
   Gravity = 2,
   Chakra = 4
@@ -214,6 +216,10 @@ export enum SpellElement {
   Fire,
   Water,
   Air
+}
+
+export enum BuffType {
+  BoostSpell
 }
 
 export const StateName = {
@@ -331,4 +337,10 @@ export interface DefensiveStats {
   resistanceRanged: number;
   resistanceMelee: number;
   resistanceSpell: number;
+}
+
+export interface Buff {
+  spell: number;
+  type: BuffType;
+  params: Array<number>;
 }

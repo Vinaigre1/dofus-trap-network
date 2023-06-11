@@ -11,6 +11,7 @@ export type Effect = {
 }
 
 export type SpellLevel = {
+  spellId: number;
   apCost: number,
   maxStack: number,
   maxCastPerTurn: number,
