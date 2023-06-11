@@ -99,7 +99,8 @@ const resources = {
       "Max HP": "Max HP",
       "Current HP": "Current HP",
       "Shield": "Shield",
-      "Erosion": "Erosion"
+      "Erosion": "Erosion",
+      "Health characteristics": "Health characteristics"
     }
   },
   fr: {
@@ -204,7 +205,8 @@ const resources = {
       "Max HP": "Vitalité Max",
       "Current HP": "Vitalité Actuelle",
       "Shield": "Bouclier",
-      "Erosion": "Erosion"
+      "Erosion": "Erosion",
+      "Health characteristics": "Caractéristiques de vitalité"
     }
   }
 };

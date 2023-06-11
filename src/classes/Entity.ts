@@ -123,6 +123,7 @@ class Entity {
     this.component?.show();
     this.health.current = this.health.initial.current;
     this.health.max = this.health.initial.max;
+    this.health.shield = this.health.initial.shield;
     this.buffs = [];
     return true;
   }
@@ -210,10 +211,17 @@ class Entity {
    * @param {number} amount how many health is lost
    */
   loseHealth(amount: number) {
+    this.lastDamageTaken = amount;
     if (amount < 0) return;
 
-    this.health.current -= amount;
-    this.lastDamageTaken = amount;
+    const shieldDamage = Math.min(amount, this.health.shield);
+
+    this.health.shield -= shieldDamage;
+    this.health.current -= amount - shieldDamage;
+    this.health.max -= Math.floor(amount * this.defensiveStats.erosion / 100);
+    if (this.health.current > this.health.max) {
+      this.health.current = this.health.max;
+    }
   }
 
   /**
