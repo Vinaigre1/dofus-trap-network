@@ -337,6 +337,7 @@ export interface DefensiveStats {
   resistanceRanged: number;
   resistanceMelee: number;
   resistanceSpell: number;
+  erosion: number;
 }
 
 export interface Buff {

@@ -76,6 +76,7 @@ class ConfigComponent extends React.Component<Props, State>
             new_state.entity.health.initial.max = new_state.entity.health.current;
           }
           break;
+        case 'erosion':    new_state.entity.def.erosion = parsed; break;
         case 'str':        new_state.entity.off.strength = parsed; break;
         case 'cha':        new_state.entity.off.chance = parsed; break;
         case 'int':        new_state.entity.off.intelligence = parsed; break;
@@ -161,10 +162,12 @@ class ConfigComponent extends React.Component<Props, State>
             <div className={`btn-move ${this.state.entity.moving ? 'active' : ''}`} onClick={() => { this.onMoveBtnClick(); }}><Trans>Move</Trans></div>
           </div>
         </div>
+        <h3><Trans>Health characteristics</Trans></h3>
         <ul className="offensive-stats">
           <li><img src="./assets/img/characteristics/tx_shield.png" alt="" /><span><Trans>Shield</Trans></span><input onChange={(e) => { this.onChange('shield', e.target.value); }} type="number" value={this.state.entity.health.initial.shield} /></li>
           <li><img src="./assets/img/characteristics/tx_vitality.png" alt="" /><span><Trans>Max HP</Trans></span><input onChange={(e) => { this.onChange('maxHealth', e.target.value); }} type="number" value={this.state.entity.health.initial.max} /></li>
           <li><img src="./assets/img/characteristics/tx_vitality.png" alt="" /><span><Trans>Current HP</Trans></span><input onChange={(e) => { this.onChange('currentHealth', e.target.value); }} type="number" value={this.state.entity.health.initial.current} /></li>
+          <li><img src="./assets/img/characteristics/tx_erosion.png" alt="" /><span><Trans>Erosion</Trans></span><input onChange={(e) => { this.onChange('erosion', e.target.value); }} type="number" value={this.state.entity.def.erosion} /></li>
         </ul>
         <h3><Trans>Offensive characteristics</Trans></h3>
         <ul className="offensive-stats">

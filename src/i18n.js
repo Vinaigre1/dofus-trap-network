@@ -98,7 +98,8 @@ const resources = {
       "Removes {{value}} dodge": "Removes {{value}} dodge",
       "Max HP": "Max HP",
       "Current HP": "Current HP",
-      "Shield": "Shield"
+      "Shield": "Shield",
+      "Erosion": "Erosion"
     }
   },
   fr: {
@@ -202,7 +203,8 @@ const resources = {
       "Removes {{value}} dodge": "Retire {{value}} de fuite",
       "Max HP": "Vitalité Max",
       "Current HP": "Vitalité Actuelle",
-      "Shield": "Bouclier"
+      "Shield": "Bouclier",
+      "Erosion": "Erosion"
     }
   }
 };

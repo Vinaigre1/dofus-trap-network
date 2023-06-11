@@ -91,7 +91,8 @@ class Entity {
       resistancePush: 0,
       resistanceRanged: 0,
       resistanceMelee: 0,
-      resistanceSpell: 0
+      resistanceSpell: 0,
+      erosion: 10
     };
   }
 
