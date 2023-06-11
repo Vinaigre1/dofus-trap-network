@@ -90,10 +90,12 @@ export function receiveDamages(value: number, fromEntity: Entity, toEntity: Enti
  * @param {number} value Received base value
  * @param {Entity} fromEntity Entity casting the spell effect
  * @param {Entity} toEntity Entity receiving the spell effect
+ * @param {number} distance Distance from the push damage origin (for indirect push damage)
  * @returns {number} Final inflicted damages
  */
-export function receivePushDamages(value: number, fromEntity: Entity, toEntity: Entity): number {
-  return Math.floor((32 + Math.floor(fromEntity.level / 2) + fromEntity.offensiveStats.damagePush - toEntity.defensiveStats.resistancePush) * value / 4);
+export function receivePushDamages(value: number, fromEntity: Entity, toEntity: Entity, distance: number = 0): number {
+  const pushBonus = fromEntity.offensiveStats.damagePush - toEntity.defensiveStats.resistancePush;
+  return Math.floor(Math.floor((32 + fromEntity.level / 2 + pushBonus) / 4) * value / Math.pow(2, distance));
 }
 
 /**

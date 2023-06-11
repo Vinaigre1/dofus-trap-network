@@ -1,6 +1,6 @@
 import Entity from "@classes/Entity";
 import { BuffType, CellType, Coordinates, Direction, EffectType, Mask, SpellElement, TargetMask, TriggerType } from "@src/enums";
-import { getDirection, moveInDirection } from "@src/utils/mapUtils";
+import { getDirection, getDistance, moveInDirection } from "@src/utils/mapUtils";
 import Game from "@classes/Game";
 import ActionComponent from "@components/ActionComponent";
 import { v4 as uuidv4 } from "uuid";
@@ -420,15 +420,13 @@ export default class Action {
     this.target.loseHealth(this.value);
     
     const dir: Direction = getDirection(this.originPos, this.targetPos);
-    let indirectPushValue: number = this.value;
     const pushActions: Action[] = [];
     for (let distance: number = 1; distance <= remainingDistance; distance++) {
       const nextCell: Coordinates = moveInDirection(this.originPos, dir, distance, false);
       const indirectTarget: Entity = Game.getEntity(nextCell);
       if (!indirectTarget) break;
 
-      indirectPushValue = Math.floor(indirectPushValue / 2);
-      pushActions.unshift(new Action(this.caster, indirectTarget, this.target.pos, indirectTarget.pos, EffectType.IndirectPushDamage, indirectPushValue, this.effect, this.spell, this.originTrap));
+      pushActions.unshift(new Action(this.caster, indirectTarget, this.target.pos, indirectTarget.pos, EffectType.IndirectPushDamage, remainingDistance, this.effect, this.spell, this.originTrap));
     }
     Game.addToActionStack(...pushActions);
   }
@@ -437,6 +435,14 @@ export default class Action {
    * Function executed for the *indirect push damage* action.
    */
   *indirectPushDamageAction() {
+    const distance = getDistance(this.originPos, this.targetPos);
+    const finalValue = receivePushDamages(
+      this.value,
+      this.caster,
+      this.target,
+      distance.real
+    );
+    this.value = finalValue;
     this.target.loseHealth(this.value);
   }
 
