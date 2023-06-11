@@ -95,7 +95,10 @@ const resources = {
       "Cawwot": "Cawwot",
       "Move": "Move",
       "Removes {{value}} MP": "Removes {{value}} MP",
-      "Removes {{value}} dodge": "Removes {{value}} dodge"
+      "Removes {{value}} dodge": "Removes {{value}} dodge",
+      "Max HP": "Max HP",
+      "Current HP": "Current HP",
+      "Shield": "Shield"
     }
   },
   fr: {
@@ -196,7 +199,10 @@ const resources = {
       "Cawwot": "Cawotte",
       "Move": "Déplacer",
       "Removes {{value}} MP": "Retire {{value}} PM",
-      "Removes {{value}} dodge": "Retire {{value}} de fuite"
+      "Removes {{value}} dodge": "Retire {{value}} de fuite",
+      "Max HP": "Vitalité Max",
+      "Current HP": "Vitalité Actuelle",
+      "Shield": "Bouclier"
     }
   }
 };

@@ -18,8 +18,16 @@ class Entity {
   states: State;
   initialStates: State;
   triggers: Array<SpellTrigger>;
-  health: number;
-  currentHealth: number;
+  health: {
+    initial: {
+      shield: number;
+      max: number;
+      current: number;
+    };
+    shield: number;
+    max: number;
+    current: number;
+  };
   level: number;
   buffs: Array<Buff>;
   offensiveStats: OffensiveStats;
@@ -36,8 +44,16 @@ class Entity {
     this.states = 0;
     this.initialStates = this.states;
     this.triggers = [];
-    this.health = 10000;
-    this.currentHealth = 10000;
+    this.health = {
+      initial: {
+        shield: 0,
+        current: 10000,
+        max: 10000
+      },
+      shield: 0,
+      current: 10000,
+      max: 10000
+    };
     this.level = 200; // TODO
     this.buffs = [];
     this.offensiveStats = {
@@ -104,7 +120,8 @@ class Entity {
     this.pos = this.initialPos;
     this.states = this.initialStates;
     this.component?.show();
-    this.currentHealth = this.health;
+    this.health.current = this.health.initial.current;
+    this.health.max = this.health.initial.max;
     this.buffs = [];
     return true;
   }
@@ -194,7 +211,7 @@ class Entity {
   loseHealth(amount: number) {
     if (amount < 0) return;
 
-    this.currentHealth -= amount;
+    this.health.current -= amount;
     this.lastDamageTaken = amount;
   }
 
@@ -206,7 +223,7 @@ class Entity {
   gainHealth(amount: number) {
     if (amount < 0) return;
 
-    this.currentHealth += amount;
+    this.health.current += amount;
   }
 
   /**

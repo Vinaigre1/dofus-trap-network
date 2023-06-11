@@ -106,10 +106,10 @@ export default class Action {
         return !this.target.hasState(mask.param);
         break;
       case TargetMask.LifeAbove:
-        return Math.floor(this.target.currentHealth / this.target.health * 100) > mask.param;
+        return Math.floor(this.target.health.current / this.target.health.max * 100) > mask.param;
         break;
       case TargetMask.NotLifeAbove:
-        return Math.floor(this.target.currentHealth / this.target.health * 100) <= mask.param;
+        return Math.floor(this.target.health.current / this.target.health.max * 100) <= mask.param;
         break;
       case TargetMask.CasterEverywhere:
         this.target = this.caster;
@@ -505,7 +505,7 @@ export default class Action {
         this.targetPos,
         element,
         this.effect.area.min,
-        true // TODO
+        false // TODO
       ),
       this.caster,
       this.target,

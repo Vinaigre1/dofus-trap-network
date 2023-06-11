@@ -14,6 +14,16 @@ type State = {
     off: OffensiveStats;
     def: DefensiveStats;
     moving: boolean;
+    health: {
+      shield: number;
+      max: number;
+      current: number;
+      initial: {
+        shield: number;
+        max: number;
+        current: number;
+      }
+    }
   }
 }
 
@@ -27,7 +37,8 @@ class ConfigComponent extends React.Component<Props, State>
         entity: {
           off: this.props.configObj.offensiveStats,
           def: this.props.configObj.defensiveStats,
-          moving: false
+          moving: false,
+          health: this.props.configObj.health
         }
       };
     }
@@ -41,24 +52,48 @@ class ConfigComponent extends React.Component<Props, State>
     this.setState((state) => {
       const new_state = state;
       switch (key) {
-        case 'str':       new_state.entity.off.strength = parsed; break;
-        case 'cha':       new_state.entity.off.chance = parsed; break;
-        case 'int':       new_state.entity.off.intelligence = parsed; break;
-        case 'agi':       new_state.entity.off.agility = parsed; break;
-        case 'power':     new_state.entity.off.power = parsed; break;
-        case 'trap':      new_state.entity.off.powerTrap = parsed; break;
-        case 'damage':    new_state.entity.off.damage = parsed; break;
-        case 'daNeutral': new_state.entity.off.damageNeutral = parsed; break;
-        case 'daEarth':   new_state.entity.off.damageEarth = parsed; break;
-        case 'daWater':   new_state.entity.off.damageWater = parsed; break;
-        case 'daFire':    new_state.entity.off.damageFire = parsed; break;
-        case 'daAir':     new_state.entity.off.damageAir = parsed; break;
-        case 'daTrap':    new_state.entity.off.damageTrap = parsed; break;
-        case 'daPush':    new_state.entity.off.damagePush = parsed; break;
-        case 'ranged':    new_state.entity.off.damageRanged = parsed; break;
-        case 'melee':     new_state.entity.off.damageMelee = parsed; break;
-        case 'spell':     new_state.entity.off.damageSpell = parsed; break;
-        case 'final':     new_state.entity.off.damageFinal = parsed; break;
+        case 'shield':
+          new_state.entity.health.shield = Math.min(state.entity.health.initial.max, Math.max(0, parsed));
+          new_state.entity.health.initial.shield = new_state.entity.health.shield;
+          break;
+        case 'maxHealth':
+          new_state.entity.health.max = Math.max(1, parsed);
+          new_state.entity.health.initial.max = new_state.entity.health.max;
+          if (new_state.entity.health.max < new_state.entity.health.current) {
+            new_state.entity.health.current = new_state.entity.health.max;
+            new_state.entity.health.initial.current = new_state.entity.health.max;
+          }
+          if (new_state.entity.health.max < new_state.entity.health.shield) {
+            new_state.entity.health.shield = new_state.entity.health.max;
+            new_state.entity.health.initial.shield = new_state.entity.health.max;
+          }
+          break;
+        case 'currentHealth':
+          new_state.entity.health.current = Math.max(1, parsed);
+          new_state.entity.health.initial.current = new_state.entity.health.current;
+          if (new_state.entity.health.current > new_state.entity.health.max) {
+            new_state.entity.health.max = new_state.entity.health.current;
+            new_state.entity.health.initial.max = new_state.entity.health.current;
+          }
+          break;
+        case 'str':        new_state.entity.off.strength = parsed; break;
+        case 'cha':        new_state.entity.off.chance = parsed; break;
+        case 'int':        new_state.entity.off.intelligence = parsed; break;
+        case 'agi':        new_state.entity.off.agility = parsed; break;
+        case 'power':      new_state.entity.off.power = parsed; break;
+        case 'trap':       new_state.entity.off.powerTrap = parsed; break;
+        case 'damage':     new_state.entity.off.damage = parsed; break;
+        case 'daNeutral':  new_state.entity.off.damageNeutral = parsed; break;
+        case 'daEarth':    new_state.entity.off.damageEarth = parsed; break;
+        case 'daWater':    new_state.entity.off.damageWater = parsed; break;
+        case 'daFire':     new_state.entity.off.damageFire = parsed; break;
+        case 'daAir':      new_state.entity.off.damageAir = parsed; break;
+        case 'daTrap':     new_state.entity.off.damageTrap = parsed; break;
+        case 'daPush':     new_state.entity.off.damagePush = parsed; break;
+        case 'ranged':     new_state.entity.off.damageRanged = parsed; break;
+        case 'melee':      new_state.entity.off.damageMelee = parsed; break;
+        case 'spell':      new_state.entity.off.damageSpell = parsed; break;
+        case 'final':      new_state.entity.off.damageFinal = parsed; break;
         case 'neutral':    new_state.entity.def.neutral = parsed; break;
         case 'earth':      new_state.entity.def.earth = parsed; break;
         case 'water':      new_state.entity.def.water = parsed; break;
@@ -102,7 +137,7 @@ class ConfigComponent extends React.Component<Props, State>
 
   render() {
     if (this.props.configObj instanceof Entity) {
-      const healthPercent = Math.max(0, Math.min(1, this.props.configObj.currentHealth / (this.props.configObj.health <= 0 ? 1 : this.props.configObj.health)));
+      const healthPercent = Math.max(0, Math.min(1, this.props.configObj.health.current / (this.props.configObj.health.max <= 0 ? 1 : this.props.configObj.health.max)));
       return <div>
         <div className="entity-infos">
           <div className={`image team-${this.props.configObj.team === Team.Attacker ? 'red' : 'blue'}`}>
@@ -111,14 +146,26 @@ class ConfigComponent extends React.Component<Props, State>
           <div className="base-infos">
             <span><Trans>{this.props.configObj.data.name}</Trans></span>
             <div className="health">
-              <img className="hp-full" src="./assets/img/other/icon_hp_full.png" alt="Life" />
+              {this.state.entity.health.shield > 0 ?
+                (<>
+                  <img className="armor" src="./assets/img/other/icon_armor.png" alt="Armor" />
+                  <img className="hp-full" src="./assets/img/other/icon_shield_full.png" alt="Shield" />
+                  <span className="shield">{Math.floor(this.props.configObj.health.shield)}</span>
+                </>) :
+                <img className="hp-full" src="./assets/img/other/icon_hp_full.png" alt="Life" />
+              }
               <img style={{ height: 50 * (1 - healthPercent) }} className="hp-empty" src="./assets/img/other/icon_hp_empty.png" alt="Life" />
-              <span className="hp-current">{Math.floor(this.props.configObj.currentHealth)}</span>
-              <span className="hp-max">{this.props.configObj.health}</span>
+              <span className="hp-current">{Math.floor(this.props.configObj.health.current)}</span>
+              <span className="hp-max">{this.props.configObj.health.max}</span>
             </div>
             <div className={`btn-move ${this.state.entity.moving ? 'active' : ''}`} onClick={() => { this.onMoveBtnClick(); }}><Trans>Move</Trans></div>
           </div>
         </div>
+        <ul className="offensive-stats">
+          <li><img src="./assets/img/characteristics/tx_shield.png" alt="" /><span><Trans>Shield</Trans></span><input onChange={(e) => { this.onChange('shield', e.target.value); }} type="number" value={this.state.entity.health.initial.shield} /></li>
+          <li><img src="./assets/img/characteristics/tx_vitality.png" alt="" /><span><Trans>Max HP</Trans></span><input onChange={(e) => { this.onChange('maxHealth', e.target.value); }} type="number" value={this.state.entity.health.initial.max} /></li>
+          <li><img src="./assets/img/characteristics/tx_vitality.png" alt="" /><span><Trans>Current HP</Trans></span><input onChange={(e) => { this.onChange('currentHealth', e.target.value); }} type="number" value={this.state.entity.health.initial.current} /></li>
+        </ul>
         <h3><Trans>Offensive characteristics</Trans></h3>
         <ul className="offensive-stats">
           <li><img src="./assets/img/characteristics/tx_strength.png" alt="" /><span><Trans>Strength</Trans></span><input onChange={(e) => { this.onChange('str', e.target.value); }} type="number" value={this.state.entity.off.strength} /></li>
