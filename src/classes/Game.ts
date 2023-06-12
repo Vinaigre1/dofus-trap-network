@@ -719,9 +719,67 @@ class Game {
   /**
    * Returns a string representing the game object.
    * 
-   * @returns {string} The string representing the game object
+   * @param {number} version Version to use for serialization (last version by default).
+   * @returns {string} Serialized string 
    */
-  serialize(compress: boolean = true): string {
+  serialize(version?: number): string {
+    const funcs = {
+      1: this.serializeV1.bind(this),
+      2: this.serializeV2.bind(this),
+      default: 2
+    };
+    if (!(version in funcs)) {
+      version = funcs.default;
+    }
+    return version + "|" + funcs[version]();
+  }
+
+  /**
+   * Loads all data from a serialized object.
+   * 
+   * This function checks which version of the serialization is used and calls the correponding function.
+   * 
+   * @param {string} str The serialized object 
+   * @returns {boolean} `true` if the loading is successful
+   */
+  unserialize(str: string): boolean {
+    const funcs = {
+      1: this.unserializeV1.bind(this),
+      2: this.unserializeV2.bind(this),
+      default: 2
+    };
+    const separator = str.indexOf('|');
+    const splits = [str.slice(0, separator), str.slice(separator + 1)];
+    let version: number = parseInt(splits[0]);
+    if (!(version in funcs)) {
+      version = funcs.default;
+    }
+    return funcs[version](splits[1]);
+  }
+
+  /**
+   * Returns a string representing the game object.
+   * @returns {string} Serialized string
+   */
+  serializeV2(): string {
+    return "test";
+  }
+
+  /**
+   * Loads all data from a serialized object.
+   * 
+   * @param {string} str The serialized object
+   * @returns {boolean} `true` if the loading is successful
+   */
+  unserializeV2(str: string): boolean {
+    
+  }
+
+  /**
+   * Returns a string representing the game object.
+   * @returns {string} Serialized string
+   */
+  serializeV1(): string {
     let str: string = "";
     str += this.mapName + "|";
     str += this.mainCharacter.serialize() + "|";
@@ -735,12 +793,8 @@ class Game {
     }
     str += (this.startPoint?.x ?? "-") + "|" + (this.startPoint?.y ?? "-") + "|";
     str += +this.options.leukide;
-  
-    if (compress) {
-      str = "1|" + zlib.deflateSync(str).toString("base64");
-    } else {
-      str = "0|" + str;
-    }
+
+    str = zlib.deflateSync(str).toString("base64");
     return str;
   }
 
@@ -748,14 +802,11 @@ class Game {
    * Loads all data from a serialized object.
    * 
    * @param {string} str The serialized object
+   * @returns {boolean} `true` if the loading is successful
    */
-  unserialize(str: string): boolean {
+  unserializeV1(str: string): boolean {
     try {
-      const parts: Array<string> = str.split("|");
-      const rawData: string = (parts[0] === "1")
-        ? zlib.inflateSync(Buffer.from(parts[1], "base64")).toString("ascii")
-        : str.slice(2)
-      ;
+      const rawData: string = zlib.inflateSync(Buffer.from(str, "base64")).toString("ascii");
 
       const groups: Array<string> = [];
       let data = "";
@@ -813,7 +864,8 @@ class Game {
       this.startPoint = _startPoint;
       this.options.leukide = _leukide;
       this.loadMap(_mapName, false);
-    } catch {
+    } catch (e) {
+      console.error(e);
       return false;
     }
     
