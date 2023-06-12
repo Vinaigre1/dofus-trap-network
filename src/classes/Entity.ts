@@ -428,6 +428,7 @@ class Entity {
 
     const _entity = new Entity(_pos, _team, _type);
     _entity.states = _states;
+    _entity.initialStates = _states;
     _entity.triggers = _triggers;
     _entity.health = {
       initial: {
