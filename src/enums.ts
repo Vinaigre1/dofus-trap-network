@@ -293,7 +293,7 @@ export interface SpellTrigger {
   spellId: number;
   spellLevel: number;
   caster: Entity;
-  _casterUuid?: string;
+  _casterId?: string;
 }
 
 export interface GameOptions {

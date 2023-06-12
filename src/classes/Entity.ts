@@ -6,6 +6,7 @@ import { EntityData } from "@src/@types/EntityDataType";
 import Game from "./Game";
 import SpellData from "@json/Spells";
 import Trap from "./Trap";
+import { BuffType } from "@src/enums";
 
 class Entity {
   uuid: string;
@@ -269,7 +270,188 @@ class Entity {
    * 
    * @returns {string} The string representing the entity
    */
-  serialize(): string {
+  serializeV2(): string {
+    let str: string = "";
+    str += this.initialPos.x + "|" + this.initialPos.y + "|";
+    str += this.team + "|";
+    str += this.data.type + "|";
+    str += this.initialStates + "|";
+    str += this.triggers.length + "|";
+    for (let i: number = 0; i < this.triggers.length; i++) {
+      str += this.triggers[i].triggers.length + "|";
+      for (let j: number = 0; j < this.triggers[i].triggers.length; j++) {
+        str += this.triggers[i].triggers[j] + "|";
+      }
+      str += this.triggers[i].spellId + "|";
+      str += this.triggers[i].spellLevel + "|";
+      str += Game.getEntityIndex(this.triggers[i].caster.uuid) + "|";
+    }
+    str += this.health.initial.shield + "|";
+    str += this.health.initial.max + "|";
+    str += this.health.initial.current + "|";
+    str += this.level + "|";
+    str += this.buffs.length + "|";
+    for (let i = 0; i < this.buffs.length; i++) {
+      str += this.buffs[i].spell + "|";
+      str += this.buffs[i].type + "|";
+      str += this.buffs[i].params.length + "|";
+      for (let j = 0; j < this.buffs[i].params.length; j++) {
+        str += this.buffs[i].params[j] + "|";
+      }
+    }
+    str += this.offensiveStats.vitality + "|";
+    str += this.offensiveStats.strength + "|";
+    str += this.offensiveStats.chance + "|";
+    str += this.offensiveStats.intelligence + "|";
+    str += this.offensiveStats.agility + "|";
+    str += this.offensiveStats.power + "|";
+    str += this.offensiveStats.powerTrap + "|";
+    str += this.offensiveStats.damage + "|";
+    str += this.offensiveStats.damageEarth + "|";
+    str += this.offensiveStats.damageWater + "|";
+    str += this.offensiveStats.damageFire + "|";
+    str += this.offensiveStats.damageAir + "|";
+    str += this.offensiveStats.damageNeutral + "|";
+    str += this.offensiveStats.damagePush + "|";
+    str += this.offensiveStats.damageTrap + "|";
+    str += this.offensiveStats.damageRanged + "|";
+    str += this.offensiveStats.damageMelee + "|";
+    str += this.offensiveStats.damageSpell + "|";
+    str += this.offensiveStats.damageFinal + "|";
+    str += this.defensiveStats.neutral + "|";
+    str += this.defensiveStats.earth + "|";
+    str += this.defensiveStats.water + "|";
+    str += this.defensiveStats.fire + "|";
+    str += this.defensiveStats.air + "|";
+    str += this.defensiveStats.resistanceEarth + "|";
+    str += this.defensiveStats.resistanceWater + "|";
+    str += this.defensiveStats.resistanceFire + "|";
+    str += this.defensiveStats.resistanceAir + "|";
+    str += this.defensiveStats.resistanceNeutral + "|";
+    str += this.defensiveStats.resistancePush + "|";
+    str += this.defensiveStats.resistanceRanged + "|";
+    str += this.defensiveStats.resistanceMelee + "|";
+    str += this.defensiveStats.resistanceSpell + "|";
+    str += this.defensiveStats.damageSustained + "|";
+    str += this.defensiveStats.erosion;
+    return str;
+  }
+
+  /**
+   * Returns a new entity from the serialized string.
+   * 
+   * @param {Array<string>} splits The next parts of the unserialization
+   */
+  static unserializeV2(splits: Array<string>): Entity {
+    const _pos: Coordinates = {
+      x: parseInt(splits.shift()),
+      y: parseInt(splits.shift())
+    };
+    const _team: Team = parseInt(splits.shift());
+    const _type: EntityType = parseInt(splits.shift());
+    const _states: State = parseInt(splits.shift());
+    const _triggersLength: number = parseInt(splits.shift());
+    const _triggers: Array<SpellTrigger> = [];
+    for (let i: number = 0; i < _triggersLength; i++) {
+      const _triggersTriggersLength: number = parseInt(splits.shift());
+      const _triggersTriggers: Array<TriggerType> = [];
+      for (let j: number = 0; j < _triggersTriggersLength; j++) {
+        _triggersTriggers.push(parseInt(splits.shift()));
+      }
+      _triggers.push({
+        triggers: _triggersTriggers,
+        spellId: parseInt(splits.shift()),
+        spellLevel: parseInt(splits.shift()),
+        caster: undefined,
+        _casterId: splits.shift()
+      });
+    }
+    const _shield: number = parseInt(splits.shift());
+    const _hpMax: number = parseInt(splits.shift());
+    const _hp: number = parseInt(splits.shift());
+    const _level: number = parseInt(splits.shift());
+    const _buffsLength: number = parseInt(splits.shift());
+    const _buffs: Array<Buff> = [];
+    for (let i = 0; i < _buffsLength; i++) {
+      const _buffSpell: number = parseInt(splits.shift());
+      const _buffType: BuffType = parseInt(splits.shift());
+      const _buffsParamsLength: number = parseInt(splits.shift());
+      const _buffsParams: Array<number> = [];
+      for (let j = 0; j < _buffsParamsLength; j++) {
+        _buffsParams.push(parseInt(splits.shift()));
+      }
+      _buffs.push({
+        spell: _buffSpell,
+        type: _buffType,
+        params: _buffsParams
+      });
+    }
+    const _offensiveStats: OffensiveStats = {
+      vitality: parseInt(splits.shift()),
+      strength: parseInt(splits.shift()),
+      chance: parseInt(splits.shift()),
+      intelligence: parseInt(splits.shift()),
+      agility: parseInt(splits.shift()),
+      power: parseInt(splits.shift()),
+      powerTrap: parseInt(splits.shift()),
+      damage: parseInt(splits.shift()),
+      damageEarth: parseInt(splits.shift()),
+      damageWater: parseInt(splits.shift()),
+      damageFire: parseInt(splits.shift()),
+      damageAir: parseInt(splits.shift()),
+      damageNeutral: parseInt(splits.shift()),
+      damagePush: parseInt(splits.shift()),
+      damageTrap: parseInt(splits.shift()),
+      damageRanged: parseInt(splits.shift()),
+      damageMelee: parseInt(splits.shift()),
+      damageSpell: parseInt(splits.shift()),
+      damageFinal: parseInt(splits.shift())
+    };
+    const _defensiveStats: DefensiveStats = {
+      neutral: parseInt(splits.shift()),
+      earth: parseInt(splits.shift()),
+      water: parseInt(splits.shift()),
+      fire: parseInt(splits.shift()),
+      air: parseInt(splits.shift()),
+      resistanceEarth: parseInt(splits.shift()),
+      resistanceWater: parseInt(splits.shift()),
+      resistanceFire: parseInt(splits.shift()),
+      resistanceAir: parseInt(splits.shift()),
+      resistanceNeutral: parseInt(splits.shift()),
+      resistancePush: parseInt(splits.shift()),
+      resistanceRanged: parseInt(splits.shift()),
+      resistanceMelee: parseInt(splits.shift()),
+      resistanceSpell: parseInt(splits.shift()),
+      damageSustained: parseInt(splits.shift()),
+      erosion: parseInt(splits.shift())
+    }
+
+    const _entity = new Entity(_pos, _team, _type);
+    _entity.states = _states;
+    _entity.triggers = _triggers;
+    _entity.health = {
+      initial: {
+        shield: _shield,
+        max: _hpMax,
+        current: _hp
+      },
+      shield: _shield,
+      max: _hpMax,
+      current: _hp
+    };
+    _entity.level = _level;
+    _entity.buffs = _buffs;
+    _entity.offensiveStats = _offensiveStats;
+    _entity.defensiveStats = _defensiveStats;
+    return _entity;
+  }
+
+  /**
+   * Returns a string representing the entity.
+   * 
+   * @returns {string} The string representing the entity
+   */
+  serializeV1(): string {
     let str: string = "<";
     str += this.uuid + "|";
     str += this.initialPos.x + "|" + this.initialPos.y + "|";
@@ -294,7 +476,7 @@ class Entity {
    * 
    * @param {string} str The string representing the entity
    */
-  static unserialize(str: string): Entity {
+  static unserializeV1(str: string): Entity {
     const parts: Array<string> = str.split("|");
     let n: number = 0;
 
@@ -318,7 +500,7 @@ class Entity {
         spellId: parseInt(parts[n++]),
         spellLevel: parseInt(parts[n++]),
         caster: undefined,
-        _casterUuid: parts[n++]
+        _casterId: parts[n++]
       });
     }
 
