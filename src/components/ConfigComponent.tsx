@@ -109,6 +109,7 @@ class ConfigComponent extends React.Component<Props, State>
         case 'rangedRes':  new_state.entity.def.resistanceRanged = parsed; break;
         case 'meleeRes':   new_state.entity.def.resistanceMelee = parsed; break;
         case 'spellRes':   new_state.entity.def.resistanceSpell = parsed; break;
+        case 'sustained':  new_state.entity.def.damageSustained = parsed; break;
         default: break;
       }
       return new_state;
@@ -210,6 +211,7 @@ class ConfigComponent extends React.Component<Props, State>
           <li><img src="" alt="" /><span><Trans>Ranged res. %</Trans></span><input onChange={(e) => { this.onChange('rangedRes', e.target.value); }} type="number" value={this.state.entity.def.resistanceRanged} /></li>
           <li><img src="" alt="" /><span><Trans>Melee res. %</Trans></span><input onChange={(e) => { this.onChange('meleeRes', e.target.value); }} type="number" value={this.state.entity.def.resistanceMelee} /></li>
           <li><img src="" alt="" /><span><Trans>Spell res. %</Trans></span><input onChange={(e) => { this.onChange('spellRes', e.target.value); }} type="number" value={this.state.entity.def.resistanceSpell} /></li>
+          <li><img src="" alt="" /><span><Trans>Sustained da. %</Trans></span><input onChange={(e) => { this.onChange('sustained', e.target.value); }} type="number" value={this.state.entity.def.damageSustained} /></li>
         </ul>
         {/* États */}
         {/* Effets déclenchés */}

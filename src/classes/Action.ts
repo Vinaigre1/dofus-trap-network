@@ -303,7 +303,7 @@ export default class Action {
    */
   *waterDamageAction() {
     const element = effectToElement(this.effect.effectType);
-    const finalValue = receiveDamages(
+    const finalValues = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
@@ -319,8 +319,8 @@ export default class Action {
       this.targetPos,
       element
     );
-    this.value = Math.max(0, finalValue);
-    this.target.loseHealth(this.value);
+    this.value = Math.max(0, finalValues.damage);
+    this.target.loseHealth(this.value, finalValues.erosion);
     this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
@@ -330,7 +330,7 @@ export default class Action {
    */
   *fireDamageAction() {
     const element = effectToElement(this.effect.effectType);
-    const finalValue = receiveDamages(
+    const finalValues = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
@@ -346,8 +346,8 @@ export default class Action {
       this.targetPos,
       element
     );
-    this.value = Math.max(0, finalValue);
-    this.target.loseHealth(this.value);
+    this.value = Math.max(0, finalValues.damage);
+    this.target.loseHealth(this.value, finalValues.erosion);
     this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
@@ -357,7 +357,7 @@ export default class Action {
    */
   *earthDamageAction() {
     const element = effectToElement(this.effect.effectType);
-    const finalValue = receiveDamages(
+    const finalValues = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
@@ -373,8 +373,8 @@ export default class Action {
       this.targetPos,
       element
     );
-    this.value = Math.max(0, finalValue);
-    this.target.loseHealth(this.value);
+    this.value = Math.max(0, finalValues.damage);
+    this.target.loseHealth(this.value, finalValues.erosion);
     this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
@@ -384,7 +384,7 @@ export default class Action {
    */
   *airDamageAction() {
     const element = effectToElement(this.effect.effectType);
-    const finalValue = receiveDamages(
+    const finalValues = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
@@ -400,8 +400,8 @@ export default class Action {
       this.targetPos,
       element
     );
-    this.value = Math.max(0, finalValue);
-    this.target.loseHealth(this.value);
+    this.value = Math.max(0, finalValues.damage);
+    this.target.loseHealth(this.value, finalValues.erosion);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
     this.target.trigger(TriggerType.onDamage, this.originTrap);
   }
@@ -497,7 +497,7 @@ export default class Action {
    */
   *stealBestElementAction() {
     const element: SpellElement = getBestElement(this.caster);
-    const finalValue = receiveDamages(
+    const finalValues = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
@@ -513,8 +513,8 @@ export default class Action {
       this.targetPos,
       element
     );
-    this.value = Math.max(0, finalValue);
-    this.target.loseHealth(this.value);
+    this.value = Math.max(0, finalValues.damage);
+    this.target.loseHealth(this.value, finalValues.erosion);
     this.caster.gainHealth(Math.floor(this.value / 2));
   }
 

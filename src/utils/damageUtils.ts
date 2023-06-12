@@ -54,9 +54,9 @@ export function sendDamages(value: number, fromEntity: Entity, fromPos: Coordina
  * @param {Coordinates} fromPos Targetted cell
  * @param {Coordinates} toPos Position of the entity when the spell was casted
  * @param {SpellElement} element Casted element
- * @returns {number} Final calculated damages
+ * @returns {{ damage: number, erosion: number }} Final calculated damages
  */
-export function receiveDamages(value: number, fromEntity: Entity, toEntity: Entity, fromPos: Coordinates, toPos: Coordinates, element: SpellElement): number {
+export function receiveDamages(value: number, fromEntity: Entity, toEntity: Entity, fromPos: Coordinates, toPos: Coordinates, element: SpellElement): { damage: number, erosion: number } {
   const typeToElem = {
     [SpellElement.Neutral]: toEntity.defensiveStats.neutral,
     [SpellElement.Water]: toEntity.defensiveStats.water,
@@ -82,7 +82,10 @@ export function receiveDamages(value: number, fromEntity: Entity, toEntity: Enti
                    * (1 + (isDistance ? fromEntity.offensiveStats.damageRanged : fromEntity.offensiveStats.damageMelee) / 100)
                    * (1 - toEntity.defensiveStats.resistanceSpell / 100)
                    * (1 - (isDistance ? toEntity.defensiveStats.resistanceRanged : toEntity.defensiveStats.resistanceMelee) / 100);
-  return Math.floor(received * multiplier);
+  return {
+    damage: Math.floor(Math.floor(received * toEntity.defensiveStats.damageSustained / 100) * multiplier),
+    erosion: Math.floor(received * multiplier)
+  };
 }
 
 /**

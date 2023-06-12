@@ -92,6 +92,7 @@ class Entity {
       resistanceRanged: 0,
       resistanceMelee: 0,
       resistanceSpell: 0,
+      damageSustained: 100,
       erosion: 10
     };
   }
@@ -210,7 +211,7 @@ class Entity {
    * 
    * @param {number} amount how many health is lost
    */
-  loseHealth(amount: number) {
+  loseHealth(amount: number, erodedAmount?: number) {
     this.lastDamageTaken = amount;
     if (amount < 0) return;
 
@@ -218,7 +219,7 @@ class Entity {
 
     this.health.shield -= shieldDamage;
     this.health.current -= amount - shieldDamage;
-    this.health.max -= Math.floor(amount * this.defensiveStats.erosion / 100);
+    this.health.max -= Math.floor((erodedAmount ?? amount) * this.defensiveStats.erosion / 100);
     if (this.health.current > this.health.max) {
       this.health.current = this.health.max;
     }
