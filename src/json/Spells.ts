@@ -10,6 +10,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.FireTrap,
     levels: [
       {
+        spellId: SpellType.TrickyTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -35,6 +36,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.TrickyTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -60,6 +62,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.TrickyTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -94,6 +97,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.FireTrap,
     levels: [
       {
+        spellId: SpellType.DriftTrap,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -128,6 +132,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.FireTrap,
     levels: [
       {
+        spellId: SpellType.FragmentationTrap,
         apCost: 4,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -153,6 +158,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.FragmentationTrap,
         apCost: 4,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -178,6 +184,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.FragmentationTrap,
         apCost: 4,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -212,6 +219,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.EarthTrap,
     levels: [
       {
+        spellId: SpellType.MassTrap,
         apCost: 4,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -237,6 +245,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.MassTrap,
         apCost: 4,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -262,6 +271,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.MassTrap,
         apCost: 4,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -296,6 +306,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.EarthTrap,
     levels: [
       {
+        spellId: SpellType.LethalTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -321,6 +332,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.LethalTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -355,6 +367,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.EarthTrap,
     levels: [
       {
+        spellId: SpellType.MalevolentTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -380,6 +393,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.MalevolentTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -405,6 +419,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.MalevolentTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -439,6 +454,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.AirTrap,
     levels: [
       {
+        spellId: SpellType.RepellingTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -464,6 +480,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.RepellingTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -489,6 +506,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.RepellingTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -523,6 +541,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.AirTrap,
     levels: [
       {
+        spellId: SpellType.InsidiousTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -548,6 +567,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.InsidiousTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -573,6 +593,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.InsidiousTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -607,6 +628,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.WaterTrap,
     levels: [
       {
+        spellId: SpellType.MiryTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -632,6 +654,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.MiryTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -657,6 +680,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.MiryTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -691,6 +715,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.WaterTrap,
     levels: [
       {
+        spellId: SpellType.SickratTrap,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -716,6 +741,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.SickratTrap,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -750,6 +776,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.WaterTrap,
     levels: [
       {
+        spellId: SpellType.Calamity,
         apCost: 4,
         maxStack: 0,
         maxCastPerTurn: 1,
@@ -784,6 +811,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.MalusTrap,
     levels: [
       {
+        spellId: SpellType.ParalysingTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -809,6 +837,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.ParalysingTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -834,6 +863,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.ParalysingTrap,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -868,6 +898,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.MalusTrap,
     levels: [
       {
+        spellId: SpellType.MassGrave,
         apCost: 3,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -902,6 +933,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.Other,
     levels: [
       {
+        spellId: SpellType.Chakra,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -927,6 +959,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.Chakra,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -952,6 +985,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.Chakra,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -986,6 +1020,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.Other,
     levels: [
       {
+        spellId: SpellType.Desynchronisation,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -1011,6 +1046,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: SpellType.Desynchronisation,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 2,
@@ -1042,9 +1078,10 @@ const SpellData: SpellDataType = {
     icon: "./assets/img/spells/TestTrap.svg",
     sfx: "./assets/img/traps/Test.svg",
     sfxSize: 1,
-    category: null, // DEBUG: Chance to SpellCategory.Other to show in menu
+    category: null, // DEBUG: Change to SpellCategory.Other to show in menu
     levels: [
       {
+        spellId: SpellType.TestTrap,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1079,6 +1116,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1001,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1117,6 +1155,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1001,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1155,6 +1194,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1001,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1202,6 +1242,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1002,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1249,6 +1290,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1003,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1313,6 +1355,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1003,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1377,6 +1420,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1003,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1450,6 +1494,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1004,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1501,6 +1546,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1004,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1552,6 +1598,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1004,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1603,6 +1650,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1004,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1628,6 +1676,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1004,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1653,6 +1702,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1004,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1687,6 +1737,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1005,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1725,6 +1776,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1005,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1772,6 +1824,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1006,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1836,6 +1889,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1006,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1900,6 +1954,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1006,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1964,6 +2019,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1006,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -1989,6 +2045,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1006,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2014,6 +2071,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1006,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2048,6 +2106,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1007,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2086,6 +2145,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1007,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2124,6 +2184,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1007,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2171,6 +2232,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1008,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2196,6 +2258,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1008,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2221,6 +2284,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1008,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2246,6 +2310,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1008,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2271,6 +2336,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1008,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2296,6 +2362,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1008,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2330,6 +2397,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1009,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2381,6 +2449,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1009,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2432,6 +2501,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1009,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2492,6 +2562,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1010,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2517,6 +2588,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1010,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2551,6 +2623,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1011,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2589,6 +2662,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1011,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2636,6 +2710,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1012,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2683,6 +2758,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1013,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2708,6 +2784,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1013,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2733,6 +2810,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1013,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2767,6 +2845,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1014,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2801,6 +2880,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1015,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2826,6 +2906,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1015,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2851,6 +2932,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1015,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2885,6 +2967,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1016,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2932,6 +3015,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1017,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -2966,6 +3050,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.None,
     levels: [
       {
+        spellId: 1018,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -3004,6 +3089,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1018,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -3042,6 +3128,7 @@ const SpellData: SpellDataType = {
         ]
       },
       {
+        spellId: 1018,
         apCost: 2,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -3089,6 +3176,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.Entity,
     levels: [
       {
+        spellId: SpellType.Poutch,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -3123,6 +3211,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.Entity,
     levels: [
       {
+        spellId: SpellType.Ally,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -3157,6 +3246,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.Entity,
     levels: [
       {
+        spellId: SpellType.Cawwot,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -3191,6 +3281,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.Action,
     levels: [
       {
+        spellId: SpellType.StartPoint,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -3225,6 +3316,7 @@ const SpellData: SpellDataType = {
     category: SpellCategory.Action,
     levels: [
       {
+        spellId: SpellType.Remove,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -3259,6 +3351,7 @@ const SpellData: SpellDataType = {
     category: undefined,
     levels: [
       {
+        spellId: SpellType.Select,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,
@@ -3293,6 +3386,7 @@ const SpellData: SpellDataType = {
     category: null,
     levels: [
       {
+        spellId: SpellType.Leukide,
         apCost: 0,
         maxStack: 0,
         maxCastPerTurn: 0,

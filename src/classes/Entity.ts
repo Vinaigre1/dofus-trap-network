@@ -1,4 +1,4 @@
-import { Coordinates, EntityType, SpellTrigger, State, OffensiveStats, Team, DefensiveStats, TriggerType } from "@src/enums";
+import { Coordinates, EntityType, SpellTrigger, State, OffensiveStats, Team, DefensiveStats, TriggerType, Buff } from "@src/enums";
 import Entities from "@json/Entities";
 import EntityComponent from "@components/EntityComponent";
 import { v4 as uuidv4 } from "uuid";
@@ -6,6 +6,7 @@ import { EntityData } from "@src/@types/EntityDataType";
 import Game from "./Game";
 import SpellData from "@json/Spells";
 import Trap from "./Trap";
+import { BuffType } from "@src/enums";
 
 class Entity {
   uuid: string;
@@ -18,9 +19,18 @@ class Entity {
   states: State;
   initialStates: State;
   triggers: Array<SpellTrigger>;
-  health: number;
-  currentHealth: number;
+  health: {
+    initial: {
+      shield: number;
+      max: number;
+      current: number;
+    };
+    shield: number;
+    max: number;
+    current: number;
+  };
   level: number;
+  buffs: Array<Buff>;
   offensiveStats: OffensiveStats;
   defensiveStats: DefensiveStats;
   lastDamageTaken: number;
@@ -35,9 +45,18 @@ class Entity {
     this.states = 0;
     this.initialStates = this.states;
     this.triggers = [];
-    this.health = 10000;
-    this.currentHealth = 10000;
+    this.health = {
+      initial: {
+        shield: 0,
+        current: 10000,
+        max: 10000
+      },
+      shield: 0,
+      current: 10000,
+      max: 10000
+    };
     this.level = 200; // TODO
+    this.buffs = [];
     this.offensiveStats = {
       vitality: 0,
       strength: 0,
@@ -73,7 +92,9 @@ class Entity {
       resistancePush: 0,
       resistanceRanged: 0,
       resistanceMelee: 0,
-      resistanceSpell: 0
+      resistanceSpell: 0,
+      damageSustained: 100,
+      erosion: 10
     };
   }
 
@@ -102,7 +123,10 @@ class Entity {
     this.pos = this.initialPos;
     this.states = this.initialStates;
     this.component?.show();
-    this.currentHealth = this.health;
+    this.health.current = this.health.initial.current;
+    this.health.max = this.health.initial.max;
+    this.health.shield = this.health.initial.shield;
+    this.buffs = [];
     return true;
   }
 
@@ -188,11 +212,18 @@ class Entity {
    * 
    * @param {number} amount how many health is lost
    */
-  loseHealth(amount: number) {
+  loseHealth(amount: number, erodedAmount?: number) {
+    this.lastDamageTaken = amount;
     if (amount < 0) return;
 
-    this.currentHealth -= amount;
-    this.lastDamageTaken = amount;
+    const shieldDamage = Math.min(amount, this.health.shield);
+
+    this.health.shield -= shieldDamage;
+    this.health.current -= amount - shieldDamage;
+    this.health.max -= Math.floor((erodedAmount ?? amount) * this.defensiveStats.erosion / 100);
+    if (this.health.current > this.health.max) {
+      this.health.current = this.health.max;
+    }
   }
 
   /**
@@ -203,7 +234,25 @@ class Entity {
   gainHealth(amount: number) {
     if (amount < 0) return;
 
-    this.currentHealth += amount;
+    this.health.current += amount;
+  }
+
+  /**
+   * Adds a buff to the buffs list
+   * 
+   * @param {Buff} buff Buff to add
+   */
+  addBuff(buff: Buff) {
+    this.buffs.push(buff);
+  }
+
+  /**
+   * Removes all buffs that have the given spellId
+   * 
+   * @param spellId spellId of all the buffs to remove
+   */
+  removeBuff(spellId: number) {
+    this.buffs = this.buffs.filter((buff) => buff.spell !== spellId);
   }
 
   /**
@@ -221,7 +270,189 @@ class Entity {
    * 
    * @returns {string} The string representing the entity
    */
-  serialize(): string {
+  serializeV2(): string {
+    let str: string = "";
+    str += this.initialPos.x + "|" + this.initialPos.y + "|";
+    str += this.team + "|";
+    str += this.data.type + "|";
+    str += this.initialStates + "|";
+    str += this.triggers.length + "|";
+    for (let i: number = 0; i < this.triggers.length; i++) {
+      str += this.triggers[i].triggers.length + "|";
+      for (let j: number = 0; j < this.triggers[i].triggers.length; j++) {
+        str += this.triggers[i].triggers[j] + "|";
+      }
+      str += this.triggers[i].spellId + "|";
+      str += this.triggers[i].spellLevel + "|";
+      str += Game.getEntityIndex(this.triggers[i].caster.uuid) + "|";
+    }
+    str += this.health.initial.shield + "|";
+    str += this.health.initial.max + "|";
+    str += this.health.initial.current + "|";
+    str += this.level + "|";
+    str += this.buffs.length + "|";
+    for (let i = 0; i < this.buffs.length; i++) {
+      str += this.buffs[i].spell + "|";
+      str += this.buffs[i].type + "|";
+      str += this.buffs[i].params.length + "|";
+      for (let j = 0; j < this.buffs[i].params.length; j++) {
+        str += this.buffs[i].params[j] + "|";
+      }
+    }
+    str += this.offensiveStats.vitality + "|";
+    str += this.offensiveStats.strength + "|";
+    str += this.offensiveStats.chance + "|";
+    str += this.offensiveStats.intelligence + "|";
+    str += this.offensiveStats.agility + "|";
+    str += this.offensiveStats.power + "|";
+    str += this.offensiveStats.powerTrap + "|";
+    str += this.offensiveStats.damage + "|";
+    str += this.offensiveStats.damageEarth + "|";
+    str += this.offensiveStats.damageWater + "|";
+    str += this.offensiveStats.damageFire + "|";
+    str += this.offensiveStats.damageAir + "|";
+    str += this.offensiveStats.damageNeutral + "|";
+    str += this.offensiveStats.damagePush + "|";
+    str += this.offensiveStats.damageTrap + "|";
+    str += this.offensiveStats.damageRanged + "|";
+    str += this.offensiveStats.damageMelee + "|";
+    str += this.offensiveStats.damageSpell + "|";
+    str += this.offensiveStats.damageFinal + "|";
+    str += this.defensiveStats.neutral + "|";
+    str += this.defensiveStats.earth + "|";
+    str += this.defensiveStats.water + "|";
+    str += this.defensiveStats.fire + "|";
+    str += this.defensiveStats.air + "|";
+    str += this.defensiveStats.resistanceEarth + "|";
+    str += this.defensiveStats.resistanceWater + "|";
+    str += this.defensiveStats.resistanceFire + "|";
+    str += this.defensiveStats.resistanceAir + "|";
+    str += this.defensiveStats.resistanceNeutral + "|";
+    str += this.defensiveStats.resistancePush + "|";
+    str += this.defensiveStats.resistanceRanged + "|";
+    str += this.defensiveStats.resistanceMelee + "|";
+    str += this.defensiveStats.resistanceSpell + "|";
+    str += this.defensiveStats.damageSustained + "|";
+    str += this.defensiveStats.erosion;
+    return str;
+  }
+
+  /**
+   * Returns a new entity from the serialized string.
+   * 
+   * @param {Array<string>} splits The next parts of the unserialization
+   */
+  static unserializeV2(splits: Array<string>): Entity {
+    const _pos: Coordinates = {
+      x: parseInt(splits.shift()),
+      y: parseInt(splits.shift())
+    };
+    const _team: Team = parseInt(splits.shift());
+    const _type: EntityType = parseInt(splits.shift());
+    const _states: State = parseInt(splits.shift());
+    const _triggersLength: number = parseInt(splits.shift());
+    const _triggers: Array<SpellTrigger> = [];
+    for (let i: number = 0; i < _triggersLength; i++) {
+      const _triggersTriggersLength: number = parseInt(splits.shift());
+      const _triggersTriggers: Array<TriggerType> = [];
+      for (let j: number = 0; j < _triggersTriggersLength; j++) {
+        _triggersTriggers.push(parseInt(splits.shift()));
+      }
+      _triggers.push({
+        triggers: _triggersTriggers,
+        spellId: parseInt(splits.shift()),
+        spellLevel: parseInt(splits.shift()),
+        caster: undefined,
+        _casterId: splits.shift()
+      });
+    }
+    const _shield: number = parseInt(splits.shift());
+    const _hpMax: number = parseInt(splits.shift());
+    const _hp: number = parseInt(splits.shift());
+    const _level: number = parseInt(splits.shift());
+    const _buffsLength: number = parseInt(splits.shift());
+    const _buffs: Array<Buff> = [];
+    for (let i = 0; i < _buffsLength; i++) {
+      const _buffSpell: number = parseInt(splits.shift());
+      const _buffType: BuffType = parseInt(splits.shift());
+      const _buffsParamsLength: number = parseInt(splits.shift());
+      const _buffsParams: Array<number> = [];
+      for (let j = 0; j < _buffsParamsLength; j++) {
+        _buffsParams.push(parseInt(splits.shift()));
+      }
+      _buffs.push({
+        spell: _buffSpell,
+        type: _buffType,
+        params: _buffsParams
+      });
+    }
+    const _offensiveStats: OffensiveStats = {
+      vitality: parseInt(splits.shift()),
+      strength: parseInt(splits.shift()),
+      chance: parseInt(splits.shift()),
+      intelligence: parseInt(splits.shift()),
+      agility: parseInt(splits.shift()),
+      power: parseInt(splits.shift()),
+      powerTrap: parseInt(splits.shift()),
+      damage: parseInt(splits.shift()),
+      damageEarth: parseInt(splits.shift()),
+      damageWater: parseInt(splits.shift()),
+      damageFire: parseInt(splits.shift()),
+      damageAir: parseInt(splits.shift()),
+      damageNeutral: parseInt(splits.shift()),
+      damagePush: parseInt(splits.shift()),
+      damageTrap: parseInt(splits.shift()),
+      damageRanged: parseInt(splits.shift()),
+      damageMelee: parseInt(splits.shift()),
+      damageSpell: parseInt(splits.shift()),
+      damageFinal: parseInt(splits.shift())
+    };
+    const _defensiveStats: DefensiveStats = {
+      neutral: parseInt(splits.shift()),
+      earth: parseInt(splits.shift()),
+      water: parseInt(splits.shift()),
+      fire: parseInt(splits.shift()),
+      air: parseInt(splits.shift()),
+      resistanceEarth: parseInt(splits.shift()),
+      resistanceWater: parseInt(splits.shift()),
+      resistanceFire: parseInt(splits.shift()),
+      resistanceAir: parseInt(splits.shift()),
+      resistanceNeutral: parseInt(splits.shift()),
+      resistancePush: parseInt(splits.shift()),
+      resistanceRanged: parseInt(splits.shift()),
+      resistanceMelee: parseInt(splits.shift()),
+      resistanceSpell: parseInt(splits.shift()),
+      damageSustained: parseInt(splits.shift()),
+      erosion: parseInt(splits.shift())
+    }
+
+    const _entity = new Entity(_pos, _team, _type);
+    _entity.states = _states;
+    _entity.initialStates = _states;
+    _entity.triggers = _triggers;
+    _entity.health = {
+      initial: {
+        shield: _shield,
+        max: _hpMax,
+        current: _hp
+      },
+      shield: _shield,
+      max: _hpMax,
+      current: _hp
+    };
+    _entity.level = _level;
+    _entity.buffs = _buffs;
+    _entity.offensiveStats = _offensiveStats;
+    _entity.defensiveStats = _defensiveStats;
+    return _entity;
+  }
+
+  /**
+   * Returns a string representing the entity.
+   * 
+   * @returns {string} The string representing the entity
+   */
+  serializeV1(): string {
     let str: string = "<";
     str += this.uuid + "|";
     str += this.initialPos.x + "|" + this.initialPos.y + "|";
@@ -246,7 +477,7 @@ class Entity {
    * 
    * @param {string} str The string representing the entity
    */
-  static unserialize(str: string): Entity {
+  static unserializeV1(str: string): Entity {
     const parts: Array<string> = str.split("|");
     let n: number = 0;
 
@@ -270,7 +501,7 @@ class Entity {
         spellId: parseInt(parts[n++]),
         spellLevel: parseInt(parts[n++]),
         caster: undefined,
-        _casterUuid: parts[n++]
+        _casterId: parts[n++]
       });
     }
 

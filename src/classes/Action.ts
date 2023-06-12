@@ -1,6 +1,6 @@
 import Entity from "@classes/Entity";
-import { CellType, Coordinates, Direction, EffectType, Mask, SpellElement, TargetMask, TriggerType } from "@src/enums";
-import { getDirection, moveInDirection } from "@src/utils/mapUtils";
+import { BuffType, CellType, Coordinates, Direction, EffectType, Mask, SpellElement, TargetMask, TriggerType } from "@src/enums";
+import { getDirection, getDistance, moveInDirection } from "@src/utils/mapUtils";
 import Game from "@classes/Game";
 import ActionComponent from "@components/ActionComponent";
 import { v4 as uuidv4 } from "uuid";
@@ -25,8 +25,9 @@ export default class Action {
   targetMask?: Array<Mask>;
   passedMask: boolean;
   cancelled: boolean;
+  spell: SpellLevel;
 
-  constructor(caster: Entity, target: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, effect: Effect, originTrap?: Trap, targetMask?: string) {
+  constructor(caster: Entity, target: Entity, originPos: Coordinates, targetPos: Coordinates, type: EffectType, value: number, effect: Effect, spell: SpellLevel, originTrap?: Trap, targetMask?: string) {
     this.uuid = uuidv4();
     this.caster = caster;
     this.target = target;
@@ -35,6 +36,7 @@ export default class Action {
     this.type = type;
     this.value = value;
     this.effect = effect;
+    this.spell = spell;
     this.originTrap = originTrap;
     this.passedMask = true;
     this.cancelled = false;
@@ -104,13 +106,14 @@ export default class Action {
         return !this.target.hasState(mask.param);
         break;
       case TargetMask.LifeAbove:
-        return Math.floor(this.target.currentHealth / this.target.health * 100) > mask.param;
+        return Math.floor(this.target.health.current / this.target.health.max * 100) > mask.param;
         break;
       case TargetMask.NotLifeAbove:
-        return Math.floor(this.target.currentHealth / this.target.health * 100) <= mask.param;
+        return Math.floor(this.target.health.current / this.target.health.max * 100) <= mask.param;
         break;
       case TargetMask.CasterEverywhere:
-        return true; // TODO
+        this.target = this.caster;
+        return true;
         break;
       default:
         return true; // If mask is unknown, ignore it.
@@ -152,6 +155,24 @@ export default class Action {
       [EffectType.CancelSpell]: this.cancelSpellAction.bind(this),
       [EffectType.SymmetricalTeleport]: this.symmetricalTeleportAction.bind(this),
       [EffectType.Toggle]: this.toggleAction.bind(this),
+    }
+
+    const boostableActions = [
+      EffectType.WaterDamage,
+      EffectType.FireDamage,
+      EffectType.EarthDamage,
+      EffectType.AirDamage,
+      EffectType.NeutralDamage,
+      EffectType.StealBestElement
+    ];
+
+    if (boostableActions.includes(this.type)) {
+      this.caster.buffs.forEach(buff => {
+        if (buff.type !== BuffType.BoostSpell) return;
+        if (buff.params[0] === this.spell.spellId) {
+          this.value += buff.params[1];
+        }
+      });
     }
 
     if (actions[this.type])
@@ -201,7 +222,7 @@ export default class Action {
       const nextCell: Coordinates = moveInDirection(this.target.pos, dir, 1);
       if (!Game.isMovementPossible(this.target.pos, nextCell, dir)) {
         if (dir !== Direction.None) {
-          Game.addToActionStack(new Action(this.caster, this.target, this.target.pos, nextCell, EffectType.PushDamage, diagonal ? Math.ceil(this.value / 2) * 2 : (this.value - i), this.effect, this.originTrap));
+          Game.addToActionStack(new Action(this.caster, this.target, this.target.pos, nextCell, EffectType.PushDamage, diagonal ? Math.ceil(this.value / 2) * 2 : (this.value - i), this.effect, this.spell, this.originTrap));
         }
         break;
       }
@@ -282,7 +303,7 @@ export default class Action {
    */
   *waterDamageAction() {
     const element = effectToElement(this.effect.effectType);
-    const finalValue = receiveDamages(
+    const finalValues = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
@@ -298,8 +319,8 @@ export default class Action {
       this.targetPos,
       element
     );
-    this.value = Math.max(0, finalValue);
-    this.target.loseHealth(this.value);
+    this.value = Math.max(0, finalValues.damage);
+    this.target.loseHealth(this.value, finalValues.erosion);
     this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
@@ -309,7 +330,7 @@ export default class Action {
    */
   *fireDamageAction() {
     const element = effectToElement(this.effect.effectType);
-    const finalValue = receiveDamages(
+    const finalValues = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
@@ -325,8 +346,8 @@ export default class Action {
       this.targetPos,
       element
     );
-    this.value = Math.max(0, finalValue);
-    this.target.loseHealth(this.value);
+    this.value = Math.max(0, finalValues.damage);
+    this.target.loseHealth(this.value, finalValues.erosion);
     this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
@@ -336,7 +357,7 @@ export default class Action {
    */
   *earthDamageAction() {
     const element = effectToElement(this.effect.effectType);
-    const finalValue = receiveDamages(
+    const finalValues = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
@@ -352,8 +373,8 @@ export default class Action {
       this.targetPos,
       element
     );
-    this.value = Math.max(0, finalValue);
-    this.target.loseHealth(this.value);
+    this.value = Math.max(0, finalValues.damage);
+    this.target.loseHealth(this.value, finalValues.erosion);
     this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
   }
@@ -363,7 +384,7 @@ export default class Action {
    */
   *airDamageAction() {
     const element = effectToElement(this.effect.effectType);
-    const finalValue = receiveDamages(
+    const finalValues = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
@@ -379,8 +400,8 @@ export default class Action {
       this.targetPos,
       element
     );
-    this.value = Math.max(0, finalValue);
-    this.target.loseHealth(this.value);
+    this.value = Math.max(0, finalValues.damage);
+    this.target.loseHealth(this.value, finalValues.erosion);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
     this.target.trigger(TriggerType.onDamage, this.originTrap);
   }
@@ -399,15 +420,13 @@ export default class Action {
     this.target.loseHealth(this.value);
     
     const dir: Direction = getDirection(this.originPos, this.targetPos);
-    let indirectPushValue: number = this.value;
     const pushActions: Action[] = [];
     for (let distance: number = 1; distance <= remainingDistance; distance++) {
       const nextCell: Coordinates = moveInDirection(this.originPos, dir, distance, false);
       const indirectTarget: Entity = Game.getEntity(nextCell);
       if (!indirectTarget) break;
 
-      indirectPushValue = Math.floor(indirectPushValue / 2);
-      pushActions.unshift(new Action(this.caster, indirectTarget, this.target.pos, indirectTarget.pos, EffectType.IndirectPushDamage, indirectPushValue, this.effect, this.originTrap));
+      pushActions.unshift(new Action(this.caster, indirectTarget, this.target.pos, indirectTarget.pos, EffectType.IndirectPushDamage, remainingDistance, this.effect, this.spell, this.originTrap));
     }
     Game.addToActionStack(...pushActions);
   }
@@ -416,6 +435,14 @@ export default class Action {
    * Function executed for the *indirect push damage* action.
    */
   *indirectPushDamageAction() {
+    const distance = getDistance(this.originPos, this.targetPos);
+    const finalValue = receivePushDamages(
+      this.value,
+      this.caster,
+      this.target,
+      distance.real
+    );
+    this.value = finalValue;
     this.target.loseHealth(this.value);
   }
 
@@ -437,7 +464,9 @@ export default class Action {
    * Function executed for the *boost spell* action.
    */
   *boostSpellAction() {
-    console.log('Non-implemented function: boostSpellAction()');
+    const spellToBoost: number = this.effect.min;
+    const boostAmount: number = this.effect.max;
+    this.target.addBuff({ spell: this.spell.spellId, type: BuffType.BoostSpell, params: [spellToBoost, boostAmount] });
   }
 
   /**
@@ -468,7 +497,7 @@ export default class Action {
    */
   *stealBestElementAction() {
     const element: SpellElement = getBestElement(this.caster);
-    const finalValue = receiveDamages(
+    const finalValues = receiveDamages(
       sendDamages(
         this.value,
         this.caster,
@@ -476,7 +505,7 @@ export default class Action {
         this.targetPos,
         element,
         this.effect.area.min,
-        true // TODO
+        false // TODO
       ),
       this.caster,
       this.target,
@@ -484,8 +513,8 @@ export default class Action {
       this.targetPos,
       element
     );
-    this.value = Math.max(0, finalValue);
-    this.target.loseHealth(this.value);
+    this.value = Math.max(0, finalValues.damage);
+    this.target.loseHealth(this.value, finalValues.erosion);
     this.caster.gainHealth(Math.floor(this.value / 2));
   }
 
@@ -521,7 +550,8 @@ export default class Action {
    * Function executed for the *cancel spell* action.
    */
   *cancelSpellAction() {
-    console.log('Non-implemented function: cancelSpellAction()');
+    const spellToCancel = this.effect.min;
+    this.target.removeBuff(spellToCancel);
   }
 
   /**

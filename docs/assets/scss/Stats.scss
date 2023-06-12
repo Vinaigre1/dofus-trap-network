@@ -180,6 +180,14 @@
         position: relative;
         height: 50px;
         width: 60px;
+        img.armor {
+          height: 58px;
+          width: 68px;
+          position: absolute;
+          top: -6px;
+          left: -4px;
+          z-index: 2;
+        }
         img.hp-full {
           height: 50px;
           width: 60px;
@@ -198,7 +206,15 @@
           object-position: top;
           z-index: 1;
         }
-        span {
+        span.shield {
+          position: absolute;
+          top: -4px;
+          font-size: 12px;
+          z-index: 4;
+          text-shadow: 1px 1px 0 black;
+        }
+        span.hp-current,
+        span.hp-max {
           text-shadow: 1px 1px 0 black;
           display: block;
           z-index: 2;

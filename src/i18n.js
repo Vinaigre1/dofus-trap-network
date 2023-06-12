@@ -68,6 +68,7 @@ const resources = {
       "Ranged res. %": "Ranged res. %",
       "Melee res. %": "Melee res. %",
       "Spell res. %": "Spell res. %",
+      "Sustained da. %": "Sustained da. %",
       "Steals {{value}} in best element": "Steals {{value}} in best element",
       "Heals {{value}} (last damage taken)": "Heals {{value}} (last damage taken)",
       "Places a glyph": "Places a glyph",
@@ -95,7 +96,12 @@ const resources = {
       "Cawwot": "Cawwot",
       "Move": "Move",
       "Removes {{value}} MP": "Removes {{value}} MP",
-      "Removes {{value}} dodge": "Removes {{value}} dodge"
+      "Removes {{value}} dodge": "Removes {{value}} dodge",
+      "Max HP": "Max HP",
+      "Current HP": "Current HP",
+      "Shield": "Shield",
+      "Erosion": "Erosion",
+      "Health characteristics": "Health characteristics"
     }
   },
   fr: {
@@ -169,6 +175,7 @@ const resources = {
       "Ranged res. %": "% Res. Ditance",
       "Melee res. %": "% Res. Mêlée",
       "Spell res. %": "% Res. Sorts",
+      "Sustained da. %": "% Do. Subis",
       "Steals {{value}} in best element": "Vole {{value}} dans le meilleur élément",
       "Heals {{value}} (last damage taken)": "Soigne {{value}} (derniers dégâts reçus)",
       "Places a glyph": "Place un glyphe",
@@ -196,7 +203,12 @@ const resources = {
       "Cawwot": "Cawotte",
       "Move": "Déplacer",
       "Removes {{value}} MP": "Retire {{value}} PM",
-      "Removes {{value}} dodge": "Retire {{value}} de fuite"
+      "Removes {{value}} dodge": "Retire {{value}} de fuite",
+      "Max HP": "Vitalité Max",
+      "Current HP": "Vitalité Actuelle",
+      "Shield": "Bouclier",
+      "Erosion": "Erosion",
+      "Health characteristics": "Caractéristiques de vitalité"
     }
   }
 };

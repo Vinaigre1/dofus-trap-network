@@ -452,7 +452,7 @@ class Game {
       }
       const value = randomInt(effects[i].min, effects[i].max);
       for (let j: number = 0; j < entities.length; j++) {
-        const action = new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], originTrap, effects[i].targetMask);
+        const action = new Action(caster, entities[j], pos, entities[j].pos, effects[i].effectType, value, effects[i], spell, originTrap, effects[i].targetMask);
         if (action.checkEntityMask()) {
           localStack.unshift(action);
         }
@@ -634,7 +634,7 @@ class Game {
     for (let i: number = 0; i < effects.length; i++) {
       if (!this.preparingEffects.includes(effects[i].effectType)) continue;
 
-      const action = new Action(this.mainCharacter, this.getEntity(pos), this.mainCharacter.pos, pos, effects[i].effectType, +entityPriority, effects[i], null, effects[i].targetMask);
+      const action = new Action(this.mainCharacter, this.getEntity(pos), this.mainCharacter.pos, pos, effects[i].effectType, +entityPriority, effects[i], null, null, effects[i].targetMask);
       const gen = action.apply(false);
       const ret = gen.next();
       if (!ret.done) {
@@ -717,30 +717,82 @@ class Game {
   }
 
   /**
+   * Returns the index of the given entity uuid in the `entities` array
+   * 
+   * @param {string} uuid Uuid of the entity
+   */
+  getEntityIndex(uuid: string): number {
+    if (this.mainCharacter.uuid === uuid)
+      return -1;
+
+    for (let i = 0; i < this.entities.length; i++) {
+      if (this.entities[i].uuid === uuid)
+        return i;
+    }
+    return -1;
+  }
+
+  /**
    * Returns a string representing the game object.
    * 
-   * @returns {string} The string representing the game object
+   * @param {number} version Version to use for serialization (last version by default).
+   * @returns {string} Serialized string 
    */
-  serialize(compress: boolean = true): string {
-    let str: string = "";
+  serialize(version?: number): string {
+    const funcs = {
+      1: this.serializeV1.bind(this),
+      2: this.serializeV2.bind(this),
+      default: 2
+    };
+    if (!(version in funcs)) {
+      version = funcs.default;
+    }
+    return version + "|" + funcs[version]();
+  }
+
+  /**
+   * Loads all data from a serialized object.
+   * 
+   * This function checks which version of the serialization is used and calls the correponding function.
+   * 
+   * @param {string} str The serialized object 
+   * @returns {boolean} `true` if the loading is successful
+   */
+  unserialize(str: string): boolean {
+    const funcs = {
+      1: this.unserializeV1.bind(this),
+      2: this.unserializeV2.bind(this),
+      default: 2
+    };
+    const separator = str.indexOf('|');
+    const splits = [str.slice(0, separator), str.slice(separator + 1)];
+    let version: number = parseInt(splits[0]);
+    if (!(version in funcs)) {
+      version = funcs.default;
+    }
+    return funcs[version](splits[1]);
+  }
+
+  /**
+   * Returns a string representing the game object.
+   * @returns {string} Serialized string
+   */
+  serializeV2(): string {
+    let str = "";
     str += this.mapName + "|";
-    str += this.mainCharacter.serialize() + "|";
+    str += this.mainCharacter.serializeV2() + "|";
     str += this.entities.length + "|";
     for (let i: number = 0; i < this.entities.length; i++) {
-      str += this.entities[i].serialize() + "|";
+      str += this.entities[i].serializeV2() + "|";
     }
     str += this.traps.length + "|";
     for (let i: number = 0; i < this.traps.length; i++) {
-      str += this.traps[i].serialize() + "|";
+      str += this.traps[i].serializeV2() + "|";
     }
     str += (this.startPoint?.x ?? "-") + "|" + (this.startPoint?.y ?? "-") + "|";
     str += +this.options.leukide;
-  
-    if (compress) {
-      str = "1|" + zlib.deflateSync(str).toString("base64");
-    } else {
-      str = "0|" + str;
-    }
+    
+    str = zlib.deflateSync(str).toString("base64");
     return str;
   }
 
@@ -748,14 +800,98 @@ class Game {
    * Loads all data from a serialized object.
    * 
    * @param {string} str The serialized object
+   * @returns {boolean} `true` if the loading is successful
    */
-  unserialize(str: string): boolean {
+  unserializeV2(str: string): boolean {
     try {
-      const parts: Array<string> = str.split("|");
-      const rawData: string = (parts[0] === "1")
-        ? zlib.inflateSync(Buffer.from(parts[1], "base64")).toString("ascii")
-        : str.slice(2)
-      ;
+      const rawData: string = zlib.inflateSync(Buffer.from(str, "base64")).toString("ascii");
+      const splits: Array<string> = rawData.split("|");
+
+      const _mapName: string = splits.shift();
+      const _mainCharacter: Entity = Entity.unserializeV2(splits);
+      const _entitiesLength: number = parseInt(splits.shift());
+      const _entities: Array<Entity> = [];
+      for (let i: number = 0; i < _entitiesLength; i++) {
+        _entities.push(Entity.unserializeV2(splits));
+      }
+      const _trapsLength: number = parseInt(splits.shift());
+      const _traps: Array<Trap> = [];
+      for (let i: number = 0; i < _trapsLength; i++) {
+        const _trap: { trap: Trap, caster: number } = Trap.unserializeV2(splits);
+        _trap.trap.casterUuid = (_trap.caster === -1) ? _mainCharacter.uuid : _entities[_trap.caster].uuid;
+        _traps.push(_trap.trap);
+      }
+      const _startPoint: Coordinates = {
+        x: parseInt(splits.shift()),
+        y: parseInt(splits.shift())
+      };
+      const _options: GameOptions = {
+        leukide: !!parseInt(splits.shift())
+      };
+
+      for (let i: number = 0; i < _entities.length; i++) {
+        for (let j: number = 0; j < _entities[i].triggers.length; j++) {
+          const _casterId: number = parseInt(_entities[i].triggers[j]._casterId);
+          _entities[i].triggers[j].caster = (_casterId === -1) ? _mainCharacter : _entities[_casterId];
+        }
+      }
+      console.log({
+        _mapName: _mapName,
+        _mainCharacter: _mainCharacter,
+        _entitiesLength: _entitiesLength,
+        _entities: _entities,
+        _trapsLength: _trapsLength,
+        _traps: _traps,
+        _startPoint: _startPoint,
+        _options: _options
+      });
+
+      this.prepareNewMap();
+      this.mainCharacter = _mainCharacter;
+      this.entities = _entities;
+      this.traps = _traps;
+      this.startPoint = (isNaN(_startPoint.x) || isNaN(_startPoint.y)) ? undefined : _startPoint;
+      this.options = _options;
+      this.loadMap(_mapName, false);
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  }
+
+  /**
+   * Returns a string representing the game object.
+   * @returns {string} Serialized string
+   */
+  serializeV1(): string {
+    let str: string = "";
+    str += this.mapName + "|";
+    str += this.mainCharacter.serializeV1() + "|";
+    str += this.entities.length + "|";
+    for (let i: number = 0; i < this.entities.length; i++) {
+      str += this.entities[i].serializeV1() + "|";
+    }
+    str += this.traps.length + "|";
+    for (let i: number = 0; i < this.traps.length; i++) {
+      str += this.traps[i].serializeV1() + "|";
+    }
+    str += (this.startPoint?.x ?? "-") + "|" + (this.startPoint?.y ?? "-") + "|";
+    str += +this.options.leukide;
+
+    str = zlib.deflateSync(str).toString("base64");
+    return str;
+  }
+
+  /**
+   * Loads all data from a serialized object.
+   * 
+   * @param {string} str The serialized object
+   * @returns {boolean} `true` if the loading is successful
+   */
+  unserializeV1(str: string): boolean {
+    try {
+      const rawData: string = zlib.inflateSync(Buffer.from(str, "base64")).toString("ascii");
 
       const groups: Array<string> = [];
       let data = "";
@@ -773,21 +909,21 @@ class Game {
           data += rawData[i];
         }
       }
-      
+
       const dataParts: Array<string> = data.split("|");
       let n = 0;
 
       const _mapName: string = dataParts[n++];
-      const _mainCharacter: Entity = Entity.unserialize(groups[parseInt(dataParts[n++])]);
+      const _mainCharacter: Entity = Entity.unserializeV1(groups[parseInt(dataParts[n++])]);
       const _entitiesLength: number = parseInt(dataParts[n++]);
       const _entities: Array<Entity> = [];
       for (let i: number = 0; i < _entitiesLength; i++) {
-        _entities.push(Entity.unserialize(groups[parseInt(dataParts[n++])]));
+        _entities.push(Entity.unserializeV1(groups[parseInt(dataParts[n++])]));
       }
       const _trapsLength: number = parseInt(dataParts[n++])
       const _traps: Array<Trap> = [];
       for (let i: number = 0; i < _trapsLength; i++) {
-        _traps.push(Trap.unserialize(groups[parseInt(dataParts[n++])]));
+        _traps.push(Trap.unserializeV1(groups[parseInt(dataParts[n++])]));
       }
       let _startPoint: Coordinates = { x: parseInt(dataParts[n++]), y: parseInt(dataParts[n++]) };
       if (isNaN(_startPoint.x)) _startPoint = undefined;
@@ -801,11 +937,11 @@ class Game {
       _entities.forEach(_entity => {
         _entity.triggers.forEach(_trigger => {
           if (_trigger.caster !== undefined) return;
-          if (_trigger._casterUuid === undefined) {
+          if (_trigger._casterId === undefined) {
             _trigger.caster = _entity;
             return;
           }
-          _trigger.caster = this.getEntityById(_trigger._casterUuid);
+          _trigger.caster = this.getEntityById(_trigger._casterId);
         });
       });
 
@@ -813,7 +949,8 @@ class Game {
       this.startPoint = _startPoint;
       this.options.leukide = _leukide;
       this.loadMap(_mapName, false);
-    } catch {
+    } catch (e) {
+      console.error(e);
       return false;
     }
     
