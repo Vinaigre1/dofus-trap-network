@@ -611,9 +611,9 @@ const SpellData: SpellDataType = {
             max: 2,
             triggers: null,
             area: {
-              type: AreaType.Cell,
+              type: AreaType.Diagonal,
               min: 0,
-              max: 0
+              max: 1
             }
           }
         ]
@@ -1609,42 +1609,29 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Ally}`,
-            effectType: EffectType.State,
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.EarthDamage,
             value: 0,
-            min: State.MassTrap,
-            max: 0,
+            min: 20,
+            max: 22,
             triggers: null,
             area: {
-              type: AreaType.Cell,
+              type: AreaType.Cross,
               min: 0,
-              max: 0
+              max: 3
             }
           },
           {
             targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
-            effectType: EffectType.SpellAsCaster,
+            effectType: EffectType.Push,
             value: 0,
-            min: 1004,
-            max: 5,
+            min: 2,
+            max: 2,
             triggers: null,
             area: {
-              type: AreaType.Cell,
+              type: AreaType.Cross,
               min: 0,
-              max: 0
-            }
-          },
-          {
-            targetMask: `${TargetMask.Ally}`,
-            effectType: EffectType.RemoveState,
-            value: 0,
-            min: State.MassTrap,
-            max: 0,
-            triggers: null,
-            area: {
-              type: AreaType.Cell,
-              min: 0,
-              max: 1
+              max: 3
             }
           }
         ]
@@ -2211,8 +2198,8 @@ const SpellData: SpellDataType = {
             targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.AirDamage,
             value: 0,
-            min: 12,
-            max: 12,
+            min: 19,
+            max: 21,
             triggers: null,
             area: {
               type: AreaType.Cross,
@@ -2295,16 +2282,29 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
-            effectType: EffectType.PlaceEndTurnGlyph,
-            value: 9895830,
-            min: 1008,
-            max: 5,
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.AirDamage,
+            value: 0,
+            min: 8,
+            max: 9,
             triggers: null,
             area: {
-              type: AreaType.Circle,
+              type: AreaType.Diagonal,
               min: 0,
-              max: 3
+              max: 1
+            }
+          },
+          {
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
+            effectType: EffectType.Pull,
+            value: 0,
+            min: 1,
+            max: 1,
+            triggers: null,
+            area: {
+              type: AreaType.Diagonal,
+              min: 0,
+              max: 1
             }
           },
         ]
@@ -2946,8 +2946,8 @@ const SpellData: SpellDataType = {
             targetMask: `${TargetMask.Enemy}`,
             effectType: EffectType.StealBestElement,
             value: 0,
-            min: 15,
-            max: 15,
+            min: 12,
+            max: 12,
             triggers: null,
             area: {
               type: AreaType.Cell,
