@@ -139,7 +139,9 @@ export enum SpellType {
   Remove,
   Desynchronisation,
   Select,
-  Leukide
+  Leukide,
+  Misere,
+  Corruption
 }
 
 export enum ActionType {
@@ -200,7 +202,8 @@ export enum TargetMask {
 
 export enum TriggerType {
   onDamage,
-  onTrapDamage
+  onTrapDamage,
+  onHeal,
 }
 
 export enum State {

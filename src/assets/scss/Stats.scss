@@ -269,4 +269,20 @@
       }
     }
   }
+  .btn-misere,
+  .btn-corruption {
+    border: 2px solid #CCC;
+    background-color: rgb(69, 69, 69);
+    color: #CCC;
+    padding: 5px 10px;
+    margin: 5px 10px 0px 0px;
+    font-weight: bold;
+    cursor: pointer;
+    display: inline-block;
+    user-select: none;
+  }
+  .btn-misere.active,
+  .btn-corruption.active {
+    background-color: rgb(186, 69, 69);
+  }
 }

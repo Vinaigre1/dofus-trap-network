@@ -475,7 +475,9 @@ export default class Action {
   *healLastDamageAction() {
     const lastDamage: number = this.caster.lastDamageTaken;
     this.value = Math.floor(lastDamage * this.value / 100);
-    this.target.gainHealth(this.value);
+    if (this.target.gainHealth(this.value)) {
+      this.target.trigger(TriggerType.onHeal, this.originTrap);
+    }
   }
 
   /**
@@ -515,7 +517,9 @@ export default class Action {
     );
     this.value = Math.max(0, finalValues.damage);
     this.target.loseHealth(this.value, finalValues.erosion);
-    this.caster.gainHealth(Math.floor(this.value / 2));
+    if (this.caster.gainHealth(Math.floor(this.value / 2))) {
+      this.caster.trigger(TriggerType.onHeal, this.originTrap);
+    }
   }
 
   /**
