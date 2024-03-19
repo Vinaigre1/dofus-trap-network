@@ -231,10 +231,16 @@ class Entity {
    * 
    * @param {number} amount how many health is gained
    */
-  gainHealth(amount: number) {
-    if (amount < 0) return;
+  gainHealth(amount: number): boolean {
+    if (amount < 0) return false;
+
+    if (this.health.current < this.health.max) {
+      this.health.current += amount;
+      return true;
+    }
 
     this.health.current += amount;
+    return false;
   }
 
   /**

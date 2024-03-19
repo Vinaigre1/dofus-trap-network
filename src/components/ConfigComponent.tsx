@@ -1,7 +1,7 @@
 import Entity from "@classes/Entity";
 import Game from "@classes/Game";
 import Trap from "@classes/Trap";
-import { DefensiveStats, OffensiveStats, Team } from "@src/enums";
+import { DefensiveStats, OffensiveStats, SpellType, Team, TriggerType } from "@src/enums";
 import * as React from "react";
 import { Trans } from "react-i18next";
 
@@ -11,6 +11,10 @@ type Props = {
 
 type State = {
   entity: {
+    triggers: {
+      misere: boolean;
+      corruption: boolean;
+    };
     off: OffensiveStats;
     def: DefensiveStats;
     moving: boolean;
@@ -35,6 +39,10 @@ class ConfigComponent extends React.Component<Props, State>
     if (this.props.configObj instanceof Entity) {
       this.state = {
         entity: {
+          triggers: {
+            misere: false,
+            corruption: false
+          },
           off: this.props.configObj.offensiveStats,
           def: this.props.configObj.defensiveStats,
           moving: false,
@@ -137,6 +145,64 @@ class ConfigComponent extends React.Component<Props, State>
     }
   }
 
+  onCorruptionClick() {
+    if (Game.isRunning) return;
+
+    if (this.props.configObj instanceof Entity) {
+      if (this.props.configObj.hasTrigger(SpellType.Corruption, 0)) {
+        this.props.configObj.removeTrigger(SpellType.Corruption, 0);
+      } else {
+        this.props.configObj.addTrigger({
+          triggers: [TriggerType.onHeal],
+          spellId: SpellType.Corruption,
+          spellLevel: 0,
+          caster: this.props.configObj,
+        });
+      }
+      this.setState((state) => {
+        return {
+          ...state,
+          entity: {
+            ...state.entity,
+            triggers: {
+              ...state.entity.triggers,
+              corruption: !state.entity.triggers.corruption
+            }
+          }
+        }
+      })
+    }
+  }
+
+  onMisereClick() {
+    if (Game.isRunning) return;
+
+    if (this.props.configObj instanceof Entity) {
+      if (this.props.configObj.hasTrigger(SpellType.Misere, 0)) {
+        this.props.configObj.removeTrigger(SpellType.Misere, 0);
+      } else {
+        this.props.configObj.addTrigger({
+          triggers: [TriggerType.onDamage],
+          spellId: SpellType.Misere,
+          spellLevel: 0,
+          caster: this.props.configObj,
+        });
+      }
+      this.setState((state) => {
+        return {
+          ...state,
+          entity: {
+            ...state.entity,
+            triggers: {
+              ...state.entity.triggers,
+              misere: !state.entity.triggers.misere
+            }
+          }
+        }
+      })
+    }
+  }
+
   render() {
     if (this.props.configObj instanceof Entity) {
       const healthPercent = Math.max(0, Math.min(1, this.props.configObj.health.current / (this.props.configObj.health.max <= 0 ? 1 : this.props.configObj.health.max)));
@@ -213,9 +279,12 @@ class ConfigComponent extends React.Component<Props, State>
           <li><img src="" alt="" /><span><Trans>Spell res. %</Trans></span><input onChange={(e) => { this.onChange('spellRes', e.target.value); }} type="number" value={this.state.entity.def.resistanceSpell} /></li>
           <li><img src="" alt="" /><span><Trans>Sustained da. %</Trans></span><input onChange={(e) => { this.onChange('sustained', e.target.value); }} type="number" value={this.state.entity.def.damageSustained} /></li>
         </ul>
-        {/* États */}
+        <div>
+          <div className={`btn-misere ${this.state.entity.triggers.misere ? 'active' : ''}`} onClick={() => { this.onMisereClick(); }}><Trans>Misère</Trans></div>
+          <div className={`btn-corruption ${this.state.entity.triggers.corruption ? 'active' : ''}`} onClick={() => { this.onCorruptionClick(); }}><Trans>Hub Corruption</Trans></div>
+        </div>
         {/* Effets déclenchés */}
-        {/* Stats */}
+        {/* États */}
       </div>;
     } else if (this.props.configObj instanceof Trap) {
       return <div></div>;

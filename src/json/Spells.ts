@@ -3168,6 +3168,119 @@ const SpellData: SpellDataType = {
       }
     ]
   },
+  1019: {
+    name: "Misere",
+    icon: null,
+    sfx: null,
+    sfxSize: 1,
+    category: null,
+    levels: [
+      {
+        spellId: SpellType.Misere,
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.Pull,
+            value: 0,
+            min: 1,
+            max: 1,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 63
+            }
+          }
+        ]
+      },
+      {
+        spellId: SpellType.Misere,
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.Pull,
+            value: 0,
+            min: 2,
+            max: 2,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 63
+            }
+          }
+        ]
+      },
+      {
+        spellId: SpellType.Misere,
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.Pull,
+            value: 0,
+            min: 3,
+            max: 3,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 63
+            }
+          }
+        ]
+      },
+      {
+        spellId: SpellType.Misere,
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.Pull,
+            value: 0,
+            min: 4,
+            max: 4,
+            triggers: null,
+            area: {
+              type: AreaType.Circle,
+              min: 0,
+              max: 63
+            }
+          }
+        ]
+      }
+    ]
+  },
   [SpellType.Poutch]: {
     name: "Poutch Ingball",
     icon: "./assets/img/spells/Poutch.svg",
@@ -3407,6 +3520,115 @@ const SpellData: SpellDataType = {
               type: AreaType.Star,
               min: 0,
               max: 63
+            }
+          }
+        ]
+      }
+    ]
+  },
+  [SpellType.Misere]: {
+    name: "Misere",
+    icon: null,
+    sfx: null,
+    sfxSize: 1,
+    category: null,
+    levels: [
+      {
+        spellId: SpellType.Misere,
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.CasterEverywhere},${TargetMask.LifeAbove}75`,
+            effectType: EffectType.SpellAsCaster,
+            value: 0,
+            min: 1019,
+            max: 0,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.CasterEverywhere},${TargetMask.LifeAbove}50,${TargetMask.NotLifeAbove}75`,
+            effectType: EffectType.SpellAsCaster,
+            value: 0,
+            min: 1019,
+            max: 1,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.CasterEverywhere},${TargetMask.LifeAbove}25,${TargetMask.NotLifeAbove}50`,
+            effectType: EffectType.SpellAsCaster,
+            value: 0,
+            min: 1019,
+            max: 2,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          },
+          {
+            targetMask: `${TargetMask.CasterEverywhere},${TargetMask.NotLifeAbove}25`,
+            effectType: EffectType.SpellAsCaster,
+            value: 0,
+            min: 1019,
+            max: 3,
+            triggers: null,
+            area: {
+              type: AreaType.Cell,
+              min: 0,
+              max: 0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  [SpellType.Corruption]: {
+    name: "Misere",
+    icon: null,
+    sfx: null,
+    sfxSize: 1,
+    category: null,
+    levels: [
+      {
+        spellId: SpellType.Misere,
+        apCost: 0,
+        maxStack: 0,
+        maxCastPerTurn: 0,
+        maxCastPerTarget: 0,
+        minCastInterval: 0,
+        initialCooldown: 0,
+        globalCooldown: 0,
+        minPlayerLevel: 0,
+        effects: [
+          {
+            targetMask: `${TargetMask.Enemy}`,
+            effectType: EffectType.Push,
+            value: 1,
+            min: 1,
+            max: 1,
+            triggers: null,
+            area: {
+              type: AreaType.Cross,
+              min: 0,
+              max: 1
             }
           }
         ]
