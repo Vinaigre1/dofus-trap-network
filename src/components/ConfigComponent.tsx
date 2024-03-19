@@ -40,8 +40,8 @@ class ConfigComponent extends React.Component<Props, State>
       this.state = {
         entity: {
           triggers: {
-            misere: false,
-            corruption: false
+            misere: this.props.configObj.hasTrigger(SpellType.Misere, 0),
+            corruption: this.props.configObj.hasTrigger(SpellType.Corruption, 0)
           },
           off: this.props.configObj.offensiveStats,
           def: this.props.configObj.defensiveStats,

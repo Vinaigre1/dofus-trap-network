@@ -808,11 +808,14 @@ class Game {
       const splits: Array<string> = rawData.split("|");
 
       const _mapName: string = splits.shift();
-      const _mainCharacter: Entity = Entity.unserializeV2(splits);
+      let _mainCharacter: Entity = Entity.unserializeV2(splits);
       const _entitiesLength: number = parseInt(splits.shift());
       const _entities: Array<Entity> = [];
       for (let i: number = 0; i < _entitiesLength; i++) {
         _entities.push(Entity.unserializeV2(splits));
+        if (_entities[i].data.type === EntityType.Player) {
+          _mainCharacter = _entities[i];
+        }
       }
       const _trapsLength: number = parseInt(splits.shift());
       const _traps: Array<Trap> = [];

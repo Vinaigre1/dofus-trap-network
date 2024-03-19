@@ -92,6 +92,7 @@ export default class Action {
   }
 
   checkSingleMask(mask: Mask): boolean {
+    if (!this.caster) this.caster = Game.mainCharacter;
     switch (mask.mask) {
       case TargetMask.Ally:
         return this.caster.team === this.target.team;
@@ -321,8 +322,8 @@ export default class Action {
     );
     this.value = Math.max(0, finalValues.damage);
     this.target.loseHealth(this.value, finalValues.erosion);
-    this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
   }
 
   /**
@@ -348,8 +349,8 @@ export default class Action {
     );
     this.value = Math.max(0, finalValues.damage);
     this.target.loseHealth(this.value, finalValues.erosion);
-    this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
   }
 
   /**
@@ -375,8 +376,8 @@ export default class Action {
     );
     this.value = Math.max(0, finalValues.damage);
     this.target.loseHealth(this.value, finalValues.erosion);
-    this.target.trigger(TriggerType.onDamage, this.originTrap);
     this.target.trigger(TriggerType.onTrapDamage, this.originTrap); // TODO: Actually check if this is a trap
+    this.target.trigger(TriggerType.onDamage, this.originTrap);
   }
 
   /**

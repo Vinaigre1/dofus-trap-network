@@ -290,7 +290,7 @@ class Entity {
       }
       str += this.triggers[i].spellId + "|";
       str += this.triggers[i].spellLevel + "|";
-      str += Game.getEntityIndex(this.triggers[i].caster.uuid) + "|";
+      str += Game.getEntityIndex(this.triggers[i].caster?.uuid) + "|";
     }
     str += this.health.initial.shield + "|";
     str += this.health.initial.max + "|";
