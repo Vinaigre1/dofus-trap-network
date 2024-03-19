@@ -3187,7 +3187,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 1,
@@ -3213,7 +3213,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 2,
@@ -3239,7 +3239,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 3,
@@ -3265,7 +3265,7 @@ const SpellData: SpellDataType = {
         minPlayerLevel: 0,
         effects: [
           {
-            targetMask: `${TargetMask.Enemy}`,
+            targetMask: `${TargetMask.Ally},${TargetMask.Enemy}`,
             effectType: EffectType.Pull,
             value: 0,
             min: 4,
@@ -3601,7 +3601,7 @@ const SpellData: SpellDataType = {
     ]
   },
   [SpellType.Corruption]: {
-    name: "Misere",
+    name: "Corruption",
     icon: null,
     sfx: null,
     sfxSize: 1,
