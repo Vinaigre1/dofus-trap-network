@@ -74,7 +74,8 @@ class Game {
     ];
     this.mainCharacter = new Entity({ x: 0, y: 0 }, Team.Attacker, EntityType.Player);
     this.options = {
-      leukide: false
+      leukide: false,
+      order: false,
     };
 
     this.loadMap(mapName);
@@ -668,6 +669,17 @@ class Game {
   }
 
   /**
+   * Toggles showing the order.
+   * 
+   * @returns {boolean} returns if the Leukide is acrive
+   */
+  toggleOrder(): boolean {
+    this.options.order = !this.options.order;
+    this.refreshMap();
+    return this.options.order;
+  }
+
+  /**
    * Moves a trap order in the traps array.
    * 
    * @param {number} trapIdx Old trap index
@@ -829,7 +841,8 @@ class Game {
         y: parseInt(splits.shift())
       };
       const _options: GameOptions = {
-        leukide: !!parseInt(splits.shift())
+        leukide: !!parseInt(splits.shift()),
+        order: false
       };
 
       for (let i: number = 0; i < _entities.length; i++) {

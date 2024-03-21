@@ -301,6 +301,7 @@ export interface SpellTrigger {
 
 export interface GameOptions {
   leukide: boolean;
+  order: boolean;
 }
 
 export interface OffensiveStats {

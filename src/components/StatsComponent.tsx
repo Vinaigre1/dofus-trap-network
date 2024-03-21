@@ -16,6 +16,7 @@ type Props = {
 type State = {
   shareText: string;
   configObj: Entity | Trap;
+  order: boolean;
 };
 
 
@@ -26,7 +27,8 @@ class StatsComponent extends React.Component<Props, State>
 
     this.state = {
       shareText: "",
-      configObj: undefined
+      configObj: undefined,
+      order: Game.options.order,
     };
   }
 
@@ -82,6 +84,11 @@ class StatsComponent extends React.Component<Props, State>
   closeConfig() {
     this.setState((state) => ({ ...state, configObj: undefined }));
     Game.setMovingEntity(null);
+  }
+
+  onOrderClick() {
+    this.setState((state) => ({ ...state, order: !state.order }));
+    Game.toggleOrder();
   }
 
   render() {
@@ -166,7 +173,7 @@ class StatsComponent extends React.Component<Props, State>
           );
         })}
       </Reorder>
-      {/* <span>requires 12 turns to place</span> */}
+      <div className={`btn-order ${this.state.order ? 'active' : ''}`} onClick={() => { this.onOrderClick(); }}><Trans>Ordre de pose</Trans></div>
       {help}
     </div>;
   }

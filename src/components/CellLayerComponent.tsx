@@ -67,17 +67,19 @@ class CellLayerComponent extends React.Component<Props, States>
       />);
 
       if (!this.state.highlighted.includes(this.props.traps[i].uuid)) {
-        trapImages.push(<image
-          className={`trap-image ${TrapClasses[colorToInt(trap.color)]}`}
-          href={SpellData[trap.spellId].sfx}
-          x={root.x + cellWidth * ((1 - sizeCoef) / 2)}
-          y={root.y + celHeight * ((1 - sizeCoef) / 2)}
-          width={cellWidth * sizeCoef}
-          height={celHeight * sizeCoef}
-          key={trap.uuid}
-          ref={(component) => { trap.imgComponent = component; }}
-          style={{ display: this.props.traps[i].active ? "" : "none" }}
-        />);
+        trapImages.push(<><image
+            className={`trap-image ${TrapClasses[colorToInt(trap.color)]}`}
+            href={SpellData[trap.spellId].sfx}
+            x={root.x + cellWidth * ((1 - sizeCoef) / 2)}
+            y={root.y + celHeight * ((1 - sizeCoef) / 2)}
+            width={cellWidth * sizeCoef}
+            height={celHeight * sizeCoef}
+            key={trap.uuid}
+            ref={(component) => { trap.imgComponent = component; } }
+            style={{ display: this.props.traps[i].active ? "" : "none" }} />
+            {Game.options.order ? <text className='trap-text' x={root.x} y={root.y}>{this.props.traps.length - i}</text> : undefined}
+          </>
+        );
       } else {
         highlightedTraps.push(<TrapComponent
           trap={trap}
@@ -87,16 +89,17 @@ class CellLayerComponent extends React.Component<Props, States>
           key={'trap-hl-' + trap.uuid}
         />);
 
-        highlightedImages.push(<image
-          className={`trap-image ${TrapClasses[colorToInt(trap.color)]}`}
-          href={SpellData[trap.spellId].sfx}
-          x={root.x + cellWidth * ((1 - (sizeCoef * 1.2)) / 2)}
-          y={root.y + celHeight * ((1 - (sizeCoef * 1.2)) / 2)}
-          width={cellWidth * sizeCoef * 1.2}
-          height={celHeight * sizeCoef * 1.2}
-          key={trap.uuid}
-          ref={(component) => { trap.imgComponent = component; }}
-        />);
+        highlightedImages.push(<><image
+            className={`trap-image ${TrapClasses[colorToInt(trap.color)]}`}
+            href={SpellData[trap.spellId].sfx}
+            x={root.x + cellWidth * ((1 - (sizeCoef * 1.2)) / 2)}
+            y={root.y + celHeight * ((1 - (sizeCoef * 1.2)) / 2)}
+            width={cellWidth * sizeCoef * 1.2}
+            height={celHeight * sizeCoef * 1.2}
+            key={trap.uuid}
+            ref={(component) => { trap.imgComponent = component; } } />
+            <text className='trap-text' x={root.x} y={root.y}>{this.props.traps.length - i}</text>
+          </>);
       }
     }
 
