@@ -77,7 +77,7 @@ class CellLayerComponent extends React.Component<Props, States>
             key={trap.uuid}
             ref={(component) => { trap.imgComponent = component; } }
             style={{ display: this.props.traps[i].active ? "" : "none" }} />
-            {Game.options.order ? <text className='trap-text' x={root.x} y={root.y}>{this.props.traps.length - i}</text> : undefined}
+            {Game.options.order ? <text className='trap-text' x={root.x + 2} y={root.y + 1.2}>{this.props.traps.length - i}</text> : undefined}
           </>
         );
       } else {
@@ -98,7 +98,7 @@ class CellLayerComponent extends React.Component<Props, States>
             height={celHeight * sizeCoef * 1.2}
             key={trap.uuid}
             ref={(component) => { trap.imgComponent = component; } } />
-            <text className='trap-text' x={root.x} y={root.y}>{this.props.traps.length - i}</text>
+            <text className='trap-text' x={root.x + 2} y={root.y + 1.2}>{this.props.traps.length - i}</text>
           </>);
       }
     }
